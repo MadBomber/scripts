@@ -1,0 +1,12 @@
+#!/bin/sh
+
+old_file=$1
+shift
+
+new_file=$1
+shift
+
+output_file=$1
+shift
+
+kdiff3 --merge "$old_file" "$new_file" --output "$output_file"

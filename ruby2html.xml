@@ -1,0 +1,40 @@
+<pre><span class="comment">#!/usr/bin/ruby</span>
+<span class="comment">#####################################################</span>
+<span class="comment">##  File:  ruby2html.rb</span>
+<span class="comment">##  Desc:  converts ruby source code into html</span>
+<span class="comment">#</span>
+
+<span class="ident">require</span> <span class="punct">'</span><span class="string">rubygems</span><span class="punct">'</span>
+<span class="ident">require</span> <span class="punct">'</span><span class="string">syntax/convertors/html</span><span class="punct">'</span>
+<span class="ident">require</span> <span class="punct">'</span><span class="string">projxslt</span><span class="punct">'</span> <span class="comment"># &lt;- this is my own class to do an XSLT transform</span>
+<span class="ident">require</span> <span class="punct">'</span><span class="string">rexml/document</span><span class="punct">'</span>
+<span class="ident">include</span> <span class="constant">REXML</span>
+
+<span class="keyword">class </span><span class="class">Ruby2Html</span>
+  <span class="keyword">def </span><span class="method">initialize</span><span class="punct">(</span><span class="ident">rubyfile</span><span class="punct">,</span> <span class="ident">htmlfile</span><span class="punct">)</span>
+    <span class="ident">code</span> <span class="punct">=</span> <span class="constant">File</span><span class="punct">.</span><span class="ident">read</span><span class="punct">(</span><span class="ident">rubyfile</span><span class="punct">)</span>
+    <span class="ident">convertor</span> <span class="punct">=</span> <span class="constant">Syntax</span><span class="punct">::</span><span class="constant">Convertors</span><span class="punct">::</span><span class="constant">HTML</span><span class="punct">.</span><span class="ident">for_syntax</span> <span class="punct">&quot;</span><span class="string">ruby</span><span class="punct">&quot;</span>
+    <span class="ident">code_html</span> <span class="punct">=</span> <span class="ident">convertor</span><span class="punct">.</span><span class="ident">convert</span><span class="punct">(</span><span class="ident">code</span><span class="punct">)</span>
+
+    <span class="ident">tempfile</span> <span class="punct">=</span> <span class="punct">'</span><span class="string">ruby2html.xml</span><span class="punct">'</span>
+    <span class="ident">xslfile</span> <span class="punct">=</span> <span class="punct">'</span><span class="string">ruby2html.xsl</span><span class="punct">'</span>
+    <span class="ident">save_file</span><span class="punct">(</span><span class="ident">tempfile</span><span class="punct">,</span> <span class="ident">code_html</span><span class="punct">)</span>
+
+    <span class="ident">px</span> <span class="punct">=</span> <span class="constant">Projxslt</span><span class="punct">.</span><span class="ident">new</span><span class="punct">(</span><span class="ident">tempfile</span><span class="punct">,</span> <span class="ident">xslfile</span><span class="punct">)</span>
+    <span class="ident">buffer</span> <span class="punct">=</span> <span class="ident">px</span><span class="punct">.</span><span class="ident">transform</span><span class="punct">()</span>
+    <span class="ident">save_file</span><span class="punct">(</span><span class="ident">htmlfile</span><span class="punct">,</span> <span class="ident">buffer</span><span class="punct">)</span>
+
+  <span class="keyword">end</span>
+
+  <span class="keyword">def </span><span class="method">save_file</span><span class="punct">(</span><span class="ident">filename</span><span class="punct">,</span> <span class="ident">buffer</span><span class="punct">)</span>
+    <span class="ident">file</span> <span class="punct">=</span> <span class="constant">File</span><span class="punct">.</span><span class="ident">new</span><span class="punct">(</span><span class="ident">filename</span><span class="punct">,</span> <span class="punct">'</span><span class="string">w</span><span class="punct">')</span>
+    <span class="ident">file</span><span class="punct">.</span><span class="ident">puts</span> <span class="ident">buffer</span>
+    <span class="ident">file</span><span class="punct">.</span><span class="ident">close</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="keyword">if</span> <span class="constant">__FILE__</span> <span class="punct">==</span> <span class="global">$0</span>
+  <span class="ident">r2h</span> <span class="punct">=</span> <span class="constant">Ruby2Html</span><span class="punct">.</span><span class="ident">new</span><span class="punct">('</span><span class="string">ruby2html.rb</span><span class="punct">',</span> <span class="punct">'</span><span class="string">ruby2html.html</span><span class="punct">')</span>
+  <span class="ident">puts</span> <span class="punct">'</span><span class="string">completed</span><span class="punct">'</span>
+<span class="keyword">end</span>
+</pre>

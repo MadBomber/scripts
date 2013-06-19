@@ -1,0 +1,17 @@
+#! /bin/tcsh
+################################################################################
+###
+##	File:	xtermall
+##	Desc:	open an xterm on all slaves
+#
+
+source $HOME/.tcshrc_50_slaves
+
+set x = 1
+
+foreach slave ($slaves)
+	echo "Opening an xterm on $slave using $colors[$x] ..."
+	xterm -bg black -fg $colors[$x] -T $slave -e ssh $slave &
+	@ x += 1
+end
+

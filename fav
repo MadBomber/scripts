@@ -1,0 +1,10 @@
+#!/bin/bash
+###################################################
+###
+##  File: fav
+##  Desc: Install favorited gems from twitter
+#
+
+t favorites | \
+  fgrep '): ' | \
+  ruby $SCRIPTS_HOME/fav.rb

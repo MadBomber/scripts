@@ -1,0 +1,29 @@
+#!/bin/sh
+#########################################################
+###
+##  File: qa
+##  Desc: Provides basic quality assurance feedback on ruby files
+#
+
+echo
+echo "#############################################"
+echo "## Method Complexity Summary"
+echo
+
+flog -a -n -c -b -q $@
+
+echo
+echo "#############################################"
+echo "## Architectural Review"
+echo
+
+roodi $@
+
+echo
+echo "#############################################"
+echo "## DRY Review"
+echo
+
+flay -v $@
+
+
