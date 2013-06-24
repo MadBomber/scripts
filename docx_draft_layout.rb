@@ -5,74 +5,162 @@
 ##  Desc: Displays the paragraph style and contents of an MS Word *.docx file
 #
 
-#require 'awesome_print'
+require 'awesome_print'
 
 require 'pathname'
 
 require 'docx'
 require 'word_wrapper'
 
+if '--html' == ARGV.first
+  html_desired = true
+  ARGV.shift
+else
+  html_desired = false
+end
+
 if ARGV.empty? or ARGV.first == "-h" or ARGV.first == "--help"
   puts
-  puts "Usage: docx_draft_style.rb MS_WORD_DOCX++"
+  puts "Usage: docx_draft_style.rb [options] MS_WORD_DOCX++"
   puts
   puts "  Where:"
   puts "    MS_WORD_DOCX++    is one or more Microsoft Word DOCX filenames"
   puts
+  puts "    options are:"
+  puts
+  puts "      -h or --help    This usage message is produced"
+  puts "      --html          Produces an HTML file for each input file"
+  puts
   exit
 end
 
+
+class String
+  def wrap_with_style(style, html_preformatted = false)
+    html_preformatted ? "&lt;#{style}&gt;" + self + "&lt;#{style}&gt;" : "<#{style}>" + self + "</#{style}>"
+  end
+end # if class String
+
+
+
+
+# SMELL: This returns a string in which the spaces have been squeezed out
+
 def paragraph_style(para)
+
   begin
-    para.node.children.children.first.attributes.first.last.value
+    style_element = para.node.children.children.first.attributes.first.last
+    #ap style_element
+    style_element.value.to_s
   rescue Exception => e
     #puts "ERROR: #{e}"
     #ap para.node
     "Normal"
   end
-end
 
-def paragraph_contents(para)
-  para.to_s
-end
+end # of def paragraph_style(para)
+
+
+# A apragraph consists of one or more text_runs
+# A paragraph has a style
+# A text_run has a consistent style
+
+def paragraph_contents(para, html = false)
+  # ap para
+
+  contents_string = ""
+
+  para.text_runs.each do |tr|
+
+    begin
+      name    = tr.node.children[0].children[0].name
+    rescue Exception => e
+      #puts "ERROR: #{e}"
+      #ap tr.node.children[0]  # .children[0]
+      #style = "text"
+      name    = tr.node.children[0].name
+    end
+
+    if 'rStyle' == name
+      style   = tr.node.children[0].children[0].attributes.first.last.value
+    elsif 'text' == name
+      style   = nil
+    else
+      style   = name
+    end
+
+    contents_string += style.nil? ? tr.text : tr.text.wrap_with_style(style, html)
+
+  end # of para.text_runs.each do |tr|
+
+  #para.to_s
+
+  return contents_string
+
+end # end of def paragraph_contents(para)
+
+
+######################################################################
+## Main Loop around the ARGV
 
 style_width   = 20
+
+out_file  = STDOUT
 
 ARGV.each do |param|
 
   given_document = Pathname.new(param)
 
   unless '.docx' == given_document.extname.downcase
-    puts
-    puts "WARNING: Not a *.docx file."
-    puts "   File: #{given_document}"
-    puts
+    STDERR.puts
+    STDERR.puts "WARNING: Not a *.docx file -- skipping."
+    STDERR.puts "   File: #{given_document}"
+    STDERR.puts
     next
   end
 
   d = Docx::Document.open(given_document.to_s)
 
-  puts
-  puts "MS Word (docx) File Name:  #{given_document}"
-  puts "Draft Layout Generated on: #{Time.now}"
-  puts "-"*(30+given_document.to_s.length)
-  puts
+
+  if html_desired
+
+    html_pathname = given_document.dirname + ( given_document.basename.to_s + ".html" )
+    out_file      = html_pathname.open("w")
+
+    out_file.puts "<html><head><title>#{given_document}</title></head>"
+    out_file.puts "<body>"
+    out_file.puts "<pre>"
+  end
+
+  out_file.puts
+  out_file.puts "MS Word (docx) File Name:  #{given_document}"
+  out_file.puts "Draft Layout Generated on: #{Time.now}"
+  out_file.puts "-"*(30+given_document.to_s.length)
+  out_file.puts
 
   d.paragraphs.each do |para|
     style     = paragraph_style(para)
-    contents  = paragraph_contents(para)
+    contents  = paragraph_contents(para, html_desired)
 
-    print style+" "*(style_width > style.size ? style_width-style.size : 3)
+    out_file.print style+" "*(style_width > style.size ? style_width-style.size : 3)
     lines = WordWrapper::MinimumRaggedness.new(style_width*3, contents).wrap.split("\n")
     x=1
     lines.each do |a_line|
-      puts a_line
+      out_file.puts a_line
       x-=1
-      print " "*style_width unless x>0
+      out_file.print " "*style_width unless x>0
     end
-    puts
+    out_file.puts
 
   end
 
+  out_file.puts
+
+  if html_desired
+    out_file.puts "</pre>"
+    out_file.puts "</body>"
+    out_file.puts "</html>"
+    #out_file.close
+  end
 
 end # end of ARGV.each do |param|
