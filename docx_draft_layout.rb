@@ -12,11 +12,21 @@ require 'pathname'
 require 'docx'
 require 'word_wrapper'
 
+style_width   = 20
+line_width    = 4 * style_width
+
 if '--html' == ARGV.first
-  html_desired = true
+  html_desired      = true
   ARGV.shift
 else
-  html_desired = false
+  html_desired      = false
+end
+
+if '--no-char' == ARGV.first
+  show_char_styles  = false
+  ARGV.shift
+else
+  show_char_styles  = true
 end
 
 if ARGV.empty? or ARGV.first == "-h" or ARGV.first == "--help"
@@ -30,6 +40,7 @@ if ARGV.empty? or ARGV.first == "-h" or ARGV.first == "--help"
   puts
   puts "      -h or --help    This usage message is produced"
   puts "      --html          Produces an HTML file for each input file"
+  puts "      --no-char       Do not show character styles within content"
   puts
   exit
 end
@@ -37,7 +48,7 @@ end
 
 class String
   def wrap_with_style(style, html_preformatted = false)
-    html_preformatted ? "&lt;#{style}&gt;" + self + "&lt;#{style}&gt;" : "<#{style}>" + self + "</#{style}>"
+    html_preformatted ? "&lt;#{style}&gt;" + self + "&lt;/#{style}&gt;" : "<#{style}>" + self + "</#{style}>"
   end
 end # if class String
 
@@ -65,7 +76,7 @@ end # of def paragraph_style(para)
 # A paragraph has a style
 # A text_run has a consistent style
 
-def paragraph_contents(para, html = false)
+def paragraph_contents(para, html = false, char_style = true)
   # ap para
 
   contents_string = ""
@@ -89,7 +100,15 @@ def paragraph_contents(para, html = false)
       style   = name
     end
 
-    contents_string += style.nil? ? tr.text : tr.text.wrap_with_style(style, html)
+# SMELL: The TAB character is implemented as a character style; this code
+#        does not take into account tab stops, etc.  May want to insert some
+#        spaces or let the tab style through regardless the value of char_style
+
+    if char_style # or 'tab' == style
+      contents_string += style.nil? ? tr.text : tr.text.wrap_with_style(style, html)
+    else
+      contents_string += tr.text
+    end
 
   end # of para.text_runs.each do |tr|
 
@@ -101,9 +120,7 @@ end # end of def paragraph_contents(para)
 
 
 ######################################################################
-## Main Loop around the ARGV
-
-style_width   = 20
+## Main Loop around the ARGV which should contain only file names
 
 out_file  = STDOUT
 
@@ -140,10 +157,10 @@ ARGV.each do |param|
 
   d.paragraphs.each do |para|
     style     = paragraph_style(para)
-    contents  = paragraph_contents(para, html_desired)
+    contents  = paragraph_contents(para, html_desired, show_char_styles)
 
     out_file.print style+" "*(style_width > style.size ? style_width-style.size : 3)
-    lines = WordWrapper::MinimumRaggedness.new(style_width*3, contents).wrap.split("\n")
+    lines = WordWrapper::MinimumRaggedness.new(line_width, contents).wrap.split("\n")
     x=1
     lines.each do |a_line|
       out_file.puts a_line
