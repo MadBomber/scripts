@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+
+if ARGV.empty?
+  puts "Usage:  where program_name"
+end
+
+require 'pathname'
+
+ENV['PATH'].split(':').each do |path|
+  here = Pathname.new(path)+ARGV.first
+  if here.exist?
+    puts here
+    system "#{here} --version"
+  end
+end
