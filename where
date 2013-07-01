@@ -1,15 +1,23 @@
 #!/usr/bin/env ruby
 
 if ARGV.empty?
+  puts
   puts "Usage:  where program_name"
+  puts
+  puts "similar to 'which -a' put also executes the"
+  puts "command 'program_name --version' for each instance found."
+  puts
+  exit
 end
 
 require 'pathname'
 
+program_name = ARGV.first
+
 ENV['PATH'].split(':').each do |path|
-  here = Pathname.new(path)+ARGV.first
+  here = Pathname.new(path) + program_name
   if here.exist?
     puts here
-    system "#{here} --version"
+    here.executable? ? system("#{here} --version") : puts('Not Executable')
   end
 end

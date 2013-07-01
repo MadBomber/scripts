@@ -146,6 +146,7 @@ ARGV.each do |param|
 
     out_file.puts "<html><head><title>#{given_document}</title></head>"
     out_file.puts "<body>"
+    out_file.puts '<a href="javascript:window.print()">Send to Printer</a><br /><br />'
     out_file.puts "<pre>"
   end
 
