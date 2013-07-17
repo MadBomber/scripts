@@ -5,18 +5,47 @@
 ##  Desc: Update all forked projects with their upstream master
 #
 
-require 'date'
 require 'pathname'
 
-require 'awesome_print'
+pgm_name = Pathname.new(__FILE__).basename
 
-github_account_dir	= ENV['HOME']+'/sandbox/github_repos/madbomber'
-git_repos 					= Pathname.new(github_account_dir).children
+if ARGV.empty?
+  github_account_dir = Pathname.pwd
+else
+  github_account_dir = Pathname.new(ARGV.first)
+  unless github_account_dir.directory?
+    puts "ERROR: not a valid directory."
+    puts "       #{ARGV.first}"
+    ARGV[0] = '--help' # force the usage message
+  end
+end
+
+if '-h' == ARGV.first  or  '--help' == ARGV.first
+  puts <<-EOS
+
+Usage:  #{pgm_name} [directory]
+
+Where:
+
+  directory (optional)    a path to a directory of github repos
+                          or to a specific repo directory.
+                          Default is the current working directory.
+
+EOS
+exit
+end
+
+
+if (github_account_dir+'.git').exist?
+  git_repos = [ github_account_dir ]
+else
+  git_repos = github_account_dir.children
+end
 
 
 git_repos.each do |repo|
 
-	unless repo.directory?
+	unless repo.directory?  and  (repo+'.git').exist?  and  (repo+'.git').directory?
 		next
 	end
 
