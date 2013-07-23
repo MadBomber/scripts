@@ -1,41 +1,38 @@
 #!/usr/bin/env ruby
 ##########################################
 ###
-##  File: fav.rb
+##  File: gemt
 ##  Desc: Build gem install command
 ##
 ##  Input is STDIN a list of gem names, 1 per line
 #
 
 require 'awesome_print'
-require 'systemu'
 
-if ARGV.length > 0
-
-  ARGV.each do |gem_name|
-    puts systemu("gem list #{gem_name} --details")[1]
+class NilClass
+  def split(*args)
+    [" "]
   end
-
-else
-
-  full_list_gems = systemu("gem list --details")[1].split("\n\n")
-
-  gem_desc = Hash.new
-  last_gem = "unknown"
-
-  full_list_gems.each do |g|
-
-    if g.include?("Author")
-      gem_name = g.split(" ").first
-      gem_desc[gem_name]="unk"
-      last_gem = gem_name
-    else
-      #puts "\t"+g
-      gem_desc[last_gem] = g.strip
-    end
-
+  def strip
+    ""
   end
-
-  ap gem_desc
-
 end
+
+gem_hash = Hash.new
+
+desc_start_col = 30
+
+Gem::Specification.all.each do |gs|
+  gem_hash[gs.name] = gs.summary
+end
+
+gem_hash.each_pair do |k, v|
+  print "#{k}  "
+  spacer_cnt = desc_start_col - k.length
+  spacer_cnt = 1 if spacer_cnt <= 0
+  print " "*spacer_cnt
+  puts v.split("\n").first.strip
+end
+
+# ap Gem::Specification.all.first.instance_variables
+
