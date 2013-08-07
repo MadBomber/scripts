@@ -2,12 +2,30 @@
 ##########################################
 ###
 ##  File: gemt
-##  Desc: Build gem install command
+##  Desc: Like "rake -T"
 ##
-##  Input is STDIN a list of gem names, 1 per line
 #
 
 require 'awesome_print'
+
+
+def usage
+  puts <<-EOS
+
+list gems -- like "rake -T"
+
+usage: #{__FILE__.basename} [search_string]
+
+Where:
+
+  search_string is an optional keyword or phrase
+
+Example:
+
+  gemt guard      shows list of the guard gems
+
+EOS
+end
 
 class NilClass
   def split(*args)
@@ -18,19 +36,34 @@ class NilClass
   end
 end
 
+search_string = nil
+
+unless ARGV.empty?
+  if '-h' == ARGV.first  or  '--help' == ARGV.first
+    usage
+    exit
+  end
+  search_string = ARGV.join(' ').downcase
+end
+
 gem_hash = Hash.new
 
-desc_start_col = 30
+longest_desc = 0
 
 Gem::Specification.all.each do |gs|
+  if search_string
+    thing = (gs.name + ' ' + gs.summary).downcase
+    next unless thing.include?(search_string)
+  end
   gem_hash[gs.name] = gs.summary
+  longest_desc = gs.name.size if longest_desc < gs.name.size
 end
+
+desc_start_col = longest_desc
 
 gem_hash.each_pair do |k, v|
   print "#{k}  "
-  spacer_cnt = desc_start_col - k.length
-  spacer_cnt = 1 if spacer_cnt <= 0
-  print " "*spacer_cnt
+  print " "*(desc_start_col - k.size)
   puts v.split("\n").first.strip
 end
 
