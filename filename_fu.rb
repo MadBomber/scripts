@@ -4,9 +4,6 @@
 ##  File: filename_fu.rb 
 ##  Desc: add/remove prefix/suffix
 ##
-##  Parameters on the Command Line
-##
-##    -a -r -p -s -d -f --add --remove --directory --files
 #
 
 require 'pathname'
@@ -16,18 +13,10 @@ require 'ostruct'
 require 'awesome_print'
 require 'pp'
 
-dry_run_proc = Proc.new do |current_name, new_name|
-  puts "DryRun: #{current_name}  becomes  #{new_name}"
-  puts "  WARNING: new filename already exists" if new_name.exist?
-end
-
-rename_file_proc = Proc.new do |current_name, new_name|
-  current_name.rename(new_name)
-end
-
-
+# Turn the command line options into a usable structure
 class MyCommandLine
 
+  # parse the ARGV array
   def self.parse
 
     # Preprocess ARGV because OptionParser cannot handle splats
@@ -41,7 +30,9 @@ class MyCommandLine
     previous_arg_was_switch = '-' == my_args.first[0,1]
 
     until ARGV.empty? do
+
       arg = ARGV.shift
+
       if '-' == arg[0,1]
         previous_arg_was_switch = true
         my_args << arg
@@ -54,29 +45,53 @@ class MyCommandLine
           my_args[last] += ',' + arg
         end
       end
+
     end # until ARGV.empty? do
+    
     parse_these_args(my_args)
+
   end # def self.parse
 
+
+  # parse an array of command line parameters
   def self.parse_these_args(args)
 
     options = OpenStruct.new
 
+    options.dryrun    = false         # Don't change anything; just report what would have been done
+    options.debug     = false         # Insert software defects liberally throughout the code
+
+    # basenames kept as strings
     options.exclude = %w{
       .svn
       .git
       .DS_Store
     }
+
     options.recursive = false
     options.add       = true
     options.user_add  = false         # Did the user explicitly select add?
     options.remove    = false
     options.directory = Pathname.pwd
-    options.files     = []
+    options.user_dir  = false         # Did the user explicitly give a directory?
+    options.files     = []            # Can not include directories
+    
     options.prefix    = ""
     options.suffix    = ""
-    options.substr    = ""
-    options.dry_run   = false
+    options.substr    = ""            # sub-strings can only be deleted/removed
+
+    options.sequence  = false         # indicates presences of '#' in either prefixx or suffix
+    options.prefix_seq= ""            # Work area for inserting a sequence field
+    options.suffix_seq= ""            # Work area for inserting a sequence field    
+    options.seq_start = 1             # start sequence number at this number
+    options.seq_incr  = 1             # value to increment the sequence number for each file
+    options.seq_size  = 2             # size of the zero-filled sequence number field
+    
+    # maximum number of files that can be supported with the sequence numbering specifications
+    # SMELL: this formula is doplicated in the validate options methods
+    options.seq_max_f = ( (10**options.seq_size - 1) / options.seq_incr ) - options.seq_start / options.seq_incr
+    
+    options.rename_file = nil         # a Proc to do the work; set after all options have been validated
 
     opt_parser = OptionParser.new do |o|
 
@@ -84,27 +99,37 @@ class MyCommandLine
 
       o.program_name = Pathname.new(__FILE__).basename.to_s
 
-      o.banner  =  "\nAdd/Remove a Prefix/Suffix to Filenames\n\n"
-      o.banner  += "Usage: #{o.program_name} [options]"
+      o.banner  =  "\nAdd/Remove a Prefix/Suffix to Filenames"
+      o.banner  += "\n\nUsage: #{o.program_name} [options]"
 
       o.separator ""
       o.separator "Specific options available:"
+      o.separator ""
 
-      o.on("", "--dry_run", "Show what would have happened without doing it") do |v|
-        options.dry_run = v
-        options.verbose = true if options.dry_run
+      o.on("", "--dryrun", "Show what would have happened without doing it") do |v|
+        options.dryrun  = v
       end
 
       o.on("-p", "--prefix S", String, "Prefix for filename") do |v|
-        options.prefix = v
+        options.prefix    = v
+        options.sequence  = true if v.include?('#')
       end
 
       o.on("-s", "--suffix S", String, "Suffix for filename") do |v|
-        options.suffix = v
+        options.suffix    = v
+        options.sequence  = true if v.include?('#')
       end
 
       o.on("", "--substr S", String, "Remove a sub-string from filename") do |v|
-        options.thing = v
+        options.substr = v
+      end
+
+      o.on("-n", "--number start,increment,field_size", Array,
+          "Sequence Number start, increment and field_size (DEFAULT: #{options.seq_start},#{options.seq_incr},#{options.seq_size}") do |v|
+        options.seq_start = v[0].to_i
+        options.seq_incr  = v[1].to_i if v.size > 1
+        options.seq_size  = v[2].to_i if v.size > 2
+        options.seq_max_f = ( (10**options.seq_size - 1) / options.seq_incr ) - options.seq_start / options.seq_incr
       end
 
       o.on("-a", "--add", "Add to filename (DEFAULT)") do |v|
@@ -116,25 +141,36 @@ class MyCommandLine
         options.remove = v
       end
 
-      o.on("-f", "--files x,y,z", Array, "List of filenames") do |v|
+      o.on("-f", "--files x,y,z...", Array, "List of filenames") do |v|
         options.files = v.map {|f| Pathname.new(f)}
       end
 
-      o.on("-d", "--directory S", String, "Directory to process (DEFAULT: current working directory)") do |v|
+      o.on("-d", "--directory S", String, "Directory to process (DEFAULT: #{options.directory})") do |v|
         options.directory = Pathname.new(v)
+        options.user_dir  = true
       end
 
       o.on("-R", "--recursive", "Process all subdirectories") do |v|
         options.recursive = v
       end
 
-      o.on("-x", "--exclude x,y,z", Array, "List of directories abd filenames to exclude") do |v|
-        options.exclude += v.map {|f| Pathname.new(f)}
+      o.on("-x", "--exclude x,y,z", Array, "List of directories and filenames to exclude") do |v|
+        options.exclude += v  # keep as strings
       end
-
 
       o.separator ""
       o.separator "Common options available:"
+      o.separator ""
+
+      o.on_tail("", "--debug", "Add software defects to code") do |v|
+        options.debug   = v
+        $DEBUG          = v
+        options.dryrun  = v
+      end
+
+      o.on_tail("-v", "--verbose", "Run verbosely") do |v|
+        options.verbose = v
+      end
 
       o.on_tail("-h", "--help", "Show this message") do
         puts o
@@ -150,11 +186,18 @@ The following default directories and filenames are excluded:
   #{options.exclude.join(', ')}
 
 '#' is reserved character that indicates sequence numbers within a
-prefix or suffix.  Using more that one '#' indicates a zero-filled
-sequence field of the specified length.
+prefix or suffix.  Sequence number start, increment and field_size
+parameters are specified with the --number option.  For example
+"--number 5,5,3" means start numbering at 5 and increment the
+sequence number by 5 within a field_size of 3 for each file.  This 
+gives a sequence field from 005 to 995 which limits on the number 
+of files that can be processed to approximately 194.  Any more files
+and the field size will overflow.
+
+The default is "#{options.seq_start},#{options.seq_incr},#{options.seq_size}"
 
 --substr only removes sub-strings from the filename.  Sub-strings can
-not be added/inserted.
+not be added/inserted.  Sequence numbers '#' are not allowed in sub-strings.
 
 Both --prefix and --suffix can be added or removed at the same time;
 however, only one action at a time is allowed (i.e., you can not add
@@ -197,10 +240,6 @@ EOS
         exit
       end
 
-      o.on_tail("-v", "--[no-]verbose", "Run verbosely") do |v|
-        options.verbose = v
-      end
-
     end # end of opt_parser = OptionParser.new do |o|
 
     errors = []
@@ -220,59 +259,144 @@ EOS
 
     validate(options, errors)
   
-  end  # parse()
+  end  # def self.parse_these_args(args)
 
+
+  # validate the options specified and report all errors
   def self.validate(options,parse_errors=[])
+
+    ap options.to_h if $DEBUG
+
     errors = parse_errors
     errors << "--add and --remove are mutually exclusive"         if options.add and options.remove
     errors << "no --prefix, --suffix, or --substr was specified"  if options.prefix.empty? and options.suffix.empty? and options.substr.empty?
     errors << "root directory operations are not allowed"         if options.directory == Pathname.new("/")
-    errors << "sequence number operations are not implemented"    if options.prefix.include?('#') or options.suffix.include?('#')
+    errors << "--prefix can have one and only one '#'"            if options.prefix.count('#') > 1
+    errors << "--suffix can have one and only one '#'"            if options.suffix.count('#') > 1
+    errors << "--substr can not have a '#' character"             if options.substr.count('#') > 0
+    errors << "--number sequence start must positive"             if options.seq_start < 0
+    errors << "--number sequence increment must positive"         if options.seq_incr  < 0
+    errors << "--number sequence field size must positive"        if options.seq_size  < 0
+    
+    if options.sequence
+      if (options.files.size > options.seq_max_f)
+        errors << "Too many files #{options.files.size}; sequence field allows for only #{options.seq_max_f}"
+      end
+      unless options.files.size > 0
+        files_in_dir = options.directory.children.size # approximately
+        if files_in_dir > options.seq_max_f
+          errors << "Too many files #{files_in_dir}; sequence field allows for only #{options.seq_max_f}"
+        end
+      end
+    end
+
+    errors << "--recursive not allowed with sequence numbers"     if options.sequence and options.recursive
+    errors << "--remove not allowed with sequence numbers"        if options.remove and options.sequence
     errors << "directory does not exist"                      unless options.directory.exist?
+    
+    if options.user_dir and options.files.lenght > 0
+      errors << "--directory and --files are mutually exclusive"
+    end
 
     options.files.each do |f|
       errors << "file/directory does not exist: #{f}" unless f.exist?
+      errors << "#{f.basename}, a directory, is not allowed in the --files list" if f.directory?
     end
 
+    # report all errors
     unless errors.empty?
-      puts "\nThe following errors must be corrected before execution can proceed:"
-      puts
-      errors.each { |e| puts "\tERROR: #{e}" }
-      puts "\nUse --help to see usage summary."
-      puts
+      STDERR.puts "\nThe following errors must be corrected before execution can proceed:"
+      STDERR.puts
+      errors.each { |e| STDERR.puts "\tERROR: #{e}" }
+      STDERR.puts "\nUse --help to see usage summary."
+      STDERR.puts
       exit
     end
 
     options
-  end
+
+  end # def self.validate(options,parse_errors=[])
 
 end # class MyCommandLine
 
 
+# Rename files using prefix/suffix/substr and sequence numbers
 class FilenameFu
+  
+  @@sequence = -1 # MAGIC: signals uninitialized
 
-  def init(a_filename, options)
+  def self.doit(a_filename, options)
+
+    if options.sequence
+      if @@sequence < 0
+        @@sequence = options.seq_start
+      else
+        @@sequence += options.seq_incr
+      end
+    end
+
     @options    = options
     @file_path  = a_filename.class == Pathname ? a_filename : Pathname.new(a_filename)
-    @file_dir   = @file_path.directory
+    @file_dir   = @file_path.dirname
     @file_ext   = @file_path.extname
     temp_str    = @file_path.basename.to_s
     temp_str_l  = temp_str.length
     @filename   = temp_str[0,temp_str_l-@file_ext.length]
+
+    add     if options.add
+    remove  if options.remove
+
+    b_filename = @file_dir + (@filename + @file_ext)
+
+    unless a_filename == b_filename
+      if options.verbose
+        puts "\nRenaming: #{a_filename}"
+        puts "      To: #{b_filename}"
+      end
+      options.rename_file.call(a_filename, b_filename)
+    end
+
+  end # def self.doit(a_filename, options)
+
+
+  # repace any '#' characters in prefix or suffix with a sequence field
+  def self.create_sequence_field
+    @options.prefix_seq = @options.prefix.dup
+    @options.suffix_seq = @options.suffix.dup
+    seq = sprintf("%0#{@options.seq_size}i", @@sequence)
+    @options.prefix_seq.gsub!('#', seq)
+    @options.suffix_seq.gsub!('#', seq)
   end
 
-  def add
-    @filename = @options.prefix + @filename + @options.suffix
+
+  # add prefix and suffix
+  def self.add
+    puts "...add (#{@@sequence})" if $DEBUG
+    if @options.sequence
+      create_sequence_field
+      @filename = @options.prefix_seq + @filename + @options.suffix_seq
+    else
+      @filename = @options.prefix + @filename + @options.suffix
+    end
   end
 
-  def remove
-    if @filename.start_with?(@options.prefix)
-      @filename = @filename[@options.prefix.length-1,99999]
+
+  # remove prefix, suffix and substr
+  def self.remove
+    puts "...remove" if $DEBUG
+    if @filename.start_with?(@options.prefix) and !@options.prefix.empty?
+      puts "...prefix #{@options.prefix}" if $DEBUG
+      @filename = @filename[@options.prefix.length, 99999] # MAGIC: no filename is this large
     end
-    if @filename.end_with?(@options.suffix)
-      @filename = @filename[0,@filename.length-@@options.suffix.length]
+    if @filename.end_with?(@options.suffix) and !@options.suffix.empty?
+      puts "...suffix #{@options.suffix} from #{@filename}" if $DEBUG
+      @filename = @filename[0,@filename.length-@options.suffix.length]
+      puts "......new name: #{@filename}" if $DEBUG
     end
-    @filename.gsub(@options.substr, "") unless @options.substr.empty?
+    unless @options.substr.empty?
+      puts "...substr #{@options.substr}" if $DEBUG
+      @filename.gsub!(@options.substr, "")
+    end
   end
 
 end # class FilenameFu
@@ -281,14 +405,53 @@ end # class FilenameFu
 ###########################################################
 ## Main
 
+# used when the --dryrun options is specified
+dryrun_proc = Proc.new do |current_name, new_name|
+  puts "DryRun: #{current_name.basename}"
+  puts "    To: #{new_name.basename}"
+  puts "  WARNING: new filename already exists" if new_name.exist?
+end
+
+
+# Tell the file to rename itself
+livefire_proc = Proc.new do |current_name, new_name|
+  current_name.rename(new_name)
+end
+
+
+# Recursively as needed process a batch for files
+def process_files(files, options)
+
+  files.each do |f|
+    # Do not recurse into excluded directories
+    if options.recursive and f.directory? and !options.exclude.include?(f.basename.to_s)
+      puts "Entering Directory: #{f.basename}" if $DEBUG
+      process_files(f.children, options)
+    else
+      FilenameFu.doit(f, options) unless f.directory? or options.exclude.include?(f.basename.to_s)
+    end
+  end
+
+end # def process_files(files)
+
 options = MyCommandLine.parse
 
+options.rename_file = options.dryrun ? dryrun_proc : livefire_proc
 
-options.dry_run = true
+if options.dryrun
+  puts "\nThis is a  *** DRY RUN ***"
+end
 
+if options.verbose
+  puts "\nRunning with the following options:"
+  ap options.to_h
+  puts
+end
 
+files = options.files.empty? ? options.directory.children : options.files
 
-rename_file = options.dry_run ? dry_run_proc : rename_file_proc
+process_files(files, options)
 
-
+## The End
+##########
 
