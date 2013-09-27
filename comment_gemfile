@@ -1,10 +1,9 @@
 #!/usr/bin/env ruby
 ##########################################
 ###
-##  File: fav.rb
+##  File: comment_gemfile
 ##  Desc: Build gem install command
 ##
-##  Input is STDIN a list of gem names, 1 per line
 #
 
 require 'awesome_print'
@@ -34,7 +33,21 @@ end
 
 last_desc_start_col = 30  # Pick an acceptable starting place
 
-gemfile = Pathname.new ARGV.first
+
+if ARGV.empty?
+  gemfile = Pathname.pwd + 'Gemfile'
+else
+  gemfile = Pathname.new ARGV.first
+end
+
+unless gemfile.exist?
+  puts
+  puts "ERROR: Invalid Gemfile path"
+  puts "       #{gemfile}"
+  puts
+  exit(1)
+end
+
 
 gemfile.readlines.each do |a_line|
 
