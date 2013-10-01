@@ -1,0 +1,95 @@
+#!/usr/bin/env ruby
+##########################################
+###
+##  File: create_install_getset
+##  Desc: Builds an executable file to reinstall the gemset taken
+##        into account the different gem dependencies.
+##
+#
+
+require 'awesome_print'
+require 'pathname'
+require 'date'
+
+class NilClass
+  def split(*args)
+    [" "]
+  end
+  def strip
+    ""
+  end
+  def to_s
+    ""
+  end
+end
+
+$gem_hash = Hash.new
+$gem_names= Array.new
+
+Gem::Specification.all.each do |gs|
+  $gem_names << gs.name unless $gem_names.include?(gs.name)
+  $gem_hash[gs.name] = gs
+end
+
+
+
+def do_it
+
+  $gem_names.each do |g|
+
+    next if g.nil?
+
+    gd = $gem_hash[g].dependencies.map {|d| d.name}
+
+    gd.each do |gg|
+
+      #print  gg
+      x = $gem_names.index(gg)
+      #puts "  #{x}"
+      $gem_names[x] = nil unless x.nil?
+
+    end unless gd.empty?
+
+  end
+
+  $gem_names.compact!
+  #puts $gem_names.size
+
+end
+
+do_it
+do_it
+do_it
+
+gemset_name = `rvm current`
+
+header = <<EOS
+###################################################################
+###
+##  File: install_getset  #{gemset_name}
+##  Desc: Minimum set of gem installs to reinstall entire gemset
+##        taking into account the gem dependencies.
+##
+##        Created #{DateTime.now}
+#
+EOS
+
+puts header
+
+$gem_names.each_slice(10) do |g|
+  puts "gem install #{g.join(' ')}"
+end
+
+__END__
+
+gd = $gem_hash['activerecord'].dependencies.map {|d| d.name}
+
+
+count = $gem_hash.size
+
+puts count
+
+
+
+
+
