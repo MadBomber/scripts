@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 ###########################################################
 ###
-##  File: filename_fu.rb 
+##  File: filename_fu.rb
 ##  Desc: add/remove prefix/suffix
 ##
 #
@@ -47,7 +47,7 @@ class MyCommandLine
       end
 
     end # until ARGV.empty? do
-    
+
     parse_these_args(my_args)
 
   end # def self.parse
@@ -75,22 +75,22 @@ class MyCommandLine
     options.directory = Pathname.pwd
     options.user_dir  = false         # Did the user explicitly give a directory?
     options.files     = []            # Can not include directories
-    
+
     options.prefix    = ""
     options.suffix    = ""
     options.substr    = ""            # sub-strings can only be deleted/removed
 
     options.sequence  = false         # indicates presences of '#' in either prefixx or suffix
     options.prefix_seq= ""            # Work area for inserting a sequence field
-    options.suffix_seq= ""            # Work area for inserting a sequence field    
+    options.suffix_seq= ""            # Work area for inserting a sequence field
     options.seq_start = 1             # start sequence number at this number
     options.seq_incr  = 1             # value to increment the sequence number for each file
     options.seq_size  = 2             # size of the zero-filled sequence number field
-    
+
     # maximum number of files that can be supported with the sequence numbering specifications
     # SMELL: this formula is doplicated in the validate options methods
     options.seq_max_f = ( (10**options.seq_size - 1) / options.seq_incr ) - options.seq_start / options.seq_incr
-    
+
     options.rename_file = nil         # a Proc to do the work; set after all options have been validated
 
     opt_parser = OptionParser.new do |o|
@@ -189,8 +189,8 @@ The following default directories and filenames are excluded:
 prefix or suffix.  Sequence number start, increment and field_size
 parameters are specified with the --number option.  For example
 "--number 5,5,3" means start numbering at 5 and increment the
-sequence number by 5 within a field_size of 3 for each file.  This 
-gives a sequence field from 005 to 995 which limits on the number 
+sequence number by 5 within a field_size of 3 for each file.  This
+gives a sequence field from 005 to 995 which limits on the number
 of files that can be processed to approximately 194.  Any more files
 and the field size will overflow.
 
@@ -258,7 +258,7 @@ EOS
     end
 
     validate(options, errors)
-  
+
   end  # def self.parse_these_args(args)
 
 
@@ -277,7 +277,7 @@ EOS
     errors << "--number sequence start must positive"             if options.seq_start < 0
     errors << "--number sequence increment must positive"         if options.seq_incr  < 0
     errors << "--number sequence field size must positive"        if options.seq_size  < 0
-    
+
     if options.sequence
       if (options.files.size > options.seq_max_f)
         errors << "Too many files #{options.files.size}; sequence field allows for only #{options.seq_max_f}"
@@ -293,8 +293,8 @@ EOS
     errors << "--recursive not allowed with sequence numbers"     if options.sequence and options.recursive
     errors << "--remove not allowed with sequence numbers"        if options.remove and options.sequence
     errors << "directory does not exist"                      unless options.directory.exist?
-    
-    if options.user_dir and options.files.lenght > 0
+
+    if options.user_dir and options.files.length > 0
       errors << "--directory and --files are mutually exclusive"
     end
 
@@ -322,7 +322,7 @@ end # class MyCommandLine
 
 # Rename files using prefix/suffix/substr and sequence numbers
 class FilenameFu
-  
+
   @@sequence = -1 # MAGIC: signals uninitialized
 
   def self.doit(a_filename, options)
