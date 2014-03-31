@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby
+#!/usr/bin/env ruby -W0
 ###################################################
 ###
 ##  File: docx_draft_style.rb
