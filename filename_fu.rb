@@ -78,6 +78,9 @@ class MyCommandLine
 
     options.prefix    = ""
     options.suffix    = ""
+
+    # TODO: Add replace substring with something else;
+    #       Common Use Case: replace spaces with underscores
     options.substr    = ""            # sub-strings can only be deleted/removed
 
     options.sequence  = false         # indicates presences of '#' in either prefixx or suffix
