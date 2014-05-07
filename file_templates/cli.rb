@@ -49,7 +49,8 @@ NOTE:
 EOS
 
 # Check command line for Problems with Parameters
-$errors = []
+$errors   = []
+$warnings = []
 
 
 # Get the next ARGV parameter after param_index
@@ -73,8 +74,17 @@ def get_out_filename(param_index)
 end # def get_out_filename(param_index)
 
 
-# Display global errors array and exit if necessary
+# Display global warnings and errors arrays and exit if necessary
 def abort_if_errors
+  unless $warnings.empty?
+    STDERR.puts
+    STDERR.puts "The following warnings were generated:"
+    STDERR.puts
+    $warnings.each do |w|
+      STDERR.puts "\tWarning: #{w}"
+    end
+    STDERR.puts
+  end
   unless $errors.empty?
     STDERR.puts
     STDERR.puts "Correct the following errors and try again:"
