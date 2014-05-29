@@ -127,20 +127,6 @@ ARGV.compact!
 
 # ...
 
-
-def abort_if_errors
-  unless $errors.empty?
-    STDERR.puts
-    STDERR.puts "Correct the following errors and try again:"
-    STDERR.puts
-    $errors.each do |e|
-      STDERR.puts "\t#{e}"
-    end
-    STDERR.puts
-    exit(-1)
-  end
-end
-
 abort_if_errors
 
 
