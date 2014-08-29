@@ -1,4 +1,5 @@
-#!/usr/bin/env ruby -W0
+#!/usr/bin/env ruby
+# encoding: utf-8
 ##########################################################
 ###
 ##  File: __file_name__.rb
@@ -55,6 +56,9 @@ $warnings = []
 
 # Get the next ARGV parameter after param_index
 def get_next_parameter(param_index)
+  unless Fixnum == param_index.class
+    param_index = ARGV.find_index(param_index)
+  end
   next_parameter = nil
   if param_index+1 >= ARGV.size
     $errors << "#{ARGV[param_index]} specified without parameter"
@@ -83,7 +87,9 @@ def abort_if_errors
     $warnings.each do |w|
       STDERR.puts "\tWarning: #{w}"
     end
-    STDERR.puts
+    STDERR.print "\nAbort program? (y/N) "
+    answer = (gets).chomp.strip.downcase
+    $errors << "Aborted by user" if answer.size>0 && 'y' == answer[0]
   end
   unless $errors.empty?
     STDERR.puts

@@ -1,1 +1,2 @@
-#!/usr/bin/env ruby -W0
+#!/usr/bin/env ruby
+# encoding: utf-8
