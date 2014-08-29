@@ -90,7 +90,7 @@ module RBeautify
     multiLine_str = ""
     tab = 0
     output = []
-    source.each do |line|
+    source.each_line do |line|
       line.chomp!
       if(!program_end)
         # detect program end mark
