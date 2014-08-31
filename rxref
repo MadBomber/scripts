@@ -1,0 +1,75 @@
+#!/bin/env ruby
+###################################################
+###
+##  File: rxref
+##  Desc: Ruby Cross Reference (xref)
+##
+# TODO: add ability to input multiple files
+# TODO: add ability to extract module/class names
+# TODO: add ability to extract method definitions
+# TODO: add ability to generate *.dot files for use with graphviz
+# TODO: Use the flog gem to parse ruby files with the -a -c -m switches
+#
+
+require 'systemu'
+
+if ARGV.empty?
+  puts <<EOS
+
+Cross Reference (xref) a Ruby source code file
+
+  Usage: #{__FILE__.split('/').last} path_to_file
+  
+    where: path_to_file is the full path to the file to be
+                        cross referenced.  It can be
+                        absolute or relative to the
+                        current working directory.
+
+EOS
+
+  exit
+end
+
+keywords  = %w[
+  alias and begin BEGIN break case chomp class def defined? 
+  do each else elsif end END __END__ ensure exit false File 
+  for foreach gsub Hash if in IO join length module new next 
+  nil not open or print puts redo require rescue retry return self 
+  split strip sub super then true undef unless until when 
+  while yield 
+]
+
+xref      = Hash.new
+linecount = 0
+
+token_max_length = -1
+
+IO.foreach(ARGV[0]) do |line|
+
+  linecount += 1
+  line.sub!(/#.*/, "")
+  tokens = line.split(/[^A-Za-z0-9_\:\$\.]/)
+
+  tokens.each do |token|
+    token_length      = token.length
+    token_max_length  = token_length if token_length > token_max_length
+    (xref[token] ||= []) << linecount unless token == "" or keywords.include? token
+  end
+
+end
+
+xref.each_pair do |token, lines|
+  puts "#{token} #{'.'*(token_max_length - token.length)}.. #{lines.join(', ')}"
+end
+
+################################################
+
+a,b,c = systemu("flog -a -c -m #{ARGV.first}")
+
+puts "#" * 45
+
+# puts a
+b.split("\n").each {|x| puts x.split.join(" <-> ") }
+# puts c
+
+

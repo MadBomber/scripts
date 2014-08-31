@@ -1,0 +1,9 @@
+#!/bin/sh
+#########################################################
+###
+##  File: launch_background_jobs
+##  Desc: Uses sudo to launch the typical set of background jobs
+#
+
+ruby $HOME/scripts/launch_background_jobs.rb
+

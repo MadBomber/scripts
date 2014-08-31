@@ -1,0 +1,8 @@
+#!/bin/sh
+mkdir -p branches
+mkdir -p tags/CI
+mkdir -p trunk
+#
+svn add trunk tags branches
+svn ci -m 'Initial TTB structure'
+
