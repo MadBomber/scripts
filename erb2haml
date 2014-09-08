@@ -1,0 +1,43 @@
+#!/bin/env ruby
+#######################################################
+###
+##  File: erb2haml
+##  Desc: Converts a directory of *.erb files into *.haml files
+#
+# TODO: add options to go into sub-directories
+# TODO: add multi directories to the command line
+# TODO: add multi files to the command line
+#
+
+require 'pathname'
+require 'systemu'
+
+pwd = Pathname.pwd
+svn = (pwd + '.svn').exist?
+
+puts "\nDirectory: #{pwd}"
+
+pwd.children.each do |a_file|
+
+  if a_file.file?
+  
+    if '.erb' == a_file.extname
+      haml = Pathname.new(a_file.to_s.sub('.erb', '.haml'))
+      print "  Converting #{a_file.basename} to #{haml.basename} ... "
+      system "cp #{a_file} #{a_file}.bak"
+      system "html2haml --erb --unix-newlines #{a_file} temp.txt"
+      system "mv temp.txt #{a_file}"
+      if svn
+        a,b,c = systemu "svn move #{a_file} #{haml}"
+      else
+        system "mv #{a_file} #{haml}"
+      end
+      puts "Done."
+    end # of if '.erb' == a_file.extname
+    
+  end # of if a_file.file?
+  
+end # end of pwd.children.each do |a_file|
+
+puts
+

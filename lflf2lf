@@ -1,0 +1,10 @@
+#!/bin/sh
+
+source_file=$1
+tmp_file=$source_file.tmp
+
+sed 's/\n\n/\n/g' $source_file > $tmp_file
+mv $tmp_file $source_file
+
+
+

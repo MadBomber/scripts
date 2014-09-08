@@ -1,0 +1,10 @@
+#!/bin/sh
+
+cr_file=$1
+tmp_file=$cr_file.tmp
+
+sed 's/\r/\n/g' $cr_file > $tmp_file
+mv $tmp_file $cr_file
+
+
+

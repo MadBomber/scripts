@@ -1,0 +1,6 @@
+#!/bin/sh
+#######################################################
+## Prints summary and description for selected gems
+
+ruby $HOME/scripts/describe_gems.rb $@
+

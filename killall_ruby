@@ -1,0 +1,4 @@
+#!/bin/sh
+ps aux | fgrep ruby | gawk '"ruby"==$11{print "kill -9 " $2}' > ~/tmp/temp.s
+echo "echo 'Done.'" >> ~/tmp/temp.s
+source ~/tmp/temp.s

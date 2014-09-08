@@ -1,0 +1,3 @@
+t favorites madbomber > $HOME/tmp/favprotes.txt
+extract_fav_gems.rb $HOME/tmp/favprotes.txt
+
