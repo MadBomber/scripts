@@ -1,4 +1,4 @@
-#!/bin/env ruby
+#!/usr/bin/env ruby
 ###################################################
 ###
 ##  File: rxref
@@ -9,17 +9,20 @@
 # TODO: add ability to extract method definitions
 # TODO: add ability to generate *.dot files for use with graphviz
 # TODO: Use the flog gem to parse ruby files with the -a -c -m switches
+# TODO: add support for multiple files and directories
 #
 
 require 'systemu'
 
-if ARGV.empty?
+if  ARGV.empty?               ||
+    ARGV.include?('-h')       ||
+    ARGV.include?('--help')
   puts <<EOS
 
 Cross Reference (xref) a Ruby source code file
 
   Usage: #{__FILE__.split('/').last} path_to_file
-  
+
     where: path_to_file is the full path to the file to be
                         cross referenced.  It can be
                         absolute or relative to the
@@ -31,18 +34,20 @@ EOS
 end
 
 keywords  = %w[
-  alias and begin BEGIN break case chomp class def defined? 
-  do each else elsif end END __END__ ensure exit false File 
-  for foreach gsub Hash if in IO join length module new next 
-  nil not open or print puts redo require rescue retry return self 
-  split strip sub super then true undef unless until when 
-  while yield 
+  alias and begin BEGIN break case chomp class def defined?
+  do each else elsif end END __END__ ensure exit false File
+  for foreach gsub Hash if in IO join length module new next
+  nil not open or print puts redo require rescue retry return self
+  split strip sub super then true undef unless until when
+  while yield
 ]
 
 xref      = Hash.new
 linecount = 0
 
 token_max_length = -1
+
+# TODO: Make sure that we are dealing with a file and not a directory
 
 IO.foreach(ARGV[0]) do |line|
 
