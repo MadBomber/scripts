@@ -8,6 +8,7 @@
 #
 
 require 'debug_me'
+include DebugMe
 
 require 'pathname'
 
@@ -17,11 +18,16 @@ my_name   = me.basename.to_s
 
 $options = {
   verbose:        false,
+  debug:          false,
   out_filename:   nil
 }
 
 def verbose?
   $options[:verbose]
+end
+
+def debug?
+  $options[:debug]
 end
 
 
@@ -90,6 +96,7 @@ def abort_if_errors
     STDERR.print "\nAbort program? (y/N) "
     answer = (gets).chomp.strip.downcase
     $errors << "Aborted by user" if answer.size>0 && 'y' == answer[0]
+    $warnings = []
   end
   unless $errors.empty?
     STDERR.puts
@@ -115,6 +122,13 @@ end
 %w[ -v --verbose ].each do |param|
   if ARGV.include? param
     $options[:verbose]        = true
+    ARGV[ ARGV.index(param) ] = nil
+  end
+end
+
+%w[ -d --debug ].each do |param|
+  if ARGV.include? param
+    $options[:debug]          = true
     ARGV[ ARGV.index(param) ] = nil
   end
 end
@@ -149,7 +163,7 @@ at_exit do
   puts
 end
 
-pp $options
+pp $options  if verbose? || debug?
 
 stub = <<EOS
 
