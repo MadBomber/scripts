@@ -10,8 +10,8 @@
 #
 
 require 'debug_me'
-
 require 'pathname'
+require_relative 'lib/find_repo_dir'
 
 me        = Pathname.new(__FILE__).realpath
 my_dir    = me.parent
@@ -51,7 +51,7 @@ Where:
                           Defaults to STDOUT
 
     -r or --repo        The name of the gem's github
-      repo_name         repository.  The default is 
+      repo_name         repository.  The default is
                         the repo where executed.
 
     -t or --tag         The 'tag' i.e. version to be
@@ -179,18 +179,6 @@ abort_if_errors
 ######################################################
 # Local methods
 
-# recursively inspect the CWD hierarchie looking for a .git
-# subdirectory.  The directory name that contains the
-# .git subdirectory is taken as the name of the
-# github repository.
-def find_repo_dir(here=Pathname.pwd)
-  puts here if verbose?
-  if (here + '.git').exist?
-    $options[:repo] = here.basename.to_s
-  else
-    find_repo_dir(here.dirname) unless '/' == here.to_s
-  end
-end
 
 ######################################################
 # Main
@@ -207,7 +195,8 @@ pp($options) if verbose? || debug?
 
 if $options[:repo].nil?
   puts "\nLooking for current git repo name ..." if verbose?
-  find_repo_dir
+  $options[:repo] = find_repo_dir
+  $options[:repo] = $options[:repo].basename unless $options[:repo].nil?
 end
 
 if $options[:repo].nil?
@@ -219,9 +208,9 @@ STDERR.print "\nDo you want to release #{$options[:repo]} version #{$options[:ve
 answer = (gets).chomp.strip.downcase
 
 if answer.size>0 && 'y' == answer[0]
-  command = "gcli issue create" + 
-      " #{$options[:user_account]} #{$options[:repo]}" + 
-      " --title='release #{$options[:version]}'" + 
+  command = "gcli issue create" +
+      " #{$options[:user_account]} #{$options[:repo]}" +
+      " --title='release #{$options[:version]}'" +
       " --body='@rultor release, tag=`#{$options[:version]}`'"
   puts command if verbose?
   system command unless debug?
