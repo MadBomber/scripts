@@ -84,6 +84,24 @@ def get_out_filename(param_index)
 end # def get_out_filename(param_index)
 
 
+# only gets valid files of one type
+def get_pathnames_from(an_array, extnames=['.json', '.txt', '.docx'])
+  an_array = [an_array] unless an_array.is_a? Array
+  extnames = [extnames] unless extnames.is_a? Array
+  extnames = extnames.map{|e| e.downcase}
+  file_array = []
+  an_array.each do |a|
+    pfn = Pathname.new(a)
+    if pfn.directory?
+      file_array << get_pathnames_from(pfn.children, extnames)
+    else
+      file_array << pfn if pfn.exist? && extnames.include?(pfn.extname.downcase)
+    end
+  end
+  return file_array.flatten
+end # def get_pathnames_from(an_array, extname='.json')
+
+
 # Display global warnings and errors arrays and exit if necessary
 def abort_if_errors
   unless $warnings.empty?
