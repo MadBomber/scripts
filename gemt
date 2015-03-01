@@ -7,7 +7,8 @@
 #
 
 require 'awesome_print'
-
+require 'terminal-size'
+require 'word_wrapper'
 
 def usage
   puts <<-EOS
@@ -59,12 +60,19 @@ Gem::Specification.all.each do |gs|
   longest_desc = gs.name.size if longest_desc < gs.name.size
 end
 
-desc_start_col = longest_desc
+desc_start_col = longest_desc + 2
+
+width = Terminal.size[:width] - desc_start_col
 
 gem_hash.each_pair do |k, v|
-  print "#{k}  "
+  print "#{k}"
   print " "*(desc_start_col - k.size)
-  puts v.split("\n").first.strip
+  text = WordWrapper::MinimumRaggedness.new(width, v.split("\n").first.strip).wrap
+  text += "https://rubygems.org/gems/#{k}"
+  text_array = text.split("\n")
+  text_array.each_index do |x|
+    puts (x<1 ? text_array[x] : (' '*desc_start_col) + '|__ '+text_array[x] )
+  end
 end
 
 # ap Gem::Specification.all.first.instance_variables
