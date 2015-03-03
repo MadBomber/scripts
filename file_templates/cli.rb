@@ -11,15 +11,19 @@ require 'debug_me'
 include DebugMe
 
 require 'pathname'
+require 'nenv'
+require 'slop'
 
 me        = Pathname.new(__FILE__).realpath
 my_dir    = me.parent
 my_name   = me.basename.to_s
+home_path = Pathname.new(Nenv.home)
 
 $options = {
+  version:        '0.0.1',# the version of this program
+  arguments:      [],     # whats left after options and parameters are extracted
   verbose:        false,
-  debug:          false,
-  out_filename:   nil
+  debug:          false
 }
 
 def verbose?
@@ -30,58 +34,51 @@ def debug?
   $options[:debug]
 end
 
+HELP = <<EOHELP
 
-usage = <<EOS
+Important:
 
-__file_description__
+  Put important stuff here.
 
-Usage: #{my_name} [options] parameters
+EOHELP
 
-Where:
+opts = Slop.parse do |o|
+  o.banner = "\nDownload files from an AWS/S3 bucket"
+  o.separator "\nUsage: #{my_name} [options] parameters"
+  o.separator "\nWhere:"
+  o.separator "  options"
 
-  options               Do This
-    -h or --help        Display this message
-    -v or --verbose     Display progress
-    -o or --output      Specifies the path to the output
-        out_filename      file.  The extname must be 'ics'
-                          Defaults to STDOUT
+  o.on '-h', '--help', 'show this message' do
+    puts o
+    puts HELP if defined?(HELP)
+    exit
+  end
 
-  parameters            The parameters required by
-                        the program
+  o.bool '-v', '--verbose', 'enable verbose mode'
+  o.bool '-d', '--debug',   'enable debug mode'
 
-NOTE:
+  o.separator "\n  parameters"
 
-  Something_imporatant
+  o.on '--version', "print the version: #{$options[:version]}" do
+    puts $options[:version]
+    exit
+  end
+end
 
-EOS
+$options.merge!(opts.to_hash)
+$options[:arguments] = opts.arguments
+
+# Display the usage info
+if  ARGV.empty?
+  puts opts
+  puts HELP if defined?(HELP)
+  exit
+end
+
 
 # Check command line for Problems with Parameters
 $errors   = []
 $warnings = []
-
-
-# Get the next ARGV parameter after param_index
-def get_next_parameter(param_index)
-  unless Fixnum == param_index.class
-    param_index = ARGV.find_index(param_index)
-  end
-  next_parameter = nil
-  if param_index+1 >= ARGV.size
-    $errors << "#{ARGV[param_index]} specified without parameter"
-  else
-    next_parameter = ARGV[param_index+1]
-    ARGV[param_index+1] = nil
-  end
-  ARGV[param_index] = nil
-  return next_parameter
-end # def get_next_parameter(param_index)
-
-
-# Get $options[:out_filename]
-def get_out_filename(param_index)
-  filename_str = get_next_parameter(param_index)
-  $options[:out_filename] = Pathname.new( filename_str ) unless filename_str.nil?
-end # def get_out_filename(param_index)
 
 
 # only gets valid files of one type
@@ -129,39 +126,7 @@ def abort_if_errors
 end # def abort_if_errors
 
 
-# Display the usage info
-if  ARGV.empty?               ||
-    ARGV.include?('-h')       ||
-    ARGV.include?('--help')
-  puts usage
-  exit
-end
 
-%w[ -v --verbose ].each do |param|
-  if ARGV.include? param
-    $options[:verbose]        = true
-    ARGV[ ARGV.index(param) ] = nil
-  end
-end
-
-%w[ -d --debug ].each do |param|
-  if ARGV.include? param
-    $options[:debug]          = true
-    ARGV[ ARGV.index(param) ] = nil
-  end
-end
-
-%w[ -o --output ].each do |param|
-  get_out_filename( ARGV.index(param) ) if ARGV.include?(param)
-  unless $options[:out_filename].nil?
-    unless $options[:out_filename].parent.exist?
-      $errors << "Directory does not exist: #{$options[:out_filename].parent}"
-    end
-  end
-end
-
-
-ARGV.compact!
 
 # ...
 
