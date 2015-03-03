@@ -14,6 +14,20 @@ require 'pathname'
 require 'nenv'
 require 'slop'
 
+# Example Custom Type for Slop
+module Slop
+  class PathOption < Option
+    def call(value)
+      Pathname.new(value)
+    end
+  end
+  class PathsOption < ArrayOption
+    def finish(opts)
+      self.value = value.map { |f| Pathname.new(f) }
+    end
+  end
+end # module Slop
+
 me        = Pathname.new(__FILE__).realpath
 my_dir    = me.parent
 my_name   = me.basename.to_s
@@ -23,7 +37,8 @@ $options = {
   version:        '0.0.1',# the version of this program
   arguments:      [],     # whats left after options and parameters are extracted
   verbose:        false,
-  debug:          false
+  debug:          false,
+  user_name:      Nenv.user || Nenv.user_name || Nenv.logname || 'Dewayne VanHoozer'
 }
 
 def verbose?
@@ -58,6 +73,13 @@ opts = Slop.parse do |o|
   o.bool '-d', '--debug',   'enable debug mode'
 
   o.separator "\n  parameters"
+
+  o.string  '-s', '--string', 'example string parameter',  default: 'IamDefault'
+  o.int     '-i', '--int',    'example integer parameter', default: 42
+  o.array   '-a', '--array',  'example array parameter',   default: [:bob, :carol, :ted, :alice]
+  o.path    '-p', '--path',   'example Pathname parameter', default: Pathname.new('default/path/to/file.txt')
+  o.paths         '--paths',  'example Pathnames parameter', default: ['default/path/to/file.txt', 'file2.txt'].map{|f| Pathname.new f}
+
 
   o.on '--version', "print the version: #{$options[:version]}" do
     puts $options[:version]
