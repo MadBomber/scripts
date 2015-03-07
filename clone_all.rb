@@ -170,11 +170,16 @@ pp $options  if verbose? || debug?
 repos = Github.repos.list user: $options[:user]
 
 repos.each do |r|
+  out_path = Pathname.new "#{$options[:out_dirname]}/#{r.name}"
+  if out_path.exist?
+    puts "Skipping #{r.name} ..." if verbose?
+    next
+  end
   puts "Cloning #{r.name} ..." if verbose?
-  command = "git clone #{r.clone_url}" +
-    " #{$options[:out_dirname]}/#{$options[:user]}/#{r.name}"
+  command = "git clone #{r.clone_url} " + out_path.to_s
   puts command if verbose? || debug?
   system command unless debug?
+  puts
 end
 
 
