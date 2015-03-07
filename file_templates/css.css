@@ -1,0 +1,29 @@
+/*
+ * File: __file_name__.css
+ * Desc: __file_description__
+ * Dewayne VanHoozer (dvanhoozer@gmail.com)
+ */
+
+* {
+    margin:0;
+    padding:0
+}
+
+/* by tag */
+a       { text-decoration:underline }
+a:hover { text-decoration:none }
+abbr { border-bottom:1px dotted #000 }
+del { text-decoration:line-through }
+
+/* by class */
+.small { font-size:80% }
+.large { font-size:120% }
+.right  { text-align:right }
+.center { text-align:center }
+.ok   { color:green }
+.warn { color:yellow }
+.err  { color:red }
+
+/* by id */
+
+
