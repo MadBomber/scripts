@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gem 'awesome_print'
 gem 'bundler'
+gem 'cli_helper'
 gem 'colortail'
 gem 'debug_me'
 gem 'docx'
