@@ -1,7 +1,13 @@
 source 'https://rubygems.org'
 
+<<<<<<< HEAD
 gem 'awesome_print'           # Pretty print Ruby objects with proper indentation and colors
 gem 'bundler'                 # The best way to manage your application's dependencies
+=======
+gem 'awesome_print'
+gem 'bundler'
+gem 'cli_helper'
+>>>>>>> 9aa14cd08e411ef63abb42e51156f0c188683f4f
 gem 'colortail'
 gem 'debug_me'                # A tool to print the labeled value of variables.
 gem 'docx'                    # a ruby library/gem for interacting with .docx files
