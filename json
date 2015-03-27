@@ -1,0 +1,66 @@
+#!/usr/bin/env ruby
+# encoding: utf-8
+##########################################################
+###
+##  File: json
+##  Desc: Pretty-print a JSON file
+##  By:   Dewayne VanHoozer (dvanhoozer@gmail.com)
+#
+
+require 'json'
+require 'cli_helper'
+
+$options[:version] = '0.0.1'
+
+HELP = <<EOHELP
+Parameters
+
+  JSON_FILE++  One of more JSON files
+EOHELP
+
+cli_helper("Pretty print JSON files")
+
+# Display the usage info
+if  ARGV.empty?
+  show_usage
+  exit
+end
+
+$options[:arguments].map!{|p| Pathname.new(p)}
+$options[:arguments].each_index do |x|
+  p = $options[:arguments][x]
+  unless '.json' == p.extname.to_s.downcase
+    warning "Not a valid JSON file '#{p}'"
+    $options[:arguments][x] = nil
+  end
+end
+
+$options[:arguments].compact!
+
+if $options[:arguments].empty?
+  error 'no JSON files were specified'
+end
+
+abort_if_errors
+
+
+######################################################
+# Local methods
+
+
+######################################################
+# Main
+
+at_exit do
+  puts
+  puts "Done."
+  puts
+end
+
+ap $options  if verbose? || debug?
+
+$options[:arguments].each do |p|
+  puts "="*45
+  puts "== File: #{p}"
+  ap JSON.parse(p.read)
+end
