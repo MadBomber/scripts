@@ -10,7 +10,7 @@
 
 require 'cli_helper'
 
-$options[:version] = '0.0.1'
+configatron.version = '0.0.1'
 
 cli_helper("Install gems from a list") do |o|
 
@@ -28,18 +28,18 @@ end
 
 # Error check you stuff; use error('some message') and warning('some message')
 
-unless $options[:path].exist?
-  error "File does not exist: #{$options[:path].basename}"
+unless configatron.path.exist?
+  error "File does not exist: #{configatron.path.basename}"
 else
-  if $options[:path].directory?
-    error "Directory is not allowed: #{$options[:path].basename}"
+  if configatron.path.directory?
+    error "Directory is not allowed: #{configatron.path.basename}"
   end
 end
 
 
 abort_if_errors
 
-gems_to_be_installed = $options[:path].readlines.map{|a_line| a_line.chomp}
+gems_to_be_installed = configatron.path.readlines.map{|a_line| a_line.chomp}
 
 ######################################################
 # Local methods
@@ -58,7 +58,7 @@ at_exit do
   puts
 end
 
-ap $options  if verbose? || debug?
+ap configatron.to_h  if verbose? || debug?
 
 
 list_of_installed_gems = gem_list
@@ -69,7 +69,7 @@ gems_to_be_installed.compact!
 gems_to_be_installed.shuffle!
 
 until gems_to_be_installed.empty?
-  count_down = $options[:group]
+  count_down = configatron.group
   while count_down > 0 && gems_to_be_installed.size > 0
     gem_name = gems_to_be_installed.shift
     puts "[#{gems_to_be_installed.size}] Installing #{gem_name} ..."

@@ -10,7 +10,7 @@
 require 'json'
 require 'cli_helper'
 
-$options[:version] = '0.0.1'
+configatron.version = '0.0.1'
 
 HELP = <<EOHELP
 Parameters
@@ -26,18 +26,19 @@ if  ARGV.empty?
   exit
 end
 
-$options[:arguments].map!{|p| Pathname.new(p)}
-$options[:arguments].each_index do |x|
-  p = $options[:arguments][x]
+configatron.arguments.map!{|p| Pathname.new(p)}
+
+configatron.arguments.each_index do |x|
+  p = configatron.arguments[x]
   unless '.json' == p.extname.to_s.downcase
     warning "Not a valid JSON file '#{p}'"
-    $options[:arguments][x] = nil
+    configatron.arguments[x] = nil
   end
 end
 
-$options[:arguments].compact!
+configatron.arguments.compact!
 
-if $options[:arguments].empty?
+if configatron.arguments.empty?
   error 'no JSON files were specified'
 end
 
@@ -57,9 +58,9 @@ at_exit do
   puts
 end
 
-ap $options  if verbose? || debug?
+ap configatron.to_h  if verbose? || debug?
 
-$options[:arguments].each do |p|
+configatron.arguments.each do |p|
   puts "="*45
   puts "== File: #{p}"
   ap JSON.parse(p.read)

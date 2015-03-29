@@ -7,9 +7,15 @@
 ##  By:   Dewayne VanHoozer (dvanhoozer@gmail.com)
 #
 
-require 'cli_helper'
+require 'awesome_print'
 
-$options[:version] = '0.0.1'
+require 'debug_me'
+include DebugMe
+
+require 'cli_helper'
+include CliHelper
+
+configatron.version = '0.0.1'
 
 HELP = <<EOHELP
 Important:
@@ -53,7 +59,7 @@ at_exit do
   puts
 end
 
-ap $options  if verbose? || debug?
+ap configatron.to_h  if verbose? || debug?
 
 stub = <<EOS
 
