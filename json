@@ -7,8 +7,11 @@
 ##  By:   Dewayne VanHoozer (dvanhoozer@gmail.com)
 #
 
+require 'awesome_print'
+
 require 'json'
 require 'cli_helper'
+include CliHelper
 
 configatron.version = '0.0.1'
 
