@@ -1,4 +1,4 @@
-#!/bin/env ruby
+#!/usr/bin/env ruby
 # encoding: utf-8
 ##########################################################
 ###
@@ -29,9 +29,9 @@ def process_yaml(file_contents='')
   #        add a newline character after
   #        the last line of the string.  That
   #        seems to contradict the YAML spec.
-  #a_hash.each_pair do |k,v|
-  #  a_hash[k].chomp! if String == a_hash[k].class
-  #end
+  a_hash.each_pair do |k,v|
+    a_hash[k].chomp! if String == a_hash[k].class
+  end
   return a_hash
 end
 
