@@ -30,6 +30,8 @@ def process_yaml(file_contents='')
   #        the last line of the string.  That
   #        seems to contradict the YAML spec.
   a_hash.each_pair do |k,v|
+    # SMELL: This will defeat any intentionally added
+    #        \n at the end of a string.
     a_hash[k].chomp! if String == a_hash[k].class
   end
   return a_hash
@@ -60,6 +62,7 @@ def process_a_parameter(a_pathname)
   a_pathname = String == a_pathname.class ? Pathname.new(a_pathname) : a_pathname
   return unless a_pathname.exist?
   if a_pathname.directory?
+    # NOTE: Not recursive
     a_pathname.children.each do |child_pathname|
       write_json_file_from(child_pathname)
     end
@@ -77,9 +80,9 @@ if  ARGV.empty?             ||
     ARGV.include?('--help')
   puts <<EOS
 
-Convert YAML (with ERB) in JSON
+Convert YAML files (with embedded ERB) to JSON files
 
-Usage: #{my_name} [-h] (file|directory}+
+Usage: #{my_name} [-h|--help] (file|directory)+
 
   Requires one or more files or directories
 
@@ -87,7 +90,9 @@ Usage: #{my_name} [-h] (file|directory}+
   or '.yaml'
 
   If a directory is provided, all YAML files
-  in the directory will be converted.
+  in the directory will be converted.  Mo
+  sub-directories will be processed.  Its not
+  recursive.
 
   ERB may be included within the YAML file.
 
