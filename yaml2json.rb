@@ -17,6 +17,20 @@ me       = Pathname.new(__FILE__).realpath
 my_name  = me.basename.to_s
 
 
+def chomp_the_hash!(a_hash)
+  a_hash.each_pair do |k,v|
+    # SMELL: This will defeat any intentionally added
+    #        \n at the end of a string.
+    if String == a_hash[k].class
+      a_hash[k].chomp!
+    elsif Hash == a_hash[k].class
+      chomp_the_hash!(a_hash[k])
+    end
+  end
+  return a_hash
+end
+
+
 def process_erb(file_contents)
   erb_contents = ERB.new(file_contents).result
   return erb_contents
@@ -29,11 +43,7 @@ def process_yaml(file_contents='')
   #        add a newline character after
   #        the last line of the string.  That
   #        seems to contradict the YAML spec.
-  a_hash.each_pair do |k,v|
-    # SMELL: This will defeat any intentionally added
-    #        \n at the end of a string.
-    a_hash[k].chomp! if String == a_hash[k].class
-  end
+  chomp_the_hash!(a_hash)
   return a_hash
 end
 
