@@ -21,7 +21,9 @@ Parameters
   JSON_FILE++  One of more JSON files
 EOHELP
 
-cli_helper("Pretty print JSON files")
+cli_helper("Pretty print JSON files") do |o|
+  o.bool '-e', '--edit', 'make json more easily edited'
+end
 
 # Display the usage info
 if  ARGV.empty?
@@ -64,7 +66,11 @@ end
 ap configatron.to_h  if verbose? || debug?
 
 configatron.arguments.each do |p|
-  puts "="*45
-  puts "== File: #{p}"
-  ap JSON.parse(p.read)
+  if edit?
+    puts JSON.pretty_generate(JSON.parse(p.read))
+  else
+    puts "="*45
+    puts "== File: #{p}"
+    ap JSON.parse(p.read)
+  end
 end
