@@ -1,1 +1,1 @@
-echo $PATH | ruby -lne 'puts $_.gsub(":","\n")'
+echo $PATH | colon_split
