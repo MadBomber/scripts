@@ -26,10 +26,12 @@ EOHELP
 
 cli_helper("__file_description__") do |o|
 
-  o.string  '-s', '--string', 'example string parameter',  default: 'IamDefault'
-  o.int     '-i', '--int',    'example integer parameter', default: 42
-  o.array   '-a', '--array',  'example array parameter',   default: [:bob, :carol, :ted, :alice]
-  o.path    '-p', '--path',   'example Pathname parameter', default: Pathname.new('default/path/to/file.txt')
+  o.bool    '-b', '--bool',   'example boolean parameter',   default: false
+  o.string  '-s', '--string', 'example string parameter',    default: 'IamDefault'
+  o.int     '-i', '--int',    'example integer parameter',   default: 42
+  o.float   '-f', '--float',  'example float parameter',     default: 123.456
+  o.array   '-a', '--array',  'example array parameter',     default: [:bob, :carol, :ted, :alice]
+  o.path    '-p', '--path',   'example Pathname parameter',  default: Pathname.new('default/path/to/file.txt')
   o.paths         '--paths',  'example Pathnames parameter', default: ['default/path/to/file.txt', 'file2.txt'].map{|f| Pathname.new f}
 
 end
@@ -42,6 +44,12 @@ end
 
 
 # Error check you stuff; use error('some message') and warning('some message')
+
+configatron.input_files = get_pathnames_from( configatron.arguments, '.txt')
+
+if configatron.input_files.empty?
+  error 'No text files were provided'
+end
 
 abort_if_errors
 
