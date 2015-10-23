@@ -6,10 +6,13 @@ include DebugMe
 require 'awesome_print'
 
 require 'pathname'
-require 'date'
 
 require 'uuidtools'
 require 'spreadsheet'
+
+require 'variable_name_of'  # @madbomber/lib_ruby
+require 'date_transformer'  # @madbomber/lib_ruby
+
 
 
 #############################################################
@@ -19,37 +22,11 @@ def convert_basename_to_table_name(a_string)
   table_name = case a_string.downcase
     when 'beeline' then
       'Contingent Staffing Data'
-  end
-end
-
-
-def variable_name_of(a_string, convention = :snake_case)
-  if a_string.include?('(')
-  	p_start = a_string.index('(')
-  	p_end   = a_string.index(')')
-  	a_string[p_start..p_end] = ''
-  end
-  parts = a_string.downcase.squeeze(' ').split
-  case convention
-    when :lowerCamelCase 
-      parts.size.times do |x|
-      	next unless x>0
-      	parts[x][0] = parts[x][0].upcase
-      end
-      variable_name = parts.join
-    when :CamelCase 
-      parts.size.times do |x|
-      	parts[x][0] = parts[x][0].upcase
-      end
-      variable_name = parts.join    
-    when :snake_case 
-      variable_name = parts.join('_')   
     else
-      raise "Invalid Convention: #{convention}"
+  	  raise "Unknown basename: #{a_string}"
   end
-
-  return variable_name
-end # def variable_name_of(a_string, convention
+  return table_name
+end # def convert_basename_to_table_name(a_string)
 
 
 def convert_strings_to_variable_names(an_array_of_strings)
@@ -74,22 +51,7 @@ def convert_strings_to_variable_names(an_array_of_strings)
 end # def convert_strings_to_variable_names(an_array)
 
 
-def date_transformer(a_date_or_string, options={})
-  formats = {to: '%Y-%m-%d', from: '%m/%d/%Y'}.merge(options)
-  if String == a_date_or_string.class
-  	return(nil) if a_date_or_string.empty?
-  	a_date = Date.strptime(a_date_or_string, formats[:from])
-  elsif a_date_or_string.nil?
-    return(nil)
-  else
-  	a_date = a_date_or_string  
-  end
-
-  a_date.strftime(formats[:to])
-end # def date_transformer(a_date_or_string, options={})
-
-
-def transform(a_value_array, a_name_array)
+def transform(a_value_array, a_name_array, max_string_size=255)
   raise ArgumentError unless Array == a_value_array.class && Array == a_name_array.class
   raise "Size mismatch: v: #{a_value_array.size} N: #{a_name_array.size}" unless a_value_array.size == a_name_array.size
 
@@ -100,6 +62,9 @@ def transform(a_value_array, a_name_array)
     if 'bill_rate' == a_name_array[x]
       # delta = rand(a_value_array[x].to_i)
       # a_value_array[x] -= delta
+    end
+    if String == a_value_array[x].class
+      a_value_array[x] = a_value_array[x][0,max_string_size] if a_value_array[x].size > max_string_size
     end
   end
 
@@ -182,7 +147,7 @@ mod_file.puts <<EOS
     updated_at: DataTypes.DATE
   }, {
     underscored: true,
-    tableName: '#{variable_name_of(table_title, :snake_case)}'
+    tableName: '#{variable_name_of(table_title, :snake_case)}',
     indexes: [
       {fields: ['report_date']}
     ]
