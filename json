@@ -7,22 +7,22 @@
 ##  By:   Dewayne VanHoozer (dvanhoozer@gmail.com)
 #
 
-require 'awesome_print'
+require 'pathname'
+require 'ffi_yajl'
 
-require 'json'
-require 'cli_helper'
-include CliHelper
+def show_usage
+  puts <<EOS
 
-configatron.version = '0.0.1'
+pretty prints JSON files
 
-HELP = <<EOHELP
-Parameters
+Usage: #{Pathname.new(__FILE__).basebane} json_files+
 
-  JSON_FILE++  One of more JSON files
-EOHELP
+Where:
 
-cli_helper("Pretty print JSON files") do |o|
-  o.bool '-e', '--edit', 'make json more easily edited'
+  json_files+ is one or more *.json file paths
+
+EOS
+  exit
 end
 
 # Display the usage info
@@ -31,23 +31,16 @@ if  ARGV.empty?
   exit
 end
 
-configatron.arguments.map!{|p| Pathname.new(p)}
-
-configatron.arguments.each_index do |x|
-  p = configatron.arguments[x]
-  unless '.json' == p.extname.to_s.downcase
-    warning "Not a valid JSON file '#{p}'"
-    configatron.arguments[x] = nil
+paths = ARGV.map do |a|
+  a_path = Pathname.new(a)
+  unless '.json' == a_path.extname.to_s.downcase  &&  a_path.exist?
+    STDERR.puts "ERROR: Not a valid JSON file '#{a_path}'"
+    a_path = nil
   end
-end
+  a_path
+end.compact
 
-configatron.arguments.compact!
-
-if configatron.arguments.empty?
-  error 'no JSON files were specified'
-end
-
-abort_if_errors
+exit if paths.empty?
 
 
 ######################################################
@@ -63,14 +56,12 @@ at_exit do
   puts
 end
 
-ap configatron.to_h  if verbose? || debug?
-
-configatron.arguments.each do |p|
-  if edit?
-    puts JSON.pretty_generate(JSON.parse(p.read))
-  else
-    puts "="*45
-    puts "== File: #{p}"
-    ap JSON.parse(p.read)
-  end
+paths.each do |a_path|
+  hash = FFI_Yajl::Parser.parse( a_path.read )
+  json = FFI_Yajl::Encoder.encode( hash, {pretty: true}  )
+  puts
+  puts "#"*65
+  puts "## File: #{a_path}"
+  puts
+  puts json
 end
