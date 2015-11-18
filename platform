@@ -1,0 +1,133 @@
+#!/usr/bin/env ruby
+# encoding: utf-8
+##########################################################
+###
+##  File: platform.rb
+##  Desc: Provides inter-element access to ohai profile
+##  By:   Dewayne VanHoozer (dvanhoozer@gmail.com)
+#
+
+require 'awesome_print'
+require 'date'
+require 'hashie'
+require 'json'
+require 'pathname'
+require 'word_wrap'
+
+json_path = Pathname.new(ENV['HOME']) + 'platform.json'
+
+
+def write_platform_file(a_path)
+  print 'Generating platform.json profile ... '
+  json = `ohai`
+  json_file = File.open(a_path.to_s, 'w')
+  json_file.puts json
+  json_file.close
+  puts "done."
+end
+
+write_platform_file(json_path) unless json_path.exist?
+
+mod_date = File.mtime(json_path)
+days_old = (Time.now - mod_date) / 86400.0
+
+write_platform_file(json_path) if days_old > 7.0
+
+profile = Hashie::Mash.new(JSON.parse json_path.read)
+
+valid_sections = profile.keys.sort
+
+HELP = <<EOHELP
+
+Providing inter-element access to Ohai profile sections
+
+Usage: #{Pathname.new(__FILE__).basename} (|section|section.|section.element)+
+
+Where:
+
+  section     is one of the top-level ohai profile sections
+  element     is an element within that section
+
+Valid Sections are:
+
+  #{WordWrap.ww(valid_sections.join(', '), 65).split("\n").join("\n  ")}
+
+Example:
+
+  #{Pathname.new(__FILE__).basename} kernel.name
+    Returns: #{profile.kernel.name}
+
+  #{Pathname.new(__FILE__).basename} kernel.
+    Returns: #{profile.kernel.keys.join(', ')}
+
+  #{Pathname.new(__FILE__).basename} kernel
+    Returns the entire kernel section just like
+    the command 'ohai kernel'
+
+  less #{json_path}
+    Returns the entire ohai generated profile
+    The file was last modified on #{File.mtime(json_path)}
+
+  ohai
+    Returns the current platform profile
+
+
+EOHELP
+
+
+# Display the usage info
+if  ARGV.empty?              ||
+    ARGV.include?('--help')  ||
+    ARGV.include?('-h')
+  puts HELP
+  exit
+end
+
+
+elements = ARGV.map do |e|
+  parts = e.split('.')
+
+  if 1 == parts.size  &&  e.end_with?('.')
+    parts << ''
+  end
+
+  section = parts.first
+
+  unless valid_sections.include? section
+    STDERR.puts "ERROR: Invalid section: #{section}"
+    e = nil
+  else
+    if parts.size > 1
+      element = parts[1]
+      if 0 == element.size
+        e = section + ".keys.join(', ')"
+      else
+        unless profile[section].keys.include?(element)
+          STDERR.puts "ERROR: Invalid element: #{element} is not contained in #{section}"
+          e = nil
+        end
+      end
+    end
+  end
+  e
+end.compact
+
+
+if elements.empty?
+  puts HELP
+  exit
+end
+
+
+
+######################################################
+# Main
+
+elements.each do |element|
+  value = eval("profile.#{element}")
+  if String == value.class
+    puts value
+  else
+    ap value
+  end
+end
