@@ -83,6 +83,7 @@ GEM
       wmi-lite (~> 1.0)
     rack (1.6.4)
     rake (10.4.2)
+    ruby-progressbar (1.7.5)
     rubyzip (1.1.7)
     slop (4.2.0)
     summary (0.7.3)
@@ -117,6 +118,7 @@ DEPENDENCIES
   nenv
   nokogiri
   ohai
+  ruby-progressbar
   slop
   summary
   svn_wc
