@@ -29,9 +29,9 @@ end
 
 usage = <<EOS
 
-Read an Excel *.xlsx file
+Read a CSV *.csv file
 
-Usage: #{my_name} [options] filename.xlsx
+Usage: #{my_name} [options] filename.csv
 
 Where:
 
@@ -39,7 +39,7 @@ Where:
     -h or --help        Display this message
     -v or --verbose     Display progress
 
-  filename.xlsx         The path to an excel *.xlsx file
+  filename.csv          The path to a text *.csv file
 
 
 EOS

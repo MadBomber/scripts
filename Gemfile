@@ -26,3 +26,7 @@ gem 'word_wrapper'            # Pure ruby word wrapping
 gem 'wordy'                   # Written to help us create sample data for our applications, Wordy speaks in lorem ipsum. You can ask Wordy for paragraphs, sentences or words.
 gem 'virtualbox'              # Support functions for VM
 gem 'ruby-progressbar'        # never leave the user guessing
+
+# These have problems with version 2.2.3
+#gem 'irbtools'
+#gem 'irbtools-more'

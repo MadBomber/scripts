@@ -19,5 +19,5 @@ elsif m == "-v"
 else
   puts "Invalid option. Please try one of the following..."
   puts "=> word words sentence sentences paragraph paragraphs body"
-  puts "   Use can also use the form:  3 words; 2 paragraphs; etc."
+  puts "   You can also use the form:  3 words; 2 paragraphs; etc."
 end
