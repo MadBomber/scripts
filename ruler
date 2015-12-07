@@ -4,7 +4,7 @@ require 'terminal-size'
 
 width = Terminal.size[:width]
 dots  = "."*width
-tens  = (1..118).step(10).map {|x| x-1}
+tens  = (1..width).step(10).map {|x| x-1}
 fives = tens.map{|x|x+5}
 
 tens.shift
