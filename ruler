@@ -2,10 +2,11 @@
 
 require 'terminal-size'
 
-width = Terminal.size[:width]
-dots  = "."*width
-tens  = (1..width).step(10).map {|x| x-1}
-fives = tens.map{|x|x+5}
+width   = Terminal.size[:width]
+height  = Terminal.size[:height]
+dots    = "."*width
+tens    = (1..width).step(10).map {|x| x-1}
+fives   = tens.map{|x|x+5}
 
 tens.shift
 
@@ -16,5 +17,6 @@ end
 
 fives.each{|x| dots[x-1]='^'}
 
+puts "Terminal Size: #{height} rows by #{width} columns"
 puts dots
 
