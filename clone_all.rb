@@ -8,8 +8,15 @@
 #
 
 require 'debug_me'
+include DebugMe
 
 require 'pathname'
+
+require 'github_api'
+
+Github.configure do |c|
+  c.auto_pagination = true
+end
 
 me        = Pathname.new(__FILE__).realpath
 my_dir    = me.parent
@@ -148,7 +155,7 @@ abort_if_errors
 
 $options[:user] = ARGV.first unless ARGV.empty?
 
-require 'github_api'
+
 
 ######################################################
 # Local methods
