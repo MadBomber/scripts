@@ -43,7 +43,7 @@ if  ARGV.empty?
 end
 
 
-# Error check you stuff; use error('some message') and warning('some message')
+# Error check your stuff; use error('some message') and warning('some message')
 
 configatron.input_files = get_pathnames_from( configatron.arguments, '.txt')
 
