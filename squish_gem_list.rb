@@ -81,6 +81,10 @@ array_of_gems.each do |g|
   progressbar.increment
   next if g.nil?
   spec = YAML.load(`gem spec #{g}`)
+  unless spec
+    puts g
+    next
+  end
   depends = spec.dependencies
   depends.each do |d|
     x = array_of_gems.find_index d.name

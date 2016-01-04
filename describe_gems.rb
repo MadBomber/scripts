@@ -5,8 +5,8 @@
 ##  Desc: Display the summary and description for a set of gems
 #
 
-require 'IO/console'
-MAX_COLUMNS = IO.console.winsize.last - 1
+require 'terminal-size'
+MAX_COLUMNS = Terminal.size[:width] # - 1
 
 usage_str = <<EOS
 
@@ -17,7 +17,7 @@ Usage: #{$0.split('/').last} gem+
 EOS
 
 if ARGV.empty?
-  puts usage_str  
+  puts usage_str
   exit
 end
 
@@ -53,7 +53,7 @@ gems.each do |gem|
     puts "\n#{gem} -- ERROR no such gem installed"
     next
   end
-  
+
   puts "\n#{gem} (#{spec.version}) #{spec.homepage}"
 
   summary = spec.summary
@@ -62,16 +62,16 @@ gems.each do |gem|
   end
 
   description = spec.description
-  unless description.nil? || 
+  unless description.nil? ||
          0 == description.strip.length ||
          summary == description
     puts wrap_with_label("  Description: ", "#{description}" )
   end
-  
+
   depends = spec.dependencies
   unless depends.empty?
     puts wrap_with_label(
-      "   Depends on: ", 
+      "   Depends on: ",
       depends.map{|d| d.name}.join(', ')
     )
   end
