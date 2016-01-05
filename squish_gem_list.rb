@@ -80,6 +80,7 @@ progressbar = ProgressBar.create(
 array_of_gems.each do |g|
   progressbar.increment
   next if g.nil?
+  # NOTE: 'gem spec' only works if the gem is installed locally
   spec = YAML.load(`gem spec #{g}`)
   unless spec
     puts g
