@@ -29,7 +29,7 @@ if [ -d .git ]; then
   echo
 
   echo "== Most Recent Commit"
-  git log --max-count=1
+  git log --name-status --max-count=1
   echo
 
   echo "Type 'git log' for more commits, or 'git show' for full commit details."
