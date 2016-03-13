@@ -3,13 +3,16 @@ source 'https://rubygems.org'
 gem 'awesome_print'           # Pretty print Ruby objects with proper indentation and colors
 gem 'bundler'                 # The best way to manage your application's dependencies
 gem 'cli_helper'              # An encapsulation of an integration of slop, nenv, inifile and configatron.
+gem 'clipboard'               # Easy access to the clipboard on Linux, MacOS and Windows.
 gem 'colortail'               # Tail a file and color lines based on regular expressions within that line
 gem 'debug_me'                # A tool to print the labeled value of variables.
 gem 'docx'                    # a ruby library/gem for interacting with .docx files
 gem 'ffi-ncurses'             # An FFI wrapper around ncursesw 5.x for MRI Ruby 1.8.x, 1.9.x and JRuby.
 gem 'geek_painter'            # A very simple DSL to generate a colored shell prompt string to use in *nix OS terminals
 gem 'github_api'              # Ruby client for the official GitHub API
-#gem 'gruff'
+gem 'gruff'                   # Beautiful graphs for one or multiple datasets.
+gem 'irbtools'                # Irbtools happy IRB.
+gem 'irbtools-more'           # irbtools-more adds bond and looksee to IRB.
 gem 'json'                    # This json is bundled with Ruby
 gem 'linefit'                 # LineFit is a linear regression math class.
 gem 'lipsum'                  # Get placeholder text from lipsum.com
@@ -27,6 +30,3 @@ gem 'wordy'                   # Written to help us create sample data for our ap
 gem 'virtualbox'              # Support functions for VM
 gem 'ruby-progressbar'        # never leave the user guessing
 
-# These have problems with version 2.2.3
-#gem 'irbtools'
-#gem 'irbtools-more'
