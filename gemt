@@ -37,24 +37,32 @@ class NilClass
   end
 end
 
-search_string = nil
-
 unless ARGV.empty?
   if '-h' == ARGV.first  or  '--help' == ARGV.first
     usage
     exit
   end
-  search_string = ARGV.join(' ').downcase
 end
+
+search_strings = ARGV.map{|a|a.downcase}
 
 gem_hash = Hash.new
 
 longest_desc = 0
 
 Gem::Specification.all.each do |gs|
-  if search_string
+  unless search_strings.empty?
     thing = (gs.name + ' ' + gs.summary).downcase
-    next unless thing.include?(search_string)
+
+    found_one = false
+    search_strings.each do |want_this|
+      if thing.include?(want_this)
+        found_one = true
+        break
+      end
+    end
+
+    next unless found_one
   end
   gem_hash[gs.name] = gs.summary
   longest_desc = gs.name.size if longest_desc < gs.name.size
