@@ -19,6 +19,7 @@ gem 'lipsum'                  # Get placeholder text from lipsum.com
 gem 'nenv'                    # Convenience wrapper for Ruby's ENV
 gem 'nokogiri'                # Nokogiri (鋸) is an HTML, XML, SAX, and Reader parser
 gem 'ohai'                    # Ohai profiles your system and emits JSON
+gem 'rmagick'                 # Ruby binding to ImageMagick
 gem 'slop'                    # Simple Lightweight Option Parsing
 gem 'summary'                 # This is a simple gem that generates introduction text from a long text, it will always break the text at the end of the last word near to the limit you informed as argument.
 gem 'svn_wc'                  # operates on a working copy (on the local filesystem) of a remote Subversion repository.
