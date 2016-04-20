@@ -6,45 +6,77 @@
 #
 
 require 'rmagick'
-include Magick
 
-usage =  <<END_INFO
+require 'awesome_print'
 
-\An image is resized to the target size (retaining its original
-aspect ratio, of course).
+require 'debug_me'
+include DebugMe
 
-Usage:
+require 'cli_helper'
+include CliHelper
 
-    resizer.rb <filename <HxV>>
-    Ex: resizer.rb ./photos/img_0010.jpg 640x480
+configatron.version = '0.0.1'
 
-where `filename' is the name of an image file and `HxV' is the
-size of the thumbnail in pixels. The default size is 640x480 pixels.
+HELP = <<EOHELP
+Important:
 
-END_INFO
+  Put important stuff here.
 
-DEFAULT_GEOM = '640x480'
+EOHELP
 
-if ARGV.empty?              ||
-   ARGV.include?('-h')      ||
-   ARGV.include?('--help')
-  puts usage
-  exit
-elsif 2 == ARGV.size
-  geom = ARGV[1]
-else
-  geom = DEFAULT_GEOM
+cli_helper("Resize image(s) to a standard size/geometry") do |o|
+
+  o.string  '-g', '--geom', 'Geometry (HxV)',    default: '640x480'
+
 end
 
-image         = ARGV[0]
-new_file_name = image.gsub('.', "_#{geom}.")
 
-# Read the image and resize it. The `change_geometry' method
-# computes the new image geometry and yields to a block. The
-# return value of the block is the return value of the method.
+# Display the usage info
+if  ARGV.empty?
+  show_usage
+  exit
+end
 
-img = Image.read(image)[0]
-img.change_geometry!(geom) { |cols, rows| img.thumbnail! cols, rows }
-img.write(new_file_name)
 
+# Error check your stuff; use error('some message') and warning('some message')
+
+configatron.input_files = get_pathnames_from( configatron.arguments, 
+  ['.jpg', '.png', '.gif'])
+
+if configatron.input_files.empty?
+  error 'No image files were provided'
+end
+
+abort_if_errors
+
+
+######################################################
+# Local methods
+
+
+######################################################
+# Main
+
+at_exit do
+  puts
+  puts "Done."
+  puts
+end
+
+ap configatron.to_h  if debug?
+
+configatron.input_files.each do |image|
+
+  # SMELL: assumes that there is only one '.' in the file name
+  new_file_name = image.to_s.gsub('.', "_#{configatron.geom}.")
+
+  print "Resizing #{image} to #{new_file_name} ... " if verbose?
+
+  img = Magick::Image.read(image)[0]
+  img.change_geometry!(configatron.geom) { |cols, rows| img.thumbnail! cols, rows }
+  img.write(new_file_name)
+
+  puts "done." if verbose?
+
+end # configatron.input_files.each do |image|
 
