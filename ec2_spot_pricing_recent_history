@@ -1,6 +1,14 @@
+# ec2_spot_pricing_recent_history
+
+type=$1
+
+if [ 0 == $# ] ; then
+  type='m3.medium'
+fi
+
 aws ec2 describe-spot-price-history \
     --start-time $(date -u +"%Y%m%dT%H0000") \
     --product "Linux/UNIX" \
-    --instance-type "m3.medium" \
+    --instance-type "$type" \
     --region us-east-1 \
     --output table
