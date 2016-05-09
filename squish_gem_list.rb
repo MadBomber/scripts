@@ -22,8 +22,8 @@ include CliHelper
 configatron.version = '0.0.1'
 
 cli_helper("return minimum set of gems to install") do |o|
-  o.path    '-f', '--file', 'file containing gem names'
-  o.boolean '-g', '--gemfile', 'output in Gemfile format', default: false
+  o.path    '-f', '--file',     'file containing gem names',  default: nil
+  o.boolean '-g', '--gemfile',  'output in Gemfile format',   default: false
 end
 
 # Display the usage info
@@ -36,7 +36,7 @@ end
 # Error check you stuff; use error('some message') and warning('some message')
 
 if configatron.file.nil?
-  error("Required argument is missing: -f/--file")
+  warning("Argument is missing: -f/--file; will use 'gem list' command")
 else
   unless !configatron.file.nil? && configatron.file.exist?
     error("File does not exist: #{configatron.file}")
@@ -66,7 +66,11 @@ end
 
 ap configatron.to_h  if verbose? || debug?
 
-array_of_gems = configatron.file.read.split("\n")
+unless configatron.file.nil?
+  array_of_gems = configatron.file.read.split("\n")
+else
+  array_of_gems = `gem list`.split("\n").map{|g| g.split(' ').first }.select{|g| !g.empty?}
+end
 
 gem_count = array_of_gems.size
 
