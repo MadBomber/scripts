@@ -22,8 +22,9 @@ include CliHelper
 configatron.version = '0.0.1'
 
 cli_helper("return minimum set of gems to install") do |o|
-  o.path    '-f', '--file',     'file containing gem names',  default: nil
-  o.boolean '-g', '--gemfile',  'output in Gemfile format',   default: false
+  o.path    '-f', '--file',     'file containing gem names',            default: nil
+  o.path    '-o', '--output',   'output to file as list of gem names',  default: nil
+  o.boolean '-g', '--gemfile',  'output in Gemfile format',             default: false
 end
 
 # Display the usage info
@@ -110,6 +111,11 @@ if gemfile?
   end
   puts
 else
-  puts array_of_gems.join("\n")
+  if configatron.output.nil?
+    puts array_of_gems.join("\n")
+  else
+    outfile = File.new(configatron.output, 'w')
+    outfile.puts array_of_gems.join("\n")
+  end
 end
 
