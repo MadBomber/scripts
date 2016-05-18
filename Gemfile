@@ -6,6 +6,7 @@ gem 'cli_helper'              # An encapsulation of an integration of slop, nenv
 gem 'clipboard'               # Easy access to the clipboard on Linux, MacOS and Windows.
 gem 'colortail'               # Tail a file and color lines based on regular expressions within that line
 gem 'debug_me'                # A tool to print the labeled value of variables.
+gem 'docopt'                  # A command line option parser, that will make you smile.
 gem 'docx'                    # a ruby library/gem for interacting with .docx files
 gem 'ffi-ncurses'             # An FFI wrapper around ncursesw 5.x for MRI Ruby 1.8.x, 1.9.x and JRuby.
 gem 'geek_painter'            # A very simple DSL to generate a colored shell prompt string to use in *nix OS terminals
