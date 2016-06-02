@@ -30,7 +30,7 @@ include DebugMe
 require 'json'
 
 
-require_relative 'lib/**/*.rb'
+require_all 'lib/**/*.rb'
 
 require 'sinatra/base'
 require 'sinatra/activerecord'

@@ -1,2 +1,2 @@
-require './mls_demo'
-run MLS::Demo
+require './app'
+run APP::App
