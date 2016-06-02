@@ -8,7 +8,7 @@ ruby "2.3.1"
 #gem 'mapbox-sdk'  # Ruby bindings for the Mapbox API
 
 # Utilities
-gem 'require_all'
+gem 'require_all'  # A wonderfully simple way to load your code
 
 # Web-app framework
 gem 'sinatra', require: 'sinatra/base'  # Classy web-development dressed in a DSL
