@@ -16,7 +16,7 @@ my_name   = me.basename.to_s
 
 file_templates_path = my_dir + 'file_templates'
 
-file_templates = file_templates_path.children.select { |c| c.file? }
+file_templates  = file_templates_path.children
 
 $options = {
   verbose:        false
@@ -50,7 +50,11 @@ NOTE:
 
   Current file templates are:
 
-  #{file_templates.map{|f|f.basename.to_s}.join("\n\t")}
+  #{file_templates.select{|f| f.file?}.map{|f|f.basename.to_s}.join("\n\t")}
+
+  Current directory templates are:
+
+  #{file_templates.select{|f| f.directory?}.map{|f|f.basename.to_s}.join("\n\t")}
 
 EOS
 
@@ -73,12 +77,6 @@ end
 
 ARGV.compact!
 
-# TODO:  No need to limit to one template.  Consider the use
-#        case where different files are combined.  For example
-#        some common header files to be combined with different
-#        body files.
-
-
 template_files = ARGV.map { |f| file_templates_path + f }
 
 template_files.each do |template_file|
@@ -100,6 +98,10 @@ unless errors.empty?
 end
 
 template_files.each do |template_file|
-  puts template_file.read
+  if template_file.file?
+    puts template_file.read
+  else
+    system "cp -R #{template_file} #{Pathname.pwd}"
+  end
 end
 
