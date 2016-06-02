@@ -110,13 +110,8 @@ unless errors.empty?
 end
 
 template_files.each do |template_file|
-
-debug_me {[ :template_file ]}
-
   if template_file.file?
-    debug_me
     if '.erb' == template_file.extname.to_s
-      debug_me
       puts ERB.new(template_file.read).result
     else
       puts template_file.read
