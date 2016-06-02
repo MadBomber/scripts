@@ -5,18 +5,23 @@
 ##  Desc: Generate a new instance of a file
 ##  By:   Dewayne VanHoozer (dvanhoozer@gmail.com)
 #
+# TODO: parse files looking for __xyzzy_magic__ strings
+#       request replacement text from user for the magic strings
+#
 
 require 'debug_me'
+include DebugMe
 
 require 'pathname'
+require 'erb'
 
 me        = Pathname.new(__FILE__).realpath
 my_dir    = me.parent
 my_name   = me.basename.to_s
 
-file_templates_path = my_dir + 'file_templates'
+templates_path = my_dir + 'templates'
 
-file_templates  = file_templates_path.children
+templates  = templates_path.children
 
 $options = {
   verbose:        false
@@ -50,11 +55,11 @@ NOTE:
 
   Current file templates are:
 
-  #{file_templates.select{|f| f.file?}.map{|f|f.basename.to_s}.join("\n\t")}
+  #{templates.select{|f| f.file?}.map{|f|f.basename.to_s.gsub('.erb','')}.join("\n\t")}
 
   Current directory templates are:
 
-  #{file_templates.select{|f| f.directory?}.map{|f|f.basename.to_s}.join("\n\t")}
+  #{templates.select{|f| f.directory?}.map{|f|f.basename.to_s}.join("\n\t")}
 
 EOS
 
@@ -77,11 +82,18 @@ end
 
 ARGV.compact!
 
-template_files = ARGV.map { |f| file_templates_path + f }
+template_files = ARGV.map { |f| templates_path + f }
 
-template_files.each do |template_file|
+template_files.each_index do |x|
+  template_file = template_files[x]
   unless template_file.exist?
-    errors << "no such template file: #{template_file.basename}"
+    erb_version = template_file.parent +
+                    (template_file.basename.to_s + '.erb')
+    unless erb_version.exist?
+      errors << "no such template file: #{template_file.basename}"
+    else
+      template_files[x] = erb_version
+    end
   end
 end
 
@@ -98,8 +110,17 @@ unless errors.empty?
 end
 
 template_files.each do |template_file|
+
+debug_me {[ :template_file ]}
+
   if template_file.file?
-    puts template_file.read
+    debug_me
+    if '.erb' == template_file.extname.to_s
+      debug_me
+      puts ERB.new(template_file.read).result
+    else
+      puts template_file.read
+    end
   else
     system "cp -R #{template_file} #{Pathname.pwd}"
   end
