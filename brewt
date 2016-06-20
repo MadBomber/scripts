@@ -1,0 +1,143 @@
+#!/usr/bin/env ruby
+##########################################
+###
+##  File: brewt
+##  Desc: Like "rake -T"
+##
+#
+
+require 'awesome_print'
+require 'terminal-size'
+require 'word_wrapper'
+require 'ruby-progressbar'
+
+def usage
+  puts <<-EOS
+
+list brew installed top-level packages -- like "rake -T"
+
+usage: #{__FILE__.basename} [search_string]
+
+Where:
+
+  search_string is an optional keyword or phrase
+
+Example:
+
+  brewt php      shows list of the php packages
+
+EOS
+end
+
+class NilClass
+  def split(*args)
+    [" "]
+  end
+  def strip
+    ""
+  end
+end
+
+unless ARGV.empty?
+  if '-h' == ARGV.first  or  '--help' == ARGV.first
+    usage
+    exit
+  end
+end
+
+
+search_strings = ARGV.map{|a|a.downcase}
+
+brew_hash = Hash.new
+
+longest_desc = 0
+
+puts "Gathering package information ..."
+
+leaves = `brew leaves`.split("\n")
+
+progressbar = ProgressBar.create(
+    title: 'Packages',
+    total: leaves.size,
+    format: '%t: [%B] %c/%C %j%% %e',
+    output: STDERR
+  )
+
+
+packages = Array.new
+
+leaves.each do |leaf|
+  progressbar.increment
+  packages << `brew info #{leaf}`
+end
+
+packages.each do |package|
+  lines = package.split("\n")
+  lines << "unknown"
+  lines << "unknown"
+  lines << "unknown"
+
+  temp            = lines[0].split(':')
+  package_name    = temp.first
+
+  if package_name.include?('/')
+    package_full_name = package_name
+    package_name = package_full_name.split('/').last
+  else
+    package_full_name = ""
+  end
+
+  brew_hash[package_name] = Hash.new
+  brew_hash[package_name][:summary] = lines[1] + " Version:#{temp.last}"
+  unless package_full_name.empty?
+    brew_hash[package_name][:summary] = "(#{package_full_name}) " + brew_hash[package_name][:summary]
+  end
+  brew_hash[package_name][:link]    = lines[2]
+end
+
+
+selected_hash = Hash.new
+
+brew_hash.each_pair do |k, v|
+  next if k.nil?
+
+  unless search_strings.empty?
+    thing = k + ' ' + v[:summary].downcase
+
+    found_one = false
+    search_strings.each do |want_this|
+      if thing.include?(want_this)
+        found_one = true
+        break
+      end
+    end
+
+    next unless found_one
+  end
+  selected_hash[k] = v
+  longest_desc = k.size if longest_desc < k.size
+end
+
+desc_start_col = longest_desc + 2
+
+width = Terminal.size[:width] - desc_start_col
+
+puts "ready."
+
+selected_hash.each_pair do |k, v|
+  print "#{k}"
+  print " "*(desc_start_col - k.size)
+  text = WordWrapper::MinimumRaggedness.new(width, v[:summary].strip).wrap
+  text += v[:link]
+  text_array = text.split("\n")
+
+  last_x = text_array.size-1
+  text_array.each_index do |x|
+    prefix = x == last_x ? '|__ ' : '|   '
+    puts (x<1 ? text_array[x] : (' '*desc_start_col) + prefix+text_array[x] )
+  end
+end
+
+
+__END__
+

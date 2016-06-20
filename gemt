@@ -70,7 +70,7 @@ end
 
 desc_start_col = longest_desc + 2
 
-width = Terminal.size[:width] - desc_start_col
+width = Terminal.size[:width] - desc_start_col - 4
 
 gem_hash.each_pair do |k, v|
   print "#{k}"
@@ -78,8 +78,10 @@ gem_hash.each_pair do |k, v|
   text = WordWrapper::MinimumRaggedness.new(width, v.split("\n").first.strip).wrap
   text += "https://rubygems.org/gems/#{k}"
   text_array = text.split("\n")
+  last_x = text_array.size-1
   text_array.each_index do |x|
-    puts (x<1 ? text_array[x] : (' '*desc_start_col) + '|__ '+text_array[x] )
+    prefix = x == last_x ? '|__ ' : '|   '
+    puts (x<1 ? text_array[x] : (' '*desc_start_col) + prefix+text_array[x] )
   end
 end
 
