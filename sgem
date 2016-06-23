@@ -1,0 +1,9 @@
+echo
+gem_file=`gem which $1`
+gem_dir=`dirname $gem_file`
+pushd $gem_dir/..
+ls -alF
+echo
+echo "popd to return to your previous directory"
+echo 'Did you source this?  If not you are not in the directory you though you would be in'
+echo
