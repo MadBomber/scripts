@@ -17,11 +17,15 @@ gem 'irbtools-more'           # irbtools-more adds bond and looksee to IRB.
 gem 'json'                    # This json is bundled with Ruby
 gem 'linefit'                 # LineFit is a linear regression math class.
 gem 'lipsum'                  # Get placeholder text from lipsum.com
+gem 'mail'                    # Mail provides a nice Ruby DSL for making, sending and reading emails.
 gem 'nenv'                    # Convenience wrapper for Ruby's ENV
 gem 'nokogiri'                # Nokogiri (鋸) is an HTML, XML, SAX, and Reader parser
 gem 'ohai'                    # Ohai profiles your system and emits JSON
 gem 'phashion'                # Simple wrapper around the pHash library - precepual hashing to find dup images
+gem 'progress_bar'            # Simple Progress Bar for output to a terminal
+gem 'rethinkdb_helper'        # A wrapper around the ruby rethinkdb gem
 gem 'rmagick'                 # Ruby binding to ImageMagick
+gem 'ruby-progressbar'        # never leave the user guessing
 gem 'slop'                    # Simple Lightweight Option Parsing
 gem 'summary'                 # This is a simple gem that generates introduction text from a long text, it will always break the text at the end of the last word near to the limit you informed as argument.
 gem 'svn_wc'                  # operates on a working copy (on the local filesystem) of a remote Subversion repository.
@@ -31,5 +35,4 @@ gem 'word_wrap'               # Simple tool for word-wrapping text
 gem 'word_wrapper'            # Pure ruby word wrapping
 gem 'wordy'                   # Written to help us create sample data for our applications, Wordy speaks in lorem ipsum. You can ask Wordy for paragraphs, sentences or words.
 gem 'virtualbox'              # Support functions for VM
-gem 'ruby-progressbar'        # never leave the user guessing
 
