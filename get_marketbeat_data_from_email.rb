@@ -40,7 +40,14 @@ cli_helper("__file_description__") do |o|
   o.string  '-p', '--password', "user's email password",  default: ENV['GMAIL_PASS']
 end
 
-
+if configatron.user.nil?  ||  configatron.user.empty?
+  require 'io/console'
+  print "gMail Username: "
+  configatron.user = gets.chomp
+  print "gMail Password: "
+  configatron.password = STDIN.noecho(&:gets).chomp
+  puts
+end
 
 ######################################################
 # Local methods
@@ -125,11 +132,12 @@ end
 
 ap configatron.to_h  if verbose? || debug?
 
-
+puts "Retrieving eMails ..."
 emails = Mail.find( what:   :last, 
                     count:  500, # configatron.days,      # how many days back from today
                     order:  :asc, 
                     keys:   'FROM newsletters@analystratings.net')
+
 
 bar = ProgressBar.new(emails.size)
 
@@ -279,6 +287,7 @@ if 1 == configatron.days
   emails = [ emails ]
 end
   
+puts "Processing eMails ..."
 
 emails.each do |mail|
   bar.increment!
