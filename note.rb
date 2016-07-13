@@ -34,25 +34,27 @@ end
 
 notes_file = nil
 
-if '+' == ARGV.first
-  here                      = Pathname.pwd
-  project_name              = here.basename
-  project_db[project_name]  = here + NOTES_FILENAME
-  f = File.open(PROJECT_DB_FILE, 'w')
-  f.puts JSON.pretty_generate(project_db)
-  puts "Added project #{project_name} to the project database."
-  exit
-end
-
-if ARGV.first.start_with? '+'
-  temp          = ARGV.shift
-  project_name  = temp[1,999]
-  unless project_db.include? project_name
-    puts "ERROR: #{project_name} is not in the project database."
-    exit -1
+if ARGV.size > 0
+  if '+' == ARGV.first
+    here                      = Pathname.pwd
+    project_name              = here.basename
+    project_db[project_name]  = here + NOTES_FILENAME
+    f = File.open(PROJECT_DB_FILE, 'w')
+    f.puts JSON.pretty_generate(project_db)
+    puts "Added project #{project_name} to the project database."
+    exit
   end
-  notes_file = Pathname.new project_db[project_name]
-end
+
+  if ARGV.first.start_with? '+'
+    temp          = ARGV.shift
+    project_name  = temp[1,999]
+    unless project_db.include? project_name
+      puts "ERROR: #{project_name} is not in the project database."
+      exit -1
+    end
+    notes_file = Pathname.new project_db[project_name]
+  end
+end # if ARGV.size > 0
 
 
 # NOTE: recursive go up the current working directory path looking
