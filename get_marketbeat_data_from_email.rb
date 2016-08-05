@@ -292,6 +292,7 @@ puts "Processing eMails ..."
 emails.each do |mail|
   bar.increment!
   next unless mail.from.include? "newsletters@analystratings.net"
+  next unless mail.html_part.respond_to? :raw_source
 
   # puts "Date: #{mail.date}"
 
