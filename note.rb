@@ -19,6 +19,7 @@
 require 'clipboard'
 require 'pathname'
 require 'json'
+require 'date'
 
 NOTES_FILENAME  = "_notes.txt"
 notes_dir       = Pathname.pwd
@@ -41,6 +42,20 @@ if ARGV.size > 0
     project_db[project_name]  = here + NOTES_FILENAME
     f = File.open(PROJECT_DB_FILE, 'w')
     f.puts JSON.pretty_generate(project_db)
+    f.close
+
+    notes_file = here + NOTES_FILENAME
+
+    if notes_file.exist?
+      puts "Using existing #{NOTES_FILENAME} file."
+    else
+      puts "Creating new #{NOTES_FILENAME} file for project #{project_name}"
+      f = File.open notes_file, 'w'
+      f.puts "# Project: #{project_name}"
+      f.print "# Started: #{Time.now}\n\n"
+      f.close
+    end
+
     puts "Added project #{project_name} to the project database."
     exit
   end
