@@ -16,7 +16,7 @@ def usage
 
 list brew installed top-level packages -- like "rake -T"
 
-usage: #{__FILE__.basename} [search_string]
+usage: #{__FILE__.basename} [-h | --help | --installed] [search_string]
 
 Where:
 
@@ -38,10 +38,15 @@ class NilClass
   end
 end
 
+leaves = []
+
 unless ARGV.empty?
-  if '-h' == ARGV.first  or  '--help' == ARGV.first
+  if ARGV.include?('-h')  ||  ARGV.include?('--help')
     usage
     exit
+  end
+  if ARGV.include?('--installed')
+    leaves = `brew leaves`.split("\n")
   end
 end
 
@@ -54,7 +59,13 @@ longest_desc = 0
 
 puts "Gathering package information ..."
 
-leaves = `brew leaves`.split("\n")
+if leaves.empty?
+  search_strings.each do |ss|
+    leaves += `brew search "#{ss}"`.split
+  end
+  leaves.flatten!
+  leaves.uniq!
+end
 
 progressbar = ProgressBar.create(
     title: 'Packages',
