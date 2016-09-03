@@ -7,8 +7,12 @@ Encoding.default_internal
 ##  Desc: Read an *.csv file
 ##  By:   Dewayne VanHoozer (dvanhoozer@gmail.com)
 #
+# TODO: add cli_helper
+#       add --header --no-header (on no-header use column number as the header name)
+#       add prettier formatting
 
 require 'debug_me'
+include DebugMe
 
 require 'pathname'
 require 'csv'
@@ -19,11 +23,16 @@ my_name   = me.basename.to_s
 
 $options = {
   verbose:        false,
+  header:         true,
   in_filename:    nil
 }
 
 def verbose?
   $options[:verbose]
+end
+
+def header?
+  $options[:header]
 end
 
 
@@ -38,6 +47,7 @@ Where:
   options               Do This
     -h or --help        Display this message
     -v or --verbose     Display progress
+          --no-header   Use column numbers
 
   filename.csv          The path to a text *.csv file
 
@@ -102,6 +112,14 @@ end
   end
 end
 
+%w[--no-header ].each do |param|
+  if ARGV.include? param
+    $options[:header]         = false
+    ARGV[ ARGV.index(param) ] = nil
+  end
+end
+
+
 ARGV.compact!
 
 if ARGV.empty?
@@ -125,6 +143,16 @@ abort_if_errors
 # Local methods
 
 
+def build_headers(an_array)
+  if header?
+    max_size  = an_array.collect {|s| s.size}.max + 3
+    out_array = an_array.collect {|s| s+" "+( "."*(max_size-s.size) )+" "}
+  else
+    out_array = (1..an_array.size).collect { |x| sprintf("%3d ... ", x) }
+  end
+  return out_array
+end
+
 ######################################################
 # Main
 
@@ -144,9 +172,8 @@ CSV.foreach( $options[:in_filename] ) do |a_row|
   puts "Row No: #{row_number}"
 
   if header_row.empty?
-    header_row = a_row
-    pp header_row
-    next
+    header_row = build_headers a_row
+    next if header?
   end
 
   x=0
@@ -158,7 +185,7 @@ CSV.foreach( $options[:in_filename] ) do |a_row|
     if 0 == x
       a_column.gsub!("\n"," ")
     end
-    puts "#{header_row[x]} ... #{a_column}"
+    puts "#{header_row[x]}#{a_column}"
     x += 1
   end
 
