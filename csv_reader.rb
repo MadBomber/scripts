@@ -139,6 +139,9 @@ end
 abort_if_errors
 
 
+column_sizes = Array.new
+
+
 ######################################################
 # Local methods
 
@@ -173,6 +176,10 @@ CSV.foreach( $options[:in_filename] ) do |a_row|
 
   if header_row.empty?
     header_row = build_headers a_row
+    header_row.size.times do |x|
+      column_sizes[x] = {min: 9999, max: 0}
+    end
+
     next if header?
   end
 
@@ -185,11 +192,32 @@ CSV.foreach( $options[:in_filename] ) do |a_row|
     if 0 == x
       a_column.gsub!("\n"," ")
     end
-    puts "#{header_row[x]}#{a_column}"
+    puts "#{header_row[x]}(#{a_column.size}) #{a_column}"
+
+    value_size = a_column.size
+
+    column_sizes[x][:min] = value_size if value_size < column_sizes[x][:min]
+    column_sizes[x][:max] = value_size if value_size > column_sizes[x][:max]
+
     x += 1
   end
 
   puts "-"*45
 
 end
+
+puts
+puts "Value Size Range"
+puts "================"
+puts
+
+(0..header_row.size-1).each do |x|
+  puts "#{header_row[x]}#{column_sizes[x][:min]} .. #{column_sizes[x][:max]}"
+end
+
+
+require 'awesome_print'
+
+ap column_sizes
+
 
