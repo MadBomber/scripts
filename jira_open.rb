@@ -27,5 +27,7 @@ end
 
 
 while !ARGV.empty?
+  # TODO: check the argument to see if it is in the form #-#
+  #       if so treat the argument as a range
   system("open #{JIRA_BASE_URL}/browse/#{JIRA_PROJECT}-" + ARGV.shift)
 end
