@@ -35,4 +35,8 @@ gem 'word_wrap'               # Simple tool for word-wrapping text
 gem 'word_wrapper'            # Pure ruby word wrapping
 gem 'wordy'                   # Written to help us create sample data for our applications, Wordy speaks in lorem ipsum. You can ask Wordy for paragraphs, sentences or words.
 gem 'virtualbox'              # Support functions for VM
+#
+gem 'guard'                   # Guard keeps an eye on your file modifications
+gem 'guard-rubycritic'        # Listens to modifications and detects smells in Ruby files
+gem 'rubycritic'              # RubyCritic is a Ruby code quality reporter
 

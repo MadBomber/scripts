@@ -2,3 +2,4 @@
 ## git should ignore these kinds of files
 
 .tags
+tmp/
