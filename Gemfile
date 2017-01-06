@@ -26,17 +26,22 @@ gem 'progress_bar'            # Simple Progress Bar for output to a terminal
 gem 'rethinkdb_helper'        # A wrapper around the ruby rethinkdb gem
 gem 'rmagick'                 # Ruby binding to ImageMagick
 gem 'ruby-progressbar'        # never leave the user guessing
+gem 'sketches'                # Sketches allows you to create and edit Ruby code from the comfort of your editor, while having it safely reloaded in IRB whenever changes to the code are saved.
 gem 'slop'                    # Simple Lightweight Option Parsing
+gem 'sugar_refinery'          # The Ruby Sugar Refinery is a collection of tiny refinements.
 gem 'summary'                 # This is a simple gem that generates introduction text from a long text, it will always break the text at the end of the last word near to the limit you informed as argument.
 gem 'svn_wc'                  # operates on a working copy (on the local filesystem) of a remote Subversion repository.
 gem 'systemu'                 # systemu
 gem 'terminal-size'           # A tiny gem to accomplish a simple task: Determining the terminal size.
+gem 'transitions'             # State machine extracted from ActiveModel
+gem 'virtualbox'              # Support functions for VM
 gem 'word_wrap'               # Simple tool for word-wrapping text
 gem 'word_wrapper'            # Pure ruby word wrapping
 gem 'wordy'                   # Written to help us create sample data for our applications, Wordy speaks in lorem ipsum. You can ask Wordy for paragraphs, sentences or words.
-gem 'virtualbox'              # Support functions for VM
 #
 gem 'guard'                   # Guard keeps an eye on your file modifications
+gem 'guard-rubocop'
 gem 'guard-rubycritic'        # Listens to modifications and detects smells in Ruby files
+gem 'rubocop'
 gem 'rubycritic'              # RubyCritic is a Ruby code quality reporter
-
+#
