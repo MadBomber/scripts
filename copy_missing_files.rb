@@ -3,7 +3,7 @@
 ##########################################################
 ###
 ##  File: copy_missing_files.rb
-##  Desc: __file_description__
+##  Desc: Copy missing files from one directory to another
 ##  By:   Dewayne VanHoozer (dvanhoozer@gmail.com)
 #
 
@@ -71,11 +71,18 @@ configatron.ignore.map!{|i| i.to_s} unless configatron.ignore.empty?
 ######################################################
 # Local methods
 
+$skipped_files = Array.new
+
+$count = Hash.new
+$count[:missing] = 0
+$count[:skipped] = 0
+$count[:ignored] = 0
 
 def review_directory(a_directory)
   a_directory.children.each do |s|
     source_name     = s.basename.to_s
     if configatron.ignore.include?(source_name)
+      $count[:ignored] += 1
       puts "Ignoring #{s}"  if     verbose?  ||  debug?  || dry_run?
       print '-'             unless verbose?  ||  debug?  || dry_run?
       next
@@ -90,6 +97,7 @@ def review_directory(a_directory)
         next
       else
         # Copy the entire directory
+        $count[:missing] += s.children.size
         puts "Copying the entire directory #{s}" if     verbose?  ||  debug?  || dry_run?
         command = "cp -R #{s} #{target_absolute.parent}"
         if dry_run?
@@ -102,6 +110,7 @@ def review_directory(a_directory)
     else
       unless target_absolute.exist?
         # Copy an individual file
+        $count[:missing] += 1
         puts "Copying #{s}" if     verbose?  ||  debug?  || dry_run?
         command = "cp #{s} #{target_absolute.parent}"
         if dry_run?
@@ -112,6 +121,8 @@ def review_directory(a_directory)
         end
       else
         # The file already exists in the target location
+        $count[:skipped] += 1
+        $skipped_files << s
         puts "Skipping #{s}" if verbose?  ||  debug?  || dry_run?
       end
     end
@@ -133,4 +144,8 @@ ap configatron.to_h  if verbose? || debug?
 
 review_directory configatron.source_dir
 
+puts
+ap $count
+
+puts "Skipped files count: #{$skipped_files.size}"
 
