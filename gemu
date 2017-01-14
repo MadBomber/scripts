@@ -1,0 +1,26 @@
+#!/usr/bin/env ruby
+##########################################
+###
+##  File: gemu
+##  Desc: Update the current gems, then invoke the gemt script
+##
+#
+
+gems_updated = Array.new
+
+cli_command = 'gem update'
+puts "Running '#{cli_command}' ..."
+IO.popen(cli_command) do |io|
+  while (a_line = io.gets) do
+    puts a_line
+    if a_line.start_with?('Updating ') && !a_line.include?("installed gems")
+      gems_updated << a_line.split().last
+    end
+  end
+end
+
+
+unless gems_updated.empty?
+  puts
+  system "gemt " + gems_updated.join(" ")
+end

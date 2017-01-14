@@ -42,11 +42,11 @@ end
 
 # Error check your stuff; use error('some message') and warning('some message')
 
-if configatron.source_dir.nil? || !configatron.source_dir.exist? || !configatron.source_dir.directory?
+unless configatron.source_dir.directory?
   error "Source directory is missing."
 end
 
-if configatron.target_dir.nil? || !configatron.target_dir.exist? || !configatron.target_dir.directory?
+unless configatron.target_dir.directory?
   error "Target directory is missing."
 end
 
@@ -64,12 +64,26 @@ end
 configatron.source_dir = configatron.source_dir.realpath
 configatron.target_dir = configatron.target_dir.realpath
 
-configatron.ignore.map!{|i| i.to_s} unless configatron.ignore.empty?
+%w[ .git .svn ].each { |i| configatron.ignore << (configatron.source_dir + i) }
 
-%w[ .git .svn ].each {|i| configatron.ignore << i}
+configatron.ignore.map!{ |i| i.to_s }
 
 ######################################################
 # Local methods
+
+class Pathname
+
+  def ignored?
+    a_string = self.to_s
+    result = false
+    configatron.ignore.each do |i|
+      result ||= a_string.include?(i)
+    end
+    return result
+  end
+
+end # class Pathname
+
 
 $skipped_files = Array.new
 
@@ -79,11 +93,16 @@ $count[:skipped] = 0
 $count[:ignored] = 0
 
 def review_directory(a_directory)
+  if a_directory.ignored?
+    $count[:ignored] += 1
+    return(nil)
+  end
+
   a_directory.children.each do |s|
     source_name     = s.basename.to_s
-    if configatron.ignore.include?(source_name)
+    if s.ignored?
       $count[:ignored] += 1
-      puts "Ignoring #{s}"  if     verbose?  ||  debug?  || dry_run?
+      puts "Ignoring #{s.relative_path_from(configatron.source_dir)}"  if     verbose?  ||  debug?  || dry_run?
       print '-'             unless verbose?  ||  debug?  || dry_run?
       next
     end
@@ -108,6 +127,10 @@ def review_directory(a_directory)
         end
       end
     else
+      if s.ignored?
+        $count[:ignored] += 1
+        next
+      end
       unless target_absolute.exist?
         # Copy an individual file
         $count[:missing] += 1

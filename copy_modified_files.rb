@@ -42,20 +42,17 @@ if  ARGV.empty?
   exit
 end
 
-
 # Error check your stuff; use error('some message') and warning('some message')
 
-if configatron.source_dir.nil? || !configatron.source_dir.exist? || !configatron.source_dir.directory?
+unless configatron.source_dir.directory?
   error "Source directory is missing."
 end
 
-if configatron.target_dir.nil? || !configatron.target_dir.exist? || !configatron.target_dir.directory?
+unless configatron.target_dir.directory?
   error "Target directory is missing."
 end
 
-if  configatron.reference_dir.nil?          ||
-    !configatron.reference_dir.exist?       ||
-    !configatron.reference_dir.directory?
+unless configatron.reference_dir.directory?
   error "Reference directory is missing."
 end
 
@@ -70,15 +67,29 @@ if dry_run?
   EOS
 end
 
-configatron.source_dir = configatron.source_dir.realpath
-configatron.target_dir = configatron.target_dir.realpath
+configatron.source_dir    = configatron.source_dir.realpath
+configatron.target_dir    = configatron.target_dir.realpath
+configatron.reference_dir = configatron.reference_dir.realpath
 
-configatron.ignore.map!{|i| i.to_s} unless configatron.ignore.empty?
+%w[ .git .svn ].each { |i| configatron.ignore << (configatron.source_dir + i) }
 
-%w[ .git .svn ].each {|i| configatron.ignore << i}
+configatron.ignore.map!{ |i| i.to_s }
 
 ######################################################
 # Local methods
+
+class Pathname
+
+  def ignored?
+    a_string = self.to_s
+    result = false
+    configatron.ignore.each do |i|
+      result ||= a_string.include?(i)
+    end
+    return result
+  end
+
+end # class Pathname
 
 $modified_files = Array.new
 
@@ -101,12 +112,18 @@ def diff_files(source_path, target_path)
 end # def diff_files(source_path, target_path)
 
 
+
 def review_directory(a_directory)
+  if a_directory.ignored?
+    $count[:ignored] += 1
+    return(nil)
+  end
+
   a_directory.children.each do |s|
     source_name     = s.basename.to_s
-    if configatron.ignore.include?(source_name)
+    if s.ignored?
       $count[:ignored] += 1
-      puts "Ignoring #{s}"  if     verbose?  ||  debug?  || dry_run?
+      puts "Ignoring #{s.relative_path_from(configatron.source_dir)}"  if     verbose?  ||  debug?  || dry_run?
       print '-'             unless verbose?  ||  debug?  || dry_run?
       next
     end
@@ -121,10 +138,14 @@ def review_directory(a_directory)
       else
         # Skip the entire directory
         $count[:skipped] += s.children.size
-        puts "Skipping the entire directory #{s}" if     verbose?  ||  debug?  || dry_run?
+        puts "Skipping the entire directory #{s.relative_path_from(configatron.source_dir)}" if     verbose?  ||  debug?  || dry_run?
       end
       next
     else
+      if s.ignored?
+        $count[:ignored] += 1
+        next
+      end
       if target_absolute.exist?
         if unmodified_file?(s,target_absolute)
           $count[:unmodified] += 1
@@ -132,7 +153,7 @@ def review_directory(a_directory)
           # Copy an individual file
           $count[:modified] += 1
           $modified_files << s
-          puts "Copying #{s}" if     verbose?  ||  debug?  || dry_run?
+          puts "Copying #{s.relative_path_from(configatron.source_dir)}" if     verbose?  ||  debug?  || dry_run?
           command = "cp #{s} #{target_absolute.parent}"
 
           if dry_run?
@@ -145,7 +166,7 @@ def review_directory(a_directory)
       else
         # The file does not exists in the target location
         $count[:skipped] += 1
-        puts "Skipping #{s}" if verbose?  ||  debug?  || dry_run?
+        puts "Skipping #{s.relative_path_from(configatron.source_dir)}" if verbose?  ||  debug?  || dry_run?
       end
     end
   end
