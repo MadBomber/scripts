@@ -22,20 +22,24 @@ Assumptions:
 =end
 
 
-require 'Pathname'
-require 'awesome_print'
-require 'date'
 require 'active_support'
 require 'active_support/inflector'
+require 'awesome_print'
+require 'date'
+require 'ostruct'
+require 'Pathname'
+
 
 require 'debug_me'
 include DebugMe
+
+require 'jira-ruby'
 
 me = Pathname.new(__FILE__).basename
 
 # TODO: accept date range from command line.
 
-DATE_RANGE = ( (Date.today - 14) .. Date.today )
+DATE_RANGE = ( (Date.today - 30) .. Date.today )
 
 # TODO: accept configuration from YAML file instead of SEV.
 # TODO: use some kind of template file for report layout
@@ -59,7 +63,6 @@ System Environment Variables Used:
   CCL_URL_xxxx    The JIRA server base URL for project xxxx
   CCL_USER_xxxx   The user name for project xxxx to login to the server
   CCL_PASS_xxxx   The user password for project xxxx for login
-  CCL_TOKEN_xxxx  The JIRA server token used to login to the JIRA server
 
 EOS
 
@@ -70,7 +73,7 @@ if  ARGV.include?('--help')  ||
   exit
 end
 
-
+#############################################################
 # Validate the System Environment Variables
 
 unless ENV['CCL_PROJECTS'].empty?
@@ -84,26 +87,41 @@ else
   exit -1
 end
 
-errors = []
+warnings = []
 CCL_PROJECTS.each do |proj_id|
-  %w[ CCL_USER CCL_PASS CCL_URL CCL_TOKEN ].each do |sev_base|
+  %w[ CCL_USER CCL_PASS CCL_URL ].each do |sev_base|
     sev = "#{sev_base}_#{proj_id}"
-    if ENV[sev].empty?
-      errors << "The system environment variable #{sev} is not defined"
-    else
-      # TODO: const_set(sev.constantize, ENV[sev])
+    if ENV[sev].blank?
+      warnings << "The system environment variable #{sev} is not defined"
     end
   end
 end
 
-unless errors.empty?
-  errors.each do |e|
-    puts "ERROR: #{e}"
+unless warnings.empty?
+  warnings.each do |e|
+    puts "WARNING: #{e}"
   end
-  exit -1
 end
 
 
+#############################################################
+# Create a JIRA client connection for each project
+
+JIRA_CLIENT = Hash.new
+
+CCL_PROJECTS.each do |proj_id|
+  options = {
+    :username     => ENV["CCL_USER_#{proj_id}"],
+    :password     => ENV["CCL_PASS_#{proj_id}"],
+    :site         => ENV["CCL_URL_#{proj_id}"],
+    :context_path => '',
+    :auth_type    => :basic
+  }
+
+  JIRA_CLIENT[proj_id] = JIRA::Client.new(options)
+end
+
+#############################################################
 # Adding a little sugar to String to support
 # duck typing requirement of the extract_jira_tickets method
 
@@ -113,6 +131,10 @@ class String
   end
 end
 
+
+
+#############################################################
+# build the command for retrieving the git log
 
 git_log_command = 'git'
 
@@ -130,11 +152,25 @@ end
 git_log_command += ' log --name-status'
 
 
+
+#####################################################
+## Helpers for Parsing Commit Entries in a GIT Log ##
+#####################################################
+
+
+#####################################################################
+# determine if this commit is a merge
+# an_array of strings that comprise a single commit from the git log
+
 def is_a_merge(an_array)
   merge_string_index = an_array.index{|s| s.start_with?("Merge")}
   return !merge_string_index.nil?
 end
 
+
+#####################################################################
+# extract the date of a commit
+# an_array of strings that comprise a single commit from the git log
 
 def extract_date(an_array)
   date_string_index = an_array.index{|s| s.start_with?("Date:")}
@@ -143,6 +179,10 @@ def extract_date(an_array)
 end
 
 
+#####################################################################
+# extract the author of a commit
+# an_array of strings that comprise a single commit from the git log
+
 def extract_author(an_array)
   author_string_index = an_array.index{|s| s.start_with?("Author:")}
   author_string = an_array[author_string_index]
@@ -150,17 +190,25 @@ def extract_author(an_array)
 end
 
 
+#####################################################################
+# extract all files impacted by this commit
+# an_array of strings that comprise a single commit from the git log
+
 def extract_files(an_array)
   files = []
   an_array.reverse.each do |a_file|
     next if a_file.empty?
     next if a_file.start_with?(' ')
     break if a_file.start_with?('Date:')
-    files << a_file.split("\t").last
+    files << a_file   # .split("\t").last
   end
   return files.sort
 end
 
+
+#####################################################################
+# extract the description of a commit
+# an_array of strings that comprise a single commit from the git log
 
 def extract_description(an_array)
   description = ""
@@ -176,7 +224,11 @@ def extract_description(an_array)
 end
 
 
-# from can be a string or an array of strings
+#####################################################################
+# extract all references to JIRA tickets
+# projects is an array of project id strings used to find JIRA ticket references
+# from can be a string or an array of strings from which JIRA tickets are extracted
+
 def extract_jira_tickets(projects: CCL_PROJECTS, from:)
   minmax_string   = projects.map{|x|x.size}.minmax.join(',')
   project_string  = projects.join + projects.join.downcase
@@ -188,12 +240,20 @@ def extract_jira_tickets(projects: CCL_PROJECTS, from:)
 end
 
 
+#####################################################################
+# parse the pull_request sting into a structured format
+# a_string that comprise a pull request merge marker
+
 def parse_pull_request(a_string)
   pr_details    = /^\s.*#(?<id>\d+) in (?<repo>.*) from (?<source>.*) to (?<target>.*)$/.match(a_string)
   pull_request  = Hash[ pr_details.names.map{|k|k.to_sym}.zip( pr_details.captures ) ]
   return pull_request
 end
 
+
+#####################################################################
+# extract all data for a pull_request into a structured format
+# an_array of strings that comprise a single commit from the git log
 
 def extract_pull_request(an_array)
   pr_string_index = an_array.index{|s| s.include?("Merge pull request")}
@@ -202,12 +262,17 @@ def extract_pull_request(an_array)
 end
 
 
+#####################################################################
+# extract all data for a commit into a structured format
+# an_array of strings that comprise a single commit from the git log
+
 def parse_commit(an_array)
   commit_id     = an_array.first.split().last
   date          = extract_date(an_array)
   author        = extract_author(an_array)
   merge         = is_a_merge(an_array)
   pull_request  = merge ? extract_pull_request(an_array) : {}
+  pull_request[:date] = date unless pull_request.empty?
   files         = extract_files(an_array)
   description   = extract_description(an_array)
   jira_tickets  = extract_jira_tickets from: [pull_request[:source], description]
@@ -240,6 +305,8 @@ commit_stop_index   = 0
 commits = []
 commit  = {}
 
+jira_hash = Hash.new
+
 result.each do |a_line|
   # NOTE: Running backwards in time
   if a_line.start_with?('commit')
@@ -251,47 +318,109 @@ result.each do |a_line|
     unless commit_stop_index <= commit_start_index
       commit = parse_commit(result[commit_start_index .. commit_stop_index])
       commits << commit unless commit[:date].to_date > DATE_RANGE.last
+      commit[:jira_tickets].each do |key|
+        unless jira_hash.include?(key)
+          jira_hash[key] = {summary: '', description: '', files: []}
+        end
+        jira_hash[key][:files] << commit[:files]
+      end
       break if commit[:date].to_date < DATE_RANGE.first
       exit if commit_count >= max_commits
     end
   end
 
   line_count += 1
+end # result.each do |a_line|
+
+jira  = []
+files = []
+prs   = []
+
+commits.reverse.each do |c|
+  unless c[:pull_request].empty?
+    jira << c[:jira_tickets]
+    files << c[:files]
+    jira  = jira.flatten.sort.uniq
+    files = files.flatten.sort.uniq
+    jira.each do |key|
+      unless jira_hash.include? key
+        jira_hash[key] = {summary: '', description: '', files: []}
+      end
+      jira_hash[key][:files] << files
+      jira_hash[key][:files] = jira_hash[key][:files].flatten.sort.uniq
+    end
+
+    prs << {
+      pull_request: c[:pull_request],
+      jira:         jira_hash
+    }
+
+    # Reset for next PR
+    jira_hash = {}
+    jira  = []
+    files = []
+    next
+  end
+  jira << c[:jira_tickets]
+  files << c[:files]
 end
 
-ap commits
+puts <<~EOS
+This is the kind of information that is available from a git log
+using the command '#{git_log_command}'
 
-tickets = []
-files   = []
+When the branch name and/or commit descriptions contain references to
+JIRA ticket numbers those reference can be extracted and information
+about the ticket can be retrieved from the associated project's
+JIRA server.  Currently only the ticket summary and description are
+being retrieved.
 
-commits.each do |c|
-  tickets << c[:jira_tickets]
-  files   << c[:files]
-end
+The format of this automatically generated report is raw.  Additional work will
+be done to make the report more visually pleasing.
 
-jira_tickets    = tickets.flatten.sort.uniq
-modified_files  =  files.flatten.sort.uniq
+This report was made from commits that occurred in the follow date range:
+  #{DATE_RANGE}
 
-puts "------------------------------------"
+Just verified this raw data against bitbucket's PR page.  Discouraged ...
+commits in log are not specifically tied to a PR.  I made a stupid ASSUMPTION
+that the order of the commits was associated with the PR but that is just nuts.
 
-require 'jira-ruby'
+Really need a good way to access the bitbucket PR record.  Did a quick look
+at what gems are available ... slim pickens.
 
-# TODO: Expand to support multiple projects
+EOS
 
-options = {
-  :username     => ENV['CCL_USER_PP'],
-  :password     => ENV['CCL_PASS_PP'],
-  :site         => ENV['CCL_URL_PP'],
-  :context_path => '',
-  :auth_type    => :basic
-}
+prs.reverse.each do |pr|
 
-client = JIRA::Client.new(options)
+  puts "\n" + "="*65
+  puts "Pull Request"
+  puts "    date: #{pr[:pull_request][:date].strftime('%c')}"
+  puts "      id: #{pr[:pull_request][:id]}"
+  puts "    repo: #{pr[:pull_request][:repo]}"
+  puts "  source: #{pr[:pull_request][:source]}"
+  puts "  target: #{pr[:pull_request][:target]}"
+  puts
 
+  jira_hash = pr[:jira]
 
-jira_tickets.each do |key|
-  ticket = client.Issue.find(key)
-  puts "#{key} - #{ticket.summary}"
-end
+  jira_hash.keys.sort.each do |key|
+    proj_id = key.split('-').first
+
+    begin
+      ticket = JIRA_CLIENT[proj_id].Issue.find(key)
+    rescue
+      ticket = OpenStruct.new(summary: 'not available', description: 'not available')
+    end
+
+    jira_hash[key][:summary]      = ticket.summary
+    jira_hash[key][:description]  = ticket.description
+
+    puts "\n#{key} - #{ticket.summary}"
+    puts "\t" + "#{ticket.description.gsub("\n","\n\t").strip}"
+    puts "\nFiles Effected:"
+    puts "\t" + "#{jira_hash[key][:files].join("\n\t").chomp}"
+  end
+
+end # prs.reverse.each do |pr|
 
 
