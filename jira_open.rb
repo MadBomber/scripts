@@ -25,9 +25,24 @@ else
   JIRA_PROJECT = ENV['JIRA_PROJECT']
 end
 
+base_command = "open #{JIRA_BASE_URL}/browse/#{JIRA_PROJECT}-"
 
 while !ARGV.empty?
-  # TODO: check the argument to see if it is in the form #-#
-  #       if so treat the argument as a range
-  system("open #{JIRA_BASE_URL}/browse/#{JIRA_PROJECT}-" + ARGV.shift)
-end
+  ticket = ARGV.shift
+
+  if ticket.include?('-')
+    parts         = ticket.split('-')
+    first_ticket  = parts.first.to_i
+    last_ticket   = parts.last.to_i
+    if first_ticket < last_ticket
+      tickets = ( first_ticket .. last_ticket).to_a
+      tickets.each do |ticket|
+        system("#{base_command}#{ticket}")
+      end
+    else
+      puts "ERROR: '#{ticket}' makes no sense. Left side must be less than the right side."
+    end
+  else
+    system("#{base_command}#{ticket}")
+  end
+end # while !ARGV.empty?
