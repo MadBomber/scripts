@@ -19,7 +19,75 @@ Assumptions:
     * JIRA ticket reference could be in the branch name and/or
     * JIRA ticket reference could be in the commit message
 
+This would so much easier If the git server I'm working against whould support
+an API....
+
+Finally figured it out.  The server I'm working against only supports the older v1.0 API
+
+https://bitbucket.vetsez.net/rest/api/1.0/projects/CUI/repos/cui/pull-requests/35/commits
+
 =end
+
+
+# This list of commits will come from the bitbucket API for a specific pull_request.
+# The pull request number will come from the command line.
+
+pr_commits = %w[
+
+07afeb8828c
+0877835f3d9
+0a297e95114
+153f5554343
+181e7e74943
+2297f8168d2
+24ecdc90a80
+2b73cebcc6e
+2e7acb44833
+340688537ff
+38c59ed1345
+43a283e1432
+4f789b2020a
+540d84ba5aa
+54b305a6e68
+55f6d227b01
+58a86c5f9e3
+5ba3cfdca52
+694cfbd88d6
+6f812ffbc8a
+713a49e6199
+716a38a7a48
+71cb0765de7
+76f6b4284f3
+79c994d771e
+80ea4ddd672
+8bedad2f994
+9b4d59229b2
+9fe8e720943
+a0e779a98e8
+a476a6723ee
+a701de121f3
+b120324a7e9
+b8c077ff315
+be05bac0314
+c82ca64a568
+d1c9d74df31
+d645da1818d
+e04b29110a1
+e2ac03365d1
+e3b715db7f7
+e3c57a5ea81
+e9502eb276c
+eb906e6f5fb
+eb96c752b3c
+f3a13fb8395
+f63a34a8b87
+f8d435fd7b2
+f9ef4372f93
+fc86e705526
+fec41f56068
+
+]
+
 
 
 require 'active_support'
@@ -39,7 +107,7 @@ me = Pathname.new(__FILE__).basename
 
 # TODO: accept date range from command line.
 
-DATE_RANGE = ( (Date.today - 30) .. Date.today )
+DATE_RANGE = ( (Date.today - 18) .. Date.today )
 
 # TODO: accept configuration from YAML file instead of SEV.
 # TODO: use some kind of template file for report layout
@@ -302,7 +370,7 @@ line_count    = 0
 commit_start_index  = 0
 commit_stop_index   = 0
 
-commits = []
+commits = {} # key = id[0,11]
 commit  = {}
 
 jira_hash = Hash.new
@@ -317,7 +385,7 @@ result.each do |a_line|
 
     unless commit_stop_index <= commit_start_index
       commit = parse_commit(result[commit_start_index .. commit_stop_index])
-      commits << commit unless commit[:date].to_date > DATE_RANGE.last
+      commits[commit[:id][0,11]] = commit unless commit[:date].to_date > DATE_RANGE.last
       commit[:jira_tickets].each do |key|
         unless jira_hash.include?(key)
           jira_hash[key] = {summary: '', description: '', files: []}
@@ -332,7 +400,77 @@ result.each do |a_line|
   line_count += 1
 end # result.each do |a_line|
 
+
+#########################################################
+# Do the CHANGELOG report
+
 jira  = []
+files = []
+
+pr_commits.each do |commit_key|
+  unless commits[commit_key].present?
+    puts "WARNING: Commit not present: #{commit_key}"
+    next
+  end
+
+  commit  = commits[commit_key]
+  jira    << commit[:jira_tickets]
+  files   << commit[:files]
+end
+
+jira  = jira.flatten.sort.uniq
+files = files.flatten.sort.uniq
+
+puts <<EOS
+# CHANGELOG.txt
+#
+# This file was automatically generated from the last pull request.
+#
+# NOTE: automatic generation of the CHANGELOG.txt file is a work in progress.
+#       The CPP team has installed git hooks which auto prepend the branch
+#       name to each commit message.  Since the branch naming convention
+#       requires all JIRA tickets which the branch is supporting to be
+#       part of the branch's name.  In a later release of the
+#       "create_changelog.rb" utility, the files will be auto associated
+#       with the JIRA tickets that impacted the file.  This time they
+#       are all grouped at the bottom.
+#
+# NOTE: The CPP developers did not have the auto pre-pending of the
+#       branch name at the start of the sprint.  Therefore, this list is
+#       not complete.
+#
+
+## #{Date.today}
+
+This pull request contains the following JIRA tickets:
+
+EOS
+
+jira.each do |key|
+  proj_id = key.split('-').first
+
+  begin
+    ticket = JIRA_CLIENT[proj_id].Issue.find(key)
+  rescue
+    ticket = OpenStruct.new(summary: 'not available', description: 'not available')
+  end
+
+  puts "  #{key} - #{ticket.summary}"
+  jira_hash[key][:files].flatten.sort.uniq.each {|f| puts "    #{f.gsub("\t",'  ')}" }
+  puts
+end
+
+puts <<EOS
+
+This pull request impacted the following files:
+
+  #{files.join("\n  ")}
+
+EOS
+
+
+__END__
+
 files = []
 prs   = []
 
@@ -422,5 +560,4 @@ prs.reverse.each do |pr|
   end
 
 end # prs.reverse.each do |pr|
-
 
