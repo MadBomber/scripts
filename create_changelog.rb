@@ -3,10 +3,15 @@
 ##########################################################
 ###
 ##  File: create_changelog.rb
-##  Desc: Create an CHANGELOG.md file from a git log that contains
+##  Desc: Create an CHANGELOG file from a git log that contains
 ##        references to JIRA tickets that document the work effort.
+##        Use the Bitbucket REST API and the JIRA REST API
+##        tp get details about the associated resource.
 ##  By:   Dewayne VanHoozer (dvanhoozer@gmail.com)
 #
+
+# TODO: accept configuration from YAML file instead of SEV.
+# TODO: use some kind of template file for report layout
 
 =begin
 
@@ -19,81 +24,13 @@ Assumptions:
     * JIRA ticket reference could be in the branch name and/or
     * JIRA ticket reference could be in the commit message
 
-This would so much easier If the git server I'm working against whould support
-an API....
-
-Finally figured it out.  The server I'm working against only supports the older v1.0 API
-
-https://bitbucket.vetsez.net/rest/api/1.0/projects/CUI/repos/cui/pull-requests/35/commits
-
 =end
-
-
-# This list of commits will come from the bitbucket API for a specific pull_request.
-# The pull request number will come from the command line.
-
-pr_commits = %w[
-
-07afeb8828c
-0877835f3d9
-0a297e95114
-153f5554343
-181e7e74943
-2297f8168d2
-24ecdc90a80
-2b73cebcc6e
-2e7acb44833
-340688537ff
-38c59ed1345
-43a283e1432
-4f789b2020a
-540d84ba5aa
-54b305a6e68
-55f6d227b01
-58a86c5f9e3
-5ba3cfdca52
-694cfbd88d6
-6f812ffbc8a
-713a49e6199
-716a38a7a48
-71cb0765de7
-76f6b4284f3
-79c994d771e
-80ea4ddd672
-8bedad2f994
-9b4d59229b2
-9fe8e720943
-a0e779a98e8
-a476a6723ee
-a701de121f3
-b120324a7e9
-b8c077ff315
-be05bac0314
-c82ca64a568
-d1c9d74df31
-d645da1818d
-e04b29110a1
-e2ac03365d1
-e3b715db7f7
-e3c57a5ea81
-e9502eb276c
-eb906e6f5fb
-eb96c752b3c
-f3a13fb8395
-f63a34a8b87
-f8d435fd7b2
-f9ef4372f93
-fc86e705526
-fec41f56068
-
-]
-
-
 
 require 'active_support'
 require 'active_support/inflector'
 require 'awesome_print'
 require 'date'
+require 'json'
 require 'ostruct'
 require 'Pathname'
 
@@ -102,28 +39,15 @@ require 'debug_me'
 include DebugMe
 
 require 'jira-ruby'
+require 'faraday'
 
-me = Pathname.new(__FILE__).basename
 
-# TODO: accept date range from command line.
+require 'cli_helper'
+include CliHelper
 
-DATE_RANGE = ( (Date.today - 18) .. Date.today )
+configatron.version = '0.0.1'
 
-# TODO: accept configuration from YAML file instead of SEV.
-# TODO: use some kind of template file for report layout
-
-usage = <<EOS
-
-Create an CHANGELOG.md file from a git log that contains
-references to JIRA tickets that document the work effort.
-
-Usage: #{me} [working_directory]
-
-Where:
-
-  working_directory   [optional] is a git-managed working directory
-                      Default Value: #{Pathname.pwd}
-
+HELP = <<EOHELP
 System Environment Variables Used:
 
   Name            Description
@@ -132,45 +56,97 @@ System Environment Variables Used:
   CCL_USER_xxxx   The user name for project xxxx to login to the server
   CCL_PASS_xxxx   The user password for project xxxx for login
 
+  BB_HOST         Bitbucket host server with protocol: 'https://bitbucket.com'
+  BB_USER         username for basic authentication
+  BB_PASS         username's password
+  BB_PROJECT      Bitbucket project slug.  Example: 'JIRA'
+  BB_REPO         Bitbucket repository slug. Example: 'jira'
+  BB_API_BASE     Example: "/rest/api/1.0/projects/$BB_PROJECT/repos/$BB_REPO"
+
+EOHELP
+
+desc = <<~EOS
+  Create a CHANGELOG file from a git log that contains
+  references to JIRA tickets that document the work effort.
 EOS
 
-if  ARGV.include?('--help')  ||
-    ARGV.include?('-h')      ||
-    ARGV.include?('-?')
-  puts usage
+# TODO: take multiple PR numbers from the command line.
+
+cli_helper(desc) do |o|
+
+  o.int     '-p', '--pull_request', 'Pull Request ID'
+  o.path    '-w', '--work_dir',     'Working Directory',  default: Pathname.pwd
+  o.string  '-o', '--output',       'Output filename',    default: 'CHANGELOG.txt'
+
+end
+
+# Display the usage info
+if  ARGV.empty?
+  show_usage
   exit
 end
+
+
+unless configatron.work_dir.exist?
+  error "Working Directory Does Not ExistL #{configatron.work_dir}"
+else
+  unless configatron.work_dir.directory?
+    error "Working Directory must be a directory: #{configatron.work_dir}"
+  end
+end
+
+abort_if_errors
 
 #############################################################
 # Validate the System Environment Variables
 
-unless ENV['CCL_PROJECTS'].empty?
-  CCL_PROJECTS = ENV['CCL_PROJECTS'].split(',').map{|proj_id| proj_id.strip.upcase}
-else
-  puts <<~EOS
+required_sev = %w[
+  CCL_PROJECTS
+  BB_HOST
+  BB_USER
+  BB_PASS
+  BB_PROJECT
+  BB_REPO
+  BB_API_BASE
+].map{|sev| sev.upcase}
 
-    ERROR: The system environment variable CCL_PROJECTS is not defined
+sev_errors = []
 
-  EOS
-  exit -1
+required_sev.each do |sev|
+  if ENV[sev].nil?  ||  ENV[sev].empty?
+    sev_errors << sev
+  end
 end
 
-warnings = []
+unless sev_errors.include?('CCL_PROJECTS')
+  CCL_PROJECTS = ENV['CCL_PROJECTS'].split(',').map{|proj_id| proj_id.strip.upcase}
+else
+  CCL_PROJECTS = []
+end
+
+unless sev_errors.empty?
+  sev_errors.each do |sev|
+    error "#{sev} is not defined."
+  end
+end
+
+sev_warnings = []
 CCL_PROJECTS.each do |proj_id|
   %w[ CCL_USER CCL_PASS CCL_URL ].each do |sev_base|
     sev = "#{sev_base}_#{proj_id}"
     if ENV[sev].blank?
-      warnings << "The system environment variable #{sev} is not defined"
+      sev_warnings << sev
     end
   end
 end
 
-unless warnings.empty?
-  warnings.each do |e|
-    puts "WARNING: #{e}"
+unless sev_warnings.empty?
+  sev_warnings.each do |sev|
+    warning "#{sev} is not defined."
   end
 end
 
+abort_if_errors
 
 #############################################################
 # Create a JIRA client connection for each project
@@ -189,6 +165,21 @@ CCL_PROJECTS.each do |proj_id|
   JIRA_CLIENT[proj_id] = JIRA::Client.new(options)
 end
 
+
+#############################################################
+# Create a connection the REST API for bitbucket server
+
+BB_HOST     = ENV['BB_HOST']      || 'https://bitbucket.com'
+BB_USER     = ENV['BB_USER']      || 'username'
+BB_PASS     = ENV['BB_PASS']      || 'password'
+BB_PROJECT  = ENV['BB_PROJECT']   || 'PROJ'
+BB_REPO     = ENV['BB_REPO']      || 'repo'
+BB_API_BASE = ENV['BB_API_BASE']  || "/rest/api/1.0/projects/#{BB_PROJECT}/repos/#{BB_REPO}"
+
+BB = Faraday.new(url: BB_HOST)
+BB.basic_auth(BB_USER, BB_PASS)
+
+
 #############################################################
 # Adding a little sugar to String to support
 # duck typing requirement of the extract_jira_tickets method
@@ -200,30 +191,87 @@ class String
 end
 
 
+# Sometimes the PR's description field is missing
+class NilClass
+  def chomp
+    ''
+  end
+end
 
 #############################################################
 # build the command for retrieving the git log
 
-git_log_command = 'git'
-
-unless ARGV.empty?
-  working_directory = Pathname.new ARGV.shift
-  unless  working_directory.exist?  &&
-          working_directory.directory?
-    puts "\nERROR: Argument is not an existing directory."
-    puts usage
-    exit
-  end
-  git_log_command += " -C #{working_directory}"
-end
-
-git_log_command += ' log --name-status'
+git_log_command = "git -C #{configatron.work_dir} log --name-status"
 
 
 
 #####################################################
 ## Helpers for Parsing Commit Entries in a GIT Log ##
 #####################################################
+
+
+def get_pull_request(pr_id)
+  r = BB.get("#{BB_API_BASE}/pull-requests/#{pr_id}")
+  raise "Gotta Problem: #{r.reason_phrase}" unless 'OK' == r.reason_phrase
+  return JSON.parse(r.body)
+end
+
+
+def get_commits_for_pr(pr_id)
+  r = BB.get("#{BB_API_BASE}/pull-requests/#{pr_id}/commits?limit=9999")
+  raise "Gotta Problem: #{r.reason_phrase}" unless 'OK' == r.reason_phrase
+  return JSON.parse(r.body)['values']
+end
+
+
+def extract_commit_ids(an_array)
+  result = Array.new
+  an_array.each do |commit|
+    result << commit['displayId']
+    commit['parents'].each do |commit_ref|
+      result << commit_ref['displayId']
+    end
+  end
+  return result.flatten.sort.uniq
+end
+
+
+def convert_unix_timestamp(an_integer)
+  unix_timestamp = an_integer / 1000 # Drop the milliseconds
+  return Time.at unix_timestamp
+end
+
+
+def format_pr_user(a_hash)
+  formatted_name = a_hash['displayName'] + " (" + a_hash['emailAddress'] + ")"
+  return formatted_name
+end
+
+
+# TODO: take multiple PR numbers from the command line.
+
+begin
+  pr = get_pull_request configatron.pull_request
+rescue
+  error "Invalid Pull Request: #{configatron.pull_request}"
+  # TODO: find out what the valid PRs values are and report them in the error message.
+end
+
+abort_if_errors
+
+
+pr_author     = format_pr_user pr["author"]["user"]
+pr_reviewers  = pr["reviewers"].map{ |reviewer| format_pr_user(reviewer['user']) }
+
+
+pr_created_date = convert_unix_timestamp pr["createdDate"]
+pr_updated_date = convert_unix_timestamp pr["updatedDate"]
+
+commits_from_pr = get_commits_for_pr configatron.pull_request
+
+pr_commits = extract_commit_ids commits_from_pr
+
+
 
 
 #####################################################################
@@ -385,14 +433,13 @@ result.each do |a_line|
 
     unless commit_stop_index <= commit_start_index
       commit = parse_commit(result[commit_start_index .. commit_stop_index])
-      commits[commit[:id][0,11]] = commit unless commit[:date].to_date > DATE_RANGE.last
+      commits[commit[:id][0,11]] = commit
       commit[:jira_tickets].each do |key|
         unless jira_hash.include?(key)
           jira_hash[key] = {summary: '', description: '', files: []}
         end
         jira_hash[key][:files] << commit[:files]
       end
-      break if commit[:date].to_date < DATE_RANGE.first
       exit if commit_count >= max_commits
     end
   end
@@ -404,12 +451,32 @@ end # result.each do |a_line|
 #########################################################
 # Do the CHANGELOG report
 
+# FIXME: There is something wrong.  Not all JIRA tickets are being
+#        shown in the report with impacted files.  The files are
+#        showing up at the bottom of the PR's section and not after
+#        the JIRA ticket to which they belong.
+
+output_path = configatron.work_dir + configatron.output
+backup_path = configatron.work_dir + (configatron.output + '.bak')
+
+if output_path.exist?
+  output_path.rename(backup_path)
+end
+
+unless backup_path.exist?
+  f = File.open(backup_path, 'w')
+  f.close
+end
+
+OUTFILE = File.open(output_path, 'w')
+
+
 jira  = []
 files = []
 
 pr_commits.each do |commit_key|
   unless commits[commit_key].present?
-    puts "WARNING: Commit not present: #{commit_key}"
+    OUTFILE.puts "WARNING: Commit not present: #{commit_key}"
     next
   end
 
@@ -421,26 +488,22 @@ end
 jira  = jira.flatten.sort.uniq
 files = files.flatten.sort.uniq
 
-puts <<EOS
-# CHANGELOG.txt
-#
-# This file was automatically generated from the last pull request.
-#
-# NOTE: automatic generation of the CHANGELOG.txt file is a work in progress.
-#       The CPP team has installed git hooks which auto prepend the branch
-#       name to each commit message.  Since the branch naming convention
-#       requires all JIRA tickets which the branch is supporting to be
-#       part of the branch's name.  In a later release of the
-#       "create_changelog.rb" utility, the files will be auto associated
-#       with the JIRA tickets that impacted the file.  This time they
-#       are all grouped at the bottom.
-#
-# NOTE: The CPP developers did not have the auto pre-pending of the
-#       branch name at the start of the sprint.  Therefore, this list is
-#       not complete.
-#
 
-## #{Date.today}
+OUTFILE.puts <<EOS
+
+----------------------------------------------------------------------------
+
+Pull Request ID: #{pr['id']}  From: #{pr["fromRef"]["displayId"]}  To: #{pr["toRef"]["displayId"]}
+   Created Date: #{pr_created_date.strftime('%c')}
+   Updated Date: #{pr_updated_date.strftime('%c')}
+
+          Title: #{pr['title']}
+
+         Author: #{pr_author}
+
+      Reviewers: #{pr_reviewers.join("\n                 ")}
+
+#{pr['description'].chomp.strip}
 
 This pull request contains the following JIRA tickets:
 
@@ -455,12 +518,12 @@ jira.each do |key|
     ticket = OpenStruct.new(summary: 'not available', description: 'not available')
   end
 
-  puts "  #{key} - #{ticket.summary}"
-  jira_hash[key][:files].flatten.sort.uniq.each {|f| puts "    #{f.gsub("\t",'  ')}" }
-  puts
+  OUTFILE.puts "  #{key} - #{ticket.summary}"
+  jira_hash[key][:files].flatten.sort.uniq.each {|f| OUTFILE.puts "    #{f.gsub("\t",'  ')}" }
+  OUTFILE.puts
 end
 
-puts <<EOS
+OUTFILE.puts <<EOS
 
 This pull request impacted the following files:
 
@@ -468,96 +531,7 @@ This pull request impacted the following files:
 
 EOS
 
+OUTFILE.puts backup_path.read
+OUTFILE.close
 
-__END__
-
-files = []
-prs   = []
-
-commits.reverse.each do |c|
-  unless c[:pull_request].empty?
-    jira << c[:jira_tickets]
-    files << c[:files]
-    jira  = jira.flatten.sort.uniq
-    files = files.flatten.sort.uniq
-    jira.each do |key|
-      unless jira_hash.include? key
-        jira_hash[key] = {summary: '', description: '', files: []}
-      end
-      jira_hash[key][:files] << files
-      jira_hash[key][:files] = jira_hash[key][:files].flatten.sort.uniq
-    end
-
-    prs << {
-      pull_request: c[:pull_request],
-      jira:         jira_hash
-    }
-
-    # Reset for next PR
-    jira_hash = {}
-    jira  = []
-    files = []
-    next
-  end
-  jira << c[:jira_tickets]
-  files << c[:files]
-end
-
-puts <<~EOS
-This is the kind of information that is available from a git log
-using the command '#{git_log_command}'
-
-When the branch name and/or commit descriptions contain references to
-JIRA ticket numbers those reference can be extracted and information
-about the ticket can be retrieved from the associated project's
-JIRA server.  Currently only the ticket summary and description are
-being retrieved.
-
-The format of this automatically generated report is raw.  Additional work will
-be done to make the report more visually pleasing.
-
-This report was made from commits that occurred in the follow date range:
-  #{DATE_RANGE}
-
-Just verified this raw data against bitbucket's PR page.  Discouraged ...
-commits in log are not specifically tied to a PR.  I made a stupid ASSUMPTION
-that the order of the commits was associated with the PR but that is just nuts.
-
-Really need a good way to access the bitbucket PR record.  Did a quick look
-at what gems are available ... slim pickens.
-
-EOS
-
-prs.reverse.each do |pr|
-
-  puts "\n" + "="*65
-  puts "Pull Request"
-  puts "    date: #{pr[:pull_request][:date].strftime('%c')}"
-  puts "      id: #{pr[:pull_request][:id]}"
-  puts "    repo: #{pr[:pull_request][:repo]}"
-  puts "  source: #{pr[:pull_request][:source]}"
-  puts "  target: #{pr[:pull_request][:target]}"
-  puts
-
-  jira_hash = pr[:jira]
-
-  jira_hash.keys.sort.each do |key|
-    proj_id = key.split('-').first
-
-    begin
-      ticket = JIRA_CLIENT[proj_id].Issue.find(key)
-    rescue
-      ticket = OpenStruct.new(summary: 'not available', description: 'not available')
-    end
-
-    jira_hash[key][:summary]      = ticket.summary
-    jira_hash[key][:description]  = ticket.description
-
-    puts "\n#{key} - #{ticket.summary}"
-    puts "\t" + "#{ticket.description.gsub("\n","\n\t").strip}"
-    puts "\nFiles Effected:"
-    puts "\t" + "#{jira_hash[key][:files].join("\n\t").chomp}"
-  end
-
-end # prs.reverse.each do |pr|
 
