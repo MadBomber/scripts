@@ -75,8 +75,8 @@ EOS
 cli_helper(desc) do |o|
 
   o.int     '-p', '--pull_request', 'Pull Request ID'
-  o.path    '-w', '--work_dir',     'Working Directory',  default: Pathname.pwd
-  o.string  '-o', '--output',       'Output filename',    default: 'CHANGELOG.txt'
+  o.path    '-w', '--work_dir',     'Working Directory (Default: $CWD)',        default: Pathname.pwd
+  o.string  '-o', '--output',       'Output filename (Default: CHANGELOG.txt)', default: 'CHANGELOG.txt'
 
 end
 
@@ -250,6 +250,8 @@ end
 
 # TODO: take multiple PR numbers from the command line.
 
+puts "Retrieving PR ##{configatron.pull_request} ..." if verbose?
+
 begin
   pr = get_pull_request configatron.pull_request
 rescue
@@ -409,6 +411,13 @@ end
 ######################################################
 # Main
 
+at_exit do
+  puts "Done." if verbose?
+end
+
+
+puts "Executing: #{git_log_command} ..." if verbose?
+
 result = `#{git_log_command}`.split("\n")
 
 max_commits   = 3000
@@ -422,6 +431,9 @@ commits = {} # key = id[0,11]
 commit  = {}
 
 jira_hash = Hash.new
+
+
+puts "Parsing git log ..." if verbose?
 
 result.each do |a_line|
   # NOTE: Running backwards in time
@@ -458,6 +470,10 @@ end # result.each do |a_line|
 
 output_path = configatron.work_dir + configatron.output
 backup_path = configatron.work_dir + (configatron.output + '.bak')
+
+
+puts "Creating #{output_path} ..." if verbose?
+
 
 if output_path.exist?
   output_path.rename(backup_path)
