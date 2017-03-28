@@ -7,6 +7,7 @@
 ##  By:   Dewayne VanHoozer (dvanhoozer@gmail.com)
 #
 
+
 require 'yaml'
 require 'ruby-progressbar'
 
@@ -44,6 +45,7 @@ end
 
 abort_if_errors
 
+installed_gems = `gem list`.split("\n").map{|g| g.split().first}
 
 ######################################################
 # Local methods
@@ -61,12 +63,10 @@ end
 ap configatron.to_h  if verbose? || debug?
 
 
-array_of_gems = configatron.file.read.split("\n")
-
+array_of_gems = configatron.file.read.split("\n").uniq.select{|g| !installed_gems.include?(g)}
 
 gem_count   = array_of_gems.size
 batch_size  = 10
-
 
 progressbar = ProgressBar.create(
     title: 'Gems',
