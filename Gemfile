@@ -16,7 +16,6 @@ gem 'docx'                    # a ruby library/gem for interacting with .docx fi
 gem 'ffi-ncurses'             # An FFI wrapper around ncursesw 5.x for MRI Ruby 1.8.x, 1.9.x and JRuby.
 gem 'geek_painter'            # A very simple DSL to generate a colored shell prompt string to use in *nix OS terminals
 gem 'github_api'              # Ruby client for the official GitHub API
-gem 'gruff'                   # Beautiful graphs for one or multiple datasets.
 gem 'irbtools'                # Irbtools happy IRB.
 gem 'irbtools-more'           # irbtools-more adds bond and looksee to IRB.
 gem 'jira-ruby'               # Ruby Gem for use with the Atlassian JIRA REST API
@@ -31,7 +30,6 @@ gem 'ohai'                    # Ohai profiles your system and emits JSON
 gem 'phashion'                # Simple wrapper around the pHash library - precepual hashing to find dup images
 gem 'progress_bar'            # Simple Progress Bar for output to a terminal
 gem 'rethinkdb_helper'        # A wrapper around the ruby rethinkdb gem
-gem 'rmagick'                 # Ruby binding to ImageMagick
 gem 'ruby-progressbar'        # never leave the user guessing
 gem 'sketches'                # Sketches allows you to create and edit Ruby code from the comfort of your editor, while having it safely reloaded in IRB whenever changes to the code are saved.
 gem 'slop'                    # Simple Lightweight Option Parsing
@@ -53,3 +51,7 @@ gem 'guard-rubycritic'        # Listens to modifications and detects smells in R
 gem 'rubocop'                 # Automatic Ruby code style checking tool.
 gem 'rubycritic'              # RubyCritic is a Ruby code quality reporter
 #
+#
+# Problems ......
+# gem 'gruff'                   # Beautiful graphs for one or multiple datasets.
+# gem 'rmagick'                 # Ruby binding to ImageMagick
