@@ -27,7 +27,7 @@ gem 'mail'                    # Mail provides a nice Ruby DSL for making, sendin
 gem 'nenv'                    # Convenience wrapper for Ruby's ENV
 gem 'nokogiri'                # Nokogiri (鋸) is an HTML, XML, SAX, and Reader parser
 gem 'ohai'                    # Ohai profiles your system and emits JSON
-gem 'phashion'                # Simple wrapper around the pHash library - precepual hashing to find dup images
+# gem 'phashion'                # Simple wrapper around the pHash library - precepual hashing to find dup images
 gem 'progress_bar'            # Simple Progress Bar for output to a terminal
 gem 'rethinkdb_helper'        # A wrapper around the ruby rethinkdb gem
 gem 'ruby-progressbar'        # never leave the user guessing

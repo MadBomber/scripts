@@ -11,6 +11,9 @@
 require 'awesome_print'
 require 'json'
 require 'tty-table'
+require 'tty-screen'
+
+screen = TTY::Screen.new
 
 header = [
   'Container ID',
@@ -29,8 +32,12 @@ container_ids.each do |cid|
   details = JSON.parse(`docker inspect #{cid}`).first
   # ap details
 
-  key         = details["HostConfig"]["PortBindings"].keys.first
-  port        = key.nil? ? 'N/A' : details["HostConfig"]["PortBindings"][key].first["HostPort"]
+  if details["HostConfig"]["PortBindings"].nil?
+    port        = 'N/A'
+  else
+    key         = details["HostConfig"]["PortBindings"].keys.first
+    port        = key.nil? ? 'N/A' : details["HostConfig"]["PortBindings"][key].first["HostPort"]
+  end
 
   status      = details["State"]["Status"]
   name        = details["Name"][1,99]
@@ -79,26 +86,23 @@ kb << [ "docker ps",
         "shows all currently running containers"
       ]
 
-kb << [ "bin/delete_docker_images_etal.rb --delete-containers --delete-images",
-        "cleans up the docker mess on your workstation by deleting everything"
+kb << [ "delete_docker_junk.rb --delete-containers",
+        "Delete containers; faster rebuild with local images"
       ]
 
-kb << [ "bin/docker_cui_create.sh db redis web",
-        "builds and starts this project's containers"
+kb << [ "delete_docker_junk.rb --delete-images",
+        "Delete docker images"
       ]
 
-minmax = kb.map{|entry| entry[0].size}.minmax
-guess1 = minmax.first + ( (minmax.last - minmax.first) / 2)
-
-minmax = kb.map{|entry| entry[1].size}.minmax
-guess2 = minmax.first + ( (minmax.last - minmax.first) / 2)
-
+kb << [ "delete_docker_junk.rb --all",
+        "Delete docker containers and images"
+      ]
 
 table = TTY::Table.new(['KnowledgeBase of Commands', 'Description'], kb)
 puts table.render(:unicode,
                   border: {separator: :each_row},
+                  width:          screen.width-4, # tty-table has bug with padding
                   resize:         true,
-                  multiline:      true,
-                  # column_widths:  [guess1, guess2]
+                  multiline:      false,  # tty-table has bug with multiline=true and padding
+                  padding:        [0, 1], # 1 character on left and right
                  )
-
