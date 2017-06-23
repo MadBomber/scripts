@@ -187,7 +187,9 @@ homebrew/science/vips
 voldemort
 watchman
 websocketd
+wrk
 x264
+xmlformat
 xvid
 yadm
 yank
