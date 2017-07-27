@@ -96,6 +96,12 @@ ActiveRecord::Base.establish_connection( configatron.database_config )
 ######################################################
 # Local methods
 
+class String
+  def scrub
+    '"' + gsub('"',"'") + '"'
+  end
+end
+
 def print_header(a_hash)
   gap     = 3
   spaces  = " "*132
@@ -143,12 +149,26 @@ def print_report(an_array_of_uniform_hashes)
   end
 end
 
-def export_csv(an_array_of_uniform_hashes)
-  puts "stub for export_csv"
+
+def export(an_array_of_uniform_hashes, sep, header)
+  first_record = header
+  an_array_of_uniform_hashes.each do |data_hash|
+    if first_record
+      puts data_hash.keys.map{|key| key.scrub}.join(sep)
+      first_record = false
+    end
+    puts data_hash.values.map{|value| value.scrub}.join(sep)
+  end
 end
 
-def export_tab(an_array_of_uniform_hashes)
-  puts "stub for export_tab"
+
+def export_csv(an_array_of_uniform_hashes, header: true)
+  export(an_array_of_uniform_hashes, ',', header)
+end
+
+
+def export_tab(an_array_of_uniform_hashes, header: true)
+  export(an_array_of_uniform_hashes, "\t", header)
 end
 
 
