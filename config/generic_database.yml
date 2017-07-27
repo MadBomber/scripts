@@ -1,0 +1,21 @@
+# config/generic_database,ynl
+
+default: &common
+  adapter:  <%= ENV['DBADAPTER'] || 'postgresql' %>
+  pool:     <%= (ENV['DBPOOL'] || '15').to_i %>
+  timeout:  5000
+  host:     <%= ENV['DBHOST']  || 'localhost' %>
+  port:     <%= (ENV['DBPORT'] || '5432').to_i %>
+  username: <%= ENV['DBUSER'] %>
+  password: <%= ENV['DBPASS'] %>
+  database: <%= ENV['DBNAME'] + '_' + (defined?(Rails) ? Rails.env : (ENV['RAILS_ENV'] || 'development') ) %>
+
+
+development:
+  <<: *common
+
+test:
+  <<: *common
+
+production:
+  <<: *common
