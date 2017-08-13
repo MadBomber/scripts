@@ -132,6 +132,10 @@ end
 
 
 def print_report(an_array_of_uniform_hashes)
+  if an_array_of_uniform_hashes.empty?
+    puts "Nothing to report ..."
+    return nil
+  end
   headers   = an_array_of_uniform_hashes.first.keys
   zeros     = headers.map{|key| key.size}
   max_size  = Hash[headers.zip(zeros)]
