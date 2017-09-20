@@ -35,15 +35,19 @@ last_desc_start_col = 30  # Pick an acceptable starting place
 
 
 if ARGV.empty?
-  gemfile = Pathname.pwd + 'Gemfile'
+  gemfile_path = Pathname.pwd
 else
-  gemfile = Pathname.new ARGV.first
+  gemfile_path = Pathname.new ARGV.first
 end
+
+gemfile = gemfile_path.directory? ? gemfile_path + 'Gemfile' : gemfile_path
+gemfile = (gemfile_path + 'gems.rb') unless gemfile.exist?
+
 
 unless gemfile.exist?
   puts
-  puts "ERROR: Invalid Gemfile path"
-  puts "       #{gemfile}"
+  puts "ERROR: Invalid path - 'Gemfile' or 'gems.rb' does not exist"
+  puts "       #{gemfile.parent}"
   puts
   exit(1)
 end

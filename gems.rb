@@ -13,6 +13,7 @@ end
 
 gem 'docopt'                  # A command line option parser, that will make you smile.
 gem 'docx'                    # a ruby library/gem for interacting with .docx files
+gem 'facter'                  # Facter, a system inventory tool
 gem 'ffi-ncurses'             # An FFI wrapper around ncursesw 5.x for MRI Ruby 1.8.x, 1.9.x and JRuby.
 gem 'geek_painter'            # A very simple DSL to generate a colored shell prompt string to use in *nix OS terminals
 gem 'github_api'              # Ruby client for the official GitHub API
