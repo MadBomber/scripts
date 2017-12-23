@@ -7,8 +7,10 @@ gem 'clipboard'               # Easy access to the clipboard on Linux, MacOS and
 gem 'colortail'               # Tail a file and color lines based on regular expressions within that line
 gem 'debug_me'                # A tool to print the labeled value of variables.
 
-if ENV['RUBY_VERSION'] == 'ruby-2.3.3'
+if 'ruby-2.3.3' == ENV['RUBY_VERSION']
   gem 'did_you_mean', '~>1.0.2'  # Newer versions require Ruby v2.4
+elsif  'ruby-2.4.2' == ENV['RUBY_VERSION']
+  gem 'did_you_mean', '~>1.1.2'  # Newer versions require Ruby v2.5
 end
 
 gem 'docopt'                  # A command line option parser, that will make you smile.
