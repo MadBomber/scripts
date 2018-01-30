@@ -177,6 +177,7 @@ tmpwatch
 tmux
 tomcat
 translate-shell
+tre
 tree
 unixodbc
 unrar

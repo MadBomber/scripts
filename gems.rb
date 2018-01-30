@@ -34,6 +34,7 @@ gem 'ohai'                    # Ohai profiles your system and emits JSON
 gem 'progress_bar'            # Simple Progress Bar for output to a terminal
 gem 'rethinkdb_helper'        # A wrapper around the ruby rethinkdb gem
 gem 'ruby-progressbar'        # never leave the user guessing
+gem 'sanitize'                # Whitelist-based HTML and CSS sanitizer.
 gem 'sketches'                # Sketches allows you to create and edit Ruby code from the comfort of your editor, while having it safely reloaded in IRB whenever changes to the code are saved.
 gem 'slop'                    # Simple Lightweight Option Parsing
 gem 'sugar_refinery'          # The Ruby Sugar Refinery is a collection of tiny refinements.
