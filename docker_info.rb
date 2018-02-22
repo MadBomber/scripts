@@ -13,7 +13,7 @@ require 'json'
 require 'tty-table'
 require 'tty-screen'
 
-screen = TTY::Screen.new
+screen = TTY::Screen
 
 header = [
   'Container ID',
