@@ -1,0 +1,9 @@
+# jarify a directory of java files
+# requires one parameter - the name of the "main" class
+
+javac *.java
+echo Main-Class: $1 > manifest.txt
+jar cvfm $1.jar manifest.txt *.class
+
+echo "Execuite: java -jar $1.jar"
+
