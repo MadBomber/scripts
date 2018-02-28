@@ -1,0 +1,63 @@
+#!/usr/bin/env ruby
+######################################################
+###
+##  File: daemon_control
+##  Desc: daemon control element of the im_gateway.rb server
+#
+# NOTE: Supports the following command line arguments:
+#       start stop restart status
+#
+# NOTE: The pid file is parent directory of the server as:
+#       #{server.basename}.pid
+
+require 'pathname'
+require 'daemons'
+
+me = Pathname.new __FILE__
+
+usage = <<~USAGE
+
+  Usage:  #{me.basename} rb_program [start | stop | restart | status]
+
+  Where:
+    rb_program is a path to a Ruby program.
+
+  Options:
+    start         start an instance of the rb_program
+    stop          stop all instances of the rb_program
+    restart       stop all instances and restart them afterwards
+    reload        send a SIGHUP to all instances of the rb_program
+    run           start the rb_program and stay on top
+    zap           set the rb_program to a stopped state
+    status        show status (PID) of rb_program instances
+
+  NOTE:
+
+    A pid (process ID) file is used in the same directory as
+    the rb_program.  It has the same base name with the extension
+    of '.pid'
+
+USAGE
+
+
+if  ARGV.empty?               ||
+    ARGV.include?('--help')   ||
+    ARGV.include?('-h')       ||
+    %w[start stop restart status].include?(ARGV[0].downcase)
+  puts usage
+  exit
+end
+
+rb_program = Pathname.new(ARGV.shift)
+
+unless rb_program.exist?
+  puts <<~ERROR
+
+    Error: Program does not exist.  #{rb_program}
+
+  ERROR
+  puts usage
+  exit(-1)
+end
+
+Daemons.run(rb_program.realpath)

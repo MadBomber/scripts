@@ -5,12 +5,15 @@ gem 'bundler'                 # The best way to manage your application's depend
 gem 'cli_helper'              # An encapsulation of an integration of slop, nenv, inifile and configatron.
 gem 'clipboard'               # Easy access to the clipboard on Linux, MacOS and Windows.
 gem 'colortail'               # Tail a file and color lines based on regular expressions within that line
+gem 'daemons'                 # A toolkit to create and control daemons in different ways
 gem 'debug_me'                # A tool to print the labeled value of variables.
 
 if 'ruby-2.3.3' == ENV['RUBY_VERSION']
   gem 'did_you_mean', '~>1.0.2'  # Newer versions require Ruby v2.4
 elsif  'ruby-2.4.2' == ENV['RUBY_VERSION']
   gem 'did_you_mean', '~>1.1.2'  # Newer versions require Ruby v2.5
+else
+  gem 'did_you_mean'             # "Did you mean?" experience in Ruby
 end
 
 gem 'docopt'                  # A command line option parser, that will make you smile.
@@ -26,6 +29,7 @@ gem 'jirasync'                # jirasync synchronises jira projects to the local
 gem 'json'                    # This json is bundled with Ruby
 gem 'linefit'                 # LineFit is a linear regression math class.
 gem 'lipsum'                  # Get placeholder text from lipsum.com
+gem 'log_analyzer'            # log_analyzer gem is created to get statistics about your views rendering performance.
 gem 'mail'                    # Mail provides a nice Ruby DSL for making, sending and reading emails.
 gem 'nenv'                    # Convenience wrapper for Ruby's ENV
 gem 'nokogiri'                # Nokogiri (鋸) is an HTML, XML, SAX, and Reader parser
@@ -36,6 +40,7 @@ gem 'rethinkdb_helper'        # A wrapper around the ruby rethinkdb gem
 gem 'ruby-progressbar'        # never leave the user guessing
 gem 'sanitize'                # Whitelist-based HTML and CSS sanitizer.
 gem 'sketches'                # Sketches allows you to create and edit Ruby code from the comfort of your editor, while having it safely reloaded in IRB whenever changes to the code are saved.
+gem 'sinatra'                 # Classy web-development dressed in a DSL
 gem 'slop'                    # Simple Lightweight Option Parsing
 gem 'sugar_refinery'          # The Ruby Sugar Refinery is a collection of tiny refinements.
 gem 'summary'                 # This is a simple gem that generates introduction text from a long text, it will always break the text at the end of the last word near to the limit you informed as argument.
