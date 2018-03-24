@@ -2,32 +2,37 @@
 ##########################################
 ###
 ##  File: brewt
-##  Desc: Like "rake -T"
+##  Desc: Like "gemt" but much slower
 ##
 #
+
+require 'pathname'
+
+me = Pathname.new(__FILE__)
 
 require 'awesome_print'
 require 'terminal-size'
 require 'word_wrapper'
 require 'ruby-progressbar'
 
-def usage
-  puts <<-EOS
+USAGE = <<~EOS
 
-list brew installed top-level packages -- like "rake -T"
+  list brew installed top-level packages -- like "rake -T"
 
-usage: #{__FILE__.basename} [-h | --help | --installed] [search_string]
+  usage: #{me.basename} [-h | --help | --installed] [search_string]
 
-Where:
+  Where:
 
-  search_string is an optional keyword or phrase
+    search_string is an optional keyword or phrase
 
-Example:
+  Example:
 
-  brewt php      shows list of the php packages
+    brewt crystal   shows list of the brew installed packages
+                    that have "crystal" as part of its name or
+                    description.
 
 EOS
-end
+
 
 class NilClass
   def split(*args)
@@ -42,7 +47,7 @@ leaves = []
 
 unless ARGV.empty?
   if ARGV.include?('-h')  ||  ARGV.include?('--help')
-    usage
+    puts USAGE
     exit
   end
   if ARGV.include?('--installed')

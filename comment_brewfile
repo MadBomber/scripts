@@ -1,0 +1,103 @@
+#!/usr/bin/env ruby
+##########################################
+###
+##  File: comment_brewfile
+##  Desc: Add comments to a Brewfile
+##
+#
+
+require 'awesome_print'
+require 'pathname'
+require 'ruby-progressbar'
+
+class NilClass
+  def split(*args)
+    [" "]
+  end
+  def strip
+    ""
+  end
+  def to_s
+    ""
+  end
+  def empty?
+    true
+  end
+end
+
+
+last_desc_start_col = 30  # Pick an acceptable starting place
+
+
+if ARGV.empty?
+  brewfile_path = Pathname.pwd
+else
+  brewfile_path = Pathname.new ARGV.first
+end
+
+brewfile = brewfile_path.directory? ? brewfile_path + 'Brewfile' : brewfile_path
+
+unless brewfile.exist?
+  puts
+  puts "ERROR: Invalid path - 'Brewfile' does not exist"
+  puts "       #{brewfile.parent}"
+  puts
+  exit(1)
+end
+
+brewfile_bak = Pathname.new (brewfile.to_s + '.bak')
+
+brewfile.rename( brewfile_bak )
+
+brewfile = brewfile.open('w')
+
+brewfile_lines = brewfile_bak.read.split("\n")
+
+progressbar = ProgressBar.create(
+    title: 'Packages',
+    total: brewfile_lines.size,
+    format: '%t: [%B] %c/%C %j%% %e',
+    output: STDERR
+  )
+
+brewfile_lines.each do |a_line|
+  progressbar.increment
+
+  if a_line.include?('#')
+    # don't document something that is already documented
+    # Also by side-effect ignores comment lines
+    brewfile.puts a_line.chomp
+    last_desc_start_col = a_line.index('#')
+    next
+  end
+
+  a_line.chomp!
+
+  if a_line.empty?
+    brewfile.puts
+    next
+  end
+
+  # At this point a_line should only contain a package name
+
+  summary     = `brew info #{a_line}`.split("\n")[1] # summary is always the 2nd line
+
+  unless summary.empty?
+
+    sz          = a_line.length
+    spacer_cnt  = last_desc_start_col - sz
+
+    if spacer_cnt <= 0
+      spacer_cnt          = 2               # number of spaces past end of current line
+      last_desc_start_col = sz + spacer_cnt
+    end
+
+    a_line += (" "*spacer_cnt) + "# #{summary}"
+
+  end # unless summary.empty?
+
+  brewfile.puts a_line
+
+end # of brewfile.readlines.each do |a_line|
+
+brewfile.close

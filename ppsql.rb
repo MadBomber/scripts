@@ -22,7 +22,10 @@ configatron.version = '0.0.1'
 HELP = <<EOHELP
 Important:
 
-  Put important stuff here.
+  Consider using the utility 'pg_format' instead
+  of this program.  You can get it using
+
+    brew install pgformatter
 
 EOHELP
 
