@@ -1,0 +1,76 @@
+#!/usr/bin/env ruby
+
+require 'awesome_print'
+require 'debug_me'
+include DebugMe
+
+require 'pathname'
+require 'set'
+
+# TODO: Add some usage text
+
+me      = Pathname.new(__FILE__).realpath
+my_name = me.basename
+my_dir  = me.parent
+
+brewfile_name = 'Brewfile'
+
+USAGE = <<~END_USAGE
+
+  Usage: #{my_nane} [path_to_brewfile]
+
+  TODO: Add some usage text
+
+END_USAGE
+
+
+if ARGV.empty?
+  brewfile_path = Pathname.pwd + brewfile_name
+else
+  bf_path = Pathname.new(ARGV.shift)
+  if bf_path.exist?
+    if bf_path.directory?
+      brewfile_path = bf_path + brewfile_name
+      unless brewfile_path.exist?
+        puts <<~ERROR
+
+          Error: File does not exist:  #{brewfile_path}
+
+        ERROR
+        exit(-1)
+      end
+    else
+      brewfile_path = bf_path
+    end
+  else
+    puts <<~ERROR
+
+      Error: Pathgiven does not exist: #{bf_path}
+
+    ERROR
+    exit(-1)
+  end
+end
+
+
+installed = `brew leaves`.split("\n")
+
+bfh = Hash.new
+
+brewfile_path.
+  read.
+  split("\n").
+  select{|a_line| !a_line.empty? && !a_line.start_with?('#')}.
+  each do |a_line|
+    key       = a_line.split('#').first.strip
+    bfh[key]  = a_line
+  end
+
+installed_set = installed.to_set
+
+not_installed = bfh.keys.to_set - installed_set
+
+not_installed.each do |package|
+  puts "#{bfh[package]}"
+end
+

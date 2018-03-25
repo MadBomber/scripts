@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem 'address_extractor'       # Give it text.  It finds addresses in it.
 gem 'awesome_print'           # Pretty print Ruby objects with proper indentation and colors
 gem 'bundler'                 # The best way to manage your application's dependencies
 gem 'cli_helper'              # An encapsulation of an integration of slop, nenv, inifile and configatron.
@@ -18,6 +19,7 @@ end
 
 gem 'docopt'                  # A command line option parser, that will make you smile.
 gem 'docx'                    # a ruby library/gem for interacting with .docx files
+gem 'email_address'           # This gem provides a ruby language library for working with and validating email addresses. By default, it validates against conventional usage, the format preferred for user email addresses. It can be configured to validate against RFC “Standard” formats, common email service provider formats, and perform DNS validation.
 gem 'facter'                  # Facter, a system inventory tool
 gem 'ffi-ncurses'             # An FFI wrapper around ncursesw 5.x for MRI Ruby 1.8.x, 1.9.x and JRuby.
 gem 'geek_painter'            # A very simple DSL to generate a colored shell prompt string to use in *nix OS terminals
