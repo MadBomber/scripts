@@ -25,7 +25,7 @@ gem 'ffi-ncurses'             # An FFI wrapper around ncursesw 5.x for MRI Ruby 
 gem 'geek_painter'            # A very simple DSL to generate a colored shell prompt string to use in *nix OS terminals
 gem 'github_api'              # Ruby client for the official GitHub API
 gem 'irbtools'                # Irbtools happy IRB.
-gem 'irbtools-more'           # irbtools-more adds bond and looksee to IRB.
+# gem 'irbtools-more'           # irbtools-more adds bond and looksee to IRB.
 gem 'jira-ruby'               # Ruby Gem for use with the Atlassian JIRA REST API
 gem 'jirasync'                # jirasync synchronises jira projects to the local file system
 gem 'json'                    # This json is bundled with Ruby
