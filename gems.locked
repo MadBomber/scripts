@@ -191,6 +191,7 @@ GEM
     multi_json (1.13.1)
     multi_xml (0.6.0)
     multipart-post (2.0.0)
+    multiprocessing (0.0.2)
     mustermann (1.0.2)
     necromancer (0.4.0)
     nenv (0.3.0)
@@ -233,6 +234,12 @@ GEM
       tty-color (~> 0.4.0)
     path_expander (1.0.3)
     pdf-core (0.7.0)
+    pg (1.0.0)
+    pgsync (0.4.0)
+      multiprocessing
+      parallel
+      pg
+      slop (>= 4.2.0)
     plist (3.4.0)
     powerpack (0.1.1)
     prawn (2.2.2)
@@ -402,6 +409,7 @@ DEPENDENCIES
   nenv
   nokogiri
   ohai
+  pgsync
   progress_bar
   rethinkdb_helper
   rubocop
