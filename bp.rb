@@ -8,6 +8,8 @@
 require 'pathname'
 require 'awesome_print'
 require 'date'
+require 'debug_me'
+include DebugMe
 
 class BloodPressureMeasurement
 
@@ -24,28 +26,25 @@ class BloodPressureMeasurement
 	def to_s
 		"#{@systolic} / #{@diastolic} @#{@rate}"
 	end
-
 end	# of class BloodPressureMeasurement
 
 
 class String
-
 	def to_bpm
 		BloodPressureMeasurement.new( self[0,3].to_i, self[4,3].to_i, self[-2,2].to_i )
 	end
-
 end # end of class String
 
 
 if ARGV.empty? or '-h' == ARGV.first or '--help' == ARGV.first
 
-	puts <<EOS
+	puts <<~EOS
 
-Usage: np.rb file_path
+		Usage: np.rb file_path
 
-Where: file_path is a path to a file of eMail messages
+		Where: file_path is a path to a file of eMail messages
 
-EOS
+	EOS
 
 	exit(-1)
 end
@@ -54,12 +53,12 @@ email_path = Pathname.new ARGV.first
 
 unless email_path.exist?
 
-	puts <<EOS
+	puts <<~EOS
 
-ERROR: File does not exist.
-       #{email_path}
+		ERROR: File does not exist.
+		       #{email_path}
 
-EOS
+	EOS
 
 	exit(-1)
 end
@@ -79,8 +78,7 @@ email_path.readlines.each do |a_line|
 	if 100 < a_line[0,3].to_i
 		observations[datetime] = a_line.to_bpm
 	end
-
-end
+end # email_path.readlines.each do |a_line|
 
 out_hash = Hash.new
 
@@ -97,8 +95,7 @@ observations.each_pair do |k,v|
 	else
 		out_hash[key] = [ [o_time, v] ]
 	end
-
-end
+end # observations.each_pair do |k,v|
 
 out_hash.sort.each do |entry|
 
@@ -107,29 +104,37 @@ out_hash.sort.each do |entry|
  	entry.last.sort.each do |e|
  		print "  #{e.first[0,5]}  #{e.last}"
  	end
+end # out_hash.sort.each do |entry|
 
-end
-
-puts; puts
+print "\n\n"
 
 #################################################
 ## Draw a graph
 
-require 'gruff'
+require 'daru'
+require 'daru/plotly'
+include Daru::Plotly::Methods
+
 require 'linefit'
 
 
+# title:string  			The plot title
+# data_points:array 	and array of [x,y] entries where x is data-time, y is BloodPressureMeasurement
+# filter:proc 				used to filter data_points
+# names:array 				array of symbols used to extract data from BloodPressureMeasurement
 def generate_plot( title, data_points, filter, *names )
+
+	debug_me{[ :title, :names ]}
 
 	line_fit 		= LineFit.new
 	line_fit2 	= LineFit.new
 
 	x_labels	= Hash.new
 	x_values 	= Array.new
-	y_values 	= Array.new
+	y_values 	= Hash.new
 
-	names.size.times do |x|
-		y_values[x]	= Array.new
+	names.each do |series_name|
+		y_values[series_name]	= Array.new
 	end
 
 	e_no = 0
@@ -139,47 +144,54 @@ def generate_plot( title, data_points, filter, *names )
 			x_labels[e_no]  = entry.first.strftime('%a')[0,1].downcase
 			x_values 			 << e_no
 			e_no += 1
-			names.size.times do |x|
-				m = names[x]
-				y_values[x]	<< entry.last.send(m)
+
+			names.each do |series_name|
+				y_values[series_name]	<< entry.last.send(series_name)
 			end
 		end
 	end
 
-	line_fit.setData( x_values,  y_values[0] )
-	line_fit2.setData( x_values, y_values[1] )
+	line_fit.setData( x_values,  y_values[names[0]] )
+	line_fit2.setData( x_values, y_values[names[1]] )
 
-	y_values[names.size] 	 = Array.new
-	y_values[names.size+1] = Array.new
+	y_values[:trend] 	= Array.new
+	y_values[:trend2] = Array.new
 
 
 	x_values.each do |x|
-		y_values[names.size] 	 << line_fit.forecast(x)
-		y_values[names.size+1] << line_fit2.forecast(x)
+		y_values[:trend] 	<< line_fit.forecast(x)
+		y_values[:trend2] << line_fit2.forecast(x)
 	end
 
-	g = Gruff::Line.new(800)
-	g.title = "#{title}"
+	# TODO: replace data stuff with a data_frame from "daru"
+	d8_index = Daru::DateTimeIndex.date_range(
+											start: 	'2018-4-1',
+											end: 		'2018-5-31',
+											freq: 	'D'
+										)
 
-	g.theme = {
-	  :colors => ['black', 'black', 'black', 'red', 'red'],
-	  :marker_color 			=> 'black',
-	  :font_color 				=> 'black',
-	  :background_colors 	=> 'transparent'
-	}
+	values 			= y_values
+	values[:x] 	= x_values
 
-	g.labels = x_labels
-
-	names.size.times do |x|
-		g.data( names[x], y_values[x] )
-	end
-
-	g.data( :trend,  y_values[names.size] )
-	g.data( :trend2, y_values[names.size+1] )
+	cat_index 	= Daru::CategoricalIndex.new(x_values)
+	data_frame 	= Daru::DataFrame.new(values, index: cat_index)
 
 
-	g.write("#{title.downcase.gsub(' ','_')}.png")
 
+	puts data_frame.data
+
+	graph = plot(
+	  data_frame,
+	  x: :x,
+	  y: names+[:trend, :trend2],
+	  layout: {
+	    title: title,
+	    xaxis: { title: 'DateTime' },
+	    yaxis: { title: 'Measurement' }
+	  },
+	)
+
+	graph.generate_html
 end	# of def generate_plot( title, data_points, filter, *names )
 
 
@@ -199,27 +211,24 @@ end
 
 my_data = observations.sort
 
-generate_plot( 'BP History', 
-								my_data, 
+
+
+generate_plot( 'BP History',
+								my_data,
 								everything,
 								:systolic, :diastolic, :rate
-							) 
+							)
 
-
-generate_plot( 'BP History Morning', 
-								my_data, 
+__END__
+generate_plot( 'BP History Morning',
+								my_data,
 								morning,
 								:systolic, :diastolic, :rate
-							) 
+							)
 
 
-generate_plot( 'BP History Evening', 
-								my_data, 
+generate_plot( 'BP History Evening',
+								my_data,
 								evening,
 								:systolic, :diastolic, :rate
-							) 
-
-
-
-
-
+							)

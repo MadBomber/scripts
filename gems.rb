@@ -7,6 +7,8 @@ gem 'cli_helper'              # An encapsulation of an integration of slop, nenv
 gem 'clipboard'               # Easy access to the clipboard on Linux, MacOS and Windows.
 gem 'colortail'               # Tail a file and color lines based on regular expressions within that line
 gem 'daemons'                 # A toolkit to create and control daemons in different ways
+gem 'daru'                    # Data Analysis in RUby
+gem 'daru-plotly'             # Draw graph with daru
 gem 'debug_me'                # A tool to print the labeled value of variables.
 
 if 'ruby-2.3.3' == ENV['RUBY_VERSION']
