@@ -25,6 +25,7 @@ gem 'email_address'           # This gem provides a ruby language library for wo
 gem 'facter'                  # Facter, a system inventory tool
 gem 'ffi-ncurses'             # An FFI wrapper around ncursesw 5.x for MRI Ruby 1.8.x, 1.9.x and JRuby.
 gem 'geek_painter'            # A very simple DSL to generate a colored shell prompt string to use in *nix OS terminals
+gem 'git-up'                  # git command to fetch and rebase all branches
 gem 'github_api'              # Ruby client for the official GitHub API
 gem 'irbtools'                # Irbtools happy IRB.
 # gem 'irbtools-more'           # irbtools-more adds bond and looksee to IRB.
