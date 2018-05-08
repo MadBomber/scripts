@@ -19,7 +19,7 @@ GEM
     backports (3.11.3)
     binding.repl (3.0.0)
     cd (1.0.1)
-    chef-config (14.0.202)
+    chef-config (14.1.1)
       addressable
       fuzzyurl
       mixlib-config (~> 2.0)
