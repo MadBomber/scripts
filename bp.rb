@@ -140,15 +140,19 @@ def generate_plot( title, data_points, filter, *names )
 	e_no = 0
 
 	data_points.each do |entry|
-		if filter.call(entry.first)
-			x_labels[e_no]  = entry.first.strftime('%a')[0,1].downcase
-			x_values 			 << e_no
+		a_date 	= entry.first
+		x_value = ((a_date.year - 2000)*100.0 + a_date.yday.to_f + a_date.hour.to_f / 24.0).round(2)
+		y_value = entry.last.send(names.first)
+
+		if filter.call(a_date)
+			x_labels[e_no]  = x_value # a_date.strftime('%a')[0,1].downcase
+			x_values 			 << e_no # x_value
 			e_no += 1
 
 			names.each do |series_name|
 				y_values[series_name]	<< entry.last.send(series_name)
 			end
-		end
+		end # if filter.call(a_date)
 	end
 
 	line_fit.setData( x_values,  y_values[names[0]] )
@@ -204,28 +208,27 @@ morning = Proc.new do |d8_time|
 end
 
 evening = Proc.new do |d8_time|
-		d8_time.hour >= 19
+	d8_time.hour >= 19
 end
 
 # observations is a hash, turn it into an sorted array
 
 my_data = observations.sort
 
-
-
+=begin
 generate_plot( 'BP History',
 								my_data,
 								everything,
 								:systolic, :diastolic, :rate
 							)
 
-__END__
+
 generate_plot( 'BP History Morning',
 								my_data,
 								morning,
 								:systolic, :diastolic, :rate
 							)
-
+=end
 
 generate_plot( 'BP History Evening',
 								my_data,
