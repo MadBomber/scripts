@@ -31,6 +31,33 @@ def verbose?
   $options[:verbose]
 end
 
+PH_REGEX = /\b(__\S+__)\b/
+
+def find_placeholders(a_string)
+  return [] unless a_string.include? '__'
+
+  place_holders = a_string.scan(PH_REGEX).flatten.sort.uniq
+
+  debug_me(file: STDERR){[ :place_holders ]}
+
+  return place_holders
+end
+
+PH_VALUES = Hash.new
+
+def fill_placeholders(a_string, place_holders)
+  text = a_string.dup
+
+  place_holders.each do |place_holder|
+    unless PH_VALUES.has_key? place_holder
+      STDERR.puts "\nEnter value for #{place_holder} then press return:"
+      STDERR.print "> "
+      PH_VALUES[place_holder] = STDIN.gets.chomp
+    end
+    text.gsub!(place_holder, PH_VALUES[place_holder])
+  end
+  return text
+end
 
 usage = <<EOS
 
@@ -109,12 +136,19 @@ unless errors.empty?
   exit(1)
 end
 
+
 template_files.each do |template_file|
+
+debug_me{[ :template_file ]}
+
   if template_file.file?
     if '.erb' == template_file.extname.to_s
       puts ERB.new(template_file.read).result
     else
-      puts template_file.read
+      text  = template_file.read
+      phers = find_placeholders(text)
+      text  = fill_placeholders(text, phers) unless phers.empty?
+      puts text
     end
   else
     system "cp -R #{template_file} #{Pathname.pwd}"
