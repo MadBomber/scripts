@@ -35,6 +35,9 @@ class NilClass
   def strip
     ""
   end
+  def to_s
+    ''
+  end
 end
 
 unless ARGV.empty?
@@ -52,7 +55,8 @@ longest_desc = 0
 
 Gem::Specification.all.each do |gs|
   unless search_strings.empty?
-    thing = (gs.name + ' ' + gs.summary).downcase
+    thing = gs.name + ' ' + gs.summary.to_s + ' ' + gs.description.to_s
+    thing.downcase!
 
     found_one = false
     search_strings.each do |want_this|
@@ -64,7 +68,7 @@ Gem::Specification.all.each do |gs|
 
     next unless found_one
   end
-  gem_hash[gs.name] = gs.summary
+  gem_hash[gs.name] = gs
   longest_desc = gs.name.size if longest_desc < gs.name.size
 end
 
@@ -72,11 +76,17 @@ desc_start_col = longest_desc + 2
 
 width = Terminal.size[:width] - desc_start_col - 4
 
-gem_hash.each_pair do |k, v|
-  print "#{k}"
-  print " "*(desc_start_col - k.size)
-  text = WordWrapper::MinimumRaggedness.new(width, v.split("\n").first.strip).wrap
-  text += "https://rubygems.org/gems/#{k}"
+gem_hash.each_pair do |name, gs|
+  summary = gs.summary
+  print "#{name}"
+  print " "*(desc_start_col - name.size)
+  text = WordWrapper::MinimumRaggedness.new(width, summary.split("\n").first.strip).wrap
+  if gs.homepage.nil?
+    text += "https://rubygems.org/gems/#{name}"
+  else
+    text += gs.homepage
+  end
+
   text_array = text.split("\n")
   last_x = text_array.size-1
   text_array.each_index do |x|
