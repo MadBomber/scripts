@@ -48,7 +48,8 @@ cli_helper("__file_description__") do |o|
 
   o.bool    '-a', '--announce', 'Say the title of the article', default: false
   o.bool    '-c', '--cleanup',  'Cleanup the database',         default: false
-  o.bool    '-r', '--remove',   'Re,pve duplicate links',       default: false
+  o.integer '-l', '--last',     'List last X stories',          default: 0
+  o.bool    '-r', '--remove',   'Remove duplicate links',       default: false
   o.bool    '-s', '--save',     'Save to a database',           default: false
   o.string  '-u', '--url',      'URL for the RSS feed',         default: ENV['INFOWARS_RSS']
 
@@ -63,10 +64,11 @@ end
 
 # Error check your stuff; use error('some message') and warning('some message')
 
-abort_if_errors
-
-
-
+if ARGV.include?("-l") || ARGV.include?("--last")
+  if 0 == configatron.last
+    warning "You specificed the --last parameter but you forgot to say how many."
+  end
+end
 
 
 ######################################################
@@ -150,6 +152,7 @@ class RssFeed
 
     cleanup           if cleanup?
     remove_duplicates if remove?
+    show_last_stories(configatron.last) unless configatron.last.nil?
     get_last_pub_date # from the RC file
   end # def initialize(....
 
@@ -176,6 +179,7 @@ class RssFeed
 
   ########################################################
   private
+
   # Save an RSS item into the database
   def save(story)
     @table.insert(story.to_h).run(@conn) unless duplicate?(story)
@@ -232,13 +236,14 @@ class RssFeed
         story = Story.new(item)
       rescue => e
         STDERR.puts "\n\n" + e.to_s
-        debug_me{[ :item ]}
+        debug_me(file: STDERR){[ :item ]}
       end
       @table.replace(story.to_h).run(@conn)
     end
     print "\n\n"
     debug_me{[ :tot_count, :bad_count ]}
   end # def cleanup
+
 
   # Before there was class there was no check for duplication.
   # This methods removes duplicate entries based upon the value of
@@ -266,6 +271,19 @@ class RssFeed
 
     debug_me{[ :before_count, :deleted_count, :after_count ]}
   end # def remove_duplicates
+
+
+  def show_last_stories(how_many=10)
+    @table
+      .order_by(index: r.desc('published_on'))
+      .limit(how_many)
+      .run(@conn)
+      .map{|item| Story.new(item)}
+      .each do |story|
+        puts "\n" + story.to_s
+        story.announce    if announce?
+      end
+  end # def show_last_stories(how_many=10)
 end # class RssFeed
 
 
