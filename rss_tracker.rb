@@ -37,12 +37,18 @@ Important:
   database entries into the new keys used by the Story
   class.
 
+  The "remove" options is also basically a one-off.  It
+  looks at the database for entries with duplication link
+  values.  It keeps the last duplicate and deletes the rest
+  on the theory that the last entry has an updated meta-data.
+
 EOHELP
 
 cli_helper("__file_description__") do |o|
 
   o.bool    '-a', '--announce', 'Say the title of the article', default: false
   o.bool    '-c', '--cleanup',  'Cleanup the database',         default: false
+  o.bool    '-r', '--remove',   'Re,pve duplicate links',       default: false
   o.bool    '-s', '--save',     'Save to a database',           default: false
   o.string  '-u', '--url',      'URL for the RSS feed',         default: ENV['INFOWARS_RSS']
 
@@ -142,7 +148,8 @@ class RssFeed
     @db     = @conn.use(db)
     @table  = @db.table(table)
 
-    cleanup if cleanup?
+    cleanup           if cleanup?
+    remove_duplicates if remove?
     get_last_pub_date # from the RC file
   end # def initialize(....
 
@@ -232,6 +239,33 @@ class RssFeed
     print "\n\n"
     debug_me{[ :tot_count, :bad_count ]}
   end # def cleanup
+
+  # Before there was class there was no check for duplication.
+  # This methods removes duplicate entries based upon the value of
+  # link which is assumed to be unique on the website.
+  def remove_duplicates
+    before_count = @table.count().run(@conn)
+
+    dups = @table.group('link').count().run(@conn).select{|link, count| count > 1}
+
+    deleted_count = 0
+    dups.each_pair do |link, count|
+      results = @table
+                  .get_all(link, index: 'link')
+                  .order_by('published_on')
+                  .run(@conn)
+      (count-1).times do
+        dup = results.shift
+        @table.get(dup['id']).delete.run(@conn)
+        deleted_count += 1
+        puts "deleted id: #{dup['id']}"
+      end
+    end
+
+    after_count = @table.count().run(@conn)
+
+    debug_me{[ :before_count, :deleted_count, :after_count ]}
+  end # def remove_duplicates
 end # class RssFeed
 
 
