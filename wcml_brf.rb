@@ -12,8 +12,8 @@ require 'pp'
 require 'pathname'       # STDLIB
 require 'pathname_helpers'
 
-require 'bible_gateway'
-require 'pericope'
+require 'bible_gateway'  # An unofficial 'API' for BibleGateway.com.
+require 'pericope'       # Pericope is a gem for parsing Bible references.
 
 require 'nokogiri'       # Nokogiri (鋸) is an HTML, XML, SAX, and Reader parser
 require 'wcml_helpers'

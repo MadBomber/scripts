@@ -18,11 +18,11 @@ USAGE = <<~EOS
 
 EOS
 
-require 'debug_me'
+require 'debug_me'  # A tool to print the labeled value of variables.
 include DebugMe
 
-require 'awesome_print'
-require 'pathname'
+require 'awesome_print'  # Pretty print Ruby objects with proper indentation and colors
+require 'pathname'       # STDLIB
 
 class NilClass
   def split(*args)

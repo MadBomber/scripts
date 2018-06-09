@@ -12,8 +12,8 @@ require 'pp'
 require 'pathname'       # STDLIB
 require 'pathname_helpers'
 
-require 'bible_gateway'
-require 'pericope'
+require 'bible_gateway'  # An unofficial 'API' for BibleGateway.com.
+require 'pericope'       # Pericope is a gem for parsing Bible references.
 
 require 'docx'           # a ruby library/gem for interacting with .docx files
 require 'docx_helpers'
