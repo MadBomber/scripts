@@ -12,14 +12,14 @@
 #       of files, this utility adapted to other formats as well.
 #
 
-require 'awesome_print'
-require 'ruby-progressbar'
-require 'systemu'
+require 'awesome_print'  # Pretty print Ruby objects with proper indentation and colors
+require 'ruby-progressbar'  # Ruby/ProgressBar is a flexible text progress bar library for Ruby.
+require 'systemu'           # systemu
 
-require 'debug_me'
+require 'debug_me'          # A tool to print the labeled value of variables.
 include DebugMe
 
-require 'cli_helper'
+require 'cli_helper'        # An encapsulation of an integration of slop, nenv, inifile and configatron.
 include CliHelper
 
 configatron.version = '0.0.1'

@@ -11,21 +11,21 @@
 #
 
 
-require 'awesome_print'
-require 'date'
-require 'hashie'
-require 'htmlentities'
-require 'open-uri'
+require 'awesome_print'  # Pretty print Ruby objects with proper indentation and colors
+require 'date'           # STDLIB
+require 'hashie'         # Your friendly neighborhood hash library.
+require 'htmlentities'   # Encode/decode HTML entities
+require 'open-uri'       # STDLIB
 
-require 'rethinkdb'
+require 'rethinkdb'      # This package provides the Ruby driver library for the RethinkDB database server.
 include RethinkDB::Shortcuts
 
-require 'simple-rss'
+require 'simple-rss'     # A simple, flexible, extensible, and liberal RSS and Atom reader for Ruby. It is designed to be backwards compatible with the standard RSS parser, but will never do RSS generation.
 
-require 'debug_me'
+require 'debug_me'       # A tool to print the labeled value of variables.
 include DebugMe
 
-require 'cli_helper'
+require 'cli_helper'     # An encapsulation of an integration of slop, nenv, inifile and configatron.
 include CliHelper
 
 configatron.version = '0.0.2'

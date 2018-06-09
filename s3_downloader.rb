@@ -7,12 +7,12 @@
 ##  By:   Dewayne VanHoozer (dvanhoozer@gmail.com)
 #
 
-require 'debug_me'
+require 'debug_me'  # A tool to print the labeled value of variables.
 include DebugMe
 
-require 'pathname'
-require 'nenv'
-require 'slop'
+require 'pathname'  # STDLIB
+require 'nenv'      # Convenience wrapper for Ruby's ENV
+require 'slop'      # Simple Lightweight Option Parsing
 
 module Slop
   class PathOption < Option
@@ -27,7 +27,7 @@ module Slop
   end
 end # module Slop
 
-require 'aws-sdk'
+require 'aws-sdk'  # AWS SDK for Ruby
 
 me        = Pathname.new(__FILE__).realpath
 my_dir    = me.parent

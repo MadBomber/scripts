@@ -5,12 +5,12 @@
 ##  Desc: Displays the paragraph style and contents of an MS Word *.docx file
 #
 
-require 'awesome_print'
+require 'awesome_print'  # Pretty print Ruby objects with proper indentation and colors
 
-require 'pathname'
+require 'pathname'       # STDLIB
 
-require 'docx'
-require 'word_wrapper'
+require 'docx'           # a ruby library/gem for interacting with .docx files
+require 'word_wrapper'   # Pure ruby word wrapping
 
 style_width   = 20
 line_width    = 4 * style_width

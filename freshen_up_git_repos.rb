@@ -6,7 +6,7 @@
 # brew install gitup
 
 
-require 'pathname'
+require 'pathname'  # STDLIB
 
 here = Pathname.pwd
 

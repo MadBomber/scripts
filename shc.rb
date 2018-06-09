@@ -8,7 +8,7 @@
 ##  By:   Dewayne VanHoozer (dvanhoozer@gmail.com)
 #
 
-require 'pathname'
+require 'pathname'  # STDLIB
 me = Pathname.new(__FILE__).basename
 
 

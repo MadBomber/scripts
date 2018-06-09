@@ -9,10 +9,10 @@
 
 # TODO: complete this stub
 
-require 'debug_me'
+require 'debug_me'  # A tool to print the labeled value of variables.
 include DebugMe
 
-require 'pathname'
+require 'pathname'  # STDLIB
 require 'hipchat_s3'
 
 me        = Pathname.new(__FILE__).realpath

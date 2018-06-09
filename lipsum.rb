@@ -5,7 +5,7 @@
 ##  Desc: Puts some filler text to STDOUT
 #
 
-require 'lipsum'
+require 'lipsum'  # Get placeholder text from lipsum.com
 
 if ARGV.empty? or ARGV.first == '-h' or ARGV.first == '--help'
   puts

@@ -13,10 +13,10 @@
 #           tag='1.0.0' release.rb
 VERSION_PLACEMENT_TAG = '__place_version_here__'
 
-require 'debug_me'
+require 'debug_me'  # A tool to print the labeled value of variables.
 include DebugMe
 
-require 'pathname'
+require 'pathname'  # STDLIB
 require_relative 'lib/find_repo_dir'
 
 

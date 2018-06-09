@@ -8,7 +8,7 @@
 ##        their counterparts on the /media/James disk.
 #
 
-require 'pathname'
+require 'pathname'  # STDLIB
 
 def doit
   h=Pathname.new ENV['HOME']

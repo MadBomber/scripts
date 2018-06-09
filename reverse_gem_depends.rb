@@ -3,8 +3,8 @@
 # TODO: turn this into a cli tool
 abort "Not ready"
 
-require 'net/http'
-require 'json'
+require 'net/http'  # STDLIB
+require 'json'      # STDLIB
 
 gem_name = "debug_me"
 

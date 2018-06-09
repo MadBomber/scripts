@@ -7,12 +7,12 @@
 ##  By:   Dewayne VanHoozer (dvanhoozer@gmail.com)
 #
 
-require 'awesome_print'
+require 'awesome_print'  # Pretty print Ruby objects with proper indentation and colors
 
-require 'debug_me'
+require 'debug_me'       # A tool to print the labeled value of variables.
 include DebugMe
 
-require 'cli_helper'
+require 'cli_helper'     # An encapsulation of an integration of slop, nenv, inifile and configatron.
 include CliHelper
 
 configatron.version = '0.0.1'

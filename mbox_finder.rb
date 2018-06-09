@@ -8,7 +8,7 @@
 #       in addition to the ability to pass a directory
 #
 
-require 'pathname'
+require 'pathname'  # STDLIB
 #require 'awesome_print'
 
 pgm_name = Pathname.new(__FILE__).basename

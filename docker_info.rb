@@ -8,10 +8,10 @@
 ##  By:   Dewayne VanHoozer (dvanhoozer@gmail.com)
 #
 
-require 'awesome_print'
-require 'json'
-require 'tty-table'
-require 'tty-screen'
+require 'awesome_print'  # Pretty print Ruby objects with proper indentation and colors
+require 'json'           # STDLIB
+require 'tty-table'      # A flexible and intuitive table generator
+require 'tty-screen'     # Terminal screen size detection which works on Linux, OS X and Windows/Cygwin platforms and supports MRI, JRuby and Rubinius interpreters.
 
 screen = TTY::Screen
 

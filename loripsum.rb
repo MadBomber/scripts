@@ -2,8 +2,8 @@
 # This is the main file from the loripsum-client gem version 0.1
 # It extracts text from the loripsum.net website
 
-require 'rest-client'
-require 'optparse'
+require 'rest-client'  # Simple HTTP and REST client for Ruby, inspired by microframework syntax for specifying actions.
+require 'optparse'     # STDLIB
 
 
 module Loripsum

@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 # freshen_up.rb
 
-require 'pathname'
+require 'pathname'  # STDLIB
 
 here = Pathname.pwd
 

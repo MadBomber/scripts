@@ -5,7 +5,7 @@
 ##  Desc: Say a blessing
 #
 
-require 'os'
+require 'os'  # Simple and easy way to know if you're on windows or not (reliably), as well as how many bits the OS is, etc.
 
 blessings_text = <<EOS
 You are blessed because you were uniquely handmade by the king of kings. (Psalm 139:14, "I will praise thee; for You are fearfully and wonderfully made: marvellous are thy works; and that my soul knoweth right well.")

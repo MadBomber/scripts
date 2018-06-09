@@ -6,16 +6,16 @@
 ##  By:   Dewayne VanHoozer (dvanhoozer@gmail.com)
 #
 
-require 'awesome_print'
+require 'awesome_print'  # Pretty print Ruby objects with proper indentation and colors
 require 'pp'
 
-require 'pathname'
+require 'pathname'       # STDLIB
 require 'pathname_helpers'
 
 require 'bible_gateway'
 require 'pericope'
 
-require 'docx'
+require 'docx'           # a ruby library/gem for interacting with .docx files
 require 'docx_helpers'
 include DocxHelpers
 

@@ -5,7 +5,7 @@
 ##  Desc: Display the summary and description for a set of gems
 #
 
-require 'terminal-size'
+require 'terminal-size'  # A tiny gem to accomplish a simple task: Determining the terminal size.
 MAX_COLUMNS = Terminal.size[:width] # - 1
 
 usage_str = <<EOS
@@ -23,12 +23,12 @@ end
 
 require 'pp'
 
-require 'yaml'
-require 'systemu'
+require 'yaml'  # STDLIB
+require 'systemu'  # systemu
 
 # FIXME: make word_wrap a gem
-require 'word_wrap'
-require 'word_wrap/core_ext'
+require 'word_wrap'  # Simple tool for word-wrapping text
+require 'word_wrap/core_ext'  # Simple tool for word-wrapping text
 
 
 def wrap_with_label(a_label, a_desc)

@@ -8,9 +8,9 @@
 #
 
 # System Libraries
-require 'pathname'
-require 'yaml'
-require 'json'
+require 'pathname'  # STDLIB
+require 'yaml'      # STDLIB
+require 'json'      # STDLIB
 
 me       = Pathname.new(__FILE__).realpath
 my_name  = me.basename.to_s

@@ -9,8 +9,8 @@
 ##  By:   Dewayne VanHoozer (dvanhoozer@gmail.com)
 #
 
-require 'debug_me'
-require 'pathname'
+require 'debug_me'  # A tool to print the labeled value of variables.
+require 'pathname'  # STDLIB
 require_relative 'lib/find_repo_dir'
 
 me        = Pathname.new(__FILE__).realpath

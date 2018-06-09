@@ -6,16 +6,16 @@
 ##  By:   Dewayne VanHoozer (dvanhoozer@gmail.com)
 #
 
-require 'awesome_print'
+require 'awesome_print'  # Pretty print Ruby objects with proper indentation and colors
 require 'pp'
 
-require 'pathname'
+require 'pathname'       # STDLIB
 require 'pathname_helpers'
 
 require 'bible_gateway'
 require 'pericope'
 
-require 'nokogiri'
+require 'nokogiri'       # Nokogiri (鋸) is an HTML, XML, SAX, and Reader parser
 require 'wcml_helpers'
 include WcmlHelpers
 

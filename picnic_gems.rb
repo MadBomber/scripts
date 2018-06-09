@@ -8,7 +8,7 @@
 ##  By:   Dewayne VanHoozer (dvanhoozer@gmail.com)
 #
 
-require 'cli_helper'
+require 'cli_helper'  # An encapsulation of an integration of slop, nenv, inifile and configatron.
 include CliHelper
 
 temp_gemfile = Pathname.new(ENV['HOME']) + 'temp' + 'temp_gemfile'

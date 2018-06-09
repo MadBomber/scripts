@@ -11,13 +11,13 @@
 ##        decide to combine the old MS Word version of this program with this one.
 #
 
-require 'debug_me'
+require 'debug_me'  # A tool to print the labeled value of variables.
 include DebugMe
 
-require 'pathname'
+require 'pathname'  # STDLIB
 
-require 'nokogiri'
-require 'word_wrapper'
+require 'nokogiri'  # Nokogiri (鋸) is an HTML, XML, SAX, and Reader parser
+require 'word_wrapper'  # Pure ruby word wrapping
 
 require('wcml_helpers')
 include WcmlHelpers

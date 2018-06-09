@@ -8,7 +8,7 @@
 $debug    = ARGV.include?('-d') || ARGV.include?('--debug')
 $changed  = 0
 
-require 'pathname'
+require 'pathname'  # STDLIB
 
 def normalize_filename( pn, from_chars, to_chars )
 

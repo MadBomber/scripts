@@ -9,10 +9,10 @@
 ##        the good body and bad heart recreate a docx file.  It lives!
 #
 
-require 'pathname'
+require 'pathname'  # STDLIB
 require 'zip'
 
-require 'awesome_print'
+require 'awesome_print'  # Pretty print Ruby objects with proper indentation and colors
 require 'pp'
 
 pgm_name  = Pathname.new(__FILE__).basename

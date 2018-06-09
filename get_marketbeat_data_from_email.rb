@@ -9,19 +9,19 @@
 # FIXME: The rethinkdb_helper is not really helpful in this application
 #        because of the aggregator not being forwarded.
 
-require 'awesome_print'
-require 'debug_me'
+require 'awesome_print'  # Pretty print Ruby objects with proper indentation and colors
+require 'debug_me'       # A tool to print the labeled value of variables.
 include DebugMe
 
-require 'progress_bar'
+require 'progress_bar'   # Simple Progress Bar for output to a terminal
 require 'rethinkdb_helper'
 include RethinkDB::Shortcuts
 
-require 'date'
+require 'date'           # STDLIB
 
-require 'mail'
+require 'mail'           # Mail provides a nice Ruby DSL for making, sending and reading emails.
 
-require 'cli_helper'
+require 'cli_helper'     # An encapsulation of an integration of slop, nenv, inifile and configatron.
 include CliHelper
 
 configatron.version = '0.0.1'

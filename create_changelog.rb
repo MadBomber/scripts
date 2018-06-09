@@ -28,21 +28,21 @@ Assumptions:
 
 require 'active_support'
 require 'active_support/inflector'
-require 'awesome_print'
-require 'date'
-require 'json'
-require 'ostruct'
+require 'awesome_print'  # Pretty print Ruby objects with proper indentation and colors
+require 'date'           # STDLIB
+require 'json'           # STDLIB
+require 'ostruct'        # STDLIB
 require 'Pathname'
 
 
-require 'debug_me'
+require 'debug_me'       # A tool to print the labeled value of variables.
 include DebugMe
 
-require 'jira-ruby'
-require 'faraday'
+require 'jira-ruby'      # Ruby Gem for use with the Atlassian JIRA REST API
+require 'faraday'        # HTTP/REST API client library.
 
 
-require 'cli_helper'
+require 'cli_helper'     # An encapsulation of an integration of slop, nenv, inifile and configatron.
 include CliHelper
 
 configatron.version = '0.0.1'

@@ -5,10 +5,10 @@
 ##  Desc: Extract bp data from eMail and format into report
 #
 
-require 'pathname'
-require 'awesome_print'
-require 'date'
-require 'debug_me'
+require 'pathname'  # STDLIB
+require 'awesome_print'  # Pretty print Ruby objects with proper indentation and colors
+require 'date'           # STDLIB
+require 'debug_me'       # A tool to print the labeled value of variables.
 include DebugMe
 
 class BloodPressureMeasurement
@@ -111,11 +111,11 @@ print "\n\n"
 #################################################
 ## Draw a graph
 
-require 'daru'
-require 'daru/plotly'
+require 'daru'  # Data Analysis in RUby
+require 'daru/plotly'  # Data Analysis in RUby
 include Daru::Plotly::Methods
 
-require 'linefit'
+require 'linefit'      # LineFit is a linear regression math class.
 
 
 # title:string  			The plot title

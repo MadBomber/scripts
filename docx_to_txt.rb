@@ -7,13 +7,13 @@
 ##  By:   Dewayne VanHoozer (dvanhoozer@gmail.com)
 #
 
-require 'debug_me'
+require 'debug_me'  # A tool to print the labeled value of variables.
 include DebugMe
 
-require 'pathname'
+require 'pathname'  # STDLIB
 require 'pathname_helpers'
 
-require 'docx'
+require 'docx'      # a ruby library/gem for interacting with .docx files
 require 'docx_helpers'
 include DocxHelpers
 

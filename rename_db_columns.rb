@@ -10,7 +10,7 @@
 ##  By: Dewayne VanHoozer (dvanhoozer@gmail.com)
 #
 
-require 'pathname'
+require 'pathname'  # STDLIB
 
 def replace_col_name(a_string)
   return(a_string) unless a_string.include?('"')

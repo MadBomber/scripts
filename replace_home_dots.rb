@@ -7,7 +7,7 @@
 ##        same from the /media/James/dot_files folder.
 #
 
-require 'pathname'
+require 'pathname'  # STDLIB
 
 def doit
   h   = Pathname.new ENV['HOME']

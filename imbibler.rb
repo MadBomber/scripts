@@ -1,9 +1,9 @@
 #!/usr/bin/env ruby
 
-require 'nokogiri'
-require 'open-uri'
-require 'csv'
-require 'pathname'
+require 'nokogiri'  # Nokogiri (鋸) is an HTML, XML, SAX, and Reader parser
+require 'open-uri'  # STDLIB
+require 'csv'       # STDLIB
+require 'pathname'  # STDLIB
 
 #
 # ReadBookChapter

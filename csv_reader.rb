@@ -11,11 +11,11 @@ Encoding.default_internal
 #       add --header --no-header (on no-header use column number as the header name)
 #       add prettier formatting
 
-require 'debug_me'
+require 'debug_me'  # A tool to print the labeled value of variables.
 include DebugMe
 
-require 'pathname'
-require 'csv'
+require 'pathname'  # STDLIB
+require 'csv'       # STDLIB
 
 me        = Pathname.new(__FILE__).realpath
 my_dir    = me.parent
@@ -216,7 +216,7 @@ puts
 end
 
 
-require 'awesome_print'
+require 'awesome_print'  # Pretty print Ruby objects with proper indentation and colors
 
 ap column_sizes
 

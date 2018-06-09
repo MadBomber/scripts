@@ -1,8 +1,8 @@
 #!/bin/env ruby
 
-require 'systemu'
+require 'systemu'  # systemu
 require 'pp'
-require 'json'
+require 'json'     # STDLIB
 
 s_added   = 'curl "https://rubygems.org/api/v1/activity/latest.json"'
 s_updated = 'curl "https://rubygems.org/api/v1/activity/just_updated.json"'

@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require 'pathname'
+require 'pathname'  # STDLIB
 
 $old = Pathname.new('old.xml').read.split("\n")
 $new = Pathname.new('new.xml').read.split("\n")

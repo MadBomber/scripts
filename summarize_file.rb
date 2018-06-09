@@ -5,9 +5,9 @@
 ##  Desc: prints to stdout a summary of a file
 #
 
-require 'pathname'
-require 'summary'
-require 'systemu'
+require 'pathname'  # STDLIB
+require 'summary'   # This is a simple gem that generates introduction text from a long text, it will always break the text at the end of the last word near to the limit you informed as argument.
+require 'systemu'   # systemu
 require 'pp'
 
 if 0 == ARGV.length or ARGV[0].downcase.include? '-h'

@@ -16,10 +16,10 @@
 #
 
 
-require 'clipboard'
-require 'pathname'
-require 'json'
-require 'date'
+require 'clipboard'  # Access to the clipboard on Linux, MacOS, Windows, and Cygwin.
+require 'pathname'   # STDLIB
+require 'json'       # STDLIB
+require 'date'       # STDLIB
 
 NOTES_FILENAME  = "_notes.txt"
 notes_dir       = Pathname.pwd

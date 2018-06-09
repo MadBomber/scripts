@@ -15,8 +15,8 @@ exit
 end
 
 
-require 'csv'
-require 'debug_me'
+require 'csv'  # STDLIB
+require 'debug_me'  # A tool to print the labeled value of variables.
 include DebugMe
 
 the_size  = 0

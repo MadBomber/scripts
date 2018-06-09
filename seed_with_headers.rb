@@ -9,17 +9,17 @@
 
 require 'pretty_backtrace'
 
-require 'awesome_print'
-require 'csv'
+require 'awesome_print'  # Pretty print Ruby objects with proper indentation and colors
+require 'csv'            # STDLIB
 
-require 'debug_me'
+require 'debug_me'       # A tool to print the labeled value of variables.
 include DebugMe
 
-require 'cli_helper'
+require 'cli_helper'     # An encapsulation of an integration of slop, nenv, inifile and configatron.
 include CliHelper
 
 require 'active_record'
-require 'pg'
+require 'pg'             # Pg is the Ruby interface to the {PostgreSQL RDBMS}[http://www.postgresql.org/]
 
 require 'active_support/core_ext/string'  # just need String #classify #constantize methods
 

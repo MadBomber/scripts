@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
-require 'rubygems'
-require 'colortail'
+require 'rubygems'  # STDLIB
+require 'colortail' # Tail a file and color lines based on regular expressions within that line
 
 Groupings = {
 

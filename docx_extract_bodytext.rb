@@ -5,11 +5,11 @@
 ##  Desc: Displays the "BodyText" styled paragraphs of *.docx files
 #
 
-require 'awesome_print'
+require 'awesome_print'  # Pretty print Ruby objects with proper indentation and colors
 
-require 'pathname'
+require 'pathname'       # STDLIB
 
-require 'docx'
+require 'docx'           # a ruby library/gem for interacting with .docx files
 
 
 

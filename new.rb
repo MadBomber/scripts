@@ -9,11 +9,11 @@
 #       request replacement text from user for the magic strings
 #
 
-require 'debug_me'
+require 'debug_me'  # A tool to print the labeled value of variables.
 include DebugMe
 
-require 'pathname'
-require 'erb'
+require 'pathname'  # STDLIB
+require 'erb'       # STDLIB
 
 me        = Pathname.new(__FILE__).realpath
 my_dir    = me.parent

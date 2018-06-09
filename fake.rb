@@ -1,7 +1,7 @@
 #! /usr/bin/env ruby
 # encoding: UTF-8
 
-require "wordy"
+require "wordy"  # Written to help us create sample data for our applications, Wordy speaks in lorem ipsum. You can ask Wordy for paragraphs, sentences or words.
 
 m = ARGV.shift || "body"
 

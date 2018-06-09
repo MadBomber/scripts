@@ -6,7 +6,7 @@
 ##        into text files - strip all the HTML tags, etc.
 #
 
-require 'pathname'
+require 'pathname'  # STDLIB
 
 cwd = Pathname.pwd
 
