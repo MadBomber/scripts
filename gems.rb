@@ -8,6 +8,7 @@ gem 'aws-sdk-s3'              # AWS SDK for Ruby - Amazon S3
 #
 gem 'bundler'                 # The best way to manage your application's dependencies
 gem 'bunny'                   # Popular easy to use Ruby client for RabbitMQ
+gem 'bible_gateway'           # An unofficial 'API' for BibleGateway.com.
 #
 gem 'cli_helper'              # An encapsulation of an integration of slop, nenv, inifile and configatron.
 gem 'clipboard'               # Easy access to the clipboard on Linux, MacOS and Windows.
@@ -49,7 +50,8 @@ gem 'guard-s3'                    # A simple guard library for syncing files wit
 gem 'guard-shell'                 # Guard gem for running shell commands
 gem 'guard-sidekiq'               # guard gem for sidekiq
 #
-gem 'htmlentities'                # Encode/decode HTML entities
+gem 'hipchat-s3'              # Ruby library to upload files to s3 and alert users in hipchat with a link
+gem 'htmlentities'            # Encode/decode HTML entities
 #
 gem 'irbtools'                # Irbtools happy IRB.
 gem 'irbtools-more'           # irbtools-more adds bond and looksee to IRB.
@@ -71,6 +73,7 @@ gem 'ocassionally'            # Ocassionally it works; and, ocassionally it does
 gem 'ohai'                    # Ohai profiles your system and emits JSON
 gem 'os'                      # Simple and easy way to know if you're on windows or not (reliably), as well as how many bits the OS is, etc.
 #
+gem 'pericope'                # Pericope is a gem for parsing Bible references.
 gem 'pg'                      # Pg is the Ruby interface to the {PostgreSQL RDBMS}[http://www.postgresql.org/]
 gem 'pgsync'                  # Sync Postgres data between databases
 gem 'progress_bar'            # Simple Progress Bar for output to a terminal
