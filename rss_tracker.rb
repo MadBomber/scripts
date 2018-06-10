@@ -20,7 +20,7 @@ require 'open-uri'       # STDLIB
 require 'rethinkdb'      # This package provides the Ruby driver library for the RethinkDB database server.
 include RethinkDB::Shortcuts
 
-require 'simple-rss'     # A simple, flexible, extensible, and liberal RSS and Atom reader for Ruby. It is designed to be backwards compatible with the standard RSS parser, but will never do RSS generation.
+require 'rss'            # STDLIB
 
 require 'debug_me'       # A tool to print the labeled value of variables.
 include DebugMe
@@ -120,6 +120,18 @@ class Story < Hashie::Dash
 end # class Story < Hashie::Dash
 
 
+# NOTE: orinally used the gem 'simple-rss' which returned the item
+#       as a Hash.  Switched to the STDLIB rss which does not.
+def hashify(item)
+  result = Hash.new
+  keys = %w[ title link pubDate dc_creator description ]
+  keys.each do |key|
+    result[key] = item.send(key)
+  end
+  result['category'] = item.category.content
+  return result
+end # def hashify(item)
+
 # SMELL: different feeds have different field names
 class RssFeed
   def initialize(
@@ -130,7 +142,7 @@ class RssFeed
       table:  'rss_feed'
     )
 
-    @rss  = SimpleRSS.parse open(link)
+    @rss  = RSS::Parser.parse open(link)
     @rc   = rc || Pathname.new(ENV['HOME']) +
                   ".#{__FILE__.split('/').last.gsub('.rb','rc')}"
 
@@ -162,7 +174,9 @@ class RssFeed
     # Typical RSS feed starts with the latest story first
     stories = @rss
                 .items.reverse
-                .map{|item| Story.new(item)}
+                .map{|item|
+                  Story.new(hashify(item))
+                }
                 .select{|story| story.published_on > @last_pub_date}
 
     stories.each do |story|

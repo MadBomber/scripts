@@ -85,7 +85,6 @@ gem 'ruby-progressbar'        # never leave the user guessing
 #
 gem 'sanitize'                # Whitelist-based HTML and CSS sanitizer.
 gem 'sketches'                # Sketches allows you to create and edit Ruby code from the comfort of your editor, while having it safely reloaded in IRB whenever changes to the code are saved.
-gem 'simple-rss'              # A simple, flexible, extensible, and liberal RSS and Atom reader for Ruby. It is designed to be backwards compatible with the standard RSS parser, but will never do RSS generation.
 gem 'sinatra'                 # Classy web-development dressed in a DSL
 gem 'slop'                    # Simple Lightweight Option Parsing
 gem 'sugar_refinery'          # The Ruby Sugar Refinery is a collection of tiny refinements.
