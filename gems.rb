@@ -90,6 +90,7 @@ gem 'slop'                    # Simple Lightweight Option Parsing
 gem 'sugar_refinery'          # The Ruby Sugar Refinery is a collection of tiny refinements.
 gem 'summary'                 # This is a simple gem that generates introduction text from a long text, it will always break the text at the end of the last word near to the limit you informed as argument.
 gem 'svn_wc'                  # operates on a working copy (on the local filesystem) of a remote Subversion repository.
+gem 'sys-proctable'           # An interface for providing process table information
 gem 'systemu'                 # systemu
 #
 gem 'terjira'                 # Terjira is interactive command line application for Jira

@@ -35,9 +35,11 @@ while !ARGV.empty?
     first_ticket  = parts.first.to_i
     last_ticket   = parts.last.to_i
     if first_ticket < last_ticket
-      tickets = ( first_ticket .. last_ticket).to_a
+      tickets = ( first_ticket .. last_ticket)
       tickets.each do |ticket|
-        system("#{base_command}#{ticket}")
+        cmd = "#{base_command}#{ticket}"
+        system(cmd)
+        sleep 1
       end
     else
       puts "ERROR: '#{ticket}' makes no sense. Left side must be less than the right side."

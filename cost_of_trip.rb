@@ -5,7 +5,7 @@ require 'debug_me'  # A tool to print the labeled value of variables.
 include DebugMe
 DebugMeDefaultOptions.merge!( {tag: "\r", header: false, time: false} )
 
-total_miles       = 2200.0
+total_miles       = 2500.0
 miles_per_gallon  = 13.0
 gallons_per_tank  = 18.0
 miles_per_tank    = miles_per_gallon * gallons_per_tank
@@ -16,7 +16,7 @@ miles_per_day     = 400.0
 days_on_the_road  = total_miles / miles_per_day
 total_days        = 1.5 * days_on_the_road
 
-price_of_hotel    = 125.0
+price_of_hotel    = 250.0
 cost_of_hotels    = total_days * price_of_hotel
 
 

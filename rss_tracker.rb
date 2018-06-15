@@ -10,7 +10,6 @@
 ##  By:   Dewayne VanHoozer (dvanhoozer@gmail.com)
 #
 
-
 require 'awesome_print'  # Pretty print Ruby objects with proper indentation and colors
 require 'date'           # STDLIB
 require 'hashie'         # Your friendly neighborhood hash library.
@@ -97,7 +96,8 @@ class Story < Hashie::Dash
 
   # Use the system's text to speach capability
   def announce
-    `say '#{text}'`
+    sayable_text = text.gsub("'","")
+    `say '#{sayable_text}'`
   end # def announce(an_item)
 
 
@@ -172,6 +172,7 @@ class RssFeed
   # process each story in the RSS feed
   def process
     # Typical RSS feed starts with the latest story first
+
     stories = @rss
                 .items.reverse
                 .map{|item|
@@ -180,9 +181,11 @@ class RssFeed
                 .select{|story| story.published_on > @last_pub_date}
 
     stories.each do |story|
-      puts "\n" + story.to_s  if verbose?
-      story.announce          if announce?
-      save story              if save?
+      unless duplicate?(story)
+        puts "\n" + story.to_s  if verbose?
+        story.announce          if announce?
+        save story              if save?
+      end
 
       set_last_pub_date story.published_on
     end # stories.each do |story|
@@ -221,12 +224,9 @@ class RssFeed
 
   # Check the database to see if this story is a duplicate
   def duplicate?(story)
-    # TODO: Assume that story.link is unique
-    #       See if the link is already in the database
-    #       if so, return true, otherwise false
-
+    return false
     result = @table.get_all(story.link, index: 'link').count().run(@conn)
-    puts "DUPLICATE" if result > 0
+    # puts "DUPLICATE" if result > 0
 
     return result > 0
   end # def duplicate?(story)

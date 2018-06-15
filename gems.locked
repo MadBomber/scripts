@@ -59,7 +59,7 @@ GEM
     aws-sdk-kms (1.5.0)
       aws-sdk-core (~> 3)
       aws-sigv4 (~> 1.0)
-    aws-sdk-s3 (1.13.0)
+    aws-sdk-s3 (1.14.0)
       aws-sdk-core (~> 3, >= 3.21.2)
       aws-sdk-kms (~> 1)
       aws-sigv4 (~> 1.0)
@@ -347,7 +347,7 @@ GEM
     mini_portile2 (2.3.0)
     minitest (5.11.3)
     mixlib-cli (1.7.0)
-    mixlib-config (2.2.6)
+    mixlib-config (2.2.8)
       tomlrb
     mixlib-log (2.0.4)
     mixlib-shellout (2.3.2)
@@ -409,7 +409,7 @@ GEM
       slop (>= 4.2.0)
     plist (3.4.0)
     posix-spawn (0.3.13)
-    powerpack (0.1.1)
+    powerpack (0.1.2)
     prawn (2.2.2)
       pdf-core (~> 0.7.0)
       ttfunk (~> 1.5)
@@ -492,7 +492,7 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.7.0)
     rspec-support (3.7.1)
-    rubocop (0.57.1)
+    rubocop (0.57.2)
       jaro_winkler (~> 1.5.1)
       parallel (~> 1.10)
       parser (>= 2.5)
@@ -550,6 +550,8 @@ GEM
     sugar_refinery (1.0.0)
     summary (0.7.3)
     svn_wc (0.0.6)
+    sys-proctable (1.2.1)
+      ffi
     systemu (2.6.5)
     terjira (0.1.0)
       activesupport (~> 4.0)
@@ -566,7 +568,7 @@ GEM
     thread_safe (0.3.6)
     tilt (2.0.8)
     tins (1.16.3)
-    tomlrb (1.2.6)
+    tomlrb (1.2.7)
     transitions (1.2.1)
     trollop (2.1.2)
     ttfunk (1.5.1)
@@ -693,6 +695,7 @@ DEPENDENCIES
   sugar_refinery
   summary
   svn_wc
+  sys-proctable
   systemu
   terjira
   terminal-size
