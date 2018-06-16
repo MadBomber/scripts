@@ -5,6 +5,8 @@ require 'debug_me'  # A tool to print the labeled value of variables.
 include DebugMe
 DebugMeDefaultOptions.merge!( {tag: "\r", header: false, time: false} )
 
+cost_pretrip_shopping = 1000.00
+
 total_miles       = 2500.0
 miles_per_gallon  = 13.0
 gallons_per_tank  = 18.0
