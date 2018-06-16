@@ -54,7 +54,7 @@ gem 'hipchat-s3'              # Ruby library to upload files to s3 and alert use
 gem 'htmlentities'            # Encode/decode HTML entities
 #
 gem 'irbtools'                # Irbtools happy IRB.
-gem 'irbtools-more'           # irbtools-more adds bond and looksee to IRB.
+#r52 gem 'irbtools-more'           # irbtools-more adds bond and looksee to IRB.
 #
 gem 'jira-ruby'               # Ruby Gem for use with the Atlassian JIRA REST API
 gem 'jirasync'                # jirasync synchronises jira projects to the local file system
@@ -79,8 +79,9 @@ gem 'pgsync'                  # Sync Postgres data between databases
 gem 'progress_bar'            # Simple Progress Bar for output to a terminal
 #
 gem 'rack-attack'             # Block & throttle abusive requests
-gem 'rails'                   # Full-stack web application framework.
+gem 'rails', '~> 5.2'         # Full-stack web application framework.
 gem 'rethinkdb_helper'        # A wrapper around the ruby rethinkdb gem
+gem 'rssable'                 # Access the RSS channel of any webiste without worrying about the engine
 gem 'ruby-progressbar'        # never leave the user guessing
 #
 gem 'sanitize'                # Whitelist-based HTML and CSS sanitizer.
@@ -93,12 +94,13 @@ gem 'svn_wc'                  # operates on a working copy (on the local filesys
 gem 'sys-proctable'           # An interface for providing process table information
 gem 'systemu'                 # systemu
 #
-gem 'terjira'                 # Terjira is interactive command line application for Jira
+#r52 gem 'terjira'                 # Terjira is interactive command line application for Jira
 gem 'terminal-size'           # A tiny gem to accomplish a simple task: Determining the terminal size.
 gem 'transitions'             # State machine extracted from ActiveModel
 #
 gem 'virtualbox'              # Support functions for VM
 #
+gem 'wharel'                  # Arel + Where = Wharel
 gem 'word_wrap'               # Simple tool for word-wrapping text
 gem 'word_wrapper'            # Pure ruby word wrapping
 gem 'wordy'                   # Written to help us create sample data for our applications, Wordy speaks in lorem ipsum. You can ask Wordy for paragraphs, sentences or words.

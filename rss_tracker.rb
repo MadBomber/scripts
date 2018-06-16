@@ -19,7 +19,7 @@ require 'open-uri'       # STDLIB
 require 'rethinkdb'      # This package provides the Ruby driver library for the RethinkDB database server.
 include RethinkDB::Shortcuts
 
-require 'rss'            # STDLIB
+require 'rssable'        # Access the RSS channel of any webiste without worrying about the engine
 
 require 'debug_me'       # A tool to print the labeled value of variables.
 include DebugMe
@@ -90,6 +90,7 @@ class Story < Hashie::Dash
 
   property :description,  from: 'description',  required: true, coerce: ->(value){Html.decode(value)}
 
+  property :published_on, from: 'published_at', required: true
   property :published_on, from: 'published_on', required: true
   property :published_on, from: :pubDate,       required: true
   property :published_on, from: 'pubDate',       required: true
@@ -121,14 +122,16 @@ end # class Story < Hashie::Dash
 
 
 # NOTE: orinally used the gem 'simple-rss' which returned the item
-#       as a Hash.  Switched to the STDLIB rss which does not.
+#       as a Hash.  Switched to the STDLIB rss which does not...
+#       and switched to the gem "rssable" which also does not.
 def hashify(item)
   result = Hash.new
-  keys = %w[ title link pubDate dc_creator description ]
+  keys = %w[ title link author description published_at tags ]
   keys.each do |key|
     result[key] = item.send(key)
   end
-  result['category'] = item.category.content
+  result['published_on'] = Time.parse item.published_at
+  result['category'] = result['tags'].first
   return result
 end # def hashify(item)
 
@@ -142,7 +145,7 @@ class RssFeed
       table:  'rss_feed'
     )
 
-    @rss  = RSS::Parser.parse open(link)
+    @rss  = RSSable.subscribe(link)
     @rc   = rc || Pathname.new(ENV['HOME']) +
                   ".#{__FILE__.split('/').last.gsub('.rb','rc')}"
 
