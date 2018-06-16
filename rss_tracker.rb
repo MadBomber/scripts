@@ -190,7 +190,7 @@ class RssFeed
         save story              if save?
       end
 
-      set_last_pub_date story.published_on
+      set_last_pub_date story.published_on  if save?
     end # stories.each do |story|
 
     set_last_pub_date stories.last.published_on unless stories.empty?
