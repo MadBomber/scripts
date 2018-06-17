@@ -6,12 +6,16 @@
 ##  File: rss_tracker.rb
 ##  Desc: Track and alert on new items from an RSS feed
 ##        Makes use of a rethinkdb cluster
-##        SMELL: looks like its tightly coupled to a specific RSS feed
+##
+##  System Environment Variables:
+##    RSS_FEEDS: semi-colon seperated list of URLS
+##
 ##  By:   Dewayne VanHoozer (dvanhoozer@gmail.com)
 #
 
 require 'awesome_print'  # Pretty print Ruby objects with proper indentation and colors
 require 'date'           # STDLIB
+require 'json'           # STDLIB
 require 'hashie'         # Your friendly neighborhood hash library.
 require 'htmlentities'   # Encode/decode HTML entities
 require 'open-uri'       # STDLIB
@@ -27,7 +31,7 @@ include DebugMe
 require 'cli_helper'     # An encapsulation of an integration of slop, nenv, inifile and configatron.
 include CliHelper
 
-configatron.version = '0.0.2'
+configatron.version = '0.0.3'
 
 HELP = <<EOHELP
 Important:
@@ -50,7 +54,7 @@ cli_helper("__file_description__") do |o|
   o.integer '-l', '--last',     'List last X stories',          default: 0
   o.bool    '-r', '--remove',   'Remove duplicate links',       default: false
   o.bool    '-s', '--save',     'Save to a database',           default: false
-  o.string  '-u', '--url',      'URL for the RSS feed',         default: ENV['INFOWARS_RSS']
+  o.string  '-u', '--url',      'URL for the RSS feed',         default: ENV['RSS_FEEDS']
 
 end
 
@@ -73,6 +77,7 @@ end
 ######################################################
 # Local classes/methods
 
+# TODO: Add ability to sort stories on published_on dates
 # An individual story from an RSS feed
 class Story < Hashie::Dash
   include Hashie::Extensions::Dash::PropertyTranslation
@@ -116,7 +121,7 @@ class Story < Hashie::Dash
   ######################################################
   private
   def text
-    "#{category}: #{title}; #{description}"
+    "#{category}: #{title}; #{description}".gsub(/<\/?[^>]*>/, "")
   end
 end # class Story < Hashie::Dash
 
@@ -136,18 +141,44 @@ def hashify(item)
 end # def hashify(item)
 
 # SMELL: different feeds have different field names
+# SMELL: different feeds have different last_pub_date
 class RssFeed
+  class NoLinkGivenError < RuntimeError; end
+  class NoRssFeedFoundError < RuntimeError; end
+
   def initialize(
-      link:   ENV['INFOWARS_RSS'],
+      links:  nil,
       rc:     nil,
       host:   'localhost',
       db:     'infowars',
       table:  'rss_feed'
     )
 
-    @rss  = RSSable.subscribe(link)
+    raise NoLinkGivenError if links.nil?
+
+    @rss  = Array(links).map{|link| RSSable.subscribe(link) }.compact
+
+    raise NoRssFeedFoundError if @rss.nil?  ||  @rss.empty?
+
+
     @rc   = rc || Pathname.new(ENV['HOME']) +
-                  ".#{__FILE__.split('/').last.gsub('.rb','rc')}"
+                  ".#{__FILE__.split('/').last.gsub('.rb','rc.json')}"
+
+
+    # @last_pub_dates is a Hash keyed by rss link, value is Time
+    if @rc.exist?
+      @last_pub_dates = JSON.parse @rc.read
+    else
+      @last_pub_dates = Hash.new
+      @rss.each do |rss_feed|
+        @last_pub_dates[rss_feed.link] = "June 3, 1953 13:00:00 -0500"
+      end
+    end
+
+    # convert the time_strings into Time objects for comparison
+    @last_pub_dates.each_pair do |link, time_string|
+      @last_pub_dates[link] = Time.parse time_string
+    end
 
     begin
       @conn = r.connect(
@@ -168,20 +199,33 @@ class RssFeed
     cleanup           if cleanup?
     remove_duplicates if remove?
     show_last_stories(configatron.last) unless configatron.last.nil?
-    get_last_pub_date # from the RC file
   end # def initialize(....
 
 
   # process each story in the RSS feed
   def process
     # Typical RSS feed starts with the latest story first
+    stories = Array.new
 
-    stories = @rss
-                .items.reverse
-                .map{|item|
-                  Story.new(hashify(item))
-                }
-                .select{|story| story.published_on > @last_pub_date}
+    # Collect all the stories from all the feeds.
+    # ASSUMES: the different feeds present the stories in the same date order
+    @rss.each do |rss_feed|
+      last_pub_date = @last_pub_dates[rss_feed.link]
+      last_pub_date = Time.parse last_pub_date if String == last_pub_date.class
+      stories += rss_feed
+                    .items.reverse
+                    .map{|item|
+                      # debug_me{[ 'item' ]}
+                      Story.new(hashify(item))
+                    }
+                    .select{|story|
+                      # debug_me{[ 'last_pub_date.class', 'last_pub_date',
+                      #  'story.published_on.class', 'story.published_on' ]}
+                      story.published_on > last_pub_date
+                    }
+
+      @last_pub_dates[rss_feed.link] = stories.last.published_on unless stories.empty?
+    end # @rss.each do |rss_feed|
 
     stories.each do |story|
       unless duplicate?(story)
@@ -189,11 +233,11 @@ class RssFeed
         story.announce          if announce?
         save story              if save?
       end
-
-      set_last_pub_date story.published_on  if save?
     end # stories.each do |story|
 
-    set_last_pub_date stories.last.published_on unless stories.empty?
+    rc_file = File.open(@rc, 'w')
+    rc_file.puts @last_pub_dates.to_json
+    rc_file.close
   end # def process
 
 
@@ -203,25 +247,6 @@ class RssFeed
   # Save an RSS item into the database
   def save(story)
     @table.insert(story.to_h).run(@conn) unless duplicate?(story)
-  end
-
-
-  # Get the last publication date from the RC file
-  def get_last_pub_date
-    if @rc.exist?
-      @last_pub_date = Time.parse @rc.read
-    else
-      @last_pub_date = Time.parse "1953-06-03 17:42:16 +0000"
-      set_last_pub_date(@last_pub_date)
-    end
-  end
-
-
-  # Save the last publication date into the RC file
-  def set_last_pub_date(a_time)
-    rc_file = File.open(@rc, 'w')
-    rc_file.puts a_time.to_s
-    rc_file.close
   end
 
 
@@ -315,19 +340,12 @@ at_exit do
   puts
 end
 
-=begin
-# A raw RSS item looks like this:
-{
-          :title => "Mysterious Wolf-like Creature Shot in Montana",
-           :link => "https://www.infowars.com/mysterious-wolf-like-creature-shot-in-montana/",
-    :description => "What is it?",
-        :pubDate => 2018-05-25 13:12:21 +0000,
-       :category => "Featured Stories",
-     :dc_creator => "Kit Daniels"
-}
-=end
+
 
 Html = HTMLEntities.new
 
-the_feed = RssFeed.new
-the_feed.process
+urls = configatron.url.split(';')
+
+the_feeds = RssFeed.new links: urls
+the_feeds.process
+
