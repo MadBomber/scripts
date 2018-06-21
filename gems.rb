@@ -65,6 +65,7 @@ gem 'lipsum'                  # Get placeholder text from lipsum.com
 gem 'log_analyzer'            # log_analyzer gem is created to get statistics about your views rendering performance.
 #
 gem 'mail'                    # Mail provides a nice Ruby DSL for making, sending and reading emails.
+gem 'mini_sql'                # A fast, safe, simple direct SQL executor
 #
 gem 'nenv'                    # Convenience wrapper for Ruby's ENV
 gem 'nokogiri'                # Nokogiri (鋸) is an HTML, XML, SAX, and Reader parser
