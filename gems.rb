@@ -53,6 +53,7 @@ gem 'guard-sidekiq'               # guard gem for sidekiq
 gem 'hipchat-s3'              # Ruby library to upload files to s3 and alert users in hipchat with a link
 gem 'htmlentities'            # Encode/decode HTML entities
 #
+gem 'inspec'                  # Infrastructure and compliance testing.
 gem 'irbtools'                # Irbtools happy IRB.
 #r52 gem 'irbtools-more'           # irbtools-more adds bond and looksee to IRB.
 #
@@ -77,6 +78,7 @@ gem 'os'                      # Simple and easy way to know if you're on windows
 gem 'pericope'                # Pericope is a gem for parsing Bible references.
 gem 'pg'                      # Pg is the Ruby interface to the {PostgreSQL RDBMS}[http://www.postgresql.org/]
 gem 'pgsync'                  # Sync Postgres data between databases
+gem 'pragmatic_segmenter'     # A rule-based sentence boundary detection gem that works out-of-the-box across many languages
 gem 'progress_bar'            # Simple Progress Bar for output to a terminal
 #
 gem 'rack-attack'             # Block & throttle abusive requests
@@ -97,6 +99,7 @@ gem 'systemu'                 # systemu
 #
 #r52 gem 'terjira'                 # Terjira is interactive command line application for Jira
 gem 'terminal-size'           # A tiny gem to accomplish a simple task: Determining the terminal size.
+gem 'test-kitchen'            # Test Kitchen is an integration tool for developing and testing infrastructure code and software on isolated target platforms.
 gem 'transitions'             # State machine extracted from ActiveModel
 #
 gem 'virtualbox'              # Support functions for VM
