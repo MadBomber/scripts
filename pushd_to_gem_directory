@@ -1,0 +1,15 @@
+# pushd_to_gem_directory
+# change directory (pushd) to the gem's root directory
+# only works if sourced so use this alias:
+#   alias gemg='source ~/scripts/pushd_to_gem_directory'
+
+gem_path=`gem which $1`
+echo gem_path
+echo $gem_path
+
+gem_dir=`dirname $gem_path`/..
+echo gem_dir
+echo $gem_dir
+
+pushd $gem_dir
+echo "User 'popd' to get back"

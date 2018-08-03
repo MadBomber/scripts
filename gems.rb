@@ -1,6 +1,12 @@
-source 'https://rubygems.org'
+#!/usr/bin/env ruby
 
-# List of "goto" libraries
+$gems = Array.new
+
+def gem(gem_name, version='')
+  $gems << gem_name
+end
+
+# Using this form so that you can grab what you want for a Gemfile
 
 gem 'address_extractor'       # Give it text.  It finds addresses in it.
 gem 'awesome_print'           # Pretty print Ruby objects with proper indentation and colors
@@ -40,7 +46,6 @@ gem 'guard-bundler-audit'     # guard + bundler-audit = security
 gem 'guard-chef'              # Guard gem for Chef
 gem 'guard-migrate'           # Guard gem for rails migrations
 gem 'guard-minitest'          # Guard plugin for the Minitest framework
-gem 'guard-rails_best_practices'  # Guard for rails_best_practices, a code metric tool to check the quality of rails code.
 gem 'guard-redis'                 # Guard gem for Redis
 gem 'guard-rspec'                 # Guard gem for RSpec
 gem 'guard-rubocop'               # Guard plugin for RuboCop
@@ -50,12 +55,11 @@ gem 'guard-s3'                    # A simple guard library for syncing files wit
 gem 'guard-shell'                 # Guard gem for running shell commands
 gem 'guard-sidekiq'               # guard gem for sidekiq
 #
-gem 'hipchat-s3'              # Ruby library to upload files to s3 and alert users in hipchat with a link
 gem 'htmlentities'            # Encode/decode HTML entities
 #
 gem 'inspec'                  # Infrastructure and compliance testing.
 gem 'irbtools'                # Irbtools happy IRB.
-#r52 gem 'irbtools-more'           # irbtools-more adds bond and looksee to IRB.
+gem 'irbtools-more'           # irbtools-more adds bond and looksee to IRB.
 #
 gem 'jira-ruby'               # Ruby Gem for use with the Atlassian JIRA REST API
 gem 'jirasync'                # jirasync synchronises jira projects to the local file system
@@ -97,7 +101,6 @@ gem 'svn_wc'                  # operates on a working copy (on the local filesys
 gem 'sys-proctable'           # An interface for providing process table information
 gem 'systemu'                 # systemu
 #
-#r52 gem 'terjira'                 # Terjira is interactive command line application for Jira
 gem 'terminal-size'           # A tiny gem to accomplish a simple task: Determining the terminal size.
 gem 'test-kitchen'            # Test Kitchen is an integration tool for developing and testing infrastructure code and software on isolated target platforms.
 gem 'transitions'             # State machine extracted from ActiveModel
@@ -109,7 +112,33 @@ gem 'word_wrap'               # Simple tool for word-wrapping text
 gem 'word_wrapper'            # Pure ruby word wrapping
 gem 'wordy'                   # Written to help us create sample data for our applications, Wordy speaks in lorem ipsum. You can ask Wordy for paragraphs, sentences or words.
 #
-# Problems ......
-# gem 'gruff'                   # Beautiful graphs for one or multiple datasets.
-# gem 'phashion'                # Simple wrapper around the pHash library - precepual hashing to find dup images
-# gem 'rmagick'                 # Ruby binding to ImageMagick
+
+gem_list = $gems.join(' ')
+
+if ARGV.empty?
+  system "gemt #{gem_list}"
+else
+  installed_gems = Gem::Specification.all.map { |gs| gs.name }
+
+  if %w{ -i --install }.include?ARGV.first
+    missing_gems = $gems.select{ |gem_name| !installed_gems.include?(gem_name)}.join(' ')
+    if missing_gems.empty?
+      puts "All gems are already installed"
+    else
+      command = "gem install #{missing_gems}"
+      puts command
+      system command
+    end
+  end
+end
+
+__END__
+# Version Conflicts with Rails 5.2
+gem 'guard-rails_best_practices'  # Guard for rails_best_practices, a code metric tool to check the quality of rails code.
+gem 'terjira'                 # Terjira is interactive command line application for Jira
+
+
+# Problems ...... just old stuff which needs updating
+gem 'gruff'                   # Beautiful graphs for one or multiple datasets.
+gem 'phashion'                # Simple wrapper around the pHash library - precepual hashing to find dup images
+gem 'rmagick'                 # Ruby binding to ImageMagick

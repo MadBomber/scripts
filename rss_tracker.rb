@@ -89,9 +89,9 @@ class Story < Hashie::Dash
   property :link,     from: 'link',     required: true
   property :category, from: 'category',   default: 'Other News', coerce: ->(value){Html.decode(value)}
 
-  property :author,   from: 'author',     required: true
-  property :author,   from: :dc_creator,  required: true
-  property :author,   from: 'dc_creator',  required: true
+  property :author,   from: 'author',     required: false, default: 'unknown'
+  property :author,   from: :dc_creator,  required: false, default: 'unknown'
+  property :author,   from: 'dc_creator',  required: false, default: 'unknown'
 
   property :description,  from: 'description',  required: true, coerce: ->(value){Html.decode(value)}
 
@@ -210,8 +210,10 @@ class RssFeed
     # Collect all the stories from all the feeds.
     # ASSUMES: the different feeds present the stories in the same date order
     @rss.each do |rss_feed|
+
       last_pub_date = @last_pub_dates[rss_feed.link]
       last_pub_date = Time.parse last_pub_date if String == last_pub_date.class
+
       stories += rss_feed
                     .items.reverse
                     .map{|item|
@@ -219,7 +221,7 @@ class RssFeed
                       Story.new(hashify(item))
                     }
                     .select{|story|
-                      # debug_me{[ 'last_pub_date.class', 'last_pub_date',
+                      # debug_me{[ 'rss_feed.link', 'last_pub_date.class', 'last_pub_date',
                       #  'story.published_on.class', 'story.published_on' ]}
                       story.published_on > last_pub_date
                     }

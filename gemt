@@ -2,31 +2,31 @@
 ##########################################
 ###
 ##  File: gemt
-##  Desc: Like "rake -T"
+##  Desc: Like "rake -T" but for gems
 ##
 #
 
-require 'awesome_print'
-require 'terminal-size'
-require 'word_wrapper'
+require 'awesome_print'  # Pretty print Ruby objects with proper indentation and colors
+require 'terminal-size'  # A tiny gem to accomplish a simple task: Determining the terminal size.
+require 'word_wrapper'   # Pure ruby word wrapping
 
 def usage
-  puts <<-EOS
+  puts <<~EOS
 
-list gems -- like "rake -T"
+    list gems -- like "rake -T"
 
-usage: #{__FILE__.basename} [search_string]
+    usage: #{__FILE__.basename} [search_string]
 
-Where:
+    Where:
 
-  search_string is an optional keyword or phrase
+      search_string is an optional keyword or phrase
 
-Example:
+    Example:
 
-  gemt guard      shows list of the guard gems
+      gemt guard      shows list of the guard gems
 
-EOS
-end
+  EOS
+end # def usage
 
 class NilClass
   def split(*args)
@@ -38,16 +38,31 @@ class NilClass
   def to_s
     ''
   end
-end
+end # class NilClass
 
 unless ARGV.empty?
-  if '-h' == ARGV.first  or  '--help' == ARGV.first
+  if %w[ -h --help ].include? ARGV.first
     usage
     exit
   end
 end
 
-search_strings = ARGV.map{|a|a.downcase}
+
+def things(number=1, thing=' ')
+  thing*number
+end
+
+
+def spaces(number=1)
+  things number
+end
+
+
+def dashes(number=1)
+  things number, '-'
+end
+
+search_strings = ARGV.map{ |a| a.downcase }
 
 gem_hash = Hash.new
 
@@ -67,7 +82,8 @@ Gem::Specification.all.each do |gs|
     end
 
     next unless found_one
-  end
+  end # unless search_strings.empty?
+
   gem_hash[gs.name] = gs
   longest_desc = gs.name.size if longest_desc < gs.name.size
 end
@@ -79,21 +95,19 @@ width = Terminal.size[:width] - desc_start_col - 4
 gem_hash.each_pair do |name, gs|
   summary = gs.summary
   print "#{name}"
-  print " "*(desc_start_col - name.size)
-  text = WordWrapper::MinimumRaggedness.new(width, summary.split("\n").first.strip).wrap
-  if gs.homepage.nil?
-    text += "https://rubygems.org/gems/#{name}"
-  else
-    text += gs.homepage
-  end
+  print spaces(desc_start_col - name.size)
 
-  text_array = text.split("\n")
-  last_x = text_array.size-1
+  text = WordWrapper::MinimumRaggedness.new(width, summary.split("\n").first.strip).wrap
+
+  text += gs.homepage.nil? ? "https://rubygems.org/gems/#{name}" : gs.homepage
+
+  text_array  = text.split("\n")
+  last_x      = text_array.size-1
+
   text_array.each_index do |x|
     prefix = x == last_x ? '|__ ' : '|   '
-    puts (x<1 ? text_array[x] : (' '*desc_start_col) + prefix+text_array[x] )
+    puts (x<1 ? text_array[x] : (spaces desc_start_col) + prefix+text_array[x] )
   end
-end
+end # gem_hash.each_pair do |name, gs|
 
 # ap Gem::Specification.all.first.instance_variables
-
