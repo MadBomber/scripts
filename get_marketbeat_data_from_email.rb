@@ -9,9 +9,6 @@
 ##        content changes over time.
 #
 
-# FIXME: The rethinkdb_helper is not really helpful in this application
-#        because of the aggregator not being forwarded.
-
 require 'io/console'
 
 require 'awesome_print'  # Pretty print Ruby objects with proper indentation and colors
@@ -21,8 +18,6 @@ include DebugMe
 require 'loofah'
 
 require 'progress_bar'   # Simple Progress Bar for output to a terminal
-require 'rethinkdb_helper'
-include RethinkDB::Shortcuts
 
 require 'date'           # STDLIB
 
@@ -36,13 +31,14 @@ configatron.version = '0.0.1'
 HELP = <<EOHELP
 Important:
 
-  Put important stuff here.
+  Use --no-save option to disable saving to database.
 
 EOHELP
 
 cli_helper("__file_description__") do |o|
   o.bool          '--drop',     "drop the db and table",    default: false
   o.integer       '--days',     'Number of days for mail',  default: 0
+  o.bool    '-2', '--save',     'Save to database',         default: true
   o.string  '-u', '--user',     "user's email account",     default: ENV['GMAIL_USER']
   o.string  '-p', '--password', "user's email password",    default: ENV['GMAIL_PASS']
 end
@@ -60,8 +56,17 @@ end
 
 ######################################################
 # Local methods
+if save?
+  require 'rethinkdb_helper'
+  include RethinkDB::Shortcuts
 
-DB = RDB.new( db: 'analyst_ratings', table: 'upsndowns', drop: configatron.drop, create_if_missing: true )
+  DB = RDB.new(
+            db:     'analyst_ratings',
+            table:  'upsndowns',
+            drop:   configatron.drop,
+            create_if_missing: true
+        )
+end
 
 unless configatron.drop
   # NOTE: last_date is of class Time
@@ -218,7 +223,7 @@ def extract(item)
 
   debug_me{:result} if debug?
 
-  DB.insert result
+  DB.insert result    if save?
 end
 
 
