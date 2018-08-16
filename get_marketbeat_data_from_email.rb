@@ -9,24 +9,31 @@
 ##        content changes over time.
 #
 
-require 'io/console'
+require 'date'          # STDLIB
+require 'io/console'    # STDLIB
 
-require 'awesome_print'  # Pretty print Ruby objects with proper indentation and colors
-require 'debug_me'       # A tool to print the labeled value of variables.
+require 'bundler/inline'
+
+print "Installing gems as necessary ... "
+gemfile do
+  source 'https://rubygems.org'
+
+  gem 'awesome_print'  # Pretty print Ruby objects with proper indentation and colors
+  gem 'cli_helper'     # An encapsulation of an integration of slop, nenv, inifile and configatron.
+  gem 'debug_me'       # A tool to print the labeled value of variables.
+  gem 'loofah'
+  gem 'mail'           # Mail provides a nice Ruby DSL for making, sending and reading emails.
+  gem 'progress_bar'   # Simple Progress Bar for output to a terminal
+  gem 'rethinkdb_helper'
+end
+
+puts 'done'
+
 include DebugMe
-
-require 'loofah'
-
-require 'progress_bar'   # Simple Progress Bar for output to a terminal
-
-require 'date'           # STDLIB
-
-require 'mail'           # Mail provides a nice Ruby DSL for making, sending and reading emails.
-
-require 'cli_helper'     # An encapsulation of an integration of slop, nenv, inifile and configatron.
 include CliHelper
+include RethinkDB::Shortcuts
 
-configatron.version = '0.0.1'
+configatron.version = '0.1.0'
 
 HELP = <<EOHELP
 Important:
@@ -57,8 +64,6 @@ end
 ######################################################
 # Local methods
 if save?
-  require 'rethinkdb_helper'
-  include RethinkDB::Shortcuts
 
   DB = RDB.new(
             db:     'analyst_ratings',

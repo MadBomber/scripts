@@ -13,22 +13,27 @@
 ##  By:   Dewayne VanHoozer (dvanhoozer@gmail.com)
 #
 
-require 'awesome_print'  # Pretty print Ruby objects with proper indentation and colors
 require 'date'           # STDLIB
 require 'json'           # STDLIB
-require 'hashie'         # Your friendly neighborhood hash library.
-require 'htmlentities'   # Encode/decode HTML entities
 require 'open-uri'       # STDLIB
 
-require 'rethinkdb'      # This package provides the Ruby driver library for the RethinkDB database server.
+require 'bundler/inline'
+
+print "Installing gems as necessary ... "
+gemfile do
+  source 'https://rubygems.org'
+  gem 'awesome_print'  # Pretty print Ruby objects with proper indentation and colors
+  gem 'cli_helper'     # An encapsulation of an integration of slop, nenv, inifile and configatron.
+  gem 'debug_me'       # A tool to print the labeled value of variables.
+  gem 'hashie'         # Your friendly neighborhood hash library.
+  gem 'htmlentities'   # Encode/decode HTML entities
+  gem 'rethinkdb'      # This package provides the Ruby driver library for the RethinkDB database server.
+  gem 'rssable'        # Access the RSS channel of any webiste without worrying about the engine
+end
+puts "done."
+
 include RethinkDB::Shortcuts
-
-require 'rssable'        # Access the RSS channel of any webiste without worrying about the engine
-
-require 'debug_me'       # A tool to print the labeled value of variables.
 include DebugMe
-
-require 'cli_helper'     # An encapsulation of an integration of slop, nenv, inifile and configatron.
 include CliHelper
 
 configatron.version = '0.0.3'

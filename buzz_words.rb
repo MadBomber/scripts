@@ -84,6 +84,7 @@ git
 Github
 Go
 GoLang
+GraphQL
 guard
 Guardfile
 HAML
