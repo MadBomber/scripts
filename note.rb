@@ -5,7 +5,7 @@
 #
 # typical usage is to alias this program to a single character...
 #   alias _='~/scripts/note.rb'
-# 
+#
 # Usage:
 #
 #   _             Open the _notes.txt file that is closes to pwd
@@ -15,11 +15,13 @@
 #   _ +project <any text>   Add the text to the _notes.txt file for "project"
 #
 
-
-require 'clipboard'  # Access to the clipboard on Linux, MacOS, Windows, and Cygwin.
 require 'pathname'   # STDLIB
 require 'json'       # STDLIB
 require 'date'       # STDLIB
+
+require 'load_gems'
+load_gems 'clipboard'
+
 
 NOTES_FILENAME  = "_notes.txt"
 notes_dir       = Pathname.pwd

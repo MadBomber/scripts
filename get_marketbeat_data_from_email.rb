@@ -10,24 +10,9 @@
 #
 
 require 'date'          # STDLIB
-require 'io/console'    # STDLIB
+require 'load_gems'     # from my lib/ruby directory
 
-require 'bundler/inline'
-
-print "Installing gems as necessary ... "
-gemfile do
-  source 'https://rubygems.org'
-
-  gem 'awesome_print'  # Pretty print Ruby objects with proper indentation and colors
-  gem 'cli_helper'     # An encapsulation of an integration of slop, nenv, inifile and configatron.
-  gem 'debug_me'       # A tool to print the labeled value of variables.
-  gem 'loofah'
-  gem 'mail'           # Mail provides a nice Ruby DSL for making, sending and reading emails.
-  gem 'progress_bar'   # Simple Progress Bar for output to a terminal
-  gem 'rethinkdb_helper'
-end
-
-puts 'done'
+load_gems %w[ awesome_print cli_helper debug_me loofah mail progress_bar rethinkdb_helper ]
 
 include DebugMe
 include CliHelper
