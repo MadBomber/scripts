@@ -36,7 +36,7 @@ include RethinkDB::Shortcuts
 include DebugMe
 include CliHelper
 
-configatron.version = '0.0.3'
+configatron.version = '0.0.4'
 
 HELP = <<EOHELP
 Important:
@@ -216,6 +216,10 @@ class RssFeed
     # ASSUMES: the different feeds present the stories in the same date order
     @rss.each do |rss_feed|
 
+      unless @last_pub_dates.has_key? rss_feed.link
+        @last_pub_dates[rss_feed.link] = "june 3, 1953"
+      end
+
       last_pub_date = @last_pub_dates[rss_feed.link]
       last_pub_date = Time.parse last_pub_date if String == last_pub_date.class
 
@@ -242,9 +246,11 @@ class RssFeed
       end
     end # stories.each do |story|
 
-    rc_file = File.open(@rc, 'w')
-    rc_file.puts @last_pub_dates.to_json
-    rc_file.close
+    if save?
+      rc_file = File.open(@rc, 'w')
+      rc_file.puts @last_pub_dates.to_json
+      rc_file.close
+    end
   end # def process
 
 
