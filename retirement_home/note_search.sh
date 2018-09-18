@@ -5,6 +5,8 @@
 # Mac-only because of use of `mdfind` ???
 #   mdfind makes use of the spotlight index to find files quickly
 #
+# Added a -s|--serarch option to the note.rb file that does this same thing
+# which makes this file OBE.
 
 echo "Search for $@ ..."
 mdfind -name "_notes.txt" | xargs \agrep -n $@ | pr -td

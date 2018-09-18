@@ -6,14 +6,42 @@
 # typical usage is to alias this program to a single character...
 #   alias _='~/scripts/note.rb'
 #
+# External System Commands Used:
+#   mdfind - makes this Mac-exclusive?
+#   xargs
+#   agrep
+#   pr
+#
 # Usage:
-#
-#   _             Open the _notes.txt file that is closes to pwd
-#   _ +           Sets the current directory as a project in the ~/_notes_project_db.json file
-#   _ +project    Opens the _notes.txt file for the "project"
-#   _ <any text>  Adds <any text> and the clipboard to the close project
-#   _ +project <any text>   Add the text to the _notes.txt file for "project"
-#
+
+def usage
+  <<~EOS
+
+    Keep and search engineering notes by project.  Notes are
+    stored in text files with the name "_notes.txt"  Project
+    names associated to each note file are maintained in the
+    home directory in the file "_notes_project_db.json"
+
+    Usage:
+
+    alias _=#{__FILE__}
+
+    _ [-h|--help] Prints this usage text
+
+    _             Open the _notes.txt file that is closes to pwd
+                    The search is up the directory tree
+    _ <any text>  Adds <any text> and the clipboard to the closest project
+
+    _ +           Sets the current directory as a project in the ~/_notes_project_db.json file
+    _ +project    Opens the _notes.txt file for the "project"
+    _ +project <any text>   Add the text to the _notes.txt file for "project"
+
+    _ [-s|--search] Will search all '_notes.txt' files using the 'agrep' command
+
+  EOS
+end
+
+
 
 require 'pathname'   # STDLIB
 require 'json'       # STDLIB
@@ -38,6 +66,24 @@ end
 notes_file = nil
 
 if ARGV.size > 0
+  if %w[ -h --help ].include? ARGV.first.downcase
+    puts usage
+    exit(0)
+  end
+
+  if %w[ -s --search ].include? ARGV.first.downcase
+    ARGV.shift
+    if ARGV.empty?
+      puts "ERROR: no search terms were entered."
+      exit(-1)
+    end
+    params = ARGV.join(' ')
+    puts "\nSearching for #{params} ..."
+    command = "mdfind -name '_notes.txt' | xargs agrep -n #{params} | pr -td"
+    system command
+    exit(0)
+  end
+
   if '+' == ARGV.first
     here                      = Pathname.pwd
     project_name              = here.basename
