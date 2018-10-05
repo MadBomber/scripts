@@ -2,149 +2,108 @@
 ##########################################
 ###
 ##  File: brewt
-##  Desc: Like "gemt" but much slower
+##  Desc: Like "gemt"
 ##
 #
 
-require 'pathname'
+require 'pathname'  # STDLIB
 
 me = Pathname.new(__FILE__)
 
-require 'awesome_print'
-require 'terminal-size'
-require 'word_wrapper'
-require 'ruby-progressbar'
+require 'awesome_print'  # Pretty print Ruby objects with proper indentation and colors
+require 'json'           # STDLIB
+require 'terminal-size'  # A tiny gem to accomplish a simple task: Determining the terminal size.
+require 'tty-spinner'    # A terminal spinner for tasks that have non-deterministic time frame.
+require 'word_wrapper'   # Pure ruby word wrapping
 
 USAGE = <<~EOS
 
-  list brew installed top-level packages -- like "rake -T"
+  list brew installed packages -- like "rake -T"
 
-  usage: #{me.basename} [-h | --help | --installed] [search_string]
+  usage: #{me.basename} [-h | --help | -k | --keywords] [search_terms]
 
   Where:
 
-    search_string is an optional keyword or phrase
+    search_terms  is an optional list of keywords or package names
+                  seperated by spaces
+                  if there are no search_terms then all
+                  installed packages will be shown
 
   Example:
 
-    brewt crystal   shows list of the brew installed packages
-                    that have "crystal" as part of its name or
-                    description.
+    brewt -k crystal  shows list of the brew installed packages
+                      that have "crystal" as part of its name or
+                      description.
+
+    brewt crystal     shows only information about a brew managed
+                      package named 'crystal'
 
 EOS
 
-
-class NilClass
-  def split(*args)
-    [" "]
-  end
-  def strip
-    ""
-  end
-end
-
-leaves = []
+KEYWORD_SEARCH = false
 
 unless ARGV.empty?
-  if ARGV.include?('-h')  ||  ARGV.include?('--help')
+  if %w[ -h --help ].include? ARGV.first
     puts USAGE
     exit
   end
-  if ARGV.include?('--installed')
-    leaves = `brew leaves`.split("\n")
+  if %w[ -k --keyword ].include? ARGV.first
+    KEYWORD_SEARCH = true
+    ARGV.shift
   end
 end
 
+search_terms = ARGV.map(&:downcase)
 
-search_strings = ARGV.map{|a|a.downcase}
-
-brew_hash = Hash.new
-
-longest_desc = 0
-
-puts "Gathering package information ..."
-
-if leaves.empty?
-  search_strings.each do |ss|
-    leaves += `brew search "#{ss}"`.split
-  end
-  leaves.flatten!
-  leaves.uniq!
+if KEYWORD_SEARCH || ARGV.empty?
+  options = '--installed'
+else
+  options = search_terms.sort.join(' ')
 end
 
-progressbar = ProgressBar.create(
-    title: 'Packages',
-    total: leaves.size,
-    format: '%t: [%B] %c/%C %j%% %e',
-    output: STDERR
-  )
+spinner = TTY::Spinner.new("Loading information about installed brew packages ... :spinner", hide_cursor: true, clear: true, format: :pulse_2)
+spinner.auto_spin
 
+installed_packages = JSON.parse `brew info --json=v1 #{options}`
 
-packages = Array.new
+spinner.stop
 
-leaves.each do |leaf|
-  progressbar.increment
-  packages << `brew info #{leaf}`
+puts
+
+# look at the package full_name and desc to see if at
+# least one of the search terms is present.
+# package is a Hash
+# search_terms is an Array of strings
+def select_package(package, search_terms)
+  return true if search_terms.empty?
+  text = package['full_name'] + ' ' + package['desc']
+  search_terms.each do |term|
+    return true if text.include? term
+  end
+  return false
 end
 
-packages.each do |package|
-  lines = package.split("\n")
-  lines << "unknown"
-  lines << "unknown"
-  lines << "unknown"
-
-  temp            = lines[0].split(':')
-  package_name    = temp.first
-
-  if package_name.include?('/')
-    package_full_name = package_name
-    package_name = package_full_name.split('/').last
-  else
-    package_full_name = ""
+if KEYWORD_SEARCH
+  installed_packages.select! do |package|
+    select_package(package, search_terms)
   end
-
-  brew_hash[package_name] = Hash.new
-  brew_hash[package_name][:summary] = lines[1] + " Version:#{temp.last}"
-  unless package_full_name.empty?
-    brew_hash[package_name][:summary] = "(#{package_full_name}) " + brew_hash[package_name][:summary]
-  end
-  brew_hash[package_name][:link]    = lines[2]
 end
 
-
-selected_hash = Hash.new
-
-brew_hash.each_pair do |k, v|
-  next if k.nil?
-
-  unless search_strings.empty?
-    thing = k + ' ' + v[:summary].downcase
-
-    found_one = false
-    search_strings.each do |want_this|
-      if thing.include?(want_this)
-        found_one = true
-        break
-      end
-    end
-
-    next unless found_one
-  end
-  selected_hash[k] = v
-  longest_desc = k.size if longest_desc < k.size
-end
-
-desc_start_col = longest_desc + 2
+longest_name    = installed_packages.map{|package| package['full_name'].size}.max
+desc_start_col  = longest_name + 2
 
 width = Terminal.size[:width] - desc_start_col
 
-puts "ready."
+installed_packages.each do |package|
+  package_name      = package['name']
+  package_full_name = package['full_name']
+  package_desc      = package['desc']
+  package_link      = package['homepage']
 
-selected_hash.each_pair do |k, v|
-  print "#{k}"
-  print " "*(desc_start_col - k.size)
-  text = WordWrapper::MinimumRaggedness.new(width, v[:summary].strip).wrap
-  text += v[:link]
+  print package_full_name
+  print " "*(desc_start_col - package_full_name.size)
+  text = WordWrapper::MinimumRaggedness.new(width, package_desc.strip).wrap
+  text += package_link
   text_array = text.split("\n")
 
   last_x = text_array.size-1
@@ -152,8 +111,54 @@ selected_hash.each_pair do |k, v|
     prefix = x == last_x ? '|__ ' : '|   '
     puts (x<1 ? text_array[x] : (' '*desc_start_col) + prefix+text_array[x] )
   end
-end
+end # installed_packages.each do |package|
 
+puts
 
 __END__
 
+
+ap installed_packages.first #=>
+{
+                        "name" => "ack",
+                   "full_name" => "ack",
+                     "oldname" => nil,
+                     "aliases" => [],
+          "versioned_formulae" => [],
+                        "desc" => "Search tool like grep, but optimized for programmers",
+                    "homepage" => "https://beyondgrep.com/",
+                    "versions" => {
+        "stable" => "2.24",
+         "devel" => "2.999-03",
+          "head" => "HEAD",
+        "bottle" => false
+    },
+                    "revision" => 0,
+              "version_scheme" => 0,
+                      "bottle" => {},
+                    "keg_only" => false,
+                     "options" => [],
+          "build_dependencies" => [],
+                "dependencies" => [],
+    "recommended_dependencies" => [],
+       "optional_dependencies" => [],
+                "requirements" => [],
+              "conflicts_with" => [],
+                     "caveats" => nil,
+                   "installed" => [
+        [0] {
+                            "version" => "2.24",
+                       "used_options" => [],
+                    "built_as_bottle" => false,
+                 "poured_from_bottle" => false,
+               "runtime_dependencies" => [],
+            "installed_as_dependency" => false,
+               "installed_on_request" => true
+        }
+    ],
+                  "linked_keg" => "2.24",
+                      "pinned" => false,
+                    "outdated" => false
+}             #=> nil
+=end
+#
