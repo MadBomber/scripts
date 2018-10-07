@@ -1,39 +1,57 @@
 #!/usr/bin/env ruby
 # ~/scripts/github_clone_my_repos.rb
 
-# TODO: github_api does not have the location of the upstream of a
-#       forked repo.  Need to get that updated so that the upstream
-#       remote can be set for the clone.
+require 'debug_me'
+include DebugMe
 
 require 'awesome_print'
 require 'github_api'
 require 'pathname'
 
-# TODO: add a --dryrun CLI parameter
+DRYRUN = ARGV.include? '--dryrun'
 
-DRYRUN = false
-
-clone_command = 'git clone https://madbomber@github.com/'
+def dryrun?
+  DRYRUN
+end
 
 sandbox_path = Pathname.new(ENV['HOME']) + 'sandbox/git_repos/madbomber'
 
+unless ARGV.empty?
+  if %w[ -h --help -? ].include? ARGV.first
+    puts <<~HELP
+
+      Clone all of my github.com hosted repositories into
+      the default working directories located at:
+        #{sandbox_path}
+
+      Use --dryrun to see what will happen but not do anything
+
+    HELP
+    exit(0)
+  end
+end
+
+clone_command         = 'git clone https://madbomber@github.com/'
+git_remote_command    = 'git remote -v'
+git_upstream_command  = 'git remote add upstream '
+
+# SMELL: may need to add the oauth_token
 my_github_repos = Github.repos.list(
   user:             ENV['GITHUB_ACCOUNT'],
   auto_pagination:  true
 )
 
 puts "\nmy_github_repos"
-ap my_github_repos.map{|r| r['name']}
+ap my_github_repos.map{|r| r.name}
 
-forked_repos    = my_github_repos.select{|r| r['fork']}
-original_repos  = my_github_repos.select{|r| !r['fork']}
-
+forked_repos    = my_github_repos.select{|r| r.fork}
+original_repos  = my_github_repos.select{|r| !r.fork}
 
 puts "\nforked_repos"
-ap forked_repos.map{|r| r['name']}
+ap forked_repos.map{|r| r.name}
 
 puts "\noriginal_repos"
-ap original_repos.map{|r| r['name']}
+ap original_repos.map{|r| r.name}
 
 
 cloned_repos = sandbox_path.children.select {|c| c.directory?}
@@ -42,15 +60,36 @@ cloned_repos = sandbox_path.children.select {|c| c.directory?}
 puts "\ncloned_repos"
 ap cloned_repos
 
-new_github_repos = my_github_repos.reject{|r| cloned_repos.include? r['name']}
+new_github_repos = my_github_repos.reject{|r| cloned_repos.include? r.name}
 
 puts "\nnew_github_repos"
-ap new_github_repos.map{|r| r['name']}
+ap new_github_repos.map{|r| r.name}
 
 new_github_repos.each do |r|
-  command = "#{clone_command}#{r['full_name']} #{sandbox_path}/#{r['name']}"
+  command = "#{clone_command}#{r.full_name} #{sandbox_path}/#{r.name}"
   puts "\n#{command} ..."
-  `#{command}` unless DRYRUN
+  `#{command}` unless dryrun?
+
+  if r.fork
+    remotes = `cd #{sandbox_path}/#{r.name} && #{git_remote_command}`
+
+    unless dryrun?  ||  remotes.include?('upstream')
+
+      puts "Setting upstream remote for a forked repo ..."
+
+      my_repo = Github.repos.get(
+        user: ENV['GITHUB_ACCOUNT'],
+        repo: r.name
+      )
+
+      upstream = my_repo.parent.html_url
+
+      command = "cd #{sandbox_path}/#{r.name} && #{git_upstream_command} #{upstream}"
+      puts command
+      `#{command}`
+
+    end
+  end
 end
 
 __END__
