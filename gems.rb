@@ -1,4 +1,11 @@
 #!/usr/bin/env ruby
+# ~/scripts/gems.rb
+# A list of gems that are useful, interesting or both.
+# I typically keep these gems in by global gemset.  When working
+# on specific projects I use a project-specific gemset which only
+# includes the gems used in that project.
+
+require 'yaml'
 
 $gems = Array.new
 
@@ -8,6 +15,11 @@ end
 
 # Using this form so that you can grab what you want for a Gemfile
 
+# my gems ...
+gem 'cli_helper'              # An encapsulation of an integration of slop, nenv, inifile and configatron.
+gem 'debug_me'                # A tool to print the labeled value of variables.
+gem 'rethinkdb_helper'        # A wrapper around the ruby rethinkdb gem
+#
 gem 'address_extractor'       # Give it text.  It finds addresses in it.
 gem 'awesome_print'           # Pretty print Ruby objects with proper indentation and colors
 gem 'aws-sdk-s3'              # AWS SDK for Ruby - Amazon S3
@@ -16,14 +28,12 @@ gem 'bundler'                 # The best way to manage your application's depend
 gem 'bunny'                   # Popular easy to use Ruby client for RabbitMQ
 gem 'bible_gateway'           # An unofficial 'API' for BibleGateway.com.
 #
-gem 'cli_helper'              # An encapsulation of an integration of slop, nenv, inifile and configatron.
 gem 'clipboard'               # Easy access to the clipboard on Linux, MacOS and Windows.
 gem 'colortail'               # Tail a file and color lines based on regular expressions within that line
 #
 gem 'daemons'                 # A toolkit to create and control daemons in different ways
 gem 'daru'                    # Data Analysis in RUby
 gem 'daru-plotly'             # Draw graph with daru
-gem 'debug_me'                # A tool to print the labeled value of variables.
 gem 'did_you_mean'            # "Did you mean?" experience in Ruby
 gem 'docopt'                  # A command line option parser, that will make you smile.
 gem 'docx'                    # a ruby library/gem for interacting with .docx files
@@ -33,6 +43,7 @@ gem 'ect'                     # Methods ending in ect
 gem 'email_address'           # This gem provides a ruby language library for working with and validating email addresses. By default, it validates against conventional usage, the format preferred for user email addresses. It can be configured to validate against RFC “Standard” formats, common email service provider formats, and perform DNS validation.
 #
 gem 'facter'                  # Facter, a system inventory tool
+gem 'falcon'                  # A fast, asynchronous, rack-compatible web server.
 gem 'ffi-ncurses'             # An FFI wrapper around ncursesw 5.x for MRI Ruby 1.8.x, 1.9.x and JRuby.
 #
 gem 'geek_painter'            # A very simple DSL to generate a colored shell prompt string to use in *nix OS terminals
@@ -46,14 +57,14 @@ gem 'guard-bundler-audit'     # guard + bundler-audit = security
 gem 'guard-chef'              # Guard gem for Chef
 gem 'guard-migrate'           # Guard gem for rails migrations
 gem 'guard-minitest'          # Guard plugin for the Minitest framework
-gem 'guard-redis'                 # Guard gem for Redis
-gem 'guard-rspec'                 # Guard gem for RSpec
-gem 'guard-rubocop'               # Guard plugin for RuboCop
-gem 'guard-rubybeautify'          # Clean up ruby files with ruby beautify.
-gem 'guard-rubycritic'            # Listens to modifications and detects smells in Ruby files
-gem 'guard-s3'                    # A simple guard library for syncing files with s3
-gem 'guard-shell'                 # Guard gem for running shell commands
-gem 'guard-sidekiq'               # guard gem for sidekiq
+gem 'guard-redis'             # Guard gem for Redis
+gem 'guard-rspec'             # Guard gem for RSpec
+gem 'guard-rubocop'           # Guard plugin for RuboCop
+gem 'guard-rubybeautify'      # Clean up ruby files with ruby beautify.
+gem 'guard-rubycritic'        # Listens to modifications and detects smells in Ruby files
+gem 'guard-s3'                # A simple guard library for syncing files with s3
+gem 'guard-shell'             # Guard gem for running shell commands
+gem 'guard-sidekiq'           # guard gem for sidekiq
 #
 gem 'htmlentities'            # Encode/decode HTML entities
 #
@@ -84,15 +95,19 @@ gem 'pg'                      # Pg is the Ruby interface to the {PostgreSQL RDBM
 gem 'pgsync'                  # Sync Postgres data between databases
 gem 'pragmatic_segmenter'     # A rule-based sentence boundary detection gem that works out-of-the-box across many languages
 gem 'progress_bar'            # Simple Progress Bar for output to a terminal
+gem 'puma'                    # Puma is a simple, fast, threaded, and highly concurrent HTTP 1.1 server for Ruby/Rack applications
+gem 'pycall'                  # Call python functions from Ruby
 #
 gem 'rack-attack'             # Block & throttle abusive requests
 gem 'rails', '~> 5.2'         # Full-stack web application framework.
-gem 'rethinkdb_helper'        # A wrapper around the ruby rethinkdb gem
 gem 'rssable'                 # Access the RSS channel of any webiste without worrying about the engine
 gem 'ruby-progressbar'        # never leave the user guessing
 #
+gem 'sail'                    # Sail will help you navigate your Rails application.
 gem 'sanitize'                # Whitelist-based HTML and CSS sanitizer.
 gem 'sketches'                # Sketches allows you to create and edit Ruby code from the comfort of your editor, while having it safely reloaded in IRB whenever changes to the code are saved.
+gem 'sidekiq'                 # Simple, efficient background processing for Ruby
+gem 'sidekiq-scheduler'       # Light weight job scheduling extension for Sidekiq
 gem 'sinatra'                 # Classy web-development dressed in a DSL
 gem 'slop'                    # Simple Lightweight Option Parsing
 gem 'sugar_refinery'          # The Ruby Sugar Refinery is a collection of tiny refinements.
@@ -112,6 +127,10 @@ gem 'word_wrap'               # Simple tool for word-wrapping text
 gem 'word_wrapper'            # Pure ruby word wrapping
 gem 'wordy'                   # Written to help us create sample data for our applications, Wordy speaks in lorem ipsum. You can ask Wordy for paragraphs, sentences or words.
 #
+gem 'yabeda'                  # Extensible framework for collecting metric for your Ruby application
+gem 'yabeda-prometheus'       # Extensible Prometheus exporter for your application
+gem 'yabeda-rails'            # Extensible metrics for monitoring Ruby on Rails application
+gem 'yabeda-sidekiq'          # Extensible Prometheus exporter for monitoring your Sidekiq
 
 gem_list = $gems.join(' ')
 
@@ -121,15 +140,27 @@ else
   installed_gems = Gem::Specification.all.map { |gs| gs.name }
 
   if %w{ -i --install }.include?ARGV.first
-    missing_gems = $gems.select{ |gem_name| !installed_gems.include?(gem_name)}.join(' ')
+    missing_gems = $gems.reject{ |gem_name| installed_gems.include?(gem_name)}
     if missing_gems.empty?
       puts "All gems are already installed"
     else
-      command = "gem install #{missing_gems}"
-      puts command
-      system command
-    end
-  end
+      # command = "gem install #{missing_gems.join(' ')}"
+      # puts command
+      # system command
+
+      until missing_gems.empty?
+        gem_name  = missing_gems.shift
+        command   = "gem install #{gem_name}"
+        puts command
+        system command
+        depends = YAML.load(`gem spec #{gem_name}`)
+                    .dependencies.map{|d| d.name}
+        unless depends.empty?
+          depends.each {|d| missing_gems.delete d}
+        end
+      end # until missing_gems.empty?
+    end # if missing_gems.empty?
+  end # if %w{ -i --install }.include?ARGV.first
 end
 
 __END__
@@ -142,3 +173,18 @@ gem 'terjira'                 # Terjira is interactive command line application 
 gem 'gruff'                   # Beautiful graphs for one or multiple datasets.
 gem 'phashion'                # Simple wrapper around the pHash library - precepual hashing to find dup images
 gem 'rmagick'                 # Ruby binding to ImageMagick
+
+until missing_gems.empty?
+  gem_name = missing_gems.shift
+  command = "gem install #{gem_name}"
+  puts command
+  system command
+  # this does not work ... because the Gem::Specification structure
+  # is build when the program starts and is not dynamically updated
+  depends = Gem::Specification.find_by_name(gem_name)
+              .dependencies.map{|d| d.name}
+
+  unless depends.empty?
+    depends.each {|d| missing_gems.delete d}
+  end
+end # until missing_gems.empty?
