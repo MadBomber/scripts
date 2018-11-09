@@ -66,11 +66,11 @@ gem 'guard-s3'                # A simple guard library for syncing files with s3
 gem 'guard-shell'             # Guard gem for running shell commands
 gem 'guard-sidekiq'           # guard gem for sidekiq
 #
+gem 'haml-rails'              # let your Gemfile do the configuring
 gem 'htmlentities'            # Encode/decode HTML entities
 #
 gem 'inspec'                  # Infrastructure and compliance testing.
 gem 'irbtools'                # Irbtools happy IRB.
-gem 'irbtools-more'           # irbtools-more adds bond and looksee to IRB.
 #
 gem 'jira-ruby'               # Ruby Gem for use with the Atlassian JIRA REST API
 gem 'jirasync'                # jirasync synchronises jira projects to the local file system
@@ -88,6 +88,7 @@ gem 'nokogiri'                # Nokogiri (鋸) is an HTML, XML, SAX, and Reader 
 #
 gem 'ocassionally'            # Ocassionally it works; and, ocassionally it doesn't
 gem 'ohai'                    # Ohai profiles your system and emits JSON
+gem 'optimist'                # Optimist is a commandline option parser for Ruby that just gets out of your way.
 gem 'os'                      # Simple and easy way to know if you're on windows or not (reliably), as well as how many bits the OS is, etc.
 #
 gem 'pericope'                # Pericope is a gem for parsing Bible references.
@@ -132,6 +133,7 @@ gem 'yabeda-prometheus'       # Extensible Prometheus exporter for your applicat
 gem 'yabeda-rails'            # Extensible metrics for monitoring Ruby on Rails application
 gem 'yabeda-sidekiq'          # Extensible Prometheus exporter for monitoring your Sidekiq
 
+
 gem_list = $gems.join(' ')
 
 if ARGV.empty?
@@ -164,6 +166,9 @@ else
 end
 
 __END__
+# Cpnflicts with Ruby 2.6.0-preview3
+gem 'irbtools-more'
+
 # Version Conflicts with Rails 5.2
 gem 'guard-rails_best_practices'  # Guard for rails_best_practices, a code metric tool to check the quality of rails code.
 gem 'terjira'                 # Terjira is interactive command line application for Jira

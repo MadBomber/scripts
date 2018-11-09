@@ -1,4 +1,4 @@
-#!/bin/env ruby
+#!/usr/bin/env ruby
 #######################################################
 ###
 ##  File: erb2haml
@@ -20,7 +20,7 @@ puts "\nDirectory: #{pwd}"
 pwd.children.each do |a_file|
 
   if a_file.file?
-  
+
     if '.erb' == a_file.extname
       haml = Pathname.new(a_file.to_s.sub('.erb', '.haml'))
       print "  Converting #{a_file.basename} to #{haml.basename} ... "
@@ -34,9 +34,9 @@ pwd.children.each do |a_file|
       end
       puts "Done."
     end # of if '.erb' == a_file.extname
-    
+
   end # of if a_file.file?
-  
+
 end # end of pwd.children.each do |a_file|
 
 puts
