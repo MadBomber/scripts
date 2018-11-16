@@ -7,9 +7,24 @@
 ##  Desc: get_historical_stock_data
 ##  By:   Dewayne VanHoozer (dvanhoozer@gmail.com)
 #
+# TODO: Add access to the rethinkdb stock price database
+#
+
+require 'csv'
+require 'date'
+
+class Date
+  def self.yesterday
+    today - 1
+  end
+  def self.tomorrow
+    today + 1
+  end
+end
 
 require 'awesome_print'
 require 'faraday'
+require 'faraday_middleware'
 
 require 'debug_me'
 include DebugMe
@@ -17,7 +32,7 @@ include DebugMe
 require 'cli_helper'
 include CliHelper
 
-configatron.version = '0.0.1'
+configatron.version = '0.0.2'
 
 HELP = <<EOHELP
 Important:
@@ -27,16 +42,8 @@ Important:
 EOHELP
 
 cli_helper("get_historical_stock_data") do |o|
-
-  o.string  '-t', '--ticker',       'Ticker Symbol'
-  o.bool    '-f', '--full_history', 'Retrieve Full History',   default: false
-
-  # o.int     '-i', '--int',    'example integer parameter',   default: 42
-  # o.float   '-f', '--float',  'example float parameter',     default: 123.456
-  # o.array   '-a', '--array',  'example array parameter',     default: [:bob, :carol, :ted, :alice]
-  # o.path    '-p', '--path',   'example Pathname parameter',  default: Pathname.new('default/path/to/file.txt')
-  # o.paths         '--paths',  'example Pathnames parameter', default: ['default/path/to/file.txt', 'file2.txt'].map{|f| Pathname.new f}
-
+  o.string  '-t', '--ticker=symbol',  'Ticker Symbol'
+  o.bool    '-f', '--full_history',   'Retrieve Full History',   default: false
 end
 
 # Display the usage info
@@ -55,7 +62,6 @@ abort_if_errors
 ######################################################
 # Local methods
 
-
 # used to download a complete history for the
 # ticker_symbol upto today as a CSV file.
 def full_url_for(ticker_symbol)
@@ -64,12 +70,48 @@ end
 
 
 def update_url_for(ticker_symbol, days: 5)
-  "http://app.quotemedia.com/quotetools/getHistoryDownload.csv?&webmasterId=501&startDay=1&startMonth=1&startYear=2018&endDay=15&endMonth=11&endYear=2018&isRanged=true&symbol=#{ticker_symbol.upcase}"
+  end_date    = Date.yesterday
+  start_date  = end_date - days
+
+  a_url = <<~ENDURL
+    http://quotes.wsj.com/#{ticker_symbol.upcase}/historical-prices/download?
+    MOD_VIEW=page
+    &num_rows=6299.041666666667
+    &range_days=6299.041666666667
+    &startDate=#{start_date.strftime("%m/%d/%Y")}
+    &endDate=#{end_date.strftime("%m/%d/%Y")}
+  ENDURL
+
+  return a_url.gsub("\n",'')
 end
 
 
 def get_csv_from(a_url)
-  Faraday.get(a_url).body
+  Faraday.new(a_url) { |b|
+    b.use FaradayMiddleware::FollowRedirects
+    b.adapter :net_http
+  }.get.body.gsub(' ','')
+end
+
+
+def get_array_of_hash(an_array)
+  headers = an_array.shift.map!{|key| key.downcase }
+  an_array
+    .map{|row| headers.zip(row).to_h.merge('ticker' => configatron.ticker.upcase)}
+    .map{|a_hash| normalize_hash(a_hash)}
+end
+
+
+def normalize_hash(a_hash)
+  integer_keys  = %w[ volume ]
+  float_keys    = %w[ open high low close ]
+
+  integer_keys.each {|key| a_hash[key] = Integer(a_hash[key])}
+  float_keys.each   {|key| a_hash[key] = Float(a_hash[key])}
+
+  a_hash['date'] = Date.strptime(a_hash['date'], '%m/%d/%y')
+
+  return a_hash
 end
 
 
@@ -85,9 +127,12 @@ end
 ap configatron.to_h  if verbose? || debug?
 
 
-csv_data = get_csv_from(full_history? ? full_url_for(configatron.ticker) : update_url_for(configatron.ticker))
+csv_hash = get_array_of_hash(
+  CSV.parse(
+    get_csv_from(
+      full_history? ? full_url_for(configatron.ticker) : update_url_for(configatron.ticker)
+    )
+  )
+)
 
-puts "\n#{configatron.ticker}\n\n"
-
-puts csv_data
-
+debug_me {[ "csv_hash" ]}
