@@ -7,11 +7,22 @@
 ##  Desc: get_historical_stock_data
 ##  By:   Dewayne VanHoozer (dvanhoozer@gmail.com)
 #
-# TODO: Add access to the rethinkdb stock price database
-#
 
-require 'csv'
-require 'date'
+require 'awesome_print'       # Pretty print Ruby objects with proper indentation and colors
+require 'cli_helper'          # An encapsulation of an integration of slop, nenv, inifile and configatron.
+require 'csv'                 # STDLIB
+require 'date'                # STDLIB
+require 'debug_me'            # A tool to print the labeled value of variables.
+require 'faraday'             # HTTP/REST API client library.
+require 'faraday_middleware'  # Various middleware for Faraday
+require 'json'                # STDLIB
+require 'rethinkdb'           # This package provides the Ruby driver library for the RethinkDB database server.
+
+
+include CliHelper
+include DebugMe
+include RethinkDB::Shortcuts
+
 
 class Date
   def self.yesterday
@@ -22,15 +33,6 @@ class Date
   end
 end
 
-require 'awesome_print'
-require 'faraday'
-require 'faraday_middleware'
-
-require 'debug_me'
-include DebugMe
-
-require 'cli_helper'
-include CliHelper
 
 configatron.version = '0.0.2'
 
@@ -54,7 +56,6 @@ end
 
 
 # Error check your stuff; use error('some message') and warning('some message')
-
 
 abort_if_errors
 
@@ -87,10 +88,12 @@ end
 
 
 def get_csv_from(a_url)
-  Faraday.new(a_url) { |b|
+  text = Faraday.new(a_url) { |b|
     b.use FaradayMiddleware::FollowRedirects
     b.adapter :net_http
-  }.get.body.gsub(' ','')
+  }.get.body.gsub(' ','').downcase
+
+  return (text.start_with?('date') ? text : text.split("\n")[10..].join("\n"))
 end
 
 
@@ -127,6 +130,28 @@ end
 ap configatron.to_h  if verbose? || debug?
 
 
+host  = 'localhost'
+port  = 28015               # default
+db    = 'analyst_ratings'
+table = 'historical_prices'
+
+begin
+  rdb_conn =  r.connect(
+                host:   host,
+                port:   port,        # default
+                db:     db,
+                table:  table,
+              )
+rescue Errno::ECONNREFUSED => e
+  STDERR.puts e
+  STDERR.puts "rethinkdb may not be running on host: #{host}"
+  exit(-1)
+end
+
+rdb_db     = rdb_conn.use(db)
+rdb_table  = rdb_db.table(table)
+
+
 csv_hash = get_array_of_hash(
   CSV.parse(
     get_csv_from(
@@ -136,3 +161,10 @@ csv_hash = get_array_of_hash(
 )
 
 debug_me {[ "csv_hash" ]}
+
+csv_hash.each do |record|
+  rdb_table.insert(record).run(rdb_conn)
+end
+
+rdb_conn.close
+
