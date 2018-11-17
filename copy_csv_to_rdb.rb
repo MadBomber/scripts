@@ -7,6 +7,8 @@
 ##  Desc: Cioy/Import a CSV file into a RethinkDB table
 ##  By:   Dewayne VanHoozer (dvanhoozer@gmail.com)
 #
+# NOTE: RethinkDB stores dates as a time object that includes timezone
+#
 
 require 'awesome_print' # Pretty print Ruby objects with proper indentation and colors
 require 'cli_helper'    # An encapsulation of an integration of slop, nenv, inifile and configatron.
@@ -42,6 +44,7 @@ cli_helper("Copy/Import a CSV file into a RethinkDB table") do |o|
 
   o.bool    '-s', '--save',       'Save to RDB',  default: false
   o.int     '-p', '--port',       'RDB Port',     default: 28015
+  o.string        '--date',       'Date Format',  default: nil
   o.string        '--host',       'RDB Host',     default: 'localhost'
   o.string        '--database',   'RDB Database', default: 'analyst_ratings'
   o.string  '-t', '--table',      'RDB Table',    default: 'historical_prices'
@@ -122,8 +125,23 @@ end
 rdb_db     = rdb_conn.use(configatron.database)
 rdb_table  = rdb_db.table(configatron.table)
 
+# Get last date in javascript:
+# r.db('analyst_ratings').table('historical_prices')
+#  .orderBy({index: r.desc('date')}).limit(5).getField('date').nth(0)
 
-spinner = TTY::Spinner.new("Reading the CSV file: #{configatron.csv_path} ...  :spinner", hide_cursor: true, clear: true, format: :pulse_2)
+
+# NOTE: RethinkDB stores date/time objects as a time object with a timezone
+last_time = rdb_table.orderby(index: r.desc('date')).limit(1).get_field('date').run(rdb_conn).to_a.first
+
+
+
+spinner = TTY::Spinner.new(
+  "Reading the CSV file: #{configatron.csv_path} ...  :spinner",
+  hide_cursor:  true,
+  clear:        true,
+  format:       :pulse_2
+)
+
 spinner.auto_spin
 
 records = SmarterCSV.process configatron.csv_path
@@ -132,12 +150,21 @@ unless configatron.add_fields.nil?
   records.map!{|record| record.merge(NewFields)}
 end
 
+
+unless configatron.date.nil?
+  records.each{|record| record[:date] = Time.strptime(record[:date], configatron.date)}
+end
+
+records.select!{|record| record[:date] > last_time}
+
+
 spinner.stop
 
 
 ap records if debug?
 
-if save?
+
+if save?  && !records.empty?
   bar = ProgressBar.new(records.size)
 
   puts "Processing Historical Stock Prices ..."
