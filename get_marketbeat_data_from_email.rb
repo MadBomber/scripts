@@ -30,7 +30,7 @@ EOHELP
 cli_helper("__file_description__") do |o|
   o.bool          '--drop',     "drop the db and table",    default: false
   o.integer       '--days',     'Number of days for mail',  default: 0
-  o.bool    '-2', '--save',     'Save to database',         default: true
+  o.bool    '-s', '--save',     'Save to database',         default: true
   o.string  '-u', '--user',     "user's email account",     default: ENV['GMAIL_USER']
   o.string  '-p', '--password', "user's email password",    default: ENV['GMAIL_PASS']
 end
