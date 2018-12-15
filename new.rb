@@ -139,7 +139,7 @@ end
 
 template_files.each do |template_file|
 
-debug_me{[ :template_file ]}
+debug_me(file: STDERR){[ :template_file ]}
 
   if template_file.file?
     if '.erb' == template_file.extname.to_s
