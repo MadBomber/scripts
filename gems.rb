@@ -120,6 +120,7 @@ gem 'systemu'                 # systemu
 gem 'terminal-size'           # A tiny gem to accomplish a simple task: Determining the terminal size.
 gem 'test-kitchen'            # Test Kitchen is an integration tool for developing and testing infrastructure code and software on isolated target platforms.
 gem 'transitions'             # State machine extracted from ActiveModel
+gem 'trick_bag'               # Miscellaneous general useful tools.
 #
 gem 'virtualbox'              # Support functions for VM
 #
