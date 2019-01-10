@@ -20,6 +20,17 @@ gem 'cli_helper'              # An encapsulation of an integration of slop, nenv
 gem 'debug_me'                # A tool to print the labeled value of variables.
 gem 'rethinkdb_helper'        # A wrapper around the ruby rethinkdb gem
 #
+# Geospatial libraries
+#
+# geohash divides the world up into squars
+# Uber's H3 divides the world up into hexagons
+#
+gem 'geohash12'               # Geohash12
+gem 'geohash36'               # Commandline interface and library to the Geohash36 Algorithm
+gem 'h3'                      # C Bindings for Uber's H3 library
+#
+# Stuff in alphabetic order
+#
 gem 'address_extractor'       # Give it text.  It finds addresses in it.
 gem 'awesome_print'           # Pretty print Ruby objects with proper indentation and colors
 gem 'aws-sdk-s3'              # AWS SDK for Ruby - Amazon S3
