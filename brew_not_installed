@@ -17,7 +17,7 @@ brewfile_name = 'Brewfile'
 
 USAGE = <<~END_USAGE
 
-  Usage: #{my_nane} [path_to_brewfile]
+  Usage: #{my_name} [path_to_brewfile]
 
   TODO: Add some usage text
 
