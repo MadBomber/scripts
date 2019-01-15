@@ -156,6 +156,32 @@ gem 'yabeda'                  # Extensible framework for collecting metric for y
 gem 'yabeda-prometheus'       # Extensible Prometheus exporter for your application
 gem 'yabeda-rails'            # Extensible metrics for monitoring Ruby on Rails application
 gem 'yabeda-sidekiq'          # Extensible Prometheus exporter for monitoring your Sidekiq
+#
+# gems dealing with TTY/CLI I/O
+#
+gem 'tty-color'               # Terminal color capabilities detection
+gem 'tty-color-cli'           # CLI tool for terminal color capabilities detection
+gem 'tty-command'             # Execute shell commands with pretty output logging and capture their stdout, stderr and exit status.
+gem 'tty-config'              # Define, read and write any Ruby app configurations with a penchant for terminal clients.
+gem 'tty-cursor'              # Terminal cursor positioning, visibility and text manipulation.
+gem 'tty-editor'              # Opens a file or text in the user's preferred editor.
+gem 'tty-file'                # File manipulation utility methods.
+gem 'tty-fireworks'           # For those extra special commits
+gem 'tty-font'                # Terminal fonts
+gem 'tty-markdown'            # Convert a markdown text or document into a terminal friendly output.
+gem 'tty-pager'               # Terminal output paging in a cross-platform way supporting all major ruby interpreters.
+gem 'tty-pie'                 # Draw pie charts in your terminal window.
+gem 'tty-platform'            # Query methods for detecting different operating systems.
+gem 'tty-process-ctl'         # Control of interactive terminal applications via simple API.
+gem 'tty-progressbar'         # A flexible progress bars drawing in terminal emulators.
+gem 'tty-prompt'              # A beautiful and powerful interactive command line prompt.
+gem 'tty-prompt-vim'          # Dead-simple Vim-like bindings extension for tty-prompt
+gem 'tty-reader'              # A set of methods for processing keyboard input in character, line and multiline modes.
+gem 'tty-screen'              # Terminal screen size detection which works on Linux, OS X and Windows/Cygwin platforms and supports MRI, JRuby and Rubinius interpreters.
+gem 'tty-spinner'             # A terminal spinner for tasks that have non-deterministic time frame.
+gem 'tty-table'               # A flexible and intuitive table generator
+gem 'tty-tree'                # Print directory or structured data in a tree like format.
+gem 'tty-which'               # Platform independent implementation of Unix which command.
 
 
 gem_list = $gems.join(' ')
