@@ -1,11 +1,16 @@
 #!/usr/bin/env ruby
-# ~/scripts/gems.rb
+# ~/scripts/useful_gems.rb
 # A list of gems that are useful, interesting or both.
-# I typically keep these gems in by global gemset.  When working
+# I typically keep these gems in my global gemset.  When working
 # on specific projects I use a project-specific gemset which only
-# includes the gems used in that project.
+# includes the gems used in that project within a classic Gemfile.
+#
+# This list is maintained mostly in alphabetic order; however,
+# there are sometimes when grouped by some category
+# makes more sense.
+#
 
-require 'yaml'
+require 'yaml' # STDLIB
 
 $gems = Array.new
 
@@ -39,6 +44,7 @@ gem 'bundler'                 # The best way to manage your application's depend
 gem 'bunny'                   # Popular easy to use Ruby client for RabbitMQ
 gem 'bible_gateway'           # An unofficial 'API' for BibleGateway.com.
 #
+gem 'chartkick'               # Create beautiful JavaScript charts with one line of Ruby
 gem 'clipboard'               # Easy access to the clipboard on Linux, MacOS and Windows.
 gem 'colortail'               # Tail a file and color lines based on regular expressions within that line
 #
@@ -68,6 +74,7 @@ gem 'guard-bundler-audit'     # guard + bundler-audit = security
 gem 'guard-chef'              # Guard gem for Chef
 gem 'guard-migrate'           # Guard gem for rails migrations
 gem 'guard-minitest'          # Guard plugin for the Minitest framework
+gem 'guard-rails_best_practices'  # Guard for rails_best_practices, a code metric tool to check the quality of rails code.
 gem 'guard-redis'             # Guard gem for Redis
 gem 'guard-rspec'             # Guard gem for RSpec
 gem 'guard-rubocop'           # Guard plugin for RuboCop
@@ -92,6 +99,7 @@ gem 'lipsum'                  # Get placeholder text from lipsum.com
 gem 'log_analyzer'            # log_analyzer gem is created to get statistics about your views rendering performance.
 #
 gem 'mail'                    # Mail provides a nice Ruby DSL for making, sending and reading emails.
+gem 'meta-tags'               # Collection of SEO helpers for Ruby on Rails.
 gem 'mini_sql'                # A fast, safe, simple direct SQL executor
 #
 gem 'nenv'                    # Convenience wrapper for Ruby's ENV
@@ -107,11 +115,13 @@ gem 'pg'                      # Pg is the Ruby interface to the {PostgreSQL RDBM
 gem 'pgsync'                  # Sync Postgres data between databases
 gem 'pragmatic_segmenter'     # A rule-based sentence boundary detection gem that works out-of-the-box across many languages
 gem 'progress_bar'            # Simple Progress Bar for output to a terminal
+gem 'pundit'                  # OO authorization for Rails
 gem 'puma'                    # Puma is a simple, fast, threaded, and highly concurrent HTTP 1.1 server for Ruby/Rack applications
 gem 'pycall'                  # Call python functions from Ruby
 #
 gem 'rack-attack'             # Block & throttle abusive requests
 gem 'rails', '~> 5.2'         # Full-stack web application framework.
+gem 'rails-erd'               # Entity-relationship diagram for your Rails models.
 gem 'rssable'                 # Access the RSS channel of any webiste without worrying about the engine
 gem 'ruby-progressbar'        # never leave the user guessing
 #
@@ -122,12 +132,14 @@ gem 'sidekiq'                 # Simple, efficient background processing for Ruby
 gem 'sidekiq-scheduler'       # Light weight job scheduling extension for Sidekiq
 gem 'sinatra'                 # Classy web-development dressed in a DSL
 gem 'slop'                    # Simple Lightweight Option Parsing
+gem 'smarter_csv'             # Ruby Gem for smarter importing of CSV Files (and CSV-like files), with lots of optional features, e.g. chunked processing for huge CSV files
 gem 'sugar_refinery'          # The Ruby Sugar Refinery is a collection of tiny refinements.
 gem 'summary'                 # This is a simple gem that generates introduction text from a long text, it will always break the text at the end of the last word near to the limit you informed as argument.
 gem 'svn_wc'                  # operates on a working copy (on the local filesystem) of a remote Subversion repository.
 gem 'sys-proctable'           # An interface for providing process table information
 gem 'systemu'                 # systemu
 #
+gem 'terjira'                 # Terjira is interactive command line application for Jira
 gem 'terminal-size'           # A tiny gem to accomplish a simple task: Determining the terminal size.
 gem 'test-kitchen'            # Test Kitchen is an integration tool for developing and testing infrastructure code and software on isolated target platforms.
 gem 'transitions'             # State machine extracted from ActiveModel
@@ -178,12 +190,8 @@ else
 end
 
 __END__
-# Cpnflicts with Ruby 2.6.0-preview3
+# Cpnflicts with Ruby 2.6.0
 gem 'irbtools-more'
-
-# Version Conflicts with Rails 5.2
-gem 'guard-rails_best_practices'  # Guard for rails_best_practices, a code metric tool to check the quality of rails code.
-gem 'terjira'                 # Terjira is interactive command line application for Jira
 
 
 # Problems ...... just old stuff which needs updating
