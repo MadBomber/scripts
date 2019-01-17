@@ -58,6 +58,7 @@ gem 'dotenv'                  # Loads environment variables from `.env`.
 #
 gem 'ect'                     # Methods ending in ect
 gem 'email_address'           # This gem provides a ruby language library for working with and validating email addresses. By default, it validates against conventional usage, the format preferred for user email addresses. It can be configured to validate against RFC “Standard” formats, common email service provider formats, and perform DNS validation.
+gem 'event_bus'               # A simple pubsub event bus for Ruby applications
 #
 gem 'facter'                  # Facter, a system inventory tool
 gem 'falcon'                  # A fast, asynchronous, rack-compatible web server.
