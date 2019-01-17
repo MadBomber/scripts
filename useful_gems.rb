@@ -35,6 +35,8 @@ gem 'geohash36'               # Commandline interface and library to the Geohash
 # h3 requires the 'cmake' package; use brew, dnf, yum, apt=get etc
 gem 'h3'                      # C Bindings for Uber's H3 library
 #
+gem 'bond' # used in IRB
+#
 # Stuff in alphabetic order
 #
 gem 'address_extractor'       # Give it text.  It finds addresses in it.
