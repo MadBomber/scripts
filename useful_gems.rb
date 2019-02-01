@@ -34,15 +34,26 @@ gem 'geohash12'               # Geohash12
 gem 'geohash36'               # Commandline interface and library to the Geohash36 Algorithm
 # h3 requires the 'cmake' package; use brew, dnf, yum, apt=get etc
 gem 'h3'                      # C Bindings for Uber's H3 library
+
+
 #
-gem 'bond' # used in IRB
+# Profilers
 #
+gem 'rack-mini-profiler'  # Profiles loading speed for rack applications.
+gem 'memory_profiler'     # Memory profiling routines for Ruby 2.1+
+gem 'flamegraph'          # Flamegraph support for arbitrary ruby apps
+gem 'stackprof'           # sampling callstack-profiler for ruby 2.1+
+
+#####################################
 # Stuff in alphabetic order
 #
 gem 'address_extractor'       # Give it text.  It finds addresses in it.
+gem 'anycable'                # AnyCable is a polyglot replacement for ActionCable-compatible servers
+gem 'anycable-rails'          # Rails adapter for AnyCable
 gem 'awesome_print'           # Pretty print Ruby objects with proper indentation and colors
 gem 'aws-sdk-s3'              # AWS SDK for Ruby - Amazon S3
 #
+gem 'bond'                    # used in IRB completions
 gem 'bundler'                 # The best way to manage your application's dependencies
 gem 'bunny'                   # Popular easy to use Ruby client for RabbitMQ
 gem 'bible_gateway'           # An unofficial 'API' for BibleGateway.com.
@@ -92,6 +103,7 @@ gem 'haml-rails'              # let your Gemfile do the configuring
 gem 'htmlentities'            # Encode/decode HTML entities
 #
 gem 'inspec'                  # Infrastructure and compliance testing.
+gem 'iodine'                  # iodine - a fast HTTP / Websocket Server with Pub/Sub support, optimized for Ruby MRI on Linux / BSD
 gem 'irbtools'                # Irbtools happy IRB.
 #
 gem 'jira-ruby'               # Ruby Gem for use with the Atlassian JIRA REST API
@@ -146,6 +158,7 @@ gem 'systemu'                 # systemu
 gem 'terjira'                 # Terjira is interactive command line application for Jira
 gem 'terminal-size'           # A tiny gem to accomplish a simple task: Determining the terminal size.
 gem 'test-kitchen'            # Test Kitchen is an integration tool for developing and testing infrastructure code and software on isolated target platforms.
+gem "timecop"                 # A gem providing "time travel" and "time freezing" capabilities, making it dead simple to test time-dependent code.  It provides a unified method to mock Time.now, Date.today, and DateTime.now in a single call.
 gem 'transitions'             # State machine extracted from ActiveModel
 gem 'trick_bag'               # Miscellaneous general useful tools.
 #
@@ -187,6 +200,7 @@ gem 'tty-table'               # A flexible and intuitive table generator
 gem 'tty-tree'                # Print directory or structured data in a tree like format.
 gem 'tty-which'               # Platform independent implementation of Unix which command.
 
+# STOP_ADDING_COMMENTS -- used by ./comment_gemset.rb
 
 gem_list = $gems.join(' ')
 

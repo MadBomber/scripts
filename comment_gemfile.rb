@@ -58,37 +58,45 @@ gemfile.rename( gemfile_bak )
 
 GEMFILE = gemfile.open('w')
 
+start_flags = ['# START_ADDING_COMMENTS']   # SMELL: unused
+end_flags   = ['__END__', '# STOP_ADDING_COMMENTS']
+
+process_the_line = true # once you hit the end flag, stop processing
+
 gemfile_bak.readlines.each do |a_line|
+  process_the_line = false if end_flags.any? {|flag| a_line.start_with? flag}
 
-  if a_line.include?('#')
-    # don't document something that is already documented
-    GEMFILE.puts a_line.chomp
-    last_desc_start_col = a_line.index('#')
-    next
-  end
-
-  a_line.chomp!
-
-  if a_line.strip.start_with? 'gem'
-
-    summary     = eval(a_line)
-
-    unless summary.empty?
-
-      sz          = a_line.length
-      spacer_cnt  = last_desc_start_col - sz
-
-      if spacer_cnt <= 0
-        spacer_cnt          = 2               # number of spaces past end of current line
-        last_desc_start_col = sz + spacer_cnt
-      end
-
-      a_line += (" "*spacer_cnt) + "# #{summary}"
-
+  if process_the_line
+    if a_line.include?('#')
+      # don't document something that is already documented
+      GEMFILE.puts a_line.chomp
+      last_desc_start_col = a_line.index('#')
+      next
     end
-    
-  end
-  
+
+    a_line.chomp!
+
+    if a_line.strip.start_with? 'gem'
+      
+      summary     = eval(a_line)
+
+      unless summary.empty?
+
+        sz          = a_line.length
+        spacer_cnt  = last_desc_start_col - sz
+
+        if spacer_cnt <= 0
+          spacer_cnt          = 2               # number of spaces past end of current line
+          last_desc_start_col = sz + spacer_cnt
+        end
+
+        a_line += (" "*spacer_cnt) + "# #{summary}"
+
+      end
+      
+    end
+  end # if process_the_line
+
   GEMFILE.puts a_line
 
 end # of gemfile.readlines.each do |a_line|
