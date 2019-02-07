@@ -112,7 +112,7 @@ SOURCE_DIR = PROJECT_DIR + source_branch
 target_branch  = configatron.branch_name
 TARGET_DIR     = WORKING_ROOT + target_branch
 
-do_command "mkdir -p #{TARGET_DIR}"
+# do_command "mkdir -p #{TARGET_DIR}"
 
 
 # recurisvely copy the source WD to the target WD
