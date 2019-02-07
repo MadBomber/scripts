@@ -47,16 +47,18 @@ gem 'stackprof'           # sampling callstack-profiler for ruby 2.1+
 #####################################
 # Stuff in alphabetic order
 #
+gem 'activerecord-import'     # Bulk insert extension for ActiveRecord
 gem 'address_extractor'       # Give it text.  It finds addresses in it.
 gem 'anycable'                # AnyCable is a polyglot replacement for ActionCable-compatible servers
 gem 'anycable-rails'          # Rails adapter for AnyCable
 gem 'awesome_print'           # Pretty print Ruby objects with proper indentation and colors
 gem 'aws-sdk-s3'              # AWS SDK for Ruby - Amazon S3
 #
+gem 'bible_gateway'           # An unofficial 'API' for BibleGateway.com.
+gem 'blazer'                  # Explore your data with SQL. Easily create charts and dashboards, and share them with your team.
 gem 'bond'                    # used in IRB completions
 gem 'bundler'                 # The best way to manage your application's dependencies
 gem 'bunny'                   # Popular easy to use Ruby client for RabbitMQ
-gem 'bible_gateway'           # An unofficial 'API' for BibleGateway.com.
 #
 gem 'chartkick'               # Create beautiful JavaScript charts with one line of Ruby
 gem 'clipboard'               # Easy access to the clipboard on Linux, MacOS and Windows.
