@@ -145,6 +145,16 @@ if ENVRC.exist?
   do_command "cd #{TARGET_DIR} && direnv allow"
 end
 
+PREP_SCRIPT = 'prepare_default_config_for_development'
+PREP_FILE   = TARGET_DIR + PREP_SCRIPT
+
+if PREP_FILE.exist?  &&  PREP_FILE.file?  &&  PREP_FILE.executable?
+  do_command "cd #{TARGET_DIR} && ./#{PREP_SCRIPT}"
+end
+
+
+
+
 # TODO: on previous project-specific version of this kind of script
 #       there was some additional steps that followed on like
 #         bundle install; database rebuild

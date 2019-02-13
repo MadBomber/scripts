@@ -47,8 +47,10 @@ gem 'stackprof'           # sampling callstack-profiler for ruby 2.1+
 #####################################
 # Stuff in alphabetic order
 #
+gem 'active_record_union'     # UNIONs in ActiveRecord! Adds proper union and union_all methods to ActiveRecord::Relation.
 gem 'activerecord-import'     # Bulk insert extension for ActiveRecord
 gem 'address_extractor'       # Give it text.  It finds addresses in it.
+gem 'any_login'               # AnyLogin is created to speedup development process and allow developer's quickly login as any user in DB.
 gem 'anycable'                # AnyCable is a polyglot replacement for ActionCable-compatible servers
 gem 'anycable-rails'          # Rails adapter for AnyCable
 gem 'awesome_print'           # Pretty print Ruby objects with proper indentation and colors
