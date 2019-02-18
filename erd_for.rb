@@ -35,7 +35,7 @@ EOHELP
 cli_helper("Create ERD files for given database models") do |o|
 
   o.string  '-t', '--type',    'Type of Output File',              default: 'pdf'
-  o.int     '-r', '--recursion_depth', 'Recursive Depth of Relationships', default: 2
+  o.int     '-r', '--recursion_depth', 'Recursive Depth of Relationships', default: 1
   o.array   '-m', '--models',  'Model names seperated by comma'
   o.path    '-o', '--outdir',  'Directory to save ERD files',      default: DEFAULT_OUT_DIR
 
@@ -86,15 +86,16 @@ configatron.models.each do |model|
 
   puts
   puts "============================================================"
-  puts "Generating ERD for $model ... "
+  puts "Generating ERD for #{model} ... "
 
   command += " --title='#{model} ERD'"
   command += " --only='#{model},'"
 
-  model_filename = model.snakecase.gsub('::', '_')
+  model_filename = model.snakecase.gsub('/', '_')
 
   command += " --filename=#{configatron.outdir}/#{model_filename}_erd"
   command += " --filetype=#{configatron.type}"
+
 
   `#{command}`
 
