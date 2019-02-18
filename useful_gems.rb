@@ -203,6 +203,9 @@ gem 'tty-spinner'             # A terminal spinner for tasks that have non-deter
 gem 'tty-table'               # A flexible and intuitive table generator
 gem 'tty-tree'                # Print directory or structured data in a tree like format.
 gem 'tty-which'               # Platform independent implementation of Unix which command.
+#
+gem 'wicked_pdf'
+
 
 # STOP_ADDING_COMMENTS -- used by ./comment_gemset.rb
 
