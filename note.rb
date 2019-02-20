@@ -38,6 +38,12 @@ def usage
 
     _ [-s|--search] Will search all '_notes.txt' files using the 'agrep' command
 
+    MPTE:
+
+      Every time a new note is added, the _notes.txt file is copied to
+      a backup file in the $HOME/_notes_backup directory.  The name of
+      the backup file indicates the directory from whihc it came.
+
   EOS
 end
 
@@ -51,10 +57,15 @@ require 'load_gems'
 load_gems 'clipboard'
 
 
-NOTES_FILENAME  = "_notes.txt"
-notes_dir       = Pathname.pwd
-HOME_PATH       = Pathname.new ENV['HOME']
-PROJECT_DB_FILE = HOME_PATH + '_notes_project_db.json'
+NOTES_FILENAME    = "_notes.txt"
+notes_dir         = Pathname.pwd
+HOME_PATH         = Pathname.new ENV['HOME']
+PROJECT_DB_FILE   = HOME_PATH + '_notes_project_db.json'
+NOTES_BACKUP_DIR  = HOME_PATH + '_notes_backup'
+
+unless NOTES_BACKUP_DIR.exist?
+  NOTES_BACKUP_DIR.mkdir
+end
 
 
 if PROJECT_DB_FILE.exist?
@@ -130,7 +141,12 @@ def get_relevant_notes_file(a_path)
     if a_path == HOME_PATH
       return HOME_PATH + NOTES_FILENAME
     else
-      return get_relevant_notes_file a_path.parent
+      here = a_path.parent
+      if '/' == here.to_s
+        return HOME_PATH + NOTES_FILENAME
+      else
+        return get_relevant_notes_file(here)
+      end
     end
   end
 end
@@ -145,4 +161,14 @@ File.open(notes_file, "a") do |f|
 end
 
 system "#{ENV['EDITOR']} #{notes_file} &" if ARGV.empty?  &&  !ENV['EDITOR'].nil?
+
+backup_filename = notes_file.relative_path_from(HOME_PATH).to_s.gsub('../','').gsub('/','_')
+
+backup_filename_path = NOTES_BACKUP_DIR + backup_filename
+
+if backup_filename_path.exist?
+  `mv #{backup_filename_path} #{backup_filename_path}.bak`
+end
+
+`cp #{notes_file} #{backup_filename_path}`
 
