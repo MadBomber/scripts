@@ -153,6 +153,7 @@ gem 'sidekiq-scheduler'       # Light weight job scheduling extension for Sideki
 gem 'sinatra'                 # Classy web-development dressed in a DSL
 gem 'slop'                    # Simple Lightweight Option Parsing
 gem 'smarter_csv'             # Ruby Gem for smarter importing of CSV Files (and CSV-like files), with lots of optional features, e.g. chunked processing for huge CSV files
+gem 'store_model'             # Gem for working with JSON-backed attributes as ActiveRecord models
 gem 'sugar_refinery'          # The Ruby Sugar Refinery is a collection of tiny refinements.
 gem 'summary'                 # This is a simple gem that generates introduction text from a long text, it will always break the text at the end of the last word near to the limit you informed as argument.
 gem 'svn_wc'                  # operates on a working copy (on the local filesystem) of a remote Subversion repository.
@@ -204,7 +205,7 @@ gem 'tty-table'               # A flexible and intuitive table generator
 gem 'tty-tree'                # Print directory or structured data in a tree like format.
 gem 'tty-which'               # Platform independent implementation of Unix which command.
 #
-gem 'wicked_pdf'
+gem 'wicked_pdf'              # PDF generator (from HTML) gem for Ruby on Rails
 
 
 # STOP_ADDING_COMMENTS -- used by ./comment_gemset.rb
