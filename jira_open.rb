@@ -8,6 +8,8 @@
 #   System Environment Variables Used:
 #   JIRA_BASE_URL
 #     Example: https://<account-name>.atlassian.net/
+#   JIRA_URL_SUFFIX
+#     Example: ?oldIssueView=true
 #   JIRA_PROJECT
 #     Example: AR
 #   JIRA_TICKET_EXAMPLE
@@ -24,6 +26,13 @@ if ENV['JIRA_BASE_URL'].nil?
 else
   JIRA_BASE_URL = ENV['JIRA_BASE_URL']
 end
+
+if ENV['JIRA_URL_SUFFIX'].nil?
+  JIRA_URL_SUFFIX = ''
+else
+  JIRA_URL_SUFFIX = ENV['JIRA_URL_SUFFIX']
+end
+
 
 if ENV['JIRA_PROJECT'].nil?
   puts "ERROR: The system environment variable JIRA_PROJECT is not set."
@@ -83,7 +92,7 @@ while !ARGV.empty?
       tickets = ( first_ticket .. last_ticket)
       tickets.each do |ticket|
         ticket = expand_using_base_ticket(ticket) 
-        cmd = "#{base_command}#{ticket}"
+        cmd = "#{base_command}#{ticket}#{JIRA_URL_SUFFIX}"
         system(cmd)
         sleep 1
       end
@@ -92,6 +101,6 @@ while !ARGV.empty?
     end
   else
     ticket = expand_using_base_ticket(ticket) 
-    system("#{base_command}#{ticket}")
+    system("#{base_command}#{ticket}#{JIRA_URL_SUFFIX}")
   end
 end # while !ARGV.empty?
