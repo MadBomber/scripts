@@ -5,6 +5,8 @@
 # to
 # ssh://git@<stuff>
 #
+# BUT sometimes there is no "user@" pattern.
+
 require 'debug_me'
 include DebugMe
 
@@ -21,7 +23,7 @@ def update_to_ssh(a_directory)
   puts "\nUpdating to SSH access for #{a_directory.basename} ..."
   values = `cd #{a_directory} && git config --get #{FIELD_NAME}`.chomp.split('@')
   return if values.empty?
-  new_value = SSH_PREFIX + values.last
+  new_value = SSH_PREFIX + values.last.gsub('https://','').gsub('http://','')
   `cd #{a_directory} && git config #{FIELD_NAME} #{new_value}`
 end
 
