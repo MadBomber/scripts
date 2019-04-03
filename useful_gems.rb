@@ -47,9 +47,11 @@ gem 'stackprof'           # sampling callstack-profiler for ruby 2.1+
 #####################################
 # Stuff in alphabetic order
 #
+gem 'active_record_extended'  # Adds extended functionality to Activerecord Postgres implementation
 gem 'active_record_union'     # UNIONs in ActiveRecord! Adds proper union and union_all methods to ActiveRecord::Relation.
 gem 'activerecord-import'     # Bulk insert extension for ActiveRecord
 gem 'address_extractor'       # Give it text.  It finds addresses in it.
+gem 'ahoy_matey'              # Simple, powerful analytics for Rails
 gem 'any_login'               # AnyLogin is created to speedup development process and allow developer's quickly login as any user in DB.
 gem 'anycable'                # AnyCable is a polyglot replacement for ActionCable-compatible servers
 gem 'anycable-rails'          # Rails adapter for AnyCable
@@ -60,8 +62,10 @@ gem 'bible_gateway'           # An unofficial 'API' for BibleGateway.com.
 gem 'blazer'                  # Explore your data with SQL. Easily create charts and dashboards, and share them with your team.
 gem 'bond'                    # used in IRB completions
 gem 'bundler'                 # The best way to manage your application's dependencies
+gem 'bundler-audit'           # Patch-level verification for Bundler
 gem 'bunny'                   # Popular easy to use Ruby client for RabbitMQ
 #
+gem 'cancancan'               # Simple authorization solution for Rails.
 gem 'chartkick'               # Create beautiful JavaScript charts with one line of Ruby
 gem 'clipboard'               # Easy access to the clipboard on Linux, MacOS and Windows.
 gem 'colortail'               # Tail a file and color lines based on regular expressions within that line
@@ -81,10 +85,12 @@ gem 'event_bus'               # A simple pubsub event bus for Ruby applications
 gem 'facter'                  # Facter, a system inventory tool
 gem 'falcon'                  # A fast, asynchronous, rack-compatible web server.
 gem 'ffi-ncurses'             # An FFI wrapper around ncursesw 5.x for MRI Ruby 1.8.x, 1.9.x and JRuby.
+gem 'fx'                      # Support for database functions and triggers in Rails migrations
 #
 gem 'geek_painter'            # A very simple DSL to generate a colored shell prompt string to use in *nix OS terminals
 gem 'git-up'                  # git command to fetch and rebase all branches
 gem 'github_api'              # Ruby client for the official GitHub API
+gem 'graphql'                 # A GraphQL language and runtime for Ruby
 gem 'guard'                   # Guard keeps an eye on your file modifications
 gem 'guard-annotate'          # Guard gem for annotate
 gem 'guard-brakeman'          # Guard gem for Brakeman
@@ -109,6 +115,7 @@ gem 'htmlentities'            # Encode/decode HTML entities
 gem 'inspec'                  # Infrastructure and compliance testing.
 gem 'iodine'                  # iodine - a fast HTTP / Websocket Server with Pub/Sub support, optimized for Ruby MRI on Linux / BSD
 gem 'irbtools'                # Irbtools happy IRB.
+gem 'irbtools-more'           # adds bond and looksee to IRB.
 #
 gem 'jira-ruby'               # Ruby Gem for use with the Atlassian JIRA REST API
 gem 'jirasync'                # jirasync synchronises jira projects to the local file system
@@ -125,14 +132,17 @@ gem 'mini_sql'                # A fast, safe, simple direct SQL executor
 gem 'nenv'                    # Convenience wrapper for Ruby's ENV
 gem 'nokogiri'                # Nokogiri (鋸) is an HTML, XML, SAX, and Reader parser
 #
+gem 'object_shadow'           # Metaprogramming Level 2
 gem 'ocassionally'            # Ocassionally it works; and, ocassionally it doesn't
 gem 'ohai'                    # Ohai profiles your system and emits JSON
 gem 'optimist'                # Optimist is a commandline option parser for Ruby that just gets out of your way.
 gem 'os'                      # Simple and easy way to know if you're on windows or not (reliably), as well as how many bits the OS is, etc.
 #
+gem 'paper_trail'             # Track changes to your models.
 gem 'pericope'                # Pericope is a gem for parsing Bible references.
 gem 'pg'                      # Pg is the Ruby interface to the {PostgreSQL RDBMS}[http://www.postgresql.org/]
 gem 'pgsync'                  # Sync Postgres data between databases
+gem 'power_assert'            # Power Assert for Ruby
 gem 'pragmatic_segmenter'     # A rule-based sentence boundary detection gem that works out-of-the-box across many languages
 gem 'progress_bar'            # Simple Progress Bar for output to a terminal
 gem 'pundit'                  # OO authorization for Rails
@@ -143,10 +153,13 @@ gem 'rack-attack'             # Block & throttle abusive requests
 gem 'rails', '~> 5.2'         # Full-stack web application framework.
 gem 'rails-erd'               # Entity-relationship diagram for your Rails models.
 gem 'rssable'                 # Access the RSS channel of any webiste without worrying about the engine
+gem 'rubocop'                 # Automatic Ruby code style checking tool.
+gem 'rubocop-performance'     # Automatic performance checking tool for Ruby code.
 gem 'ruby-progressbar'        # never leave the user guessing
 #
 gem 'sail'                    # Sail will help you navigate your Rails application.
 gem 'sanitize'                # Whitelist-based HTML and CSS sanitizer.
+gem 'scenic'                  # Support for database views in Rails migrations
 gem 'semantic_logger'         # Feature rich logging framework, and replacement for existing Ruby & Rails loggers.
 gem 'sketches'                # Sketches allows you to create and edit Ruby code from the comfort of your editor, while having it safely reloaded in IRB whenever changes to the code are saved.
 gem 'sidekiq'                 # Simple, efficient background processing for Ruby
@@ -206,6 +219,7 @@ gem 'tty-table'               # A flexible and intuitive table generator
 gem 'tty-tree'                # Print directory or structured data in a tree like format.
 gem 'tty-which'               # Platform independent implementation of Unix which command.
 #
+gem 'web-console'             # A debugging tool for your Ruby on Rails applications.
 gem 'wicked_pdf'              # PDF generator (from HTML) gem for Ruby on Rails
 
 
@@ -243,26 +257,26 @@ else
 end
 
 __END__
-# Cpnflicts with Ruby 2.6.0
-gem 'irbtools-more'
+graphql                 A GraphQL language and runtime for Ruby
+                        |__ https://github.com/rmosolgo/graphql-ruby
+graphql-active_record   Active Record Helpers for graphql-ruby
+                        |__ http://github.com/brettjurgens/graphql-active-record
+graphql-batch           A query batching executor for the graphql gem
+                        |__ https://github.com/Shopify/graphql-batch
+graphql-client          GraphQL Client
+                        |__ https://github.com/github/graphql-client
+graphql-docs            Easily generate beautiful documentation from your GraphQL schema.
+                        |__ https://github.com/gjtorikian/graphql-docs
+graphql-errors          Simple error handler for graphql-ruby
+                        |__ https://github.com/exAspArk/graphql-errors
+graphql-guard           Simple authorization gem for graphql-ruby
+                        |__ https://github.com/exAspArk/graphql-guard
+graphql-preload         Preload ActiveRecord associations with graphql-batch
+                        |__ https://github.com/ConsultingMD/graphql-preload
+graphql-smart_select    Plugin for graphql-ruby gem
+                        |__ https://github.com/Arkweid/graphql-smart_select
+graphql_schema          Classes for convenient use of GraphQL introspection result
+                        |__ https://github.com/Shopify/graphql_schema
+rspec-graphql_matchers  Collection of rspec matchers to test your graphQL api schema.
+                        |__ https://github.com/khamusa/rspec-graphql_matchers
 
-
-# Problems ...... just old stuff which needs updating
-gem 'gruff'                   # Beautiful graphs for one or multiple datasets.
-gem 'phashion'                # Simple wrapper around the pHash library - precepual hashing to find dup images
-gem 'rmagick'                 # Ruby binding to ImageMagick
-
-until missing_gems.empty?
-  gem_name = missing_gems.shift
-  command = "gem install #{gem_name}"
-  puts command
-  system command
-  # this does not work ... because the Gem::Specification structure
-  # is build when the program starts and is not dynamically updated
-  depends = Gem::Specification.find_by_name(gem_name)
-              .dependencies.map{|d| d.name}
-
-  unless depends.empty?
-    depends.each {|d| missing_gems.delete d}
-  end
-end # until missing_gems.empty?
