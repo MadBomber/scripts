@@ -47,6 +47,7 @@ gem 'stackprof'           # sampling callstack-profiler for ruby 2.1+
 #####################################
 # Stuff in alphabetic order
 #
+gem 'active_record_extended'  # Adds extended functionality to Activerecord Postgres implementation
 gem 'active_record_union'     # UNIONs in ActiveRecord! Adds proper union and union_all methods to ActiveRecord::Relation.
 gem 'activerecord-import'     # Bulk insert extension for ActiveRecord
 gem 'address_extractor'       # Give it text.  It finds addresses in it.
@@ -85,6 +86,7 @@ gem 'ffi-ncurses'             # An FFI wrapper around ncursesw 5.x for MRI Ruby 
 gem 'geek_painter'            # A very simple DSL to generate a colored shell prompt string to use in *nix OS terminals
 gem 'git-up'                  # git command to fetch and rebase all branches
 gem 'github_api'              # Ruby client for the official GitHub API
+gem 'graphql'                 # A GraphQL language and runtime for Ruby
 gem 'guard'                   # Guard keeps an eye on your file modifications
 gem 'guard-annotate'          # Guard gem for annotate
 gem 'guard-brakeman'          # Guard gem for Brakeman
@@ -109,6 +111,7 @@ gem 'htmlentities'            # Encode/decode HTML entities
 gem 'inspec'                  # Infrastructure and compliance testing.
 gem 'iodine'                  # iodine - a fast HTTP / Websocket Server with Pub/Sub support, optimized for Ruby MRI on Linux / BSD
 gem 'irbtools'                # Irbtools happy IRB.
+gem 'irbtools-more'           # adds bond and looksee to IRB.
 #
 gem 'jira-ruby'               # Ruby Gem for use with the Atlassian JIRA REST API
 gem 'jirasync'                # jirasync synchronises jira projects to the local file system
@@ -206,6 +209,7 @@ gem 'tty-table'               # A flexible and intuitive table generator
 gem 'tty-tree'                # Print directory or structured data in a tree like format.
 gem 'tty-which'               # Platform independent implementation of Unix which command.
 #
+gem 'web-console'             # A debugging tool for your Ruby on Rails applications.
 gem 'wicked_pdf'              # PDF generator (from HTML) gem for Ruby on Rails
 
 
@@ -243,26 +247,26 @@ else
 end
 
 __END__
-# Cpnflicts with Ruby 2.6.0
-gem 'irbtools-more'
+graphql                 A GraphQL language and runtime for Ruby
+                        |__ https://github.com/rmosolgo/graphql-ruby
+graphql-active_record   Active Record Helpers for graphql-ruby
+                        |__ http://github.com/brettjurgens/graphql-active-record
+graphql-batch           A query batching executor for the graphql gem
+                        |__ https://github.com/Shopify/graphql-batch
+graphql-client          GraphQL Client
+                        |__ https://github.com/github/graphql-client
+graphql-docs            Easily generate beautiful documentation from your GraphQL schema.
+                        |__ https://github.com/gjtorikian/graphql-docs
+graphql-errors          Simple error handler for graphql-ruby
+                        |__ https://github.com/exAspArk/graphql-errors
+graphql-guard           Simple authorization gem for graphql-ruby
+                        |__ https://github.com/exAspArk/graphql-guard
+graphql-preload         Preload ActiveRecord associations with graphql-batch
+                        |__ https://github.com/ConsultingMD/graphql-preload
+graphql-smart_select    Plugin for graphql-ruby gem
+                        |__ https://github.com/Arkweid/graphql-smart_select
+graphql_schema          Classes for convenient use of GraphQL introspection result
+                        |__ https://github.com/Shopify/graphql_schema
+rspec-graphql_matchers  Collection of rspec matchers to test your graphQL api schema.
+                        |__ https://github.com/khamusa/rspec-graphql_matchers
 
-
-# Problems ...... just old stuff which needs updating
-gem 'gruff'                   # Beautiful graphs for one or multiple datasets.
-gem 'phashion'                # Simple wrapper around the pHash library - precepual hashing to find dup images
-gem 'rmagick'                 # Ruby binding to ImageMagick
-
-until missing_gems.empty?
-  gem_name = missing_gems.shift
-  command = "gem install #{gem_name}"
-  puts command
-  system command
-  # this does not work ... because the Gem::Specification structure
-  # is build when the program starts and is not dynamically updated
-  depends = Gem::Specification.find_by_name(gem_name)
-              .dependencies.map{|d| d.name}
-
-  unless depends.empty?
-    depends.each {|d| missing_gems.delete d}
-  end
-end # until missing_gems.empty?
