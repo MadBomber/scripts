@@ -99,7 +99,7 @@ gem_hash.each_pair do |name, gs|
 
   text = WordWrapper::MinimumRaggedness.new(width, summary.split("\n").first.strip).wrap
 
-  text += gs.homepage.nil? ? "https://rubygems.org/gems/#{name}" : gs.homepage
+  text += gs.homepage.empty? ? "https://rubygems.org/gems/#{name}" : gs.homepage
 
   text_array  = text.split("\n")
   last_x      = text_array.size-1
