@@ -15,6 +15,8 @@
 #   JIRA_TICKET_EXAMPLE
 #     Example: 162755560
 
+require 'os'
+
 if ARGV.empty?
   puts "ERROR: You need at least one JIRA ticket Number on the command line"
   exit -1
@@ -50,8 +52,9 @@ JIRA_TICKET_EXAMPLE = ENV['JIRA_TICKET_EXAMPLE']
 # NOTE: "open" is the CLI command for a Mac that will launch an
 #       application to render the URI passed to it.  In this
 #       case it launches the default browser and opens the
-#       designated URL
-base_command = "open #{JIRA_BASE_URL}/browse/#{JIRA_PROJECT}-"
+#       designated URL... opens in the default browser.
+open_command = OS.mac? ? 'open' : 'xdg-open'
+base_command = "#{open_command} #{JIRA_BASE_URL}/browse/#{JIRA_PROJECT}-"
 
 
 
@@ -101,6 +104,6 @@ while !ARGV.empty?
     end
   else
     ticket = expand_using_base_ticket(ticket) 
-    system("#{base_command}#{ticket}#{JIRA_URL_SUFFIX}")
+    `#{base_command}#{ticket}#{JIRA_URL_SUFFIX}`
   end
 end # while !ARGV.empty?
