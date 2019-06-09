@@ -78,6 +78,16 @@ gem 'docopt'                  # A command line option parser, that will make you
 gem 'docx'                    # a ruby library/gem for interacting with .docx files
 gem 'dotenv'                  # Loads environment variables from `.env`.
 #
+gem 'dry-configurable'        # A mixin to add configuration functionality to your classes
+gem 'dry-container'           # A simple container intended for use as an IoC container
+gem 'dry-core'                # A toolset of small support modules used throughout the dry-rb ecosystem.
+gem 'dry-equalizer'           # Module to define equality, equivalence and inspection methods
+gem 'dry-inflector'           # DRY Inflector
+gem 'dry-initializer'         # DSL for declaring params and options of the initializer
+gem 'dry-logic'               # Predicate logic with rule composition
+gem 'dry-struct'              # Typed structs and value objects.
+gem 'dry-types'               # Type system for Ruby supporting coercions, constraints and complex types like structs, value objects, enums etc.
+#
 gem 'ect'                     # Methods ending in ect
 gem 'email_address'           # This gem provides a ruby language library for working with and validating email addresses. By default, it validates against conventional usage, the format preferred for user email addresses. It can be configured to validate against RFC “Standard” formats, common email service provider formats, and perform DNS validation.
 gem 'event_bus'               # A simple pubsub event bus for Ruby applications
@@ -91,6 +101,8 @@ gem 'geek_painter'            # A very simple DSL to generate a colored shell pr
 gem 'git-up'                  # git command to fetch and rebase all branches
 gem 'github_api'              # Ruby client for the official GitHub API
 gem 'graphql'                 # A GraphQL language and runtime for Ruby
+gem 'graphql_rails'           # GraphQL server and client for rails
+gem 'graphiti'                # Easily build jsonapi.org-compatible APIs
 gem 'guard'                   # Guard keeps an eye on your file modifications
 gem 'guard-annotate'          # Guard gem for annotate
 gem 'guard-brakeman'          # Guard gem for Brakeman
@@ -152,6 +164,9 @@ gem 'pycall'                  # Call python functions from Ruby
 gem 'rack-attack'             # Block & throttle abusive requests
 gem 'rails', '~> 5.2'         # Full-stack web application framework.
 gem 'rails-erd'               # Entity-relationship diagram for your Rails models.
+gem 'rexe'                    # Ruby Command Line Executor
+gem 'rom'                     # Persistence and mapping toolkit for Ruby
+gem 'rom-sql'                 # SQL databases support for ROM
 gem 'rssable'                 # Access the RSS channel of any webiste without worrying about the engine
 gem 'rubocop'                 # Automatic Ruby code style checking tool.
 gem 'rubocop-performance'     # Automatic performance checking tool for Ruby code.

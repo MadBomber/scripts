@@ -14,8 +14,8 @@
 #     Example: AR
 #   JIRA_TICKET_EXAMPLE
 #     Example: 162755560
-
-require 'os'
+#   JIRA_OPEN_COMMAND
+#     Example: open | xdg=open | firefox | chrome | safari etc.
 
 if ARGV.empty?
   puts "ERROR: You need at least one JIRA ticket Number on the command line"
@@ -43,20 +43,19 @@ else
   JIRA_PROJECT = ENV['JIRA_PROJECT']
 end
 
+
+if ENV['JIRA_OPEN_COMMAND'].nil?
+  puts "ERROR: The system environment variable JIRA_OPEN_COMMAND is not set."
+  exit -1
+else
+  JIRA_OPEN_COMMAND = ENV['JIRA_OPEN_COMMAND']
+end
+
+
 # NOTE: JIRA_TICKET_EXAMPLE is optional so no error message
 JIRA_TICKET_EXAMPLE = ENV['JIRA_TICKET_EXAMPLE']
 
-
-
-
-# NOTE: "open" is the CLI command for a Mac that will launch an
-#       application to render the URI passed to it.  In this
-#       case it launches the default browser and opens the
-#       designated URL... opens in the default browser.
-open_command = OS.mac? ? 'open' : 'xdg-open'
-base_command = "#{open_command} #{JIRA_BASE_URL}/browse/#{JIRA_PROJECT}-"
-
-
+base_command = "#{JIRA_OPEN_COMMAND} #{JIRA_BASE_URL}/browse/#{JIRA_PROJECT}-"
 
 
 # base_ticket is used to allow short id.  For example
@@ -94,7 +93,7 @@ while !ARGV.empty?
     if first_ticket < last_ticket
       tickets = ( first_ticket .. last_ticket)
       tickets.each do |ticket|
-        ticket = expand_using_base_ticket(ticket) 
+        ticket = expand_using_base_ticket(ticket)
         cmd = "#{base_command}#{ticket}#{JIRA_URL_SUFFIX}"
         system(cmd)
         sleep 1
@@ -103,7 +102,7 @@ while !ARGV.empty?
       puts "ERROR: '#{ticket}' makes no sense. Left side must be less than the right side."
     end
   else
-    ticket = expand_using_base_ticket(ticket) 
+    ticket = expand_using_base_ticket(ticket)
     `#{base_command}#{ticket}#{JIRA_URL_SUFFIX}`
   end
 end # while !ARGV.empty?
