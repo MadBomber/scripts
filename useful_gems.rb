@@ -98,6 +98,7 @@ gem 'ffi-ncurses'             # An FFI wrapper around ncursesw 5.x for MRI Ruby 
 gem 'fx'                      # Support for database functions and triggers in Rails migrations
 #
 gem 'geek_painter'            # A very simple DSL to generate a colored shell prompt string to use in *nix OS terminals
+gem 'geospatial'              # Provides abstractions for dealing with geographical locations efficiently
 gem 'git-up'                  # git command to fetch and rebase all branches
 gem 'github_api'              # Ruby client for the official GitHub API
 gem 'graphql'                 # A GraphQL language and runtime for Ruby
@@ -165,6 +166,7 @@ gem 'rack-attack'             # Block & throttle abusive requests
 gem 'rails', '~> 5.2'         # Full-stack web application framework.
 gem 'rails-erd'               # Entity-relationship diagram for your Rails models.
 gem 'rexe'                    # Ruby Command Line Executor
+gem 'rgeo'                    # RGeo is a geospatial data library for Ruby.
 gem 'rom'                     # Persistence and mapping toolkit for Ruby
 gem 'rom-sql'                 # SQL databases support for ROM
 gem 'rssable'                 # Access the RSS channel of any webiste without worrying about the engine
@@ -182,6 +184,7 @@ gem 'sidekiq-scheduler'       # Light weight job scheduling extension for Sideki
 gem 'sinatra'                 # Classy web-development dressed in a DSL
 gem 'slop'                    # Simple Lightweight Option Parsing
 gem 'smarter_csv'             # Ruby Gem for smarter importing of CSV Files (and CSV-like files), with lots of optional features, e.g. chunked processing for huge CSV files
+gem 'squasher'                # Squash your old migrations
 gem 'store_model'             # Gem for working with JSON-backed attributes as ActiveRecord models
 gem 'sugar_refinery'          # The Ruby Sugar Refinery is a collection of tiny refinements.
 gem 'summary'                 # This is a simple gem that generates introduction text from a long text, it will always break the text at the end of the last word near to the limit you informed as argument.
@@ -210,6 +213,7 @@ gem 'yabeda-sidekiq'          # Extensible Prometheus exporter for monitoring yo
 #
 # gems dealing with TTY/CLI I/O
 #
+gem 'tty-box'                 # Draw various frames and boxes in your terminal interface.
 gem 'tty-color'               # Terminal color capabilities detection
 gem 'tty-color-cli'           # CLI tool for terminal color capabilities detection
 gem 'tty-command'             # Execute shell commands with pretty output logging and capture their stdout, stderr and exit status.
@@ -219,6 +223,7 @@ gem 'tty-editor'              # Opens a file or text in the user's preferred edi
 gem 'tty-file'                # File manipulation utility methods.
 gem 'tty-fireworks'           # For those extra special commits
 gem 'tty-font'                # Terminal fonts
+gem 'tty-logger'              # Readable, structured and beautiful terminal logging
 gem 'tty-markdown'            # Convert a markdown text or document into a terminal friendly output.
 gem 'tty-pager'               # Terminal output paging in a cross-platform way supporting all major ruby interpreters.
 gem 'tty-pie'                 # Draw pie charts in your terminal window.
