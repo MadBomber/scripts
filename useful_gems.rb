@@ -30,7 +30,6 @@ gem 'rethinkdb_helper'        # A wrapper around the ruby rethinkdb gem
 # geohash divides the world up into squars
 # Uber's H3 divides the world up into hexagons
 #
-gem 'geohash12'               # Geohash12
 gem 'geohash36'               # Commandline interface and library to the Geohash36 Algorithm
 # h3 requires the 'cmake' package; use brew, dnf, yum, apt=get etc
 gem 'h3'                      # C Bindings for Uber's H3 library
