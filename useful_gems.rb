@@ -52,8 +52,8 @@ gem 'activerecord-import'     # Bulk insert extension for ActiveRecord
 gem 'address_extractor'       # Give it text.  It finds addresses in it.
 gem 'ahoy_matey'              # Simple, powerful analytics for Rails
 gem 'any_login'               # AnyLogin is created to speedup development process and allow developer's quickly login as any user in DB.
-gem 'anycable'                # AnyCable is a polyglot replacement for ActionCable-compatible servers
-gem 'anycable-rails'          # Rails adapter for AnyCable
+#270 gem 'anycable'                # AnyCable is a polyglot replacement for ActionCable-compatible servers
+#270 gem 'anycable-rails'          # Rails adapter for AnyCable
 gem 'awesome_print'           # Pretty print Ruby objects with proper indentation and colors
 gem 'aws-sdk-s3'              # AWS SDK for Ruby - Amazon S3
 #
@@ -115,7 +115,6 @@ gem 'guard-rails_best_practices'  # Guard for rails_best_practices, a code metri
 gem 'guard-redis'             # Guard gem for Redis
 gem 'guard-rspec'             # Guard gem for RSpec
 gem 'guard-rubocop'           # Guard plugin for RuboCop
-gem 'guard-rubybeautify'      # Clean up ruby files with ruby beautify.
 gem 'guard-rubycritic'        # Listens to modifications and detects smells in Ruby files
 gem 'guard-s3'                # A simple guard library for syncing files with s3
 gem 'guard-shell'             # Guard gem for running shell commands
