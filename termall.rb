@@ -19,15 +19,15 @@ include CliHelper
 configatron.version = '0.0.1'
 
 HELP = <<EOHELP
-Important:
+Example:
 
-  Put important stuff here.
+  #{$0} sidekiq   # will do 'kill -TERM <pid>' on all sidekiq processes
 
 EOHELP
 
 cli_helper("Send TERM signal to all process that start with the given string") do |o|
 
-  o.bool          '--dryrun', 'do not do anything',         default: true
+  o.bool          '--dryrun', 'do not do anything',         default: false
   o.string  '-s', '--signal', 'Exanole: 9 or TERM',         default: 'TERM'
 
 end
@@ -84,6 +84,7 @@ else
     ap commands
   else
     commands.each do |command|
+      puts command if verbose?
       system command
     end
   end
