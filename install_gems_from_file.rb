@@ -9,7 +9,6 @@
 
 
 require 'yaml'  # STDLIB
-require 'ruby-progressbar'  # Ruby/ProgressBar is a flexible text progress bar library for Ruby.
 
 require 'awesome_print'     # Pretty print Ruby objects with proper indentation and colors
 
@@ -45,7 +44,7 @@ end
 
 abort_if_errors
 
-installed_gems = `gem list`.split("\n").map{|g| g.split().first}
+installed_gems = Gem::Specification.all.map { |gs| gs.name }
 
 ######################################################
 # Local methods
@@ -63,23 +62,26 @@ end
 ap configatron.to_h  if verbose? || debug?
 
 
-array_of_gems = configatron.file.read.split("\n").uniq.select{|g| !installed_gems.include?(g)}
+missing_gems = configatron.file.read.split("\n").sort.uniq - installed_gems.sort.uniq
 
-gem_count   = array_of_gems.size
-batch_size  = 10
 
-progressbar = ProgressBar.create(
-    title: 'Gems',
-    total: gem_count / batch_size,
-    format: '%t: [%B] %c/%C %j%% %e',
-    output: STDERR
-  )
+if missing_gems.empty?
+  puts "All gems are already installed"
+else
+  # command = "gem install #{missing_gems.join(' ')}"
+  # puts command
+  # system command
 
-array_of_gems.each_slice(batch_size) do |batch|
-  progressbar.increment
-  next if batch.nil? || batch.empty?
+  until missing_gems.empty?
+    gem_name  = missing_gems.shift
+    command   = "gem install #{gem_name}"
+    puts command
+    system command
+    depends = YAML.load(`gem spec #{gem_name}`)
+                .dependencies.map{|d| d.name}
+    unless depends.empty?
+      depends.each {|d| missing_gems.delete d}
+    end
+  end # until missing_gems.empty?
+end # if missing_gems.empty?
 
-  `gem install #{batch.join(' ')}`
-end
-
-progressbar.finish

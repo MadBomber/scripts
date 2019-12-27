@@ -7,6 +7,7 @@
 
 require 'pp'
 require 'debug_me'  # A tool to print the labeled value of variables.
+include DebugMe
 
 require 'awesome_print'  # Pretty print Ruby objects with proper indentation and colors
 require 'pathname'       # STDLIB
@@ -178,7 +179,7 @@ def process_a_file(given_document)
   character_styles.flatten!
   character_styles.uniq!
 
-# debug_me {[ :paragraph_styles, :character_styles ]}
+  debug_me {[ :paragraph_styles, :character_styles ]}
 
 
   unless paragraph_styles.empty?
@@ -190,8 +191,8 @@ def process_a_file(given_document)
   end
 
   bad_style_names   = []
-  bad_style_names   += paragraph_styles - $approved_paragraph_style_names
-  bad_style_names   += character_styles - $approved_character_style_names
+  # bad_style_names   += paragraph_styles - $approved_paragraph_style_names
+  # bad_style_names   += character_styles - $approved_character_style_names
 
   if verbose?
     print "Paragraph Style Names Used:\n\n"

@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# bin/create_data_dictionary
+
+# save current working directory
+here=`pwd`
+
+my_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source $my_dir/check_app_root
+
+UTILITY_DIR=$APP_ROOT/utilities
+DOC_DIR=$APP_ROOT/doc
+DB_DIR=$APP_ROOT/db
+
+ruby -r$UTILITY_DIR/data_dictionary.rb $DB_DIR/schema.rb > $DOC_DIR/data_dictionary.md

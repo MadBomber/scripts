@@ -102,6 +102,15 @@ class String
   end
 end
 
+class UTC
+  class Time
+    def to_s
+      'Fake timestamp'
+    end
+  end
+end
+
+
 def print_header(a_hash)
   gap     = 3
   spaces  = " "*132
