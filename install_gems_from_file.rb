@@ -54,6 +54,11 @@ installed_gems = Gem::Specification.all.map { |gs| gs.name }
 # Main
 
 at_exit do
+  unless $problem_gems.empty?
+    STDERR.puts
+    STDERR.puts "The following gems had problems durning installation:"
+    STDERR.puts $problem_gems.join('  ')
+  end
   STDERR.puts
   STDERR.puts "Done."
   STDERR.puts
@@ -64,23 +69,25 @@ ap configatron.to_h  if verbose? || debug?
 
 missing_gems = configatron.file.read.split("\n").sort.uniq - installed_gems.sort.uniq
 
+$problem_gems = Array.new
 
 if missing_gems.empty?
   puts "All gems are already installed"
 else
-  # command = "gem install #{missing_gems.join(' ')}"
-  # puts command
-  # system command
-
   until missing_gems.empty?
     gem_name  = missing_gems.shift
     command   = "gem install #{gem_name}"
     puts command
-    system command
-    depends = YAML.load(`gem spec #{gem_name}`)
-                .dependencies.map{|d| d.name}
-    unless depends.empty?
-      depends.each {|d| missing_gems.delete d}
+    begin
+      system command
+      depends = YAML.load(`gem spec #{gem_name}`)
+                  .dependencies.map{|d| d.name}
+      unless depends.empty?
+        depends.each {|d| missing_gems.delete d}
+      end
+    rescue Exception => e 
+      $problem_gems << gem_name
+      print "\n... problem installing #{gem_name} ...\n\n"
     end
   end # until missing_gems.empty?
 end # if missing_gems.empty?
