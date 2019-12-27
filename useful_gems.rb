@@ -127,7 +127,6 @@ gem 'inspec'                  # Infrastructure and compliance testing.
 gem 'iodine'                  # iodine - a fast HTTP / Websocket Server with Pub/Sub support, optimized for Ruby MRI on Linux / BSD
 gem 'irbtools'                # Irbtools happy IRB.
 # 270p3 gem 'irbtools-more'           # adds bond and looksee to IRB.
-#
 gem 'jira-ruby'               # Ruby Gem for use with the Atlassian JIRA REST API
 gem 'jirasync'                # jirasync synchronises jira projects to the local file system
 gem 'json'                    # This json is bundled with Ruby
