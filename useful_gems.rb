@@ -81,9 +81,11 @@ gem 'dry-configurable'        # A mixin to add configuration functionality to yo
 gem 'dry-container'           # A simple container intended for use as an IoC container
 gem 'dry-core'                # A toolset of small support modules used throughout the dry-rb ecosystem.
 gem 'dry-equalizer'           # Module to define equality, equivalence and inspection methods
+gem 'dry-graphql'             # Integrate dry-types/dry-struct with graphql-ruby
 gem 'dry-inflector'           # DRY Inflector
 gem 'dry-initializer'         # DSL for declaring params and options of the initializer
 gem 'dry-logic'               # Predicate logic with rule composition
+gem 'dry-schema'              # Coercion and validation for data structures
 gem 'dry-struct'              # Typed structs and value objects.
 gem 'dry-types'               # Type system for Ruby supporting coercions, constraints and complex types like structs, value objects, enums etc.
 #
