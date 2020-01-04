@@ -96,6 +96,7 @@ configatron.models.each do |model|
   command += " --filename=#{configatron.outdir}/#{model_filename}_erd"
   command += " --filetype=#{configatron.type}"
 
+  puts "Command:  #{command}"
 
   `#{command}`
 
