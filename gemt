@@ -2,46 +2,93 @@
 ##########################################
 ###
 ##  File: gemt
-##  Desc: Like "rake -T" but for gems
+##  Desc: Like "rake -T" but for gems that are locally installed
+##        Searchs gem names and descriptions for words or phrases.
 ##
+# TODO: RubyToolbox makes a database dump (PG) available so
+#       look at using that dump to replace the slow
+#       API access.
+#       See: https://data.ruby-toolbox.com/backups.json
+#       The dumps are less than 1Gb as of May 1, 2020
+#       Could mirror the db with a weekly refresh.
+#       Less often may be better.
 #
+# TODO: consider turning gemt, gemd and gemg into a single
+#       system.
 
-require 'awesome_print'  # Pretty print Ruby objects with proper indentation and colors
-require 'terminal-size'  # A tiny gem to accomplish a simple task: Determining the terminal size.
-require 'word_wrapper'   # Pure ruby word wrapping
+def use_rubytoolbox?
+  @use_rubytoolbox ||=  if '--rt' == ARGV.first
+                          ARGV.shift
+                          true
+                        else
+                          false
+                        end
+end
+
+require 'awesome_print'     # Pretty print Ruby objects with proper indentation and colors
+require 'pathname'          # STDLIB
+require 'terminal-size'     # A tiny gem to accomplish a simple task: Determining the terminal size.
+require 'word_wrapper'      # Pure ruby word wrapping
+
+if use_rubytoolbox?
+  require 'pastel'          # Part of the TTY family; colorize text to terminal
+  require 'rubytoolbox/api' # API to the Ruby Toolbox database
+  Color = Pastel.new
+  RT    = Rubytoolbox::Api.new
+end
+
 
 def usage
   puts <<~EOS
 
-    list gems -- like "rake -T"
+    Desc: Like "rake -T" but for gems that are locally installed
+          Searchs gem names and descriptions for words or phrases.
 
-    usage: #{__FILE__.basename} [search_string]
+
+    Usage: #{Pathname.new(__FILE__).basename} [ --rt | -h | --help ] [search_items]
 
     Where:
 
-      search_string is an optional keyword or phrase
+      --rt          use the RubyToolbox to get health status of the gem
+                    NOTE: this is a slow https access to the RubyToolbox
+                          website
 
-    Example:
+      -h --help     Show this usage information
 
-      gemt guard      shows list of the guard gems
+      search_items  is an optional space delimited
+                    list of keyword(s) and/or phrase(s)
+                    used as search terms for gem name
+                    and/or description. Each word and
+                    phrase is used in an OR (i.e. any?)
+                    relationship to find local gems.
+
+    Examples:
+
+      gemt            # shows list of all gems
+      gemt guard      # shows list of the guard gems
+      gemt --rt guard # shows list of guard gems and their health status
+                      # from the RubyToolbox
+
+      gemt guard reload   # finds local gems whose name+description contains
+                          # either the word "guard" or the word "reload"
+
+      gemt 'schedule extension' # The use of quotes denotes a phrase
+
+      gemt 'schedule extension' sidekiq # finds local gems whose name+description
+                                        # contains either the phrase or the word
 
   EOS
 end # def usage
 
+
 class NilClass
-  def split(*args)
-    [" "]
-  end
-  def strip
-    ""
-  end
-  def to_s
-    ''
-  end
-  def empty?
-    true
-  end
+  # I'm starting to think that the "endless method def might be a good idea"
+  def split(*args); [" "];  end
+  def strip;        '';     end
+  def to_s;         '';     end
+  def empty?;       true;   end
 end # class NilClass
+
 
 unless ARGV.empty?
   if %w[ -h --help ].include? ARGV.first
@@ -73,8 +120,7 @@ longest_desc = 0
 
 Gem::Specification.all.each do |gs|
   unless search_strings.empty?
-    thing = gs.name + ' ' + gs.summary.to_s + ' ' + gs.description.to_s
-    thing.downcase!
+    thing = "#{gs.name} #{gs.summary} #{gs.description}".downcase
 
     found_one = false
     search_strings.each do |want_this|
@@ -97,10 +143,20 @@ width = Terminal.size[:width] - desc_start_col - 4
 
 gem_hash.each_pair do |name, gs|
   summary = gs.summary
-  print "#{name}"
+  print "\n#{name}"
   print spaces(desc_start_col - name.size)
 
   text = WordWrapper::MinimumRaggedness.new(width, summary.split("\n").first.strip).wrap
+
+  if use_rubytoolbox?
+    rt_stuff = RT.compare(name)
+
+    unless rt_stuff.empty?
+      rt      = rt_stuff.first
+      color   = rt.health.statuses.last.level
+      text   += Color.send("on_bright_#{color}", color) + ' - ' + rt.health.statuses.last.label + "\n"
+    end
+  end
 
   text += gs.homepage.empty? ? "https://rubygems.org/gems/#{name}" : gs.homepage
 
@@ -112,5 +168,7 @@ gem_hash.each_pair do |name, gs|
     puts (x<1 ? text_array[x] : (spaces desc_start_col) + prefix+text_array[x] )
   end
 end # gem_hash.each_pair do |name, gs|
+
+puts
 
 # ap Gem::Specification.all.first.instance_variables
