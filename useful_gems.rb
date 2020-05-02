@@ -172,6 +172,7 @@ gem 'rssable'                 # Access the RSS channel of any webiste without wo
 gem 'rubocop'                 # Automatic Ruby code style checking tool.
 gem 'rubocop-performance'     # Automatic performance checking tool for Ruby code.
 gem 'ruby-progressbar'        # never leave the user guessing
+gem 'rubytoolbox-api'         # A simple, dependency-free API client for The Ruby Toolbox
 #
 gem 'sail'                    # Sail will help you navigate your Rails application.
 gem 'sanitize'                # Whitelist-based HTML and CSS sanitizer.
@@ -183,6 +184,7 @@ gem 'sidekiq-scheduler'       # Light weight job scheduling extension for Sideki
 gem 'sinatra'                 # Classy web-development dressed in a DSL
 gem 'slop'                    # Simple Lightweight Option Parsing
 gem 'smarter_csv'             # Ruby Gem for smarter importing of CSV Files (and CSV-like files), with lots of optional features, e.g. chunked processing for huge CSV files
+gem 'spreadsheet_architect'   # Spreadsheet Architect is a library that allows you to create XLSX, ODS, or CSV spreadsheets easily from ActiveRecord relations, Plain Ruby classes, or predefined data.
 gem 'squasher'                # Squash your old migrations
 gem 'store_model'             # Gem for working with JSON-backed attributes as ActiveRecord models
 gem 'sugar_refinery'          # The Ruby Sugar Refinery is a collection of tiny refinements.
