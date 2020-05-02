@@ -6,7 +6,7 @@
 ##        withing Sublime Text and other utilities
 #
 
-system "find . -name '*.rb' | ctags -f .tags -L -"
+system "find . -name '*.rb' | ctags #{ARGV.join(' ')} -u -f .tags -L -"
 
 if File.exist? './Gemfile'
   require 'bundler'
