@@ -154,7 +154,7 @@ gem_hash.each_pair do |name, gs|
     unless rt_stuff.empty?
       rt      = rt_stuff.first
       color   = rt.health.statuses.last.level
-      text   += Color.send("on_bright_#{color}", color) + ' - ' + rt.health.statuses.last.label + "\n"
+      text   += Color.send("on_#{color}", color) + ' - ' + rt.health.statuses.last.label + "\n"
     end
   end
 
