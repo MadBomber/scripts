@@ -1,0 +1,66 @@
+#!/bin/bash
+# ~/scripts/go2work
+# Start up some tabs on the terminal
+#
+# Requires: jump, ruby and the gem "os"
+#           For linux the terminal is konsole
+#           For macos the terminal is iTerm2
+#
+# TODO: One of the problems with the konsole CLI command is
+#       that you can not send an initial command to the new tab
+#       have it execute AND when its finished the bash shell
+#       for that tab is left in interactive mode.
+#       I've tried the -e options to konsole and even
+#       tried a combination of -e bash -c command  BUT nothing
+#       would cause the bash shell to remain active in interactive
+#       mode after the initial command was executed.
+#
+# TODO: Write this kind of thing for iTerm2 on MacOS... its easy
+#       using applescript or whatever calls it these days.
+#
+mac_os=`ruby -ros -e 'p OS.mac?'` # will "true" || "false"
+
+ticket=$1
+
+if [ "x" = "x$ticket" ] ; then
+  echo "No Ticket - No Work!"
+else
+  # There is a top-level working directory with sub-directories
+  # for each JIRA ticket currently being worked.  Each tab in the
+  # terminal will be doing different stuff.  For example in the
+  # tabs for the log_dir the primary action will be to tail a
+  # file.  In one of the current_dir tabs the action will be
+  # to run guard.  Another current_dir tab will the application.
+  # Other tabs are open for CLI work.
+  working_dir=$(jump cd working)
+  current_dir=$working_dir/$ticket
+  log_dir=$current_dir/log
+
+  if [[ ! -d "$working_dir" ]] ; then
+    echo "Working dir is missing: $working_dir"
+  else
+    if [[ ! -d "$current_dir" ]] ; then
+      echo "Current dir is missing: $current_dir"
+    else
+      if [[ ! -d "$log_dir" ]] ; then
+        echo "Log dir is missing: $log_dir"
+      else
+        if [[ "true" = "$mac_os" ]] ; then
+          # TODO: Run a Mac applescript
+          echo "Not Yet Implemented"
+        else
+          konsole --new-tab --workdir $working_dir
+          #
+          konsole --new-tab --workdir $current_dir
+          konsole --new-tab --workdir $current_dir
+          konsole --new-tab --workdir $current_dir
+          #
+          konsole --new-tab --workdir $log_dir
+          konsole --new-tab --workdir $log_dir
+          konsole --new-tab --workdir $log_dir
+        fi # if [ "true" = "$(ruby -ros -e 'p OS.mac?')" ] ; then
+        echo "Ready to work on $ticket ..."
+      fi # if [[ ! -d "$log_dir" ]] ; then
+    fi # if [[ ! -d "$current_dir" ]] ; then
+  fi # if [[ ! -d "$working_dir" ]] ; then
+fi # if [ "x" = "x$ticket" ] ; then
