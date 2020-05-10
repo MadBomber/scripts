@@ -51,10 +51,10 @@ gem 'active_record_union'     # UNIONs in ActiveRecord! Adds proper union and un
 gem 'activerecord-import'     # Bulk insert extension for ActiveRecord
 gem 'address_extractor'       # Give it text.  It finds addresses in it.
 gem 'ahoy_matey'              # Simple, powerful analytics for Rails
+gem 'amazing_print'           # Pretty print Ruby objects with proper indentation and colors
 gem 'any_login'               # AnyLogin is created to speedup development process and allow developer's quickly login as any user in DB.
 #270 gem 'anycable'                # AnyCable is a polyglot replacement for ActionCable-compatible servers
 #270 gem 'anycable-rails'          # Rails adapter for AnyCable
-gem 'awesome_print'           # Pretty print Ruby objects with proper indentation and colors
 gem 'aws-sdk-s3'              # AWS SDK for Ruby - Amazon S3
 #
 gem 'bible_gateway'           # An unofficial 'API' for BibleGateway.com.
