@@ -55,6 +55,7 @@ gem 'amazing_print'           # Pretty print Ruby objects with proper indentatio
 gem 'any_login'               # AnyLogin is created to speedup development process and allow developer's quickly login as any user in DB.
 #270 gem 'anycable'                # AnyCable is a polyglot replacement for ActionCable-compatible servers
 #270 gem 'anycable-rails'          # Rails adapter for AnyCable
+gem 'apexcharts'              # Awesome charts for your ruby app
 gem 'aws-sdk-s3'              # AWS SDK for Ruby - Amazon S3
 #
 gem 'bible_gateway'           # An unofficial 'API' for BibleGateway.com.
@@ -68,6 +69,9 @@ gem 'cancancan'               # Simple authorization solution for Rails.
 gem 'chartkick'               # Create beautiful JavaScript charts with one line of Ruby
 gem 'clipboard'               # Easy access to the clipboard on Linux, MacOS and Windows.
 gem 'colortail'               # Tail a file and color lines based on regular expressions within that line
+gem 'concurrent-ruby'         # Modern concurrency tools for Ruby. Inspired by Erlang, Clojure, Scala, Haskell, F#, C#, Java, and classic concurrency patterns.
+gem 'concurrent-ruby-ext'     # C extensions to optimize concurrent-ruby under MRI.
+gem 'concurrent-ruby-edge'    # Edge features and additions to the concurrent-ruby gem.
 #
 gem 'daemons'                 # A toolkit to create and control daemons in different ways
 gem 'daru'                    # Data Analysis in RUby
@@ -95,6 +99,7 @@ gem 'event_bus'               # A simple pubsub event bus for Ruby applications
 #
 gem 'facter'                  # Facter, a system inventory tool
 gem 'falcon'                  # A fast, asynchronous, rack-compatible web server.
+gem 'fast_jsonparser'         # Fast Json Parser
 gem 'ffi-ncurses'             # An FFI wrapper around ncursesw 5.x for MRI Ruby 1.8.x, 1.9.x and JRuby.
 gem 'fx'                      # Support for database functions and triggers in Rails migrations
 #
@@ -171,8 +176,11 @@ gem 'rom-sql'                 # SQL databases support for ROM
 gem 'rssable'                 # Access the RSS channel of any webiste without worrying about the engine
 gem 'rubocop'                 # Automatic Ruby code style checking tool.
 gem 'rubocop-performance'     # Automatic performance checking tool for Ruby code.
+gem 'ruby_crystal_codemod'    # Ruby => Crystal codemod
 gem 'ruby-progressbar'        # never leave the user guessing
+gem 'rubyfmt'                 # Ruby port of gofmt
 gem 'rubytoolbox-api'         # A simple, dependency-free API client for The Ruby Toolbox
+gem 'rufo'                    # Ruby code formatter
 #
 gem 'sail'                    # Sail will help you navigate your Rails application.
 gem 'sanitize'                # Whitelist-based HTML and CSS sanitizer.
