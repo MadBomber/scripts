@@ -92,7 +92,12 @@ end
 def check_the_website(who, options)
   timestamp = Time.now.strftime('%Y%m%d_%H%M%S')
 
-  response  = Faraday.get options['url']
+  conn = Faraday.new(options['url'], request: {
+    open_timeout:  5, # opening a connection
+    timeout:      15  # waiting for response
+  })
+
+  response  = conn.get('/')
   status    = response.status
 
   to_console(timestamp, who, status)
