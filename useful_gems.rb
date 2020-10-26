@@ -150,6 +150,7 @@ gem 'jira-ruby'               # Ruby Gem for use with the Atlassian JIRA REST AP
 gem 'jirasync'                # jirasync synchronises jira projects to the local file system
 gem 'json'                    # This json is bundled with Ruby
 #
+gem 'lefthook'                # A single dependency-free binary to manage all your git hooks that works with any language in any environment, and in all common team workflows.
 gem 'linefit'                 # LineFit is a linear regression math class.
 gem 'lipsum'                  # Get placeholder text from lipsum.com
 gem 'log_analyzer'            # log_analyzer gem is created to get statistics about your views rendering performance.
