@@ -20,10 +20,17 @@ here = Pathname.pwd
 
 def update_to_ssh(a_directory)
   return unless (a_directory + '.git').exist?
+
   puts "\nUpdating to SSH access for #{a_directory.basename} ..."
   values = `cd #{a_directory} && git config --get #{FIELD_NAME}`.chomp.split('@')
+
   return if values.empty?
-  new_value = SSH_PREFIX + values.last.gsub('https://','').gsub('http://','')
+
+  new_value = SSH_PREFIX + values.last
+                                  .gsub('https://','')
+                                  .gsub('http://','')
+                                  .gsub('git://','')
+
   `cd #{a_directory} && git config #{FIELD_NAME} #{new_value}`
 end
 
