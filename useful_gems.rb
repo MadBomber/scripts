@@ -30,7 +30,7 @@ gem 'rethinkdb_helper'        # A wrapper around the ruby rethinkdb gem
 # geohash divides the world up into squars
 # Uber's H3 divides the world up into hexagons
 #
-gem 'geohash36'               # Commandline interface and library to the Geohash36 Algorithm
+# !3.0.0-p1 gem 'geohash36'               # Commandline interface and library to the Geohash36 Algorithm
 # h3 requires the 'cmake' package; use brew, dnf, yum, apt=get etc
 gem 'h3'                      # C Bindings for Uber's H3 library
 
@@ -97,11 +97,11 @@ gem 'ect'                     # Methods ending in ect
 gem 'email_address'           # This gem provides a ruby language library for working with and validating email addresses. By default, it validates against conventional usage, the format preferred for user email addresses. It can be configured to validate against RFC “Standard” formats, common email service provider formats, and perform DNS validation.
 gem 'event_bus'               # A simple pubsub event bus for Ruby applications
 #
-gem 'facter'                  # Facter, a system inventory tool
+# !3.0.0=p1 gem 'facter'                  # Facter, a system inventory tool
 gem 'falcon'                  # A fast, asynchronous, rack-compatible web server.
 gem 'fast_jsonparser'         # Fast Json Parser
 gem 'ffi-ncurses'             # An FFI wrapper around ncursesw 5.x for MRI Ruby 1.8.x, 1.9.x and JRuby.
-gem 'fx'                      # Support for database functions and triggers in Rails migrations
+# !3.0.0-p1 gem 'fx'                      # Support for database functions and triggers in Rails migrations
 #
 gem 'geek_painter'            # A very simple DSL to generate a colored shell prompt string to use in *nix OS terminals
 gem 'geospatial'              # Provides abstractions for dealing with geographical locations efficiently
@@ -130,9 +130,9 @@ gem 'guard-sidekiq'           # guard gem for sidekiq
 gem 'haml-rails'              # let your Gemfile do the configuring
 gem 'htmlentities'            # Encode/decode HTML entities
 #
-gem 'inspec'                  # Infrastructure and compliance testing.
+# !3.0.0-p1 gem 'inspec'                  # Infrastructure and compliance testing.
 gem 'iodine'                  # iodine - a fast HTTP / Websocket Server with Pub/Sub support, optimized for Ruby MRI on Linux / BSD
-gem 'irbtools'                # Irbtools happy IRB.
+# !3.0.0-p1 gem 'irbtools'                # Irbtools happy IRB.
 # 270p3 gem 'irbtools-more'           # adds bond and looksee to IRB.
 gem 'jira-ruby'               # Ruby Gem for use with the Atlassian JIRA REST API
 gem 'jirasync'                # jirasync synchronises jira projects to the local file system
@@ -140,7 +140,7 @@ gem 'json'                    # This json is bundled with Ruby
 #
 gem 'linefit'                 # LineFit is a linear regression math class.
 gem 'lipsum'                  # Get placeholder text from lipsum.com
-gem 'log_analyzer'            # log_analyzer gem is created to get statistics about your views rendering performance.
+# !3.0.0-p1 gem 'log_analyzer'            # log_analyzer gem is created to get statistics about your views rendering performance.
 #
 gem 'mail'                    # Mail provides a nice Ruby DSL for making, sending and reading emails.
 gem 'meta-tags'               # Collection of SEO helpers for Ruby on Rails.
@@ -149,7 +149,7 @@ gem 'mini_sql'                # A fast, safe, simple direct SQL executor
 gem 'nenv'                    # Convenience wrapper for Ruby's ENV
 gem 'nokogiri'                # Nokogiri (鋸) is an HTML, XML, SAX, and Reader parser
 #
-gem 'object_shadow'           # Metaprogramming Level 2
+# !3.0.0-p1 gem 'object_shadow'           # Metaprogramming Level 2
 gem 'ocassionally'            # Ocassionally it works; and, ocassionally it doesn't
 gem 'ohai'                    # Ohai profiles your system and emits JSON
 gem 'optimist'                # Optimist is a commandline option parser for Ruby that just gets out of your way.
@@ -192,10 +192,10 @@ gem 'sidekiq-scheduler'       # Light weight job scheduling extension for Sideki
 gem 'sinatra'                 # Classy web-development dressed in a DSL
 gem 'slop'                    # Simple Lightweight Option Parsing
 gem 'smarter_csv'             # Ruby Gem for smarter importing of CSV Files (and CSV-like files), with lots of optional features, e.g. chunked processing for huge CSV files
-gem 'spreadsheet_architect'   # Spreadsheet Architect is a library that allows you to create XLSX, ODS, or CSV spreadsheets easily from ActiveRecord relations, Plain Ruby classes, or predefined data.
+# !3.0.0-p1 gem 'spreadsheet_architect'   # Spreadsheet Architect is a library that allows you to create XLSX, ODS, or CSV spreadsheets easily from ActiveRecord relations, Plain Ruby classes, or predefined data.
 gem 'squasher'                # Squash your old migrations
 gem 'store_model'             # Gem for working with JSON-backed attributes as ActiveRecord models
-gem 'sugar_refinery'          # The Ruby Sugar Refinery is a collection of tiny refinements.
+# !3.0.0-p1 gem 'sugar_refinery'          # The Ruby Sugar Refinery is a collection of tiny refinements.
 gem 'summary'                 # This is a simple gem that generates introduction text from a long text, it will always break the text at the end of the last word near to the limit you informed as argument.
 gem 'svn_wc'                  # operates on a working copy (on the local filesystem) of a remote Subversion repository.
 gem 'sys-proctable'           # An interface for providing process table information
