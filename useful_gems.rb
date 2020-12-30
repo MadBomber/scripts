@@ -208,7 +208,7 @@ gem "timecop"                 # A gem providing "time travel" and "time freezing
 gem 'transitions'             # State machine extracted from ActiveModel
 gem 'trick_bag'               # Miscellaneous general useful tools.
 #
-gem 'virtualbox'              # Support functions for VM
+# 3.0.0 gem 'virtualbox'              # Support functions for VM
 #
 gem 'wharel'                  # Arel + Where = Wharel
 gem 'word_wrap'               # Simple tool for word-wrapping text
