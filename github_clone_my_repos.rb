@@ -1,8 +1,13 @@
 #!/usr/bin/env ruby
 # ~/scripts/github_clone_my_repos.rb
+#
+# TODO: Add a --help capability
+# TODO: Add ability to take user account name from command line
+#
 
 require 'debug_me'
 include DebugMe
+
 
 require 'awesome_print'
 require 'github_api'
@@ -14,7 +19,8 @@ def dryrun?
   DRYRUN
 end
 
-sandbox_path = Pathname.new(ENV['HOME']) + 'sandbox/git_repos/madbomber'
+# sandbox_path = Pathname.new(ENV['HOME']) + 'sandbox/git_repos/madbomber'
+sandbox_path = Pathname.new(ENV['HOME']) + 'sandbox/git_repos' + ENV['GITHUB_ACCOUNT'].downcase
 
 unless ARGV.empty?
   if %w[ -h --help -? ].include? ARGV.first
@@ -31,7 +37,7 @@ unless ARGV.empty?
   end
 end
 
-clone_command         = 'git clone https://madbomber@github.com/'
+clone_command         = 'git clone ssh://git@github.com/'
 git_remote_command    = 'git remote -v'
 git_upstream_command  = 'git remote add upstream '
 
@@ -71,7 +77,10 @@ new_github_repos.each do |r|
   `#{command}` unless dryrun?
 
   if r.fork
-    remotes = `cd #{sandbox_path}/#{r.name} && #{git_remote_command}`
+    target_dir = Pathname.new("#{sandbox_path}/#{r.name}")
+    target_dir.mkdir unless target_dir.exist?
+
+    remotes = `cd #{target_dir} && #{git_remote_command}`
 
     unless dryrun?  ||  remotes.include?('upstream')
 
