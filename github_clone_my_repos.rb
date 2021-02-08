@@ -9,7 +9,7 @@ require 'debug_me'
 include DebugMe
 
 
-require 'awesome_print'
+require 'amazing_print'
 require 'github_api'
 require 'pathname'
 

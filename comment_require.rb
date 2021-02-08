@@ -21,7 +21,7 @@ EOS
 require 'debug_me'  # A tool to print the labeled value of variables.
 include DebugMe
 
-require 'awesome_print'  # Pretty print Ruby objects with proper indentation and colors
+require 'amazing_print'  # Pretty print Ruby objects with proper indentation and colors
 require 'pathname'       # STDLIB
 
 class NilClass

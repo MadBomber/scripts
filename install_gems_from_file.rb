@@ -10,7 +10,7 @@
 
 require 'yaml'  # STDLIB
 
-require 'awesome_print'     # Pretty print Ruby objects with proper indentation and colors
+require 'amazing_print'     # Pretty print Ruby objects with proper indentation and colors
 
 require 'debug_me'          # A tool to print the labeled value of variables.
 include DebugMe
@@ -85,7 +85,7 @@ else
       unless depends.empty?
         depends.each {|d| missing_gems.delete d}
       end
-    rescue Exception => e 
+    rescue Exception => e
       $problem_gems << gem_name
       print "\n... problem installing #{gem_name} ...\n\n"
     end

@@ -7,7 +7,7 @@
 ##  By:   Dewayne VanHoozer (dvanhoozer@gmail.com)
 #
 
-require 'awesome_print'  # Pretty print Ruby objects with proper indentation and colors
+require 'amazing_print'  # Pretty print Ruby objects with proper indentation and colors
 
 require 'debug_me'       # A tool to print the labeled value of variables.
 include DebugMe
@@ -90,19 +90,19 @@ a_lines = configatron.path.readlines.map{|a_line| a_line.strip}
 configatron.arguments.each do |search_term|
   puts "Searching for #{search_term} ..."
   found_array = a_lines.each_index.select{|x| a_lines[x].downcase.include?(search_term.downcase)}
-  
+
   if debug?
     ap found_array
     puts
   end
 
   ranges = reduce_to_ranges a_lines, found_array
-   
+
   if debug?
     ap ranges
     puts
   end
-  
+
   ranges.each do |a_range|
     puts "Range: #{a_range}"
     a_range.each do |x|

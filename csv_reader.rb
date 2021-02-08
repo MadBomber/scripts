@@ -216,7 +216,7 @@ puts
 end
 
 
-require 'awesome_print'  # Pretty print Ruby objects with proper indentation and colors
+require 'amazing_print'  # Pretty print Ruby objects with proper indentation and colors
 
 ap column_sizes
 

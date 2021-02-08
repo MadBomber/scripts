@@ -13,7 +13,7 @@
 #
 # TODO: add support for bitbucket.com hosted clones
 
-require 'awesome_print'  # Pretty print Ruby objects with proper indentation and colors
+require 'amazing_print'  # Pretty print Ruby objects with proper indentation and colors
 
 require 'github_api'
 

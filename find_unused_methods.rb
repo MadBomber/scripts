@@ -18,7 +18,7 @@
 
 =end
 
-require 'awesome_print'
+require 'amazing_print'
 
 require 'debug_me'
 include DebugMe

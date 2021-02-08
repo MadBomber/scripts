@@ -6,7 +6,7 @@
 ##
 #
 
-require 'awesome_print'  # Pretty print Ruby objects with proper indentation and colors
+require 'amazing_print'  # Pretty print Ruby objects with proper indentation and colors
 require 'pathname'       # STDLIB
 
 class NilClass
@@ -77,7 +77,7 @@ gemfile_bak.readlines.each do |a_line|
     a_line.chomp!
 
     if a_line.strip.start_with? 'gem'
-      
+
       summary     = eval(a_line)
 
       unless summary.empty?
@@ -93,7 +93,7 @@ gemfile_bak.readlines.each do |a_line|
         a_line += (" "*spacer_cnt) + "# #{summary}"
 
       end
-      
+
     end
   end # if process_the_line
 

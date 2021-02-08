@@ -15,7 +15,7 @@ DEFAULT_OUT_DIR = RAILS_ROOT + 'etc/doc'
 
 require 'mods/string_mods'  # from lib/ruby
 
-require 'awesome_print'
+require 'amazing_print'
 
 require 'debug_me'
 include DebugMe

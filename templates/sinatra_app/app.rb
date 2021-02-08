@@ -2,7 +2,7 @@
 #########################################################
 ###
 ##  File: app.rb
-##  Desc: __description__ 
+##  Desc: __description__
 #
 
 require 'pathname'
@@ -23,7 +23,7 @@ end
 
 require 'require_all'
 
-require 'awesome_print'
+require 'amazing_print'
 require 'debug_me'
 include DebugMe
 
@@ -66,7 +66,7 @@ module APP
 
     helpers Sinatra::Param
 
-  
+
     configure do
       mime_type :html, 'text/html'
     end

@@ -25,7 +25,7 @@ def use_rubytoolbox?
                         end
 end
 
-require 'awesome_print'     # Pretty print Ruby objects with proper indentation and colors
+require 'amazing_print'     # Pretty print Ruby objects with proper indentation and colors
 require 'pathname'          # STDLIB
 require 'terminal-size'     # A tiny gem to accomplish a simple task: Determining the terminal size.
 require 'word_wrapper'      # Pure ruby word wrapping

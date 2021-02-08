@@ -31,7 +31,7 @@ gem 'table_print'   # Turn objects into nicely formatted columns for easy readin
 
 
 # Development tools
-gem 'awesome_print'  # Pretty print Ruby objects with proper indentation and colors
+gem 'amazing_print'  # Pretty print Ruby objects with proper indentation and colors
 gem 'debug_me'       # A tool to print the labeled value of variables.
 
 gem 'minitest',           require: false  # minitest provides a complete suite of testing facilities supporting TDD, BDD, mocking, and benchmarking

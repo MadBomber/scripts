@@ -28,7 +28,7 @@ Assumptions:
 
 require 'active_support'
 require 'active_support/inflector'
-require 'awesome_print'  # Pretty print Ruby objects with proper indentation and colors
+require 'amazing_print'  # Pretty print Ruby objects with proper indentation and colors
 require 'date'           # STDLIB
 require 'json'           # STDLIB
 require 'ostruct'        # STDLIB

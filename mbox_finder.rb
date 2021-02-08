@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 ########################################################
 ###
-##  File: mbox_finder.rb 
+##  File: mbox_finder.rb
 ##  Desc: Finds mbox files and prints out subject and date lines
 #
 # TOdO: Consider passing individual *.mbox files as arguments
@@ -9,7 +9,7 @@
 #
 
 require 'pathname'  # STDLIB
-#require 'awesome_print'
+#require 'amazing_print'
 
 pgm_name = Pathname.new(__FILE__).basename
 
@@ -100,12 +100,12 @@ def print_subject_date(a_filepath)
   all_lines.each do |a_line|
 
     line_number += 1
-        
+
     message_content << a_line
 
     a_subject = a_line    if a_line.start_with?('Subject')
     a_date    = a_line    if a_line.start_with?('Date')
-    
+
     interesting_message = is_interesting?(a_line) unless interesting_message
 
     if a_line.start_with?('From ')

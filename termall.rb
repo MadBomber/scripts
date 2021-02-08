@@ -8,15 +8,15 @@
 ##  By:   Dewayne VanHoozer (dvanhoozer@gmail.com)
 #
 
-require 'awesome_print'
+require 'amazing_print'
 
 require 'debug_me'
 include DebugMe
 
-require 'cli_helper'
-include CliHelper
+# require 'cli_helper'
+# include CliHelper
 
-configatron.version = '0.0.1'
+# configatron.version = '0.0.1'
 
 HELP = <<EOHELP
 Example:
@@ -25,29 +25,30 @@ Example:
 
 EOHELP
 
-cli_helper("Send TERM signal to all process that start with the given string") do |o|
+# cli_helper("Send TERM signal to all process that start with the given string") do |o|
 
-  o.bool          '--dryrun', 'do not do anything',         default: false
-  o.string  '-s', '--signal', 'Exanole: 9 or TERM',         default: 'TERM'
+#   o.bool          '--dryrun', 'do not do anything',         default: false
+#   o.string  '-s', '--signal', 'Exanole: 9 or TERM',         default: 'TERM'
 
-end
+# end
 
 # Display the usage info
 if  ARGV.empty?
-  show_usage
+  # show_usage
+  puts "you forgot to say what to terminate."
   exit
 end
 
 
 # Error check your stuff; use error('some message') and warning('some message')
 
-configatron.process_name = ARGV.last
+# configatron.process_name = ARGV.last
 
-if configatron.process_name.empty?
-  error 'No process name was provided'
-end
+# if configatron.process_name.empty?
+#   error 'No process name was provided'
+# end
 
-abort_if_errors
+# abort_if_errors
 
 
 ######################################################
@@ -63,16 +64,18 @@ at_exit do
   puts
 end
 
-ap configatron.to_h  if verbose? || debug?
+# ap configatron.to_h  if verbose? || debug?
 
-command = "kill -#{configatron.signal}"
+command = "kill -TERM"
 
-psf_lines   = `ps aux | fgrep #{configatron.process_name}`.split("\n")
+process_name = ARGV.first
+
+psf_lines   = `ps aux | fgrep #{process_name}`.split("\n")
 commands = []
 
 psf_lines.each do |psf|
   elements = psf.split
-  if elements[10].start_with? configatron.process_name
+  if elements[10].start_with? process_name
     commands << "#{command} #{elements[1]} # #{elements[10]}"
   end
 end
@@ -80,12 +83,12 @@ end
 if commands.empty?
   puts "Nothing to terminate"
 else
-  if dryrun?
-    ap commands
-  else
+  # if dryrun?
+  #   ap commands
+  # else
     commands.each do |command|
-      puts command if verbose?
+      puts command # if verbose?
       system command
     end
-  end
+  # end
 end

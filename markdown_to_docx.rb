@@ -12,7 +12,7 @@
 #       of files, this utility adapted to other formats as well.
 #
 
-require 'awesome_print'  # Pretty print Ruby objects with proper indentation and colors
+require 'amazing_print'  # Pretty print Ruby objects with proper indentation and colors
 require 'ruby-progressbar'  # Ruby/ProgressBar is a flexible text progress bar library for Ruby.
 require 'systemu'           # systemu
 

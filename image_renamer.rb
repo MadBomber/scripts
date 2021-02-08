@@ -9,7 +9,7 @@
 ##    where:  MMMM is a zero-filed number and xxx is the file extension
 #
 
-require 'awesome_print'  # Pretty print Ruby objects with proper indentation and colors
+require 'amazing_print'  # Pretty print Ruby objects with proper indentation and colors
 
 require 'debug_me'       # A tool to print the labeled value of variables.
 include DebugMe
@@ -60,7 +60,7 @@ if configatron.increment <= 0
   error "serial number increment can not be zero or negative"
 end
 
-configatron.input_files = get_pathnames_from( configatron.arguments, 
+configatron.input_files = get_pathnames_from( configatron.arguments,
   ['.jpg', '.png', '.gif'])
 
 if configatron.input_files.empty?

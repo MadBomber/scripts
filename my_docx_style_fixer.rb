@@ -5,14 +5,14 @@
 ##  Desc: Transplants the bad heart of a *.docx file into a good body
 ##        Given a docx file that has all the correct detail definitions
 ##        of styles thrown out its heart (word/document.xml) and replace
-##        it with a bad heart from a different docx file.  Now with 
+##        it with a bad heart from a different docx file.  Now with
 ##        the good body and bad heart recreate a docx file.  It lives!
 #
 
 require 'pathname'  # STDLIB
 require 'zip'
 
-require 'awesome_print'  # Pretty print Ruby objects with proper indentation and colors
+require 'amazing_print'  # Pretty print Ruby objects with proper indentation and colors
 require 'pp'
 
 pgm_name  = Pathname.new(__FILE__).basename

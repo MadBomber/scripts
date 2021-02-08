@@ -5,7 +5,7 @@
 ##  Desc: Displays the paragraph style and contents of an MS Word *.docx file
 #
 
-require 'awesome_print'  # Pretty print Ruby objects with proper indentation and colors
+require 'amazing_print'  # Pretty print Ruby objects with proper indentation and colors
 
 require 'pathname'       # STDLIB
 

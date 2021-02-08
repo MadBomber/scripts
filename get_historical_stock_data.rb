@@ -8,7 +8,7 @@
 ##  By:   Dewayne VanHoozer (dvanhoozer@gmail.com)
 #
 
-require 'awesome_print'       # Pretty print Ruby objects with proper indentation and colors
+require 'amazing_print'       # Pretty print Ruby objects with proper indentation and colors
 require 'cli_helper'          # An encapsulation of an integration of slop, nenv, inifile and configatron.
 require 'csv'                 # STDLIB
 require 'date'                # STDLIB

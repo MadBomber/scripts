@@ -6,7 +6,7 @@
 ##
 #
 
-require 'awesome_print'
+require 'amazing_print'
 require 'pathname'
 require 'ruby-progressbar'
 

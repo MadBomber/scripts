@@ -7,7 +7,7 @@
 
 require 'rmagick'
 
-require 'awesome_print'  # Pretty print Ruby objects with proper indentation and colors
+require 'amazing_print'  # Pretty print Ruby objects with proper indentation and colors
 
 require 'debug_me'       # A tool to print the labeled value of variables.
 include DebugMe
@@ -40,7 +40,7 @@ end
 
 # Error check your stuff; use error('some message') and warning('some message')
 
-configatron.input_files = get_pathnames_from( configatron.arguments, 
+configatron.input_files = get_pathnames_from( configatron.arguments,
   ['.jpg', '.png', '.gif'])
 
 if configatron.input_files.empty?

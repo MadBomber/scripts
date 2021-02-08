@@ -23,7 +23,7 @@ source_branch    = 'review'  # NOTE: 'development' and 'develop' are more common
 update_branches  = %w[ master release ] << source_branch
 working_dir_name = 'working'
 
-require 'awesome_print'
+require 'amazing_print'
 
 require 'debug_me'
 include DebugMe

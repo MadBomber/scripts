@@ -10,7 +10,7 @@ require 'pathname'  # STDLIB
 require 'optparse'  # STDLIB
 require 'ostruct'   # STDLIB
 
-require 'awesome_print'  # Pretty print Ruby objects with proper indentation and colors
+require 'amazing_print'  # Pretty print Ruby objects with proper indentation and colors
 require 'pp'
 
 # Turn the command line options into a usable structure

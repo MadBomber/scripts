@@ -6,7 +6,7 @@
 
 QUITE = true  # when true no output to the console
 
-require 'amazing_print' # Because awesome_print is not being maintained
+require 'amazing_print' # Because amazing_print is not being maintained
 require 'concurrent'    # Using: Concurrent::TimerTask
 require 'faraday'       # Used to access a url and get status
 require 'json'          # to read/write config.json file

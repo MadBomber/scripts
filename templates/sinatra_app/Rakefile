@@ -1,7 +1,7 @@
 # Rakefile
 
 
-require 'awesome_print'
+require 'amazing_print'
 require 'require_all'
 require 'table_print'
 

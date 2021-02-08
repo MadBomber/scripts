@@ -10,7 +10,7 @@
 # NOTE: RethinkDB stores dates as a time object that includes timezone
 #
 
-require 'awesome_print' # Pretty print Ruby objects with proper indentation and colors
+require 'amazing_print' # Pretty print Ruby objects with proper indentation and colors
 require 'cli_helper'    # An encapsulation of an integration of slop, nenv, inifile and configatron.
 require 'date'          # STDLIB
 require 'debug_me'      # A tool to print the labeled value of variables.

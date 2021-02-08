@@ -7,7 +7,7 @@
 ##  By:   Dewayne VanHoozer (dvanhoozer@gmail.com)
 #
 
-require 'awesome_print'
+require 'amazing_print'
 require 'date'
 require 'hashie'
 require 'json'

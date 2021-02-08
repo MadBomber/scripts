@@ -12,7 +12,7 @@
 require 'pathname'  # STDLIB
 require 'zip'
 
-require 'awesome_print'  # Pretty print Ruby objects with proper indentation and colors
+require 'amazing_print'  # Pretty print Ruby objects with proper indentation and colors
 require 'pp'
 
 me        = Pathname.new(__FILE__).realpath

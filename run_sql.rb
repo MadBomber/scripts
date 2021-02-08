@@ -13,7 +13,7 @@
 RAILS_ENV = ENV['RAILS_ENV'] || 'development'
 
 
-require 'awesome_print'  # Pretty print Ruby objects with proper indentation and colors
+require 'amazing_print'  # Pretty print Ruby objects with proper indentation and colors
 
 require 'debug_me'       # A tool to print the labeled value of variables.
 include DebugMe

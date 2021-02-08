@@ -7,7 +7,7 @@
 ##  Input is STDIN a list of gem names, 1 per line
 #
 
-#require 'awesome_print'
+#require 'amazing_print'
 require 'systemu'
 
 installed_gems = systemu("gem list")[1].split("\n").map {|g| g.split(' ').first if g.include?("(")}

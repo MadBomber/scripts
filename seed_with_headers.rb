@@ -9,7 +9,7 @@
 
 require 'pretty_backtrace'
 
-require 'awesome_print'  # Pretty print Ruby objects with proper indentation and colors
+require 'amazing_print'  # Pretty print Ruby objects with proper indentation and colors
 require 'csv'            # STDLIB
 
 require 'debug_me'       # A tool to print the labeled value of variables.
@@ -110,7 +110,7 @@ rescue Exception => e
   exit
 end
 
-csv_data = CSV.foreach(csv_pathname, quote_char: '"', col_sep: ',', row_sep: :auto, headers: true) 
+csv_data = CSV.foreach(csv_pathname, quote_char: '"', col_sep: ',', row_sep: :auto, headers: true)
 
 row_count = 0
 pg_record_cnt = 0

@@ -11,7 +11,7 @@
 require 'yaml'  # STDLIB
 require 'ruby-progressbar'  # Ruby/ProgressBar is a flexible text progress bar library for Ruby.
 
-require 'awesome_print'     # Pretty print Ruby objects with proper indentation and colors
+require 'amazing_print'     # Pretty print Ruby objects with proper indentation and colors
 
 require 'debug_me'          # A tool to print the labeled value of variables.
 include DebugMe

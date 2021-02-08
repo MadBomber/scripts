@@ -10,7 +10,7 @@ SHARD_FILENAME    = 'shard.yml'
 
 puts "processing #{SHARD_FILENAME} ..."
 
-require 'awesome_print'  # Pretty print Ruby objects with proper indentation and colors
+require 'amazing_print'  # Pretty print Ruby objects with proper indentation and colors
 require 'github_api'
 
 GITHUB = Github.new( oauth_token: GITHUB_API_TOKEN)

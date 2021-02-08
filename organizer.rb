@@ -9,7 +9,7 @@
 #
 
 require 'address_extractor'  # Give it text.  It finds addresses in it.
-require 'awesome_print'      # Pretty print Ruby objects with proper indentation and colors
+require 'amazing_print'      # Pretty print Ruby objects with proper indentation and colors
 
 require 'debug_me'           # A tool to print the labeled value of variables.
 include DebugMe

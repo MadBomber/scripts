@@ -7,7 +7,7 @@
 #
 
 require 'pathname'  			# STDLIB
-require 'awesome_print'  	# Pretty print Ruby objects with proper indentation and colors
+require 'amazing_print'  	# Pretty print Ruby objects with proper indentation and colors
 require 'date'           	# STDLIB
 require 'debug_me'       	# A tool to print the labeled value of variables.
 include DebugMe

@@ -12,7 +12,7 @@
 require 'date'          # STDLIB
 require 'load_gems'     # from my lib/ruby directory
 
-load_gems %w[ awesome_print cli_helper debug_me loofah mail progress_bar rethinkdb_helper ]
+load_gems %w[ amazing_print cli_helper debug_me loofah mail progress_bar rethinkdb_helper ]
 
 include DebugMe
 include CliHelper

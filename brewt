@@ -10,7 +10,7 @@ require 'pathname'  # STDLIB
 
 me = Pathname.new(__FILE__)
 
-require 'awesome_print'  # Pretty print Ruby objects with proper indentation and colors
+require 'amazing_print'  # Pretty print Ruby objects with proper indentation and colors
 require 'json'           # STDLIB
 require 'terminal-size'  # A tiny gem to accomplish a simple task: Determining the terminal size.
 require 'tty-spinner'    # A terminal spinner for tasks that have non-deterministic time frame.

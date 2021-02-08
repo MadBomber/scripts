@@ -1,9 +1,9 @@
 #!/usr/bin/env ruby
 
 require 'debug_me'
-include DebugMe 
+include DebugMe
 
-require 'awesome_print'
+require 'amazing_print'
 
 require 'pathname'
 
@@ -237,8 +237,8 @@ sql_file.puts <<EOS
 
 DROP TABLE IF EXISTS #{variable_name_of(table_title, :snake_case)};
 
-CREATE TABLE "public"."contingent_staffing_data" ( 
-  "id" INTEGER DEFAULT nextval('#{variable_name_of(table_title, :snake_case)}_id_seq'::regclass) NOT NULL UNIQUE, 
+CREATE TABLE "public"."contingent_staffing_data" (
+  "id" INTEGER DEFAULT nextval('#{variable_name_of(table_title, :snake_case)}_id_seq'::regclass) NOT NULL UNIQUE,
   "unique_id" CHARACTER VARYING( 255 ) COLLATE "pg_catalog"."default"
 EOS
 
@@ -281,9 +281,9 @@ expected_columns_base 	= column_names.size
 number_of_added_columns = 5 # id, unique_id, report_date, created_at, updated_at
 expected_columns 		= expected_columns_base + number_of_added_columns
 
-debug_me{[ 	:expected_columns_base, 
-			:number_of_added_columns, 
-			:expected_columns, 
+debug_me{[ 	:expected_columns_base,
+			:number_of_added_columns,
+			:expected_columns,
 			:column_names ]}
 
 
