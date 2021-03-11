@@ -128,6 +128,7 @@ gem 'guard-shell'             # Guard gem for running shell commands
 gem 'guard-sidekiq'           # guard gem for sidekiq
 #
 gem 'haml-rails'              # let your Gemfile do the configuring
+gem 'holidays'                # A collection of Ruby methods to deal with statutory and other holidays.
 gem 'htmlentities'            # Encode/decode HTML entities
 #
 # !3.0.0-p1 gem 'inspec'                  # Infrastructure and compliance testing.
@@ -155,13 +156,17 @@ gem 'ohai'                    # Ohai profiles your system and emits JSON
 gem 'optimist'                # Optimist is a commandline option parser for Ruby that just gets out of your way.
 gem 'os'                      # Simple and easy way to know if you're on windows or not (reliably), as well as how many bits the OS is, etc.
 #
+gem 'pagy'                    # The Ultimate Pagination Ruby Gem
+gem 'pagy_cursor'             # cursor paginations for pagy
 gem 'paper_trail'             # Track changes to your models.
 gem 'pericope'                # Pericope is a gem for parsing Bible references.
 gem 'pg'                      # Pg is the Ruby interface to the {PostgreSQL RDBMS}[http://www.postgresql.org/]
+gem 'pg_search'               # builds Active Record named scopes that take advantage of PostgreSQL's full text search
 gem 'pgsync'                  # Sync Postgres data between databases
 gem 'power_assert'            # Power Assert for Ruby
 gem 'pragmatic_segmenter'     # A rule-based sentence boundary detection gem that works out-of-the-box across many languages
 gem 'progress_bar'            # Simple Progress Bar for output to a terminal
+gem 'prosopite'               # N+1 auto-detection for Rails with zero false positives / false negatives
 gem 'pundit'                  # OO authorization for Rails
 gem 'puma'                    # Puma is a simple, fast, threaded, and highly concurrent HTTP 1.1 server for Ruby/Rack applications
 gem 'pycall'                  # Call python functions from Ruby
@@ -185,6 +190,7 @@ gem 'rufo'                    # Ruby code formatter
 gem 'sail'                    # Sail will help you navigate your Rails application.
 gem 'sanitize'                # Whitelist-based HTML and CSS sanitizer.
 gem 'scenic'                  # Support for database views in Rails migrations
+gem 'searchkick'              # Intelligent search made easy with Rails and Elasticsearch
 gem 'semantic_logger'         # Feature rich logging framework, and replacement for existing Ruby & Rails loggers.
 gem 'sketches'                # Sketches allows you to create and edit Ruby code from the comfort of your editor, while having it safely reloaded in IRB whenever changes to the code are saved.
 gem 'sidekiq'                 # Simple, efficient background processing for Ruby
