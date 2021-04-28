@@ -13,6 +13,9 @@
 # Last reviewed for Ruby v3.0.1-p64
 #
 
+system "gem install os"
+
+require 'os'
 require 'yaml' # STDLIB
 
 $gems = Array.new
@@ -35,7 +38,9 @@ gem 'rethinkdb_helper'        # A wrapper around the ruby rethinkdb gem
 #
 # !3.0.0-p1 gem 'geohash36'               # Commandline interface and library to the Geohash36 Algorithm
 # h3 requires the 'cmake' package; use brew, dnf, yum, apt=get etc
-gem 'h3'                      # C Bindings for Uber's H3 library
+unless OS.linux?
+  gem 'h3'                      # C Bindings for Uber's H3 library
+end
 
 
 #
