@@ -55,8 +55,9 @@ end
 # NOTE: JIRA_TICKET_EXAMPLE is optional so no error message
 JIRA_TICKET_EXAMPLE = ENV['JIRA_TICKET_EXAMPLE']
 
-base_command = "#{JIRA_OPEN_COMMAND} #{JIRA_BASE_URL}/browse/#{JIRA_PROJECT}-"
-
+def base_command(ticket)
+  "#{JIRA_OPEN_COMMAND} #{JIRA_BASE_URL}/browse/#{JIRA_PROJECT}-#{ticket}#{JIRA_URL_SUFFIX}"
+end
 
 # base_ticket is used to allow short id.  For example
 # if the base_ticket is "9876543210" and the ARGV contains
@@ -81,10 +82,30 @@ def expand_using_base_ticket(a_ticket)
   return ticket
 end
 
+# if a_string looks like XX-nnnn we want to extract XX as
+# the project.  Also if the string looks like XX without any
+# digits we want XX as the project.
+#
+# returns an Array of two strings.  This first is the project.
+# the last is the ticket number.
+#
+def extract_project(a_string)
+  a_string.scan(/([a-zA-Z]*)-?(\d*)/).first
+end
 
 
-while !ARGV.empty?
-  ticket = ARGV.shift
+parameters = ARGV.map(&:upcase)
+
+while !parameters.empty?
+  ticket = parameters.shift
+
+  result = extract_project(ticket)
+
+  unless result[0].empty?
+    JIRA_PROJECT = result[0]
+    # allow for "XX-123-456"
+    ticket = ticket.gsub("#{JIRA_PROJECT}-", '')
+  end
 
   if ticket.include?('-')
     parts         = ticket.split('-')
@@ -94,7 +115,7 @@ while !ARGV.empty?
       tickets = ( first_ticket .. last_ticket)
       tickets.each do |ticket|
         ticket = expand_using_base_ticket(ticket)
-        cmd = "#{base_command}#{ticket}#{JIRA_URL_SUFFIX}"
+        cmd = base_command(ticket)
         system(cmd)
         sleep 1
       end
@@ -103,6 +124,6 @@ while !ARGV.empty?
     end
   else
     ticket = expand_using_base_ticket(ticket)
-    `#{base_command}#{ticket}#{JIRA_URL_SUFFIX}`
+    system( base_command(ticket) )
   end
 end # while !ARGV.empty?
