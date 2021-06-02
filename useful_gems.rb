@@ -118,6 +118,7 @@ gem 'github_api'              # Ruby client for the official GitHub API
 gem 'graphql'                 # A GraphQL language and runtime for Ruby
 gem 'graphql_rails'           # GraphQL server and client for rails
 gem 'graphiti'                # Easily build jsonapi.org-compatible APIs
+gem 'gruff'                   # Beautiful graphs for one or multiple datasets.
 gem 'guard'                   # Guard keeps an eye on your file modifications
 gem 'guard-annotate'          # Guard gem for annotate
 gem 'guard-brakeman'          # Guard gem for Brakeman
@@ -185,6 +186,7 @@ gem 'rails-erd'               # Entity-relationship diagram for your Rails model
 gem 'reform'                  # Form object decoupled from models with validation, population and presentation.
 gem 'rexe'                    # Ruby Command Line Executor
 gem 'rgeo'                    # RGeo is a geospatial data library for Ruby.
+gem 'rolify'                  # Roles library with resource scoping
 gem 'rom'                     # Persistence and mapping toolkit for Ruby
 gem 'rom-sql'                 # SQL databases support for ROM
 gem 'rssable'                 # Access the RSS channel of any webiste without worrying about the engine
