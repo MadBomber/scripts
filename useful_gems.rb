@@ -107,6 +107,7 @@ gem 'event_bus'               # A simple pubsub event bus for Ruby applications
 #
 #v3.0.0 gem 'facter'                  # Facter, a system inventory tool
 gem 'falcon'                  # A fast, asynchronous, rack-compatible web server.
+gem 'fast_excel'              # Ultra Fast Excel Writer (XLSX)
 gem 'fast_jsonparser'         # Fast Json Parser
 gem 'ffi-ncurses'             # An FFI wrapper around ncursesw 5.x for MRI Ruby 1.8.x, 1.9.x and JRuby.
 gem 'fx'                      # Support for database functions and triggers in Rails migrations
@@ -137,6 +138,7 @@ gem 'guard-shell'             # Guard gem for running shell commands
 gem 'guard-sidekiq'           # guard gem for sidekiq
 #
 gem 'haml-rails'              # let your Gemfile do the configuring
+gem 'hashdiff'                # Hashdiff is a diff lib to compute the smallest difference between two hashes.
 gem 'holidays'                # A collection of Ruby methods to deal with statutory and other holidays.
 gem 'htmlentities'            # Encode/decode HTML entities
 #
