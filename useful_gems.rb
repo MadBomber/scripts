@@ -295,11 +295,19 @@ else
         gem_name  = missing_gems.shift
         command   = "gem install #{gem_name}"
         puts command
-        system command
-        depends = YAML.load(`gem spec #{gem_name}`)
-                    .dependencies.map{|d| d.name}
-        unless depends.empty?
-          depends.each {|d| missing_gems.delete d}
+        begin
+          system command
+          begin
+            depends = YAML.load(`gem spec #{gem_name}`)
+                        .dependencies.map{|d| d.name}
+            unless depends.empty?
+              depends.each {|d| missing_gems.delete d}
+            end
+          rescue => e
+            # Don't care
+          end
+        rescue => e
+          puts "#{gem_name} has ERROR: #{e}"
         end
       end # until missing_gems.empty?
     end # if missing_gems.empty?
