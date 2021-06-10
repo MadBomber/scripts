@@ -13,6 +13,7 @@ require 'pathname'
 RAILS_ROOT      = Pathname.new( ENV['RR']  ||  ENV['RAILS_ROOT']  ||  ENV['PWD'] )
 DEFAULT_OUT_DIR = RAILS_ROOT + 'etc/doc'
 
+# Get String#snakecase from here:
 require 'mods/string_mods'  # from lib/ruby
 
 require 'amazing_print'
