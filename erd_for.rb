@@ -62,9 +62,26 @@ end
 
 # Error check your stuff; use error('some message') and warning('some message')
 
+unless configatron.outdir.exist?
+  puts "Warning: Directory does not exist - #{configatron.outdir}"
+  print "Do you want to create #{configatron.outdir}? (y/N) "
+
+  answer = (STDIN.gets).chomp.strip.downcase
+
+  if answer.size > 0 && answer.start_with?('y')
+    configatron.outdir.mkpath
+  end
+end
+
+
+# At this point we know outdir exists but it had better be a directory!
+unless configatron.outdir.directory?
+  error "Not a directory: #{configatron.outdir}"
+end
 
 
 abort_if_errors
+
 
 
 ######################################################
