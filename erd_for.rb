@@ -46,8 +46,8 @@ cli_helper("Create ERD files for given database models") do |o|
 
   o.string  '-t', '--type',    'Type of Output File',                       default: 'pdf'
   o.int     '-r', '--recursion_depth', 'Recursive Depth of Relationships',  default: 1
-  o.array   '-e', '--exclude', 'Exclude model names seperated by comma',    default: []
-  o.array   '-m', '--models',  'Model names seperated by comma'
+  o.array   '-e', '--exclude', 'Exclude model names separated by comma',    default: []
+  o.array   '-m', '--models',  'Model names separated by comma'
   o.string  '-T', '--title',   'Title defaults to Model Name',            default: ''
   o.boolean '-g', '--group',   'Group models together into one ERD',      default: false
   o.path    '-o', '--outdir',  'Directory to save ERD files',             default: DEFAULT_OUT_DIR

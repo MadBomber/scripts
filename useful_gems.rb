@@ -75,6 +75,7 @@ gem 'bunny'                   # Popular easy to use Ruby client for RabbitMQ
 #
 gem 'cancancan'               # Simple authorization solution for Rails.
 gem 'chartkick'               # Create beautiful JavaScript charts with one line of Ruby
+gem 'childprocess'            # A simple and reliable solution for controlling external programs running in the background on any Ruby / OS combination.
 gem 'clipboard'               # Easy access to the clipboard on Linux, MacOS and Windows.
 gem 'colortail'               # Tail a file and color lines based on regular expressions within that line
 gem 'concurrent-ruby'         # Modern concurrency tools for Ruby. Inspired by Erlang, Clojure, Scala, Haskell, F#, C#, Java, and classic concurrency patterns.
@@ -163,7 +164,7 @@ gem 'nenv'                    # Convenience wrapper for Ruby's ENV
 gem 'nokogiri'                # Nokogiri (鋸) is an HTML, XML, SAX, and Reader parser
 #
 gem 'object_shadow'           # Metaprogramming Level 2
-gem 'ocassionally'            # Ocassionally it works; and, ocassionally it doesn't
+gem 'ocassionally'            # occasionally it works; and, ocassionally it doesn't
 gem 'ohai'                    # Ohai profiles your system and emits JSON
 gem 'optimist'                # Optimist is a commandline option parser for Ruby that just gets out of your way.
 gem 'os'                      # Simple and easy way to know if you're on windows or not (reliably), as well as how many bits the OS is, etc.
@@ -192,7 +193,7 @@ gem 'rgeo'                    # RGeo is a geospatial data library for Ruby.
 gem 'rolify'                  # Roles library with resource scoping
 gem 'rom'                     # Persistence and mapping toolkit for Ruby
 gem 'rom-sql'                 # SQL databases support for ROM
-gem 'rssable'                 # Access the RSS channel of any webiste without worrying about the engine
+gem 'rssable'                 # Access the RSS channel of any website without worrying about the engine
 gem 'rubocop'                 # Automatic Ruby code style checking tool.
 gem 'rubocop-performance'     # Automatic performance checking tool for Ruby code.
 gem 'ruby_crystal_codemod'    # Ruby => Crystal codemod
