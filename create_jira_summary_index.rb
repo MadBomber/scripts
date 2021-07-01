@@ -62,18 +62,18 @@ end
 
 ap configatron.to_h  if verbose? || debug?
 
-summaries = {}
+summaries = []
 
 configatron.input_files.each do |filename|
-  ticket  = filename.basename(".*").to_s.split('-').last.to_i
   stuff   = JSON.parse(filename.read)
+  key     = stuff["key"]
   summary = stuff["fields"]["summary"]
   status  = stuff["fields"]["status"]["name"]
-  summaries[ticket] = "#{status} - #{summary}"
+  summaries << "#{key} - #{status} - #{summary}"
 end
 
 summaries.sort.each do |ticket|
-  printf "%4d - %s\n", ticket[0], ticket[1]
+  puts ticket
 end
 
 
