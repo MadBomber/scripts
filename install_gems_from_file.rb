@@ -3,10 +3,9 @@
 ##########################################################
 ###
 ##  File: install_gems_from_file.rb
-##  Desc: Take a list of gem names and installs them
+##  Desc: Take a list of gem names from a file and installs them
 ##  By:   Dewayne VanHoozer (dvanhoozer@gmail.com)
 #
-
 
 require 'yaml'  # STDLIB
 
@@ -18,10 +17,11 @@ include DebugMe
 require 'cli_helper'        # An encapsulation of an integration of slop, nenv, inifile and configatron.
 include CliHelper
 
-configatron.version = '0.0.1'
+configatron.version = '0.0.2'
 
 cli_helper("return minimum set of gems to install") do |o|
-  o.path    '-f', '--file',     'file containing gem names'
+  o.path    '-f', '--file',       'file containing gem names'
+  o.integer '-b', '--batch-size', 'Number of gems to fetch at once', default: 20
 end
 
 # Display the usage info
@@ -75,19 +75,33 @@ if missing_gems.empty?
   puts "All gems are already installed"
 else
   until missing_gems.empty?
-    gem_name  = missing_gems.shift
-    command   = "gem install #{gem_name}"
+    gem_names = []
+
+    configatron.batch_size.times do
+      gem_names << missing_gems.shift
+    end
+
+    command   = "gem install #{gem_names.join(' ')}"
     puts command
+
     begin
       system command
-      depends = YAML.load(`gem spec #{gem_name}`)
-                  .dependencies.map{|d| d.name}
-      unless depends.empty?
-        depends.each {|d| missing_gems.delete d}
+
+      begin
+        gem_names.each do |gem_name|
+          depends = YAML.load(`gem spec #{gem_name}`)
+                      .dependencies.map{|d| d.name}
+          unless depends.empty?
+            depends.each {|d| missing_gems.delete d}
+          end
+        end
+      rescue Psych::DisallowedClass
+        # NO-OP
       end
+
     rescue Exception => e
-      $problem_gems << gem_name
-      print "\n... problem installing #{gem_name} ...\n\n"
+      $problem_gems << gem_names
+      print "\n...ERROR #{e} ...\n\n"
     end
   end # until missing_gems.empty?
 end # if missing_gems.empty?
