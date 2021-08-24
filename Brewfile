@@ -12,7 +12,6 @@ atk                           # GNOME accessibility toolkit
 autojump                      # Shell extension to jump to frequently used directories
 aws-shell                     # Integrated shell for working with the AWS CLI
 awscli                        # Official Amazon AWS command-line interface
-
 b2-tools                      # B2 Cloud Storage Command-Line Tools
 bash                          # Bourne-Again SHell, a UNIX command interpreter
 bazel                         # Google's own build tool
@@ -20,8 +19,8 @@ bfg                           # Remove large files or passwords from Git history
 bigloo                        # Scheme implementation with object system, C, and Java interfaces
 bork                          # Bash-Operated Reconciling Kludge
 boxes                         # Draw boxes around text
+broot                         # New way to see and navigate directory trees
 buku                          # Powerful command-line bookmark manager
-
 cgrep                         # Context-aware grep for source code
 check_postgres                # Monitor Postgres databases
 chicken                       # Compiler for the Scheme programming language
@@ -35,7 +34,6 @@ colortail                     # Like tail(1), but with various colors for specif
 couchdb                       # Document database server
 crystal-lang                  # Fast and statically typed, compiled language with Ruby-like syntax
 csv-fix                       # Tool for manipulating CSV data
-
 daemonize                     # Run a command as a UNIX daemon
 dasht                         # Search API docs offline, in your terminal or browser
 dateutils                     # Tools to manipulate dates with a focus on financial data
@@ -53,20 +51,16 @@ docker-swarm                  # Turn a pool of Docker hosts into a single, virtu
 docx2txt                      # Converts Microsoft Office docx documents to equivalent text documents
 dupseek                       # Interactive program to find and remove duplicate files
 dwdiff                        # Diff that operates at the word level
-
 ecl                           # Embeddable Common Lisp
 ejabberd                      # XMPP application server
 elixir                        # Functional metaprogramming aware language built on Erlang VM
 eralchemy                     # Simple entity relation (ER) diagrams generation
-
 faac                          # ISO AAC audio encoder
 flac                          # Free lossless audio codec
-homebrew/science/flann
 fping                         # Scriptable ping program for checking if multiple hosts are up
 freeling                      # Suite of language analyzers
 fswatch                       # Monitor a directory for changes and run a shell command
 fzf                           # Command-line fuzzy finder written in Go
-
 ganglia                       # Scalable distributed monitoring system
 gcc                           # GNU compiler collection
 gdal                          # Geospatial Data Abstraction Library
@@ -91,16 +85,20 @@ grip                          # GitHub Markdown previewer
 gsar                          # General Search And Replace on files
 gsettings-desktop-schemas     # GSettings schemas for desktop components
 gsl                           # Numerical library for C and C++
-
 heroku                        # Command-line client for the cloud PaaS
 hicolor-icon-theme            # Fallback theme for FreeDesktop.org icon themes
 hivemind                      # The mind to rule processes of your development environment
+homebrew/completions/vagrant-completion
+homebrew/dupes/unzip
+homebrew/dupes/zlib
+homebrew/science/flann
+homebrew/science/opencv
+homebrew/science/r
+homebrew/science/vips
 html2text                     # Advanced HTML-to-text converter
 htop                          # Improved top (interactive process viewer)
 hyperscan                     # High-performance regular expression matching library
-
 icdiff                        # Improved colored diff
-
 javarepl                      # Read Eval Print Loop (REPL) for Java
 joshua                        # Statistical machine translation decoder
 jq                            # Lightweight and flexible command-line JSON processor
@@ -109,9 +107,7 @@ jsonnet                       # Domain specific configuration language for defin
 jsonschema2pojo               # Generates Java types from JSON Schema (or example JSON)
 jump                          # Helps you navigate your file system faster by learning your habits
 jython                        # Python implementation written in Java (successor to JPython)
-
 kommit                        # More detailed commit messages without committing!
-
 lame                          # High quality MPEG Audio Layer III (MP3) encoder
 libepoxy                      # Library for handling OpenGL function pointer management
 libsvm                        # Library for support vector machines
@@ -120,7 +116,6 @@ libxslt                       # C XSLT library for GNOME
 logrotate                     # Rotates, compresses, and mails system logs
 logstash                      # Tool for managing events and logs
 logtalk                       # Object-oriented logic programming language
-
 m-cli                         # Swiss Army Knife for macOS
 mapbox/cli/mapbox
 maven                         # Java-based project management
@@ -137,12 +132,8 @@ mysql                         # Open source relational database management syste
 nginx                         # HTTP(S) server and reverse proxy, and IMAP/POP3 proxy server
 nifi                          # Easy to use, powerful, and reliable system to process and distribute data
 nmap                          # Port scanning utility for large networks
-
 no-more-secrets               # Recreates the SETEC ASTRONOMY effect from 'Sneakers'
-
-homebrew/science/opencv
 openshift-cli                 # OpenShift command-line interface tools
-
 p7zip                         # 7-Zip (high compression file archiver) implementation
 packer                        # Tool for creating identical machine images for multiple platforms
 pandoc                        # Swiss-army knife of markup format conversion
@@ -162,8 +153,6 @@ psql2csv                      # Run a query in psql and output the result as CSV
 pushpin                       # Reverse proxy for realtime web services
 pygobject                     # GLib/GObject/GIO Python bindings for Python 2
 python3                       # Interpreted, interactive, object-oriented programming language
-
-homebrew/science/r
 rabbitmq                      # Messaging broker
 rclone                        # Rsync for cloud storage
 re2                           # Alternative to backtracking PCRE-style regular expression engines
@@ -171,7 +160,6 @@ redis                         # Persistent key-value database, with built-in net
 rename                        # Perl-powered file rename script with many helpful built-ins
 rethinkdb                     # The open-source database for the realtime web
 rust                          # Safe, concurrent, practical language
-
 s3cmd                         # Command-line tool for the Amazon S3 service
 sfcgal                        # C++ wrapper library around CGAL
 siege                         # HTTP regression testing and benchmarking utility
@@ -187,7 +175,6 @@ swiftgen                      # Swift code generator for assets, storyboards, Lo
 swiftlint                     # Tool to enforce Swift style and conventions
 syncthing                     # Open source continuous file synchronization application
 syncthing-inotify             # File watcher intended for use with Syncthing
-
 tailor                        # Cross-platform static analyzer and linter for Swift
 taylor                        # Measure Swift code metrics and get reports in Xcode and Jenkins
 tcpstat                       # Active TCP connections monitoring tool
@@ -204,29 +191,19 @@ tomcat                        # Implementation of Java Servlet and JavaServer Pa
 translate-shell               # Command-line translator using Google Translate and more
 tre                           # Lightweight, POSIX-compliant regular expression (regex) library
 tree                          # Display directories as trees (with optional color/HTML output)
-
 unixodbc                      # ODBC 3 connectivity for UNIX
 unrar                         # Extract, view, and test RAR archives
-homebrew/dupes/unzip
-
 v8                            # Google's JavaScript engine
-homebrew/completions/vagrant-completion
-homebrew/science/vips
 voldemort                     # Distributed key-value storage system
-
 watchman                      # Watch files and take action when they change
 websocketd                    # WebSockets the Unix way
 wrk                           # HTTP benchmarking tool
-
 x264                          # H.264/AVC encoder
 xmlformat                     # Format XML documents
 xvid                          # High-performance, high-quality MPEG-4 video library
-
 yadm                          # Yet Another Dotfiles Manager
 yank                          # Copy terminal output to clipboard
-
 zebra                         # Information management system
-homebrew/dupes/zlib
 zookeeper                     # Centralized server for distributed coordination of services
 zorba                         # NoSQL query processor
 zzz                           # Command-line tool to put Macs to sleep
