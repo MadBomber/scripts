@@ -1,74 +1,91 @@
 #!/usr/bin/env ruby
 # ~/scripts/github_clone_my_repos.rb
 #
-# TODO: Add a --help capability
-# TODO: Add ability to take user account name from command line
-#
 
 require 'debug_me'
 include DebugMe
-
 
 require 'amazing_print'
 require 'github_api'
 require 'pathname'
 
-DRYRUN = ARGV.include? '--dryrun'
+require 'cli_helper'
+include CliHelper
 
-def dryrun?
-  DRYRUN
+configatron.version = '0.0.2'
+
+HELP = <<EOHELP
+Important:
+
+  --dryrun  will not download the content of any repo.
+            It will just list the repo names.
+EOHELP
+
+
+cli_helper("Clone all github for a given user") do |o|
+  o.bool          '--dryrun', 'only report stuff',      default: false
+  o.string  '-u', '--user',   'user account on github'
+  o.path    '-p', '--path',   'base directory path',    default: Pathname.new(ENV['HOME']) + 'sandbox/git_repos'
 end
 
-# sandbox_path = Pathname.new(ENV['HOME']) + 'sandbox/git_repos/madbomber'
-sandbox_path = Pathname.new(ENV['HOME']) + 'sandbox/git_repos' + ENV['GITHUB_ACCOUNT'].downcase
 
-unless ARGV.empty?
-  if %w[ -h --help -? ].include? ARGV.first
-    puts <<~HELP
-
-      Clone all of my github.com hosted repositories into
-      the default working directories located at:
-        #{sandbox_path}
-
-      Use --dryrun to see what will happen but not do anything
-
-    HELP
-    exit(0)
-  end
+# Display the usage info
+if  ARGV.empty?
+  show_usage
+  exit
 end
 
+# Error check your stuff; use error('some message') and warning('some message')
+
+abort_if_errors
+
+
+######################################################
+# Main
+
+at_exit do
+  puts
+  puts "Done."
+  puts
+end
+
+ap configatron.to_h  if verbose? || debug?
+
+github_account        = configatron.user
+
+sandbox_path          = configatron.path + github_account
 clone_command         = 'git clone ssh://git@github.com/'
 git_remote_command    = 'git remote -v'
 git_upstream_command  = 'git remote add upstream '
 
-# SMELL: may need to add the oauth_token
+
 my_github_repos = Github.repos.list(
-  user:             ENV['GITHUB_ACCOUNT'],
+  user:             github_account,
   auto_pagination:  true
 )
 
-puts "\nmy_github_repos"
+puts "\n#{github_account}'s github repos"
 ap my_github_repos.map{|r| r.name}
 
 forked_repos    = my_github_repos.select{|r| r.fork}
 original_repos  = my_github_repos.select{|r| !r.fork}
 
-puts "\nforked_repos"
+puts "\nforked repos"
 ap forked_repos.map{|r| r.name}
 
-puts "\noriginal_repos"
+puts "\noriginal repos"
 ap original_repos.map{|r| r.name}
 
 
 cloned_repos = sandbox_path.children.select {|c| c.directory?}
   .map{|c| c.basename.to_s}
 
-puts "\ncloned_repos"
+puts "\ncloned repos"
 ap cloned_repos
 
 new_github_repos = my_github_repos.reject{|r| cloned_repos.include? r.name}
 
-puts "\nnew_github_repos"
+puts "\nnew github repos"
 ap new_github_repos.map{|r| r.name}
 
 new_github_repos.each do |r|
@@ -87,7 +104,7 @@ new_github_repos.each do |r|
       puts "Setting upstream remote for a forked repo ..."
 
       my_repo = Github.repos.get(
-        user: ENV['GITHUB_ACCOUNT'],
+        user: github_account,
         repo: r.name
       )
 
