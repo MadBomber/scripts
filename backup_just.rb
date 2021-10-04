@@ -13,8 +13,11 @@
 require 'date'
 require 'pathname'
 
-HOME        = Pathname.new(ENV['HOME'])
-BACKUP_DIR  = HOME + '.just_backup'
+HOME            = Pathname.new(ENV['HOME'])
+BACKUP_DIR      = HOME + '.just_backup'
+LAST_TIME_PATH  = BACKUP_DIR + 'last_backup_timestamp.txt'
+
+LAST_BACKUP_TIME  = LAST_TIME_PATH.mtime
 
 home_string       = HOME.to_s
 backup_dir_string = BACKUP_DIR.to_s
@@ -47,7 +50,11 @@ at_exit do
   puts
 end
 
-print "Finding all the files ... "
+puts
+puts "Last backup was: #{LAST_BACKUP_TIME}"
+puts
+
+print "Finding all the files modified since then ... "
 source_files_string  = `find $HOME -name '*.just' -exec echo "{}<br/>" \\;`
 source_files_string += `find $HOME -name 'justfile' -exec echo "{}<br/>" \\;`
 
@@ -56,6 +63,12 @@ source_paths  = source_files_string
                   .split("\n")
                   .reject{|f| f.include?(backup_dir_string) }
                   .map{   |f| Pathname.new(f.chomp.strip)   }
+
+total_file_count = source_paths.size
+
+source_paths.reject!{|f| f.mtime < LAST_BACKUP_TIME }
+
+modified_file_count = source_paths.size
 
 puts "done"
 
@@ -80,7 +93,5 @@ puts "Copy files to backup ... "
   end
 puts "done"
 
-last_backup_timestamp = BACKUP_DIR + 'last_backup_timestamp.txt'
-
-last_backup_timestamp.write(DateTime.now.to_s)
+LAST_TIME_PATH.write(DateTime.now.to_s)
 
