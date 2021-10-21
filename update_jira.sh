@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 # scripts/update_jira.sh
 # gem install jira-sync
+# brew install gron
+# brew install jq
+
 
 asof="YYYY-MM-DD$1"
 
@@ -37,4 +40,7 @@ for project in $JIRA_DB_PROJECTS ; do
         --target $JIRA_DB_DIR/$project \
         update
 
+    for a_file in $JIRA_DB_DIR/$project/*.json ; do
+      gron $a_file > $a_file.txt
+    done
 done
