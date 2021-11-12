@@ -20,8 +20,24 @@ if ARGV.empty?
 end
 
 ARGV.each do |file|
-  puts file
-  img = Magick::Image.read(file).first
+  puts "\n" + "="*65
+  puts "== #{file}"
+
+  error = false
+  begin
+    img = Magick::Image.read(file).first
+  rescue => e
+    STDERR.puts "\nERROR: #{e}"
+    STDERR.puts "Delete File? yes|[no] "
+    answer = STDIN.gets
+    if answer.downcase.start_with?('yes')
+      system "rm #{file}"
+    end
+    error = true
+  end
+
+  next if error
+
   puts "   Format: #{img.format}"
   puts "   Geometry: #{img.columns}x#{img.rows}"
   puts '   Class: ' + case img.class_type

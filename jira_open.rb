@@ -53,7 +53,7 @@ end
 
 
 # NOTE: JIRA_TICKET_EXAMPLE is optional so no error message
-JIRA_TICKET_EXAMPLE = ENV['JIRA_TICKET_EXAMPLE']
+JIRA_TICKET_EXAMPLE = nil # ENV['JIRA_TICKET_EXAMPLE']
 
 def base_command(ticket)
   "#{JIRA_OPEN_COMMAND} #{JIRA_BASE_URL}/browse/#{JIRA_PROJECT}-#{ticket}#{JIRA_URL_SUFFIX}"

@@ -193,6 +193,7 @@ tre                           # Lightweight, POSIX-compliant regular expression 
 tree                          # Display directories as trees (with optional color/HTML output)
 unixodbc                      # ODBC 3 connectivity for UNIX
 unrar                         # Extract, view, and test RAR archives
+urlwatch                      # Get notified when a webpage changes
 v8                            # Google's JavaScript engine
 voldemort                     # Distributed key-value storage system
 watchman                      # Watch files and take action when they change
