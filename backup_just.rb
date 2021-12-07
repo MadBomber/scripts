@@ -9,6 +9,8 @@
 ##        to ~/.just_backup directory
 ##  By:   Dewayne VanHoozer (dvanhoozer@gmail.com)
 #
+# NOTE: Uses 'mdfind' which is a MacOS-only tool ???
+#
 
 require 'date'
 require 'pathname'
@@ -55,14 +57,14 @@ puts "Last backup was: #{LAST_BACKUP_TIME}"
 puts
 
 print "Finding all the files modified since then ... "
-source_files_string  = `find $HOME -name '*.just' -exec echo "{}<br/>" \\;`
-source_files_string += `find $HOME -name 'justfile' -exec echo "{}<br/>" \\;`
+source_files_string  = `mdfind -onlyin $HOME -name just`
 
 source_paths  = source_files_string
-                  .gsub('<br/>', "\n")
                   .split("\n")
                   .reject{|f| f.include?(backup_dir_string) }
+                  .select{|f| f.end_with?('.just') || f.end_with?('justfile')}
                   .map{   |f| Pathname.new(f.chomp.strip)   }
+
 
 total_file_count = source_paths.size
 
