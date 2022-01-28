@@ -32,6 +32,8 @@ for project in $JIRA_DB_PROJECTS ; do
 
     echo "Updating JIRA project: $project ..."
 
+    # TODO: capture list of changed jira tickets
+
     jira-sync \
         --baseurl $JIRA_HOST \
         --project $project \
@@ -40,7 +42,9 @@ for project in $JIRA_DB_PROJECTS ; do
         --target $JIRA_DB_DIR/$project \
         update
 
-    for a_file in $JIRA_DB_DIR/$project/*.json ; do
-      gron $a_file > $a_file.txt
-    done
+    # TODO: only apply gron to the list of changed tickets
+
+    # for a_file in $JIRA_DB_DIR/$project/*.json ; do
+    #   gron $a_file > $a_file.txt
+    # done
 done

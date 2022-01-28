@@ -38,7 +38,7 @@ def usage
 
     _ [-s|--search] Will search all '_notes.txt' files using the 'agrep' command
 
-    MPTE:
+    NOTE:
 
       Every time a new note is added, the _notes.txt file is copied to
       a backup file in the $HOME/_notes_backup directory.  The name of
