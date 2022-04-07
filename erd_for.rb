@@ -128,7 +128,7 @@ configatron.models.each do |model|
     command += " --only='#{model},'"
   end
 
-  command += configatron.title.empty? ? " --title='#{model} ERD'" : " --title='#{configatron.title}'"
+  command += configatron.title.empty? ? " --title='#{model} ERD\n#{Time.now}'" : " --title='#{configatron.title}\n#{Time.now}'"
 
   if configatron.filename.empty?
     model_filename = model.snakecase.gsub('/', '_')
