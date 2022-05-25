@@ -47,8 +47,15 @@ else
     command   = "gem install #{gem_name}"
     puts command
     system command
-    depends = YAML.load(`gem spec #{gem_name}`)
-                .dependencies.map{|d| d.name}
+
+    begin
+      depends = YAML.load(`gem spec #{gem_name}`)
+                  .dependencies.map{|d| d.name}
+    rescue => e
+      print "\nERROR: #{e}\n\n"
+      depends = []
+    end
+
     unless depends.empty?
       depends.each {|d| missing_gems.delete d}
     end

@@ -64,6 +64,7 @@ gem 'any_login'               # AnyLogin is created to speedup development proce
 gem 'anycable'                # AnyCable is a polyglot replacement for ActionCable-compatible servers
 gem 'anycable-rails'          # Rails adapter for AnyCable
 gem 'apexcharts'              # Awesome charts for your ruby app
+gem 'ar_lazy_preload'         # lazy_preload implementation for ActiveRecord models
 gem 'aws-sdk-s3'              # AWS SDK for Ruby - Amazon S3
 #
 gem 'bible_gateway'           # An unofficial 'API' for BibleGateway.com.
@@ -160,6 +161,7 @@ gem 'mail'                    # Mail provides a nice Ruby DSL for making, sendin
 gem 'meta-tags'               # Collection of SEO helpers for Ruby on Rails.
 gem 'mini_sql'                # A fast, safe, simple direct SQL executor
 #
+gem 'n1_loader'               # Loader to solve N+1 issue for good.
 gem 'nenv'                    # Convenience wrapper for Ruby's ENV
 gem 'nokogiri'                # Nokogiri (鋸) is an HTML, XML, SAX, and Reader parser
 #
@@ -207,6 +209,7 @@ gem 'sanitize'                # Whitelist-based HTML and CSS sanitizer.
 gem 'scenic'                  # Support for database views in Rails migrations
 gem 'searchkick'              # Intelligent search made easy with Rails and Elasticsearch
 gem 'semantic_logger'         # Feature rich logging framework, and replacement for existing Ruby & Rails loggers.
+gem 'sequel'                  # The Database Toolkit for Ruby
 gem 'sketches'                # Sketches allows you to create and edit Ruby code from the comfort of your editor, while having it safely reloaded in IRB whenever changes to the code are saved.
 gem 'sidekiq'                 # Simple, efficient background processing for Ruby
 gem 'sidekiq-scheduler'       # Light weight job scheduling extension for Sidekiq

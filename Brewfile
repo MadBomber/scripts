@@ -5,6 +5,7 @@
 #
 
 ack                           # Search tool like grep, but optimized for programmers
+alerter                       # Send User Alert Notification on macOS from the command-line
 ant-contrib                   # Collection of tasks for Apache Ant
 asciidoc                      # Formatter/translator for text files to numerous formats. Includes a2x
 aspell                        # Spell checker with better logic than ispell
