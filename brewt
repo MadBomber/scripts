@@ -100,6 +100,7 @@ installed_packages.each do |package|
   package_desc      = package['desc']
   package_link      = package['homepage']
 
+  puts
   print package_full_name
   print " "*(desc_start_col - package_full_name.size)
   text = WordWrapper::MinimumRaggedness.new(width, package_desc.strip).wrap
