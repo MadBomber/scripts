@@ -1,5 +1,4 @@
-# scripts/brewt_all.txt
-# all my current installed brews ...
+
 
 abseil                     C++ Common Libraries
                            |__ https://abseil.io
@@ -576,6 +575,9 @@ icu4c                      C/C++ and Java libraries for
                            |   Unicode and globalization
                            |__ https://icu.unicode.org/home
 
+ijq                        Interactive jq
+                           |__ https://sr.ht/~gpanders/ijq/
+
 ilmbase                    OpenEXR ILM Base libraries (high
                            |   dynamic-range image file format)
                            |__ https://www.openexr.com/
@@ -596,6 +598,9 @@ isl                        Integer Set Library for the polyhedral model
 
 iso-codes                  Provides lists of various ISO standards
                            |__ https://salsa.debian.org/iso-codes-team/iso-codes
+
+ispell                     International Ispell
+                           |__ https://www.cs.hmc.edu/~geoff/ispell.html
 
 janet                      Dynamic language and bytecode vm
                            |__ https://janet-lang.org
@@ -652,7 +657,7 @@ jump                       Helps you navigate your file system
 just                       Handy way to save and run project-specific commands
                            |__ https://github.com/casey/just
 
-justprep                   Pre-processor to the 'just' command-line utility
+madbomber/brews/justprep   Pre-processor to the 'just' command-line utility
                            |__ https://github.com/MadBomber/justprep
 
 kommit                     More detailed commit messages without committing!
@@ -1047,6 +1052,9 @@ pinentry                   Passphrase entry dialog
                            |   utilizing the Assuan protocol
                            |__ https://www.gnupg.org/related_software/pinentry/
 
+pipe-rename                Rename your files using your favorite text editor
+                           |__ https://github.com/marcusbuffett/pipe-rename
+
 pixman                     Low-level library for pixel manipulation
                            |__ https://cairographics.org/
 
@@ -1079,6 +1087,9 @@ pre-commit                 Framework for managing
 
 protobuf                   Protocol buffers (Google's data interchange format)
                            |__ https://github.com/protocolbuffers/protobuf/
+
+pspg                       Unix pager optimized for psql
+                           |__ https://github.com/okbob/pspg
 
 psql2csv                   Run a query in psql and output the result as CSV
                            |__ https://github.com/fphilipe/psql2csv
@@ -1334,6 +1345,9 @@ vala                       Compiler for the GObject type system
 
 vbindiff                   Visual Binary Diff
                            |__ https://www.cjmweb.net/vbindiff/
+
+viddy                      Modern watch command
+                           |__ https://github.com/sachaos/viddy
 
 vroom                      Vehicle Routing Open-Source Optimization Machine
                            |__ http://vroom-project.org/
