@@ -1720,6 +1720,10 @@ i18n                               New wave Internationalization
 ice_nine                           Deep Freeze Ruby Objects
                                    |__ https://github.com/dkubb/ice_nine
 
+imap-backup                        Backup GMail (or other
+                                   |   IMAP) accounts to disk
+                                   |__ https://github.com/joeyates/imap-backup
+
 inifile                            INI file reader and writer
                                    |__ http://rubygems.org/gems/inifile
 
@@ -3682,6 +3686,10 @@ thread_variables                   Provide functionality compatible
 
 thredded                           The best Rails forums engine ever.
                                    |__ https://thredded.org
+
+thunderbird                        Conveniences for interacting
+                                   |   with Mozilla Thunderbird
+                                   |__ https://github.com/joeyates/thunderbird
 
 thwait                             Watches for termination
                                    |   of multiple threads.
