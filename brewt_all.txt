@@ -1146,6 +1146,9 @@ redpen                     Proofreading tool to help writers
                            |   of technical documentation
                            |__ https://redpen.cc/
 
+remind                     Sophisticated calendar and alarm
+                           |__ https://dianne.skoll.ca/projects/remind/
+
 rename                     Perl-powered file rename script
                            |   with many helpful built-ins
                            |__ http://plasmasturm.org/code/rename
