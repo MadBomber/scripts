@@ -1,0 +1,161 @@
+#!/bin/bash
+# scripts/spot
+#
+# See:  https://github.com/mhinz/spotlight-cli
+#
+
+# Colors
+gg="$(tput setaf 2)$(tput bold)"
+g="$(tput sgr0)$(tput setaf 2)"
+y=$(tput setaf 250)
+x=$(tput sgr0)
+
+helpme() {
+    cat <<MSG
+ Spotlight CLI.
+
+If a command takes a [path], the results will be restricted to that directory.
+
+${gg}apps                     $x Installed applications.
+${gg}attr                     $x Attributes that can be used with "spot <query>".
+${gg}author ${g}<query> [path]    $x Files from author.
+${gg}ext ${g}<query> [path]       $x Any files with that extension.
+                         $y $ spot ext pdf ~
+${gg}file ${g}<query> [path]      $x Find files.
+                         $y $ spot file vimrc ~/dotfiles
+${gg}group ${g}<group|gid> [path] $x All files from user.
+                         $y $ spot group \$GID /etc
+${gg}size ${g}<rel> <size> [path] $x Find all files of a certain size in bytes.
+                          Or (k)ilobytes, (m)egabytes, (g)igabytes.
+                         $y $ spot size '>=' 1g ~
+${gg}text ${g}<query> [path]      $x Find files containing text.
+                         $y $ spot text 'ascii porn' ~
+${gg}user ${g}<user|uid> [path]   $x All files from user.
+                         $y $ spot user \$UID /var
+
+${gg}<path>                   $x Get all attributes for that path.
+                         $y $ spot ~/fancy.gif
+${gg}<query> ${g}[path]           $x Generic query. Supports any attributes from "spot attr".
+                          See link at the bottom for the syntax.
+                         $y $ spot foo
+                         $y $ spot 'kMDItemMusicalGenre == *Metal*' /data/music${x}
+
+The Spotlight query syntax explained:
+https://developer.apple.com/library/mac/documentation/Carbon/Conceptual/SpotlightQuery/Concepts/QueryFormat.html
+MSG
+}
+
+required() {
+    local argcount=$1
+    shift
+    local args=("$@")
+    if (( argcount < $# )); then
+        echo -e "Missing: ${g}${args[$argcount]}" 1>&2
+        exit 1
+    fi
+}
+
+find_apps() {
+    for dir in {,$HOME}/Applications; do
+        mdfind 'kMDItemContentType == "com.apple.application-*"'
+    done
+}
+
+find_attr_with_desc() {
+    mdimport -A \
+        | awk -F '\t\t' '{ print $1 "|" $3 }' \
+        | tr -d \' \
+        | column -ts \|
+}
+
+find_author() {
+    required $# '<query>'
+    local query=$1 dir=$2
+    mdfind "kMDItemAuthors == \"*${query}*\"" ${dir:+ -onlyin "$dir"}
+}
+
+find_ext() {
+    required $# '<query>'
+    local ext=$1 dir=$2
+    mdfind "kMDItemFSName == \"*.${ext}\"" ${dir:+ -onlyin "$dir"}
+}
+
+find_file() {
+    required $# '<user|uid>'
+    local file=$1 dir=$2
+    mdfind -name "$file" ${dir:+ -onlyin "$dir"}
+}
+
+find_group() {
+    required $# '<group|gid>'
+    local group=$1 dir=$2
+    if [[ "$group" =~ ^[0-9]+$ ]]; then
+        echo foo
+        mdfind "kMDItemFSOwnerGroupID == $group" ${dir:+ -onlyin "$dir"}
+    else
+        group=$(awk -F: -v group="^$group\$" '$1 ~ group { print $3 }' /etc/group)
+        mdfind "kMDItemFSOwnerGroupID == $group" ${dir:+ -onlyin "$dir"}
+    fi
+}
+
+find_size() {
+    required $# '<rel> <size>' '<size>'
+    local relation=$1 size=$2 dir=$3
+    if   [[ "$size" =~ ^[0-9]+k$ ]]; then size=$(( ${size%%k} * 1024 ))
+    elif [[ "$size" =~ ^[0-9]+m$ ]]; then size=$(( ${size%%m} * 1024 * 1024 ))
+    elif [[ "$size" =~ ^[0-9]+g$ ]]; then size=$(( ${size%%g} * 1024 * 1024 * 1024 ))
+    fi
+    mdfind "kMDItemFSSize $relation $size" ${dir:+ -onlyin "$dir"}
+}
+
+find_text() {
+    required $# '<query>'
+    local text=$1 dir=$2
+    mdfind "kMDItemTextContent == \"*${text}*\"" ${dir:+ -onlyin "$dir"}
+}
+
+find_user() {
+    required $# '<user|uid>'
+    local user=$1 dir=$2
+    if [[ "$user" =~ ^[0-9]+$ ]]; then
+        mdfind "kMDItemFSOwnerUserID == $user" ${dir:+ -onlyin "$dir"}
+    else
+        mdfind "kMDItemFSOwnerUserID == \"$(id -u "$user")\"" ${dir:+ -onlyin "$dir"}
+    fi
+}
+
+no_command_given() {
+    if [ -e "$1" ]; then
+        mdls "$1"
+    else
+        mdfind "$1" ${2:+ -onlyin "$2"}
+    fi
+}
+
+main() {
+    [ "$(uname)" != Darwin ] &&
+        { 1>&2 echo "Thou hast angered me; this is not Darwin!"; exit 1; }
+
+    local plugin="spot-$1"
+
+    if [[ -x $(type -p "$plugin") ]]; then
+        export -f required
+        shift; exec "$plugin" "$@"
+    else
+        case "$1" in
+            apps)   find_apps               ;;
+            attr)   find_attr_with_desc     ;;
+            author) shift; find_author "$@" ;;
+            ext)    shift; find_ext    "$@" ;;
+            file)   shift; find_file   "$@" ;;
+            group)  shift; find_group  "$@" ;;
+            size)   shift; find_size   "$@" ;;
+            text)   shift; find_text   "$@" ;;
+            user)   shift; find_user   "$@" ;;
+            '')     helpme                  ;;
+            *)      no_command_given "$@"   ;;
+        esac
+    fi | less -FrXe
+}
+
+main "$@"
