@@ -1,0 +1,4 @@
+# ~/database_dumps/_notes.txt
+
+--- 2022-06-09 14:32:47 -0500
+	all dtaabase backups are stored on darmok
