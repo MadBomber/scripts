@@ -1,4 +1,8 @@
 #!/usr/bin/env ruby
+#
+# SMELL:  brew leaves is not reliable; or maybe
+#         it is being used the wrong way.
+#
 
 require 'amazing_print'
 require 'debug_me'
@@ -53,7 +57,7 @@ else
 end
 
 
-installed = `brew leaves`.split("\n")
+installed = `brew leaves -r`.split("\n").map{|f| f.strip}.sort
 
 bfh = Hash.new
 
@@ -62,15 +66,23 @@ brewfile_path.
   split("\n").
   select{|a_line| !a_line.empty? && !a_line.start_with?('#')}.
   each do |a_line|
-    key       = a_line.split('#').first.strip
+    key       = a_line.split(' ').first.strip
     bfh[key]  = a_line
   end
 
-installed_set = installed.to_set
+bfh_keys          = bfh.keys.sort
 
-not_installed = bfh.keys.to_set - installed_set
+installed_set     = installed.to_set
+not_installed_set = bfh_keys.to_set - installed_set
 
-not_installed.each do |package|
+not_installed_set.each do |package|
   puts "#{bfh[package]}"
 end
+
+puts "="*65
+
+ap (bfh_keys - installed)
+
+File.open('bfh_keys.txt', 'w').write bfh_keys.join("\n")
+File.open('installed.txt', 'w').write installed.join("\n")
 
