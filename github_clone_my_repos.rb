@@ -24,7 +24,7 @@ EOHELP
 
 cli_helper("Clone all github for a given user") do |o|
   o.bool          '--dryrun', 'only report stuff',      default: false
-  o.string  '-u', '--user',   'user account on github'
+  o.string  '-u', '--user',   'user account on github', default: 'MadBomber'
   o.path    '-p', '--path',   'base directory path',    default: Pathname.new(ENV['HOME']) + 'sandbox/git_repos'
 end
 
