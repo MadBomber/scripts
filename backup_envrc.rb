@@ -68,7 +68,7 @@ source_files_string  = `cd #{DOCUMENTS_PATH} && find . | fgrep \.envrc`
 source_paths  = source_files_string
                   .split("\n")
                   .reject{|f| f.include?(backup_dir_string) }
-                  # .select{|f| ".envrc" == f}
+                  .select{|f| ".envrc" == f}
                   .map{   |f| DOCUMENTS_PATH + f.chomp.strip }
 
 
