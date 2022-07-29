@@ -9,8 +9,15 @@
 ##  By:   Dewayne VanHoozer (dvanhoozer@gmail.com)
 #
 # INPUT
-#   A JSON file from Github
+#   JSON data from Github
+#     provided by a file or coming directly
+#     from the results of a GH command.
 #
+#                                           owner/repo_name
+GITHUB_REPO = ENV.fetch('GITHUB_REPO', 'MadBomber/scripts')
+
+# List of GitHub account user names for the current team
+TEAM = %w[ MadBomber rileygelwicks huezoaa roger88ist RobGelbman]
 
 require 'date'
 require 'ffi_yajl'
@@ -27,15 +34,23 @@ configatron.version = '0.0.1'
 
 HELP = <<EOHELP
 Important:
+  The 'gh' CLI for github must be setup in your environment.
 
-  Put important stuff here.
+  brew install gh
 
+  The 'gh' application needs to be authorized in your
+  github.com account.
+
+  The system environment variable GITHUB_API_TOKEN should be setup
+  in your shell.
+
+  Use the --repo option to over-ride the value in the system environment
+  variable GITHUB_REPO which is in the normal form owner/repo_name.
 EOHELP
 
 cli_helper("Format a Summary of Pull Requests") do |o|
 
-  o.bool    '-b', '--bool',   'example boolean parameter',   default: false
-  o.string  '-s', '--string', 'example string parameter',    default: 'IamDefault'
+  o.string  '-r', '--repo', 'owner/repo_name', default: GITHUB_REPO
 
 end
 
@@ -45,11 +60,34 @@ end
 configatron.input_files = get_pathnames_from( configatron.arguments, '.json')
 
 if configatron.input_files.empty?
-  error 'No JSON files were provided'
+  STDERR.puts 'INFO: No JSON files were provided.  Using "GH" command.'
+  if  !configatron.repo.include?('/') ||
+       configatron.repo.include?(' ')
+    error "GITHUB_REPO is badly formatted: '#{configatron.repo}'"
+  end
 end
 
 abort_if_errors
 
+
+GH_COMMAND = <<~SHELL_COMMAND
+  gh api \
+  -H "Accept: application/vnd.github+json" \
+  /repos/#{configatron.repo}/pulls \
+  --paginate
+SHELL_COMMAND
+
+
+STDERR.puts "INFO: This is the GH COMMAND ..."
+STDERR.puts GH_COMMAND
+
+
+options_hash = {
+  symbolize_keys:         true,
+  allow_multiple_values:  true
+}
+
+parser        = FFI_Yajl::Parser.new( options_hash )
 
 ######################################################
 # Local methods
@@ -66,25 +104,45 @@ end
 
 ap configatron.to_h  if verbose? || debug?
 
+# Report Title
+puts "Tean Open PRs"
+print "Source: "
 
-json_file_path = configatron.input_files.first
+if configatron.input_files.empty?
+  json_data = `#{GH_COMMAND}`
 
-options_hash = {
-  symbolize_keys:         true,
-  allow_multiple_values:  true
-}
+  if '[' == json_data[0]
+    puts "#{configatron.repo}"
+  else
+    error_message = parser.parse( json_data )
 
-parser        = FFI_Yajl::Parser.new( options_hash )
-pull_requests = parser.parse( json_file_path.read ).flatten
+    STDERR.puts <<~EOS
+
+      ERROR:  #{error_message.pretty_inspect}
+              Most likely cause is that the repo
+              owner or name is incorrect ...
+              Using: '#{configatron.repo}'
+
+    EOS
+    exit(1)
+  end
+else
+  # TODO: support multiple files
+  json_file_path  = configatron.input_files.first
+  json_data       = json_file_path.read
+  puts json_file_path.basename.to_s
+end
+
+puts
+
+pull_requests = parser.parse( json_data ).flatten
 
 
 counter = 0
 
-team = %w[ MadBomber rileygelwicks huezoaa roger88ist RobGelbman]
-
 pull_requests.each do |pr|
   assignee = pr.dig(:assignee, :login)
-  next unless team.include? assignee
+  next unless TEAM.include? assignee
 
   counter += 1
 
@@ -118,7 +176,7 @@ end
 
 __END__
 
-These are all of the keys to a PR
+These are all of the keys to a PR Hash
 
  :id,
  :node_id,
