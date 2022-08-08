@@ -53,6 +53,15 @@ abort_if_errors
 ######################################################
 # Local methods
 
+configatron.things = Array.new
+
+Record = Struct.new(:filename, :name, :relation, :associate, :baggage) do 
+  def initialize(filename: '', name: '', relation: '', associate: '', baggage: '')
+    super(filename, name, relation, associate, baggage)
+  end
+end
+
+
 def extract_relationships_from(a_path)
   content = a_path.read.squeeze(" ")
 
@@ -60,17 +69,52 @@ def extract_relationships_from(a_path)
 
   lines = content.split("\n").map{|x| x.chomp.strip}
 
+  record = Record.new
+
   puts "----" # used as a record seperate for agrep
-  puts a_path.relative_path_from(HERE).to_s
 
+  record.filename = a_path.relative_path_from(HERE).to_s
+
+  puts record.filename
+
+  name = ""
   lines.each do |a_line|
-    puts a_line if a_line.start_with? "module"
-    puts a_line if a_line.start_with? "class"
-    puts a_line if a_line.start_with? "belongs_"
-    puts a_line if a_line.start_with? "has_"
+    if  a_line.start_with?("module")   ||
+        a_line.start_with?("class")    ||
+        a_line.start_with?("belongs_") ||
+        a_line.start_with?("has_")
+      puts a_line  
+    end
+
+    if a_line.start_with?("module")
+      name += a_line.split(' ')[1]+ "::"
+    end
+
+    if a_line.start_with?("class")
+      parts = a_line.split(' ')
+      
+      if parts.size >= 2
+        name += a_line.split(' ')[1]
+      else
+        name += "unknown"
+      end
+
+      record.name = name
+      configatron.things << record
+    end
+
+    if  a_line.start_with?("has_")      ||
+        a_line.start_with?("belongs_")
+      parts = a_line.split(' ')
+
+      next if parts.size < 2
+
+      record.relation   = parts[0]
+      record.associate  = parts[1].gsub(/[:,]/,'')
+      record.baggage    = a_line.gsub(parts[0], '').gsub(parts[1],'').strip
+      configatron.things << record
+    end
   end
-
-
 
   return
 end
@@ -93,3 +137,18 @@ paths.each do |a_path|
   extract_relationships_from a_path
 end
 
+
+f = File.new('relationships.csv', 'w')
+headers = %w[ filename name relation associate baggage]
+
+f.puts headers.join(",")
+
+configatron.things.each do |thing|
+  f.print "#{thing.filename},"
+  f.print "#{thing.name},"
+  f.print "#{thing.relation},"
+  f.print "#{thing.associate},"
+  f.puts "\"#{thing.baggage}\""
+end
+
+f.close  
