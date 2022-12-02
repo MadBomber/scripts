@@ -175,6 +175,7 @@ gem 'pagy'                    # The Ultimate Pagination Ruby Gem
 gem 'pagy_cursor'             # cursor paginations for pagy
 gem 'paper_trail'             # Track changes to your models.
 gem 'pericope'                # Pericope is a gem for parsing Bible references.
+gem 'pessimize'               # Add the pessimistic constraint operator to all gems in your Gemfile, restricting the maximum update version.
 gem 'pg'                      # Pg is the Ruby interface to the {PostgreSQL RDBMS}[http://www.postgresql.org/]
 gem 'pg_search'               # builds Active Record named scopes that take advantage of PostgreSQL's full text search
 gem 'pgsync'                  # Sync Postgres data between databases
