@@ -276,7 +276,8 @@ gem 'tty-which'               # Platform independent implementation of Unix whic
 gem 'web-console'             # A debugging tool for your Ruby on Rails applications.
 gem 'wicked_pdf'              # PDF generator (from HTML) gem for Ruby on Rails
 gem 'wt_activerecord_index_spy' # It checks if queries use an index
-
+#
+gem 'yake'                    # Rake-like DSL for declaring AWS Lambda function handlers
 
 # STOP_ADDING_COMMENTS -- DO NOT DELETE THIS COMMENT its used by ./comment_gemset.rb
 
