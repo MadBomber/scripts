@@ -8,20 +8,21 @@
 #
 
 require 'pathname'
-require 'ffi_yajl'
+require 'multi_json'
 
 def show_usage
-  puts <<EOS
+  puts <<~EOS
 
-pretty prints JSON files
+  pretty prints JSON files
 
-Usage: #{Pathname.new(__FILE__).basebane} json_files+
+  Usage: #{Pathname.new(__FILE__).basebane} json_files+
 
-Where:
+  Where:
 
-  json_files+ is one or more *.json file paths
+    json_files+ is one or more *.json file paths
 
-EOS
+  EOS
+
   exit
 end
 
@@ -57,8 +58,9 @@ at_exit do
 end
 
 paths.each do |a_path|
-  hash = FFI_Yajl::Parser.parse( a_path.read )
-  json = FFI_Yajl::Encoder.encode( hash, {pretty: true}  )
+  hash = MultiJson.load( a_path.read )
+  json = MultiJson.dump( hash, {pretty: true}  )
+
   puts
   puts "#"*65
   puts "## File: #{a_path}"
