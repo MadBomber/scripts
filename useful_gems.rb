@@ -170,6 +170,7 @@ gem 'ocassionally'            # occasionally it works; and, ocassionally it does
 gem 'ohai'                    # Ohai profiles your system and emits JSON
 gem 'optimist'                # Optimist is a commandline option parser for Ruby that just gets out of your way.
 gem 'os'                      # Simple and easy way to know if you're on windows or not (reliably), as well as how many bits the OS is, etc.
+gem 'overcommit'              # Git hook manager See Also: lefthook
 #
 gem 'pagy'                    # The Ultimate Pagination Ruby Gem
 gem 'pagy_cursor'             # cursor paginations for pagy
