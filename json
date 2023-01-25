@@ -34,7 +34,8 @@ end
 
 paths = ARGV.map do |a|
   a_path = Pathname.new(a)
-  unless '.json' == a_path.extname.to_s.downcase  &&  a_path.exist?
+  if  ! a_path.exist? ||
+      ! ['.log', '.json'].include?(a_path.extname.to_s.downcase)
     STDERR.puts "ERROR: Not a valid JSON file '#{a_path}'"
     a_path = nil
   end
@@ -47,6 +48,32 @@ exit if paths.empty?
 ######################################################
 # Local methods
 
+def pretty_print_json(text)
+  hash = MultiJson.load( text )
+  json = MultiJson.dump( hash, {pretty: true}  )
+
+  puts json
+end
+
+def pretty_print_json_events(content)
+  events = content.split("\n")
+
+  event_counter = 0
+
+  events.each do |event|
+    if '{' == event[0]
+      event_counter += 1
+      puts
+      puts "Event: #{event_counter}"
+      puts 
+      pretty_print_json(event)
+    else
+      puts
+      puts event 
+      puts
+    end
+  end
+end
 
 ######################################################
 # Main
@@ -58,12 +85,16 @@ at_exit do
 end
 
 paths.each do |a_path|
-  hash = MultiJson.load( a_path.read )
-  json = MultiJson.dump( hash, {pretty: true}  )
+  content = a_path.read
 
   puts
   puts "#"*65
   puts "## File: #{a_path}"
   puts
-  puts json
+
+  if '#' == content[0]
+    pretty_print_json_events(content)
+  else
+    pretty_print_json(content)
+  end
 end
