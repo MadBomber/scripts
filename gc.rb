@@ -45,7 +45,7 @@ replacements = {
   # New branches for a ticket are created in a working directory with the ticket name
   '[jira_ticket]'   => ENV['JIRA_TICKET'],
   '[jira_summary]'  => ENV['JIRA_SUMMARY'],
-  '[jira_ac]'       => ENV['JIRA_AC']
+  '[jira_ac]'       => ENV['JIRA_AC']       # Acceptance Criteria
 }
 
 template = template_path.read
