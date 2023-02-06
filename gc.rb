@@ -41,11 +41,15 @@ unless template_path.exist?
   exit(0)
 end
 
+JIRA_TICKET   = ENV.fetch('JIRA_TICKET', '')
+JIRA_SUMMARY  = ENV.fetch('JIRA_SUMMARY', '')
+JIRA_AC       = ENV.fetch('JIRA_AC', '') # Acceptance Critera
+
 replacements = {
   # New branches for a ticket are created in a working directory with the ticket name
-  '[jira_ticket]'   => ENV['JIRA_TICKET'],
-  '[jira_summary]'  => ENV['JIRA_SUMMARY'],
-  '[jira_ac]'       => ENV['JIRA_AC']       # Acceptance Criteria
+  '[jira_ticket]'   => JIRA_TICKET,
+  '[jira_summary]'  => JIRA_SUMMARY,
+  '[jira_ac]'       => JIRA_AC       
 }
 
 template = template_path.read
