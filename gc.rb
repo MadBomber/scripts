@@ -35,7 +35,7 @@ end
 
 home          = Pathname.new(ENV['HOME'])
 template_path = home + '.gitmessage.template'
-message_path  = home + '.gitmessage.txt'
+message_path  = rr + '.gitmessage.txt'
 
 unless template_path.exist?
   exit(0)
