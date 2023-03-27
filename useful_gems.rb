@@ -160,6 +160,7 @@ gem 'log_analyzer'            # log_analyzer gem is created to get statistics ab
 gem 'mail'                    # Mail provides a nice Ruby DSL for making, sending and reading emails.
 gem 'meta-tags'               # Collection of SEO helpers for Ruby on Rails.
 gem 'mini_sql'                # A fast, safe, simple direct SQL executor
+gem 'motor-admin'             # Low-code Admin panel and Business intelligence
 #
 gem 'n1_loader'               # Loader to solve N+1 issue for good.
 gem 'nenv'                    # Convenience wrapper for Ruby's ENV
