@@ -10,7 +10,7 @@
 # makes more sense.
 #
 #
-# Last reviewed for Ruby v3.0.1-p64
+# Last reviewed for Ruby v3.2.2
 #
 
 system "gem install os"

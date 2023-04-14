@@ -1,0 +1,42 @@
+#!/usr/bin/env ruby
+# encoding: utf-8
+# frozen_string_literal: true
+# warn_indent: true
+##########################################################
+###
+##  File: cf
+##  Desc: Compare a target ($t) and a source ($s)
+##  By:   Dewayne VanHoozer (dvanhoozer@gmail.com)
+#
+
+require 'amazing_print'
+
+require 'debug_me'
+include DebugMe
+
+require 'pathname'
+
+debug_me{[ :ARGV ]}
+
+target_path = Pathname.new ARGV[0]
+source_path = Pathname.new ARGV[1]
+file_or_dir = ARGV[2]
+target      = target_path + file_or_dir
+source      = source_path + file_or_dir
+
+unless target.exist?
+  puts "Does not exist: #{target}"
+  exit 
+end
+
+unless source.exist?
+  puts "Does not exist: #{source}"
+  exit 
+end
+
+
+compare_cmd = 'bcompare'
+command     = "#{compare_cmd} #{target} #{source}"
+
+`#{command}`
+
