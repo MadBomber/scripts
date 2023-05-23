@@ -73,6 +73,7 @@ gem 'bond'                    # used in IRB completions
 gem 'bundler'                 # The best way to manage your application's dependencies
 gem 'bundler-audit'           # Patch-level verification for Bundler
 gem 'bunny'                   # Popular easy to use Ruby client for RabbitMQ
+gem 'business_days'           # Add method business_days as interval to active support
 #
 gem 'cancancan'               # Simple authorization solution for Rails.
 gem 'chartkick'               # Create beautiful JavaScript charts with one line of Ruby
@@ -192,6 +193,7 @@ gem 'pycall'                  # Call python functions from Ruby
 gem 'rack-attack'             # Block & throttle abusive requests
 gem 'rails', '~> 5.2'         # Full-stack web application framework.
 gem 'rails-erd'               # Entity-relationship diagram for your Rails models.
+gem 'ripper-tags'             # ctags generator for ruby code
 gem 'reform'                  # Form object decoupled from models with validation, population and presentation.
 gem 'rexe'                    # Ruby Command Line Executor
 gem 'rgeo'                    # RGeo is a geospatial data library for Ruby.

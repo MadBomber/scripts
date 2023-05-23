@@ -6,9 +6,14 @@
 ##  Desc: Pretty-print a JSON file
 ##  By:   Dewayne VanHoozer (dvanhoozer@gmail.com)
 #
+#   The JSON file can have some not JSON header material.
+#   The file can be one JSON object or a series of JSON objects (events)
+#   where each line in the file is a JSON event.
+#
 
 require 'pathname'
 require 'multi_json'
+
 
 def show_usage
   puts <<~EOS
@@ -75,6 +80,40 @@ def pretty_print_json_events(content)
   end
 end
 
+# print whatever header might exist at th the top
+# of the file and return the rest
+# assuming its all proper JSON
+#
+def print_file_header(a_string)
+  json_start = a_string.index("\n{")+1
+  header = a_string[0..json_start-1]
+
+  puts header
+
+  a_string = a_string[json_start..]
+end
+
+def json_events?(content)
+  !content.index("\n{").nil?
+end
+
+def print_file(a_path)
+  puts
+  puts "#"*65
+  puts "## File: #{a_path}"
+  puts
+
+  content = a_path.read
+
+  print_file_header(content) unless '{' == content[0]
+
+  if json_events?(content)
+    pretty_print_json_events(content)
+  else
+    pretty_print_json(content)
+  end
+end
+
 ######################################################
 # Main
 
@@ -85,16 +124,5 @@ at_exit do
 end
 
 paths.each do |a_path|
-  content = a_path.read
-
-  puts
-  puts "#"*65
-  puts "## File: #{a_path}"
-  puts
-
-  if '#' == content[0]
-    pretty_print_json_events(content)
-  else
-    pretty_print_json(content)
-  end
+  print_file(a_path)
 end

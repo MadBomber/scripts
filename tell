@@ -1,0 +1,27 @@
+#!/bin/bash
+# ~/scripts/tell
+#
+# Using this primarily with the "remind" cli tool
+# brew install remind
+# It's and oldie but a goodie
+#
+#   remind -z2 -k"tell %s" ~/.reminders &
+#
+
+msg="$@"
+
+echo $msg
+say $msg
+
+# could also use terminal-notifier
+#   brew install terminal-notifier
+#
+osascript -e 'tell app "System Events" to display dialog "'"$msg"'" with title "Reminder"'
+
+# The reason that I like the osascript to the "System Events" app is
+# that the dialog stays up forever, on top of all windows, AND is on all
+# desktop spaces.
+#
+# If I could make it better, I would have the notification
+# send to all computers in the battle station cluster.
+
