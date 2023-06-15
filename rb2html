@@ -1,0 +1,84 @@
+#!/usr/bin/env ruby
+# encoding: utf-8
+# frozen_string_literal: true
+# warn_indent: true
+##########################################################
+###
+##  File: rb2html.rb
+##  Desc: Convert a Ruby file into source highlighted HTML file
+##  By:   Dewayne VanHoozer (dvanhoozer@gmail.com)
+#
+# brew install source-highlight
+#   ... can do so much more than just ruby and html
+#
+
+require 'amazing_print'
+
+require 'debug_me'
+include DebugMe
+
+require 'cli_helper'
+include CliHelper
+
+configatron.version = '0.0.1'
+
+HELP = <<EOHELP
+NOTE:
+
+  rb2html uses the CLI tool source-highlight ...
+    brew install source-highlight
+  ... which can process many different 
+  source languages into many different output
+  formats.
+
+EOHELP
+
+cli_helper("Convert a Ruby file into source highlighted HTML file") do |o|
+
+  o.path          '--outdir',  'Output Director', default: Pathname.pwd
+
+end
+
+# Display the usage info
+if  ARGV.empty?
+  show_usage
+  exit
+end
+
+
+# Error check your stuff; use error('some message') and warning('some message')
+
+configatron.input_files = get_pathnames_from( configatron.arguments, '.rb')
+
+if configatron.input_files.empty?
+  error 'No Ruby files were provided'
+end
+
+abort_if_errors
+
+
+######################################################
+# Local methods
+
+
+######################################################
+# Main
+
+at_exit do
+  puts
+  puts "Done."
+  puts
+end
+
+ap configatron.to_h  if verbose? || debug?
+
+configatron.input_files.each do |rb_file_path|
+  html_file_path = Pathname.new rb_file_path.to_s.gsub(".rb", ".html")
+
+  print "#{rb_file_path} ... "
+
+  `source-highlight -i #{rb_file_path} > #{html_file_path}`
+
+  puts "done."
+end
+
