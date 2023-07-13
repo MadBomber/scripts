@@ -16,7 +16,7 @@ say $msg
 # could also use terminal-notifier
 #   brew install terminal-notifier
 #
-osascript -e 'tell app "System Events" to display dialog "'"$msg"'" with title "Reminder"'
+osascript -e 'tell app "System Events" to activate display dialog "'"$msg"'" with title "Reminder" '
 
 # The reason that I like the osascript to the "System Events" app is
 # that the dialog stays up forever, on top of all windows, AND is on all
@@ -24,4 +24,5 @@ osascript -e 'tell app "System Events" to display dialog "'"$msg"'" with title "
 #
 # If I could make it better, I would have the notification
 # send to all computers in the battle station cluster.
+#
 

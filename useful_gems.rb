@@ -215,6 +215,7 @@ gem 'scenic'                  # Support for database views in Rails migrations
 gem 'searchkick'              # Intelligent search made easy with Rails and Elasticsearch
 gem 'semantic_logger'         # Feature rich logging framework, and replacement for existing Ruby & Rails loggers.
 gem 'sequel'                  # The Database Toolkit for Ruby
+gem 'service_actor'           # Service objects for your application logic
 gem 'sketches'                # Sketches allows you to create and edit Ruby code from the comfort of your editor, while having it safely reloaded in IRB whenever changes to the code are saved.
 gem 'sidekiq'                 # Simple, efficient background processing for Ruby
 gem 'sidekiq-scheduler'       # Light weight job scheduling extension for Sidekiq

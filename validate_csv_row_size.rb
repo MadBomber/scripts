@@ -1,4 +1,8 @@
 #!/usr/bin/env ruby
+#
+# consider using the `mlr` tool
+# brew install miller
+
 
 if ARGV.empty?          ||
    ARGV.include?('-h')  ||
