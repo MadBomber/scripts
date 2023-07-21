@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # scripts/update_jira.sh
-# gem install jira-sync
+# gem install jirasync
 # brew install gron
 # brew install jq
 
@@ -40,7 +40,7 @@ for project in $JIRA_DB_PROJECTS ; do
         --user $JIRA_USER \
         --password $JIRA_PASS \
         --target $JIRA_DB_DIR/$project \
-        update
+        fetch
 
     # TODO: only apply gron to the list of changed tickets
 

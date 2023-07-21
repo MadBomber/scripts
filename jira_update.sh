@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # scripts/jira_update.sh
-# gem install jira-sync
+# gem install jirasync
 #
 # The system environment variables are usually set by a .envrc file
 # in the appropriate directory.

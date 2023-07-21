@@ -99,6 +99,9 @@ crystal                         Fast and statically typed, compiled
                                 |   language with Ruby-like syntax
                                 |__ https://crystal-lang.org/
 
+crystalline                     Language Server Protocol implementation for Crystal
+                                |__ https://github.com/elbywan/crystalline
+
 ctags                           Reimplementation of ctags(1)
                                 |__ https://ctags.sourceforge.io/
 
@@ -119,7 +122,8 @@ docbook                         Standard SGML representation
                                 |   system for technical documents
                                 |__ https://docbook.org/
 
-docbook-xsl                     XML vocabulary to create presentation-neutral documents
+docbook-xsl                     XML vocabulary to create
+                                |   presentation-neutral documents
                                 |__ https://github.com/docbook/xslt10-stylesheets
 
 docutils                        Text processing system for reStructuredText
@@ -182,7 +186,8 @@ gd                              Graphics library to dynamically manipulate image
 gdbm                            GNU database manager
                                 |__ https://www.gnu.org/software/gdbm/
 
-gdk-pixbuf                      Toolkit for image loading and pixel buffer manipulation
+gdk-pixbuf                      Toolkit for image loading and
+                                |   pixel buffer manipulation
                                 |__ https://gtk.org
 
 gettext                         GNU internationalization (i18n)
@@ -222,6 +227,9 @@ glib                            Core application library for C
 glog                            Application-level logging library
                                 |__ https://github.com/google/glog
 
+glow                            Render markdown on the CLI
+                                |__ https://github.com/charmbracelet/glow
+
 gmp                             GNU multiple precision arithmetic library
                                 |__ https://gmplib.org/
 
@@ -236,6 +244,9 @@ gnutls                          GNU Transport Layer Security (TLS) Library
 
 gobject-introspection           Generate introspection data for GObject libraries
                                 |__ https://gi.readthedocs.io/en/latest/
+
+gpgme                           Library access to GnuPG
+                                |__ https://www.gnupg.org/related_software/gpgme/
 
 graphite2                       Smart font renderer for non-Roman scripts
                                 |__ https://graphite.sil.org/
@@ -261,6 +272,9 @@ gts                             GNU triangulated surface library
 guile                           GNU Ubiquitous Intelligent Language for Extensions
                                 |__ https://www.gnu.org/software/guile/
 
+gum                             Tool for glamorous shell scripts
+                                |__ https://github.com/charmbracelet/gum
+
 harfbuzz                        OpenType text shaping engine
                                 |__ https://github.com/harfbuzz/harfbuzz
 
@@ -274,13 +288,17 @@ highway                         Performance-portable, length-agnostic
                                 |   SIMD with runtime dispatch
                                 |__ https://github.com/google/highway
 
+hoverfly                        API simulations for development and testing
+                                |__ https://hoverfly.io/
+
 howdoi                          Instant coding answers via the command-line
                                 |__ https://github.com/gleitz/howdoi
 
 icdiff                          Improved colored diff
                                 |__ https://github.com/jeffkaufman/icdiff
 
-icu4c                           C/C++ and Java libraries for Unicode and globalization
+icu4c                           C/C++ and Java libraries for
+                                |   Unicode and globalization
                                 |__ https://icu.unicode.org/home
 
 imagemagick                     Tools and libraries to manipulate
@@ -294,7 +312,8 @@ imath                           Library of 2D and 3D vector,
 isl                             Integer Set Library for the polyhedral model
                                 |__ https://libisl.sourceforge.io/
 
-jansson                         C library for encoding, decoding, and manipulating JSON
+jansson                         C library for encoding,
+                                |   decoding, and manipulating JSON
                                 |__ https://digip.org/jansson/
 
 jasper                          Library for manipulating JPEG-2000 images
@@ -376,7 +395,8 @@ libcdio                         Compact Disc Input and Control Library
 libde265                        Open h.265 video codec implementation
                                 |__ https://github.com/strukturag/libde265
 
-libepoxy                        Library for handling OpenGL function pointer management
+libepoxy                        Library for handling OpenGL
+                                |   function pointer management
                                 |__ https://github.com/anholt/libepoxy
 
 libevent                        Asynchronous event library
@@ -405,9 +425,12 @@ libksba                         X.509 and CMS library
 liblqr                          C/C++ seam carving library
                                 |__ https://liblqr.wikidot.com/
 
+libmicrohttpd                   Light HTTP/1.1 server library
+                                |__ https://www.gnu.org/software/libmicrohttpd/
+
 libmpc                          C library for the arithmetic of
                                 |   high precision complex numbers
-                                |__ http://www.multiprecision.org/mpc/
+                                |__ https://www.multiprecision.org/mpc/
 
 libnghttp2                      HTTP/2 C Library
                                 |__ https://nghttp2.org/
@@ -423,6 +446,9 @@ libpng                          Library for manipulating PNG images
 
 libpq                           Postgres C API library
                                 |__ https://www.postgresql.org/docs/15/libpq.html
+
+libpsl                          C library for the Public Suffix List
+                                |__ https://rockdaboot.github.io/libpsl
 
 libpthread-stubs                X.Org: pthread-stubs.pc
                                 |__ https://www.x.org/
@@ -540,6 +566,9 @@ lowdown                         Simple markdown translator
 lz4                             Extremely Fast Compression algorithm
                                 |__ https://lz4.github.io/lz4/
 
+lzlib                           Data compression library
+                                |__ https://www.nongnu.org/lzip/lzlib.html
+
 lzo                             Real-time data compression library
                                 |__ https://www.oberhumer.com/opensource/lzo/
 
@@ -562,6 +591,9 @@ metis                           Programs that partition graphs and order matrice
 miller                          Like sed, awk, cut, join & sort
                                 |   for name-indexed data such as CSV
                                 |__ https://github.com/johnkerl/miller
+
+charmbracelet/tap/mods          GPT-4 on the command line
+                                |__ https://charm.sh/
 
 mpdecimal                       Library for decimal floating point arithmetic
                                 |__ https://www.bytereef.org/mpdecimal/
@@ -611,7 +643,8 @@ oniguruma                       Regular expressions library
 openblas                        Optimized BLAS library
                                 |__ https://www.openblas.net/
 
-opencore-amr                    Audio codecs extracted from Android open source project
+opencore-amr                    Audio codecs extracted from
+                                |   Android open source project
                                 |__ https://opencore-amr.sourceforge.io/
 
 opencv                          Open source computer vision library
@@ -731,7 +764,8 @@ pycparser                       C parser in Python
 pygments                        Generic syntax highlighter
                                 |__ https://pygments.org/
 
-pygobject3                      GNOME Python bindings (based on GObject Introspection)
+pygobject3                      GNOME Python bindings (based
+                                |   on GObject Introspection)
                                 |__ https://wiki.gnome.org/Projects/PyGObject
 
 pyqt@5                          Python bindings for v5 of Qt
@@ -837,7 +871,8 @@ felixkratz/formulae/sketchybar  Custom macOS statusbar with shell
                                 |   plugin, interaction and graph support
                                 |__ https://github.com/FelixKratz/SketchyBar
 
-snappy                          Compression/decompression library aiming for high speed
+snappy                          Compression/decompression
+                                |   library aiming for high speed
                                 |__ https://google.github.io/snappy/
 
 source-highlight                Source-code syntax highlighter
@@ -866,6 +901,10 @@ sqlfluff                        SQL linter and auto-formatter for Humans
 
 sqlite                          Command-line interface for SQLite
                                 |__ https://sqlite.org/index.html
+
+sqlpage                         Web application framework, for creation
+                                |   of websites with simple database queries
+                                |__ https://sql.ophir.dev/
 
 srt                             Secure Reliable Transport
                                 |__ https://www.srtalliance.org/
@@ -941,6 +980,10 @@ vtk                             Toolkit for 3D computer graphics,
 webp                            Image format providing lossless and
                                 |   lossy compression for web images
                                 |__ https://developers.google.com/speed/webp/
+
+wget2                           Successor of GNU Wget, a file
+                                |   and recursive website downloader
+                                |__ https://gitlab.com/gnuwget/wget2
 
 wxwidgets                       Cross-platform C++ GUI toolkit
                                 |__ https://www.wxwidgets.org
