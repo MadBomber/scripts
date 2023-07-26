@@ -1,0 +1,74 @@
+1Password.app
+Alfred.app
+Authenticator.app
+BBEdit.app
+Beyond Compare.app
+Blackmagic Proxy Generator Lite.app
+Blackmagic RAW
+Cody.app
+CopyClip.app
+Countdown.app
+Cursor.app
+DaVinci Resolve
+Dash for AWS.app
+Desktop Clock free.app
+Discord.app
+DuckDuckGo Privacy for Safari.app
+EazyDraw.app
+Firefox.app
+GarageBand.app
+Go2Shell.app
+Google Chrome.app
+GpgFrontend.app
+House Designer.app
+JSON Query.app
+JSONModeler.app
+Kaleidoscope.app
+Keynote.app
+LibreOffice.app
+LittleIpsum.app
+MacWhisper.app
+MacX YouTube Downloader.app
+Marked 2.app
+Meeter.app
+Microsoft Edge.app
+Microsoft Teams.app
+MindNode.app
+Numbers.app
+OBS.app
+Octotree.app
+OneHighlighter.app
+OrbStack.app
+Owly.app
+Pages.app
+Postman copy.app
+Postman.app
+Raycast.app
+Reminders MenuBar.app
+Safari.app
+SiteSucker.app
+Skitch.app
+Slack.app
+Smart JSON Editor.app
+SnailGitLite.app
+Sublime Merge.app
+Sublime Text.app
+Synology Drive Client.app
+Synology Note Station Client.app
+SysAid Helpdesk.app
+SysAid Settings.app
+TeamViewer.app
+TrendMicroSecurity.app
+Utilities
+Valentina Studio.app
+Visual Studio Code.app
+Warp.app
+WorkSpaces.app
+Xcode.app
+iBooks Author.app
+iMovie.app
+iTerm.app
+xfer.workflow
+zoom.us.app
+Beyond Compare.app
+Synology Note Station Client.app
