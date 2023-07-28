@@ -53,8 +53,7 @@ boost                           Collection of portable C++ source libraries
 broot                           New way to see and navigate directory trees
                                 |__ https://dystroy.org/broot/
 
-brotli                          Generic-purpose lossless
-                                |   compression algorithm by Google
+brotli                          Generic-purpose lossless compression algorithm by Google
                                 |__ https://github.com/google/brotli
 
 c-ares                          Asynchronous DNS library
@@ -63,15 +62,13 @@ c-ares                          Asynchronous DNS library
 ca-certificates                 Mozilla CA certificate store
                                 |__ https://curl.se/docs/caextract.html
 
-cairo                           Vector graphics library with
-                                |   cross-device output support
+cairo                           Vector graphics library with cross-device output support
                                 |__ https://cairographics.org/
 
 calc                            Arbitrary precision calculator
                                 |__ http://www.isthe.com/chongo/tech/comp/calc/
 
-capstone                        Multi-platform, multi-architecture
-                                |   disassembly framework
+capstone                        Multi-platform, multi-architecture disassembly framework
                                 |__ https://www.capstone-engine.org/
 
 ceres-solver                    C++ library for large-scale optimization
@@ -122,8 +119,7 @@ docbook                         Standard SGML representation
                                 |   system for technical documents
                                 |__ https://docbook.org/
 
-docbook-xsl                     XML vocabulary to create
-                                |   presentation-neutral documents
+docbook-xsl                     XML vocabulary to create presentation-neutral documents
                                 |__ https://github.com/docbook/xslt10-stylesheets
 
 docutils                        Text processing system for reStructuredText
@@ -186,8 +182,7 @@ gd                              Graphics library to dynamically manipulate image
 gdbm                            GNU database manager
                                 |__ https://www.gnu.org/software/gdbm/
 
-gdk-pixbuf                      Toolkit for image loading and
-                                |   pixel buffer manipulation
+gdk-pixbuf                      Toolkit for image loading and pixel buffer manipulation
                                 |__ https://gtk.org
 
 gettext                         GNU internationalization (i18n)
@@ -297,23 +292,19 @@ howdoi                          Instant coding answers via the command-line
 icdiff                          Improved colored diff
                                 |__ https://github.com/jeffkaufman/icdiff
 
-icu4c                           C/C++ and Java libraries for
-                                |   Unicode and globalization
+icu4c                           C/C++ and Java libraries for Unicode and globalization
                                 |__ https://icu.unicode.org/home
 
-imagemagick                     Tools and libraries to manipulate
-                                |   images in many formats
+imagemagick                     Tools and libraries to manipulate images in many formats
                                 |__ https://imagemagick.org/index.php
 
-imath                           Library of 2D and 3D vector,
-                                |   matrix, and math operations
+imath                           Library of 2D and 3D vector, matrix, and math operations
                                 |__ https://www.openexr.com/
 
 isl                             Integer Set Library for the polyhedral model
                                 |__ https://libisl.sourceforge.io/
 
-jansson                         C library for encoding,
-                                |   decoding, and manipulating JSON
+jansson                         C library for encoding, decoding, and manipulating JSON
                                 |__ https://digip.org/jansson/
 
 jasper                          Library for manipulating JPEG-2000 images
@@ -322,8 +313,7 @@ jasper                          Library for manipulating JPEG-2000 images
 jbig2dec                        JBIG2 decoder and library (for monochrome documents)
                                 |__ https://github.com/ArtifexSoftware/jbig2dec
 
-jpeg-turbo                      JPEG image codec that aids
-                                |   compression and decompression
+jpeg-turbo                      JPEG image codec that aids compression and decompression
                                 |__ https://www.libjpeg-turbo.org/
 
 jpeg-xl                         New file format for still image compression
@@ -385,8 +375,7 @@ libavif                         Library for encoding and decoding .avif files
 libb2                           Secure hashing function
                                 |__ https://blake2.net/
 
-libbluray                       Blu-Ray disc playback library
-                                |   for media players like VLC
+libbluray                       Blu-Ray disc playback library for media players like VLC
                                 |__ https://www.videolan.org/developers/libbluray.html
 
 libcdio                         Compact Disc Input and Control Library
@@ -395,8 +384,7 @@ libcdio                         Compact Disc Input and Control Library
 libde265                        Open h.265 video codec implementation
                                 |__ https://github.com/strukturag/libde265
 
-libepoxy                        Library for handling OpenGL
-                                |   function pointer management
+libepoxy                        Library for handling OpenGL function pointer management
                                 |__ https://github.com/anholt/libepoxy
 
 libevent                        Asynchronous event library
@@ -430,7 +418,7 @@ libmicrohttpd                   Light HTTP/1.1 server library
 
 libmpc                          C library for the arithmetic of
                                 |   high precision complex numbers
-                                |__ https://www.multiprecision.org/mpc/
+                                |__ https://www.multiprecision.org/
 
 libnghttp2                      HTTP/2 C Library
                                 |__ https://nghttp2.org/
@@ -453,8 +441,7 @@ libpsl                          C library for the Public Suffix List
 libpthread-stubs                X.Org: pthread-stubs.pc
                                 |__ https://www.x.org/
 
-libraw                          Library for reading RAW files
-                                |   from digital photo cameras
+libraw                          Library for reading RAW files from digital photo cameras
                                 |__ https://www.libraw.org/
 
 librist                         Reliable Internet Stream Transport (RIST)
@@ -537,8 +524,7 @@ libxcb                          X.Org: Interface to the X Window System protocol
 libxdmcp                        X.Org: X Display Manager Control Protocol library
                                 |__ https://www.x.org/
 
-libxext                         X.Org: Library for common
-                                |   extensions to the X11 protocol
+libxext                         X.Org: Library for common extensions to the X11 protocol
                                 |__ https://www.x.org/
 
 libxrender                      X.Org: Library for the Render
@@ -550,6 +536,9 @@ libyaml                         YAML Parser
 
 little-cms2                     Color management engine supporting ICC profiles
                                 |__ https://www.littlecms.com/
+
+llm                             Access large language models from the command-line
+                                |__ https://llm.datasette.io/
 
 llvm@14                         Next-gen compiler infrastructure
                                 |__ https://llvm.org/
@@ -643,8 +632,7 @@ oniguruma                       Regular expressions library
 openblas                        Optimized BLAS library
                                 |__ https://www.openblas.net/
 
-opencore-amr                    Audio codecs extracted from
-                                |   Android open source project
+opencore-amr                    Audio codecs extracted from Android open source project
                                 |__ https://opencore-amr.sourceforge.io/
 
 opencv                          Open source computer vision library
@@ -764,12 +752,14 @@ pycparser                       C parser in Python
 pygments                        Generic syntax highlighter
                                 |__ https://pygments.org/
 
-pygobject3                      GNOME Python bindings (based
-                                |   on GObject Introspection)
+pygobject3                      GNOME Python bindings (based on GObject Introspection)
                                 |__ https://wiki.gnome.org/Projects/PyGObject
 
 pyqt@5                          Python bindings for v5 of Qt
                                 |__ https://www.riverbankcomputing.com/software/pyqt/intro
+
+python-tabulate                 Pretty-print tabular data in Python
+                                |__ https://github.com/astanin/python-tabulate
 
 python-typing-extensions        Backported and experimental type hints for Python
                                 |__ https://github.com/python/typing_extensions
@@ -831,8 +821,7 @@ rubberband                      Audio time stretcher tool and library
 ruby-build                      Install various Ruby versions and implementations
                                 |__ https://github.com/rbenv/ruby-build
 
-runme                           Execute commands inside your
-                                |   runbooks, docs, and READMEs
+runme                           Execute commands inside your runbooks, docs, and READMEs
                                 |__ https://runme.dev/
 
 rust                            Safe, concurrent, practical language
@@ -871,8 +860,7 @@ felixkratz/formulae/sketchybar  Custom macOS statusbar with shell
                                 |   plugin, interaction and graph support
                                 |__ https://github.com/FelixKratz/SketchyBar
 
-snappy                          Compression/decompression
-                                |   library aiming for high speed
+snappy                          Compression/decompression library aiming for high speed
                                 |__ https://google.github.io/snappy/
 
 source-highlight                Source-code syntax highlighter
