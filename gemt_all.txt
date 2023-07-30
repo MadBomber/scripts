@@ -1934,6 +1934,10 @@ image_size                              Measure image size/dimensions
                                         |   using pure Ruby
                                         |__ https://github.com/toy/image_size
 
+imap-backup                             Backup GMail (or other
+                                        |   IMAP) accounts to disk
+                                        |__ https://github.com/joeyates/imap-backup
+
 importmap-rails                         Use ESM with importmap to manage
                                         |   modern JavaScript in Rails
                                         |   without transpiling or bundling.
@@ -2153,6 +2157,9 @@ launchy                                 Launchy is helper class for launching
                                         |   cross-platform applications
                                         |   in a fire and forget manner.
                                         |__ https://github.com/copiousfreetime/launchy
+
+lbfgsb                                  Lbfgsb.rb is a Ruby binding for L-BFGS-B.
+                                        |__ https://github.com/yoshoku/lbfgsb.rb
 
 lefthook                                A single dependency-free binary to
                                         |   manage all your git hooks that works
@@ -2389,6 +2396,12 @@ mixlib-versioning                       General purpose Ruby library that allows
                                         |   version strings in multiple formats.
                                         |__ https://github.com/chef/mixlib-versioning
 
+mjml-rails                              MJML + ERb templates
+                                        |__ https://github.com/sighmon/mjml-rails
+
+mmh3                                    A pure Ruby implementation of MurmurHash3
+                                        |__ https://github.com/yoshoku/mmh3
+
 module_methods                          Extendable module for modules
                                         |   with instance and class methods.
                                         |__ https://github.com/AlexWayfer/module_methods
@@ -2554,6 +2567,10 @@ nori                                    XML to Hash translator
 notiffany                               Notifier library (extracted
                                         |   from Guard project)
                                         |__ https://github.com/guard/notiffany
+
+numo-linalg                             Ruby/Numo Linear Algebra
+                                        |   library with BLAS/LAPACK
+                                        |__ https://github.com/ruby-numo/numo-linalg
 
 numo-narray                             alpha release of Numo::NArray
                                         |   - New NArray class library in
@@ -3526,6 +3543,95 @@ rugged                                  Rugged is a Ruby binding to
                                         |   the libgit2 linkable library
                                         |__ https://github.com/libgit2/rugged
 
+rumale                                  Rumale is a machine learning library in
+                                        |   Ruby. Rumale supports Support Vector
+                                        |   Machine, Logistic Regression, Multi-layer
+                                        |   Perceptron, Naive Bayes, Decision Tree,
+                                        |   Random Forest, K-Means, Gaussian Mixture
+                                        |   Model, DBSCAN, Principal Component
+                                        |   Analysis, and many other algorithms.
+                                        |__ https://github.com/yoshoku/rumale
+
+rumale-clustering                       Rumale::Clustering provides cluster
+                                        |   analysis algorithms with Rumale interface.
+                                        |__ https://github.com/yoshoku/rumale
+
+rumale-core                             Rumale::Core provides base classes and
+                                        |   utility functions for implementing machine
+                                        |   learning algorithm with Rumale interface.
+                                        |__ https://github.com/yoshoku/rumale
+
+rumale-decomposition                    Rumale::Decomposition provides
+                                        |   matrix decomposition algorithms
+                                        |   with Rumale interface
+                                        |__ https://github.com/yoshoku/rumale
+
+rumale-ensemble                         Rumale::Ensemble provides ensemble
+                                        |   learning algorithms with Rumale interface.
+                                        |__ https://github.com/yoshoku/rumale
+
+rumale-evaluation_measure               Rumale::EvaluationMeasure provides
+                                        |   evaluation measures with Rumale interface.
+                                        |__ https://github.com/yoshoku/rumale
+
+rumale-feature_extraction               Rumale::FeatureExtraction provides feature
+                                        |   extraction methods with Rumale interface.
+                                        |__ https://github.com/yoshoku/rumale
+
+rumale-kernel_approximation             Rumale::KernelApproximation
+                                        |   provides kernel approximation
+                                        |   algorithms with Rumale interface.
+                                        |__ https://github.com/yoshoku/rumale
+
+rumale-kernel_machine                   Rumale::KernelMachine provides
+                                        |   kernel method-based algorithms
+                                        |   with Rumale interface.
+                                        |__ https://github.com/yoshoku/rumale
+
+rumale-linear_model                     Rumale::LinearModel provides linear
+                                        |   model algorithms with Rumale interface.
+                                        |__ https://github.com/yoshoku/rumale
+
+rumale-manifold                         Rumale::Manifold provides data embedding
+                                        |   algorithms with Rumale interface.
+                                        |__ https://github.com/yoshoku/rumale
+
+rumale-metric_learning                  Rumale::MetricLearning provides metric
+                                        |   learning algorithms with Rumale interface.
+                                        |__ https://github.com/yoshoku/rumale
+
+rumale-model_selection                  Rumale::ModelSelection provides model
+                                        |   validation techniques with Rumale interface.
+                                        |__ https://github.com/yoshoku/rumale
+
+rumale-naive_bayes                      Rumale::NaiveBayes provides naive
+                                        |   bayes models with Rumale interface.
+                                        |__ https://github.com/yoshoku/rumale
+
+rumale-nearest_neighbors                Rumale::NearestNeighbors provides
+                                        |   classifier and regression based on nearest
+                                        |   neighbors rule with Rumale interface.
+                                        |__ https://github.com/yoshoku/rumale
+
+rumale-neural_network                   Rumale::NeuralNetwork provides classifier
+                                        |   and regression based on multi-layer
+                                        |   perceptron with Rumale interface.
+                                        |__ https://github.com/yoshoku/rumale
+
+rumale-pipeline                         Rumale::Pipeline provides classes
+                                        |   for chaining transformers and
+                                        |   estimators with Rumale interface.
+                                        |__ https://github.com/yoshoku/rumale
+
+rumale-preprocessing                    Rumale::Preprocessing provides preprocessing
+                                        |   techniques with Rumale interface.
+                                        |__ https://github.com/yoshoku/rumale
+
+rumale-tree                             Rumale::Tree provides classifier and
+                                        |   regression based on decision tree
+                                        |   algorithms with Rumale interface.
+                                        |__ https://github.com/yoshoku/rumale
+
 runcom                                  A XDG enhanced run command manager
                                         |   for command line interfaces.
                                         |__ https://alchemists.io/projects/runcom
@@ -4038,6 +4144,10 @@ thor                                    Thor is a toolkit for building
 thread_safe                             Thread-safe collections
                                         |   and utilities for Ruby
                                         |__ https://github.com/ruby-concurrency/thread_safe
+
+thunderbird                             Conveniences for interacting
+                                        |   with Mozilla Thunderbird
+                                        |__ https://github.com/joeyates/thunderbird
 
 tiktoken_ruby                           Ruby wrapper for Tiktoken
                                         |__ https://github.com/IAPark/tiktoken_ruby
