@@ -2821,6 +2821,9 @@ polyglot                                Augment 'require' to
 polyphony                               Fine grained concurrency for Ruby
                                         |__ https://github.com/digital-fabric/polyphony
 
+portrayal                               A minimal builder for struct-like classes
+                                        |__ https://github.com/maxim/portrayal
+
 posix-spawn                             posix_spawnp(2) for ruby
                                         |__ https://github.com/rtomayko/posix-spawn
 
