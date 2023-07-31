@@ -1021,6 +1021,9 @@ csv                                     CSV Reading and Writing
 cuprite                                 Headless Chrome driver for Capybara
                                         |__ https://github.com/rubycdp/cuprite
 
+curb                                    Ruby libcurl bindings
+                                        |__ https://github.com/taf2/curb
+
 daemons                                 A toolkit to create and control
                                         |   daemons in different ways
                                         |__ https://github.com/thuehlinger/daemons
@@ -2958,6 +2961,14 @@ pycall                                  pycall
 qdrant-ruby                             Ruby wrapper for the Qdrant
                                         |   vector search database API
                                         |__ https://github.com/andreibondarev/qdrant-ruby
+
+quantum_rng                             A random number generator that leverages
+                                        |   the ANU Quantum Random Nubmers API.
+                                        |__ https://github.com/alephtwo/quantum_rng
+
+quantum_ruby                            A Quantum Computer
+                                        |   Simulator written in Ruby.
+                                        |__ https://github.com/AlessandroMinali/quantum_ruby
 
 raabro                                  a very dumb PEG parser library
                                         |__ https://github.com/floraison/raabro
