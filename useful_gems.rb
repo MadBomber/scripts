@@ -208,6 +208,7 @@ gem 'ruby-progressbar'        # never leave the user guessing
 gem 'rubyfmt'                 # Ruby port of gofmt
 gem 'rubytoolbox-api'         # A simple, dependency-free API client for The Ruby Toolbox
 gem 'rufo'                    # Ruby code formatter
+gem 'rumale'                  # RUby MAchine LEarning
 #
 gem 'sail'                    # Sail will help you navigate your Rails application.
 gem 'sanitize'                # Whitelist-based HTML and CSS sanitizer.
