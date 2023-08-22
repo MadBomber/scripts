@@ -1,0 +1,93 @@
+#!/usr/bin/env ruby
+# encoding: utf-8
+# frozen_string_literal: true
+# warn_indent: true
+##########################################################
+###
+##  File: md2html
+##  Desc: Convert Markdown Files into HTML files
+##  By:   Dewayne VanHoozer (dvanhoozer@gmail.com)
+#
+
+require 'amazing_print'
+
+require 'debug_me'
+include DebugMe
+
+require 'cli_helper'
+include CliHelper
+
+require 'kramdown'
+
+configatron.version = '0.0.1'
+
+
+cli_helper("Convert Markdown Files into HTML files") do |o|
+
+  o.path    '-o', '--outdir',   'Director to place the HTML files',  default: Pathname.pwd
+
+end
+
+# Display the usage info
+if  ARGV.empty?
+  show_usage
+  exit
+end
+
+
+# Error check your stuff; use error('some message') and warning('some message')
+
+if  configatron.outdir.exist?     &&
+    configatron.outdir.directory?
+  out_dir = configatron.outdir
+else
+  error "out dir does not exist: #{configatron.outdir}"
+end
+
+
+configatron.input_files = get_pathnames_from( configatron.arguments, '.md')
+
+if configatron.input_files.empty?
+  error 'No markdown files were provided'
+else
+  configatron.input_files.each do |in_path|
+    error "File missing: #{in_path}" unless in_path.exist?
+  end
+end
+
+abort_if_errors
+
+
+######################################################
+# Local methods
+
+
+######################################################
+# Main
+
+at_exit do
+  puts
+  puts "Done."
+  puts
+end
+
+ap configatron.to_h  if verbose? || debug?
+
+puts
+
+configatron.input_files.each do |in_path|
+  basename = in_path.basename.to_s.gsub('.md', '.html')
+  out_path = out_dir + basename
+
+  print "#{basename} ... "
+
+  # Read the markdown file
+  markdown_content = in_path.read
+
+  # Convert the markdown to HTML using kramdown
+  out_path.write Kramdown::Document.new(markdown_content).to_html
+
+  puts "done"
+end
+
+puts

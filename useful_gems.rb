@@ -54,7 +54,7 @@ gem 'stackprof'           # sampling callstack-profiler for ruby 2.1+
 #####################################
 # Stuff in alphabetic order
 #
-gem 'active_record_extended'  # Adds extended functionality to Activerecord Postgres implementation
+#270 gem 'active_record_extended'  # Adds extended functionality to Activerecord Postgres implementation
 gem 'active_record_union'     # UNIONs in ActiveRecord! Adds proper union and union_all methods to ActiveRecord::Relation.
 gem 'activerecord-import'     # Bulk insert extension for ActiveRecord
 gem 'address_extractor'       # Give it text.  It finds addresses in it.
