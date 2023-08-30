@@ -14,12 +14,22 @@ require 'pathname'
 HOME            = Pathname.new( ENV['HOME'] )
 PROMPT_DIR      = HOME + ".prompts"
 PROMPT_EXTNAME  = ".txt"
-AI_COMMAND      = "mods --no-limit --format"
+AI_COMMAND      = "mods --no-limit -f "
 KEYWORD_REGEX   = /(\[[A-Z _|]+\])/
 
+AVAILABLE_PROMPTS = PROMPT_DIR
+                      .children
+                      .select{|c| PROMPT_EXTNAME == c.extname}
+                      .map{|c| c.basename.to_s.split('.')[0]}
+
+
+
+AVAILABLE_PROMPTS_HELP  = AVAILABLE_PROMPTS
+                            .map{|c| "  * " + c}
+                            .join("\n")
+
 require 'amazing_print'
-
-
+require 'tty-prompt'
 
 require 'debug_me'
 include DebugMe
@@ -30,15 +40,16 @@ include CliHelper
 configatron.version = '0.0.1'
 
 HELP = <<EOHELP
-Important:
+Available Prompts:
 
-  Put important stuff here.
+#{ AVAILABLE_PROMPTS_HELP }
 
 EOHELP
 
 cli_helper("Use generative AI with saved prompts") do |o|
 
   o.string  '-p', '--prompt', 'The prompt name'
+  o.path    '-o', '--output', 'The output file', default: Pathname.pwd + "temp.md"
 
 end
 
@@ -60,6 +71,13 @@ end
 abort_if_errors
 
 
+if configatron.prompt.nil?
+  chooser             = TTY::Prompt.new
+  choices             = AVAILABLE_PROMPTS.map{|p| {name: p, value: p}}
+  configatron.prompt  = chooser.select('Use which prompt:', choices)
+end
+
+
 ######################################################
 # Local methods
 
@@ -79,7 +97,7 @@ def replacements_for(keywords)
 
   keywords.each do |kw|
     print "#{kw} ? "
-    replacements[kw] = gets.chomp
+    replacements[kw] = STDIN.gets().chomp
   end
 
   replacements
@@ -125,14 +143,11 @@ replacements  = replacements_for keywords
 prompt = replace_keywords_with replacements, prompt_raw
 ptompt = %Q{prompt}
 
-command = AI_COMMAND + "\"#{prompt}\""
+command = AI_COMMAND + '"' + prompt + '"'
 
 configatron.input_files.each do |input_file|
   command += " < #{input_file}"
 end
 
-puts command
 
-puts "="*42
-
-puts `#{command}`
+configatron.output.write `#{command}`
