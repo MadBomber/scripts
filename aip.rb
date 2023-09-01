@@ -11,6 +11,7 @@
 
 require 'pathname'
 
+EDITOR          = ENV['EDITOR']
 HOME            = Pathname.new( ENV['HOME'] )
 PROMPT_DIR      = HOME + ".prompts"
 PROMPT_EXTNAME  = ".txt"
@@ -49,7 +50,8 @@ EOHELP
 cli_helper("Use generative AI with saved prompts") do |o|
 
   o.string  '-p', '--prompt', 'The prompt name'
-  o.path    '-o', '--output', 'The output file', default: Pathname.pwd + "temp.md"
+  o.bool    '-e', '--edit',   'Edit the prompt text', default: false
+  o.path    '-o', '--output', 'The output file',      default: Pathname.pwd + "temp.md"
 
 end
 
@@ -64,11 +66,10 @@ end
 
 configatron.input_files = get_pathnames_from( configatron.arguments, %w[.txt .md])
 
-if configatron.input_files.empty?
-  error 'No text files were provided'
-end
+# if configatron.input_files.empty?
+#   error 'No text files were provided'
+# end
 
-abort_if_errors
 
 
 if configatron.prompt.nil?
@@ -77,9 +78,58 @@ if configatron.prompt.nil?
   configatron.prompt  = chooser.select('Use which prompt:', choices)
 end
 
+prompt_path = PROMPT_DIR + (configatron.prompt + PROMPT_EXTNAME)
+
+unless prompt_path.exist?
+  warn "This promps does not exist: #{configatron.prompt}\n"
+end
+
+abort_if_errors
+
+if configatron.edit || !prompt_path.exist?
+  prompt_path.write "# #{prompt_path}\n# DESC: " unless prompt_path.exist?
+  system "#{EDITOR} #{prompt_path}"
+  exit(0)
+end
 
 ######################################################
 # Local methods
+
+def extract_raw_prompt(prompt_path)
+  array_of_strings = ignore_after_end(prompt_path)
+  print_header_comment(array_of_strings)
+
+  array_of_strings.reject do |a_line|
+                    a_line.chomp.strip.start_with?('#')
+                  end
+                  .join("\n")
+end
+
+def ignore_after_end(prompt_path)
+  array_of_strings  = prompt_path.readlines
+                        .map{|a_line| a_line.chomp.strip}
+
+  x = array_of_strings.index("__END__")
+
+  unless x.nil?
+    array_of_strings = array_of_strings[..x-1]
+  end
+
+  array_of_strings
+end
+
+def print_header_comment(array_of_strings)
+  print "\n\n" if verbose?
+
+  x = 0
+
+  while array_of_strings[x].start_with?('#') do
+    puts array_of_strings[x]
+    x += 1
+  end
+
+  print "\n\n" if x>0 && verbose?
+end
 
 # Returns an Array of keywords or phrases that look like:
 #   [KEYWORD]
@@ -115,6 +165,8 @@ def replace_keywords_with replacements, prompt_raw
 end
 
 
+
+
 ######################################################
 # Main
 
@@ -124,18 +176,11 @@ at_exit do
   puts
 end
 
-ap configatron.to_h  if verbose? || debug?
+ap configatron.to_h  if debug?
 
 
+prompt_raw  = extract_raw_prompt(prompt_path)
 
-prompt_path = PROMPT_DIR + (configatron.prompt + PROMPT_EXTNAME)
-
-prompt_raw  = prompt_path.readlines
-                .map{|a_line| a_line.chomp.strip}
-                .reject do |a_line|
-                  a_line.chomp.strip.start_with?('#')
-                end
-                .join(" ")
 
 keywords      = extract_keywords_from prompt_raw
 replacements  = replacements_for keywords
@@ -149,5 +194,14 @@ configatron.input_files.each do |input_file|
   command += " < #{input_file}"
 end
 
+
+print "\n\n" if verbose? && !keywords.empty?
+
+if verbose?
+  puts "="*42
+  puts command
+  puts "="*42
+  print "\n\n"
+end
 
 configatron.output.write `#{command}`
