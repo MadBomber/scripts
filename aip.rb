@@ -11,12 +11,13 @@
 
 require 'pathname'
 
-EDITOR          = ENV['EDITOR']
-HOME            = Pathname.new( ENV['HOME'] )
-PROMPT_DIR      = HOME + ".prompts"
-PROMPT_EXTNAME  = ".txt"
-AI_COMMAND      = "mods --no-limit -f "
-KEYWORD_REGEX   = /(\[[A-Z _|]+\])/
+EDITOR            = ENV['EDITOR']
+HOME              = Pathname.new( ENV['HOME'] )
+PROMPT_DIR        = HOME + ".prompts"
+PROMPT_EXTNAME    = ".txt"
+DEFAULTS_EXTNAME  = ".json"
+AI_COMMAND        = "mods --no-limit -f "
+KEYWORD_REGEX     = /(\[[A-Z _|]+\])/
 
 AVAILABLE_PROMPTS = PROMPT_DIR
                       .children
@@ -30,6 +31,7 @@ AVAILABLE_PROMPTS_HELP  = AVAILABLE_PROMPTS
                             .join("\n")
 
 require 'amazing_print'
+require 'json'
 require 'tty-prompt'
 
 require 'debug_me'
@@ -78,25 +80,26 @@ if configatron.prompt.nil?
   configatron.prompt  = chooser.select('Use which prompt:', choices)
 end
 
-prompt_path = PROMPT_DIR + (configatron.prompt + PROMPT_EXTNAME)
+configatron.prompt_path   = PROMPT_DIR + (configatron.prompt + PROMPT_EXTNAME)
+configatron.defaults_path = PROMPT_DIR + (configatron.prompt + DEFAULTS_EXTNAME)
 
-unless prompt_path.exist?
+unless configatron.prompt_path.exist?
   warn "This promps does not exist: #{configatron.prompt}\n"
 end
 
 abort_if_errors
 
-if configatron.edit || !prompt_path.exist?
-  prompt_path.write "# #{prompt_path}\n# DESC: " unless prompt_path.exist?
-  system "#{EDITOR} #{prompt_path}"
+if configatron.edit
+  configatron.prompt_path.write "# #{configatron.prompt_path}\n# DESC: " unless configatron.prompt_path.exist?
+  system "#{EDITOR} #{configatron.prompt_path}"
   exit(0)
 end
 
 ######################################################
 # Local methods
 
-def extract_raw_prompt(prompt_path)
-  array_of_strings = ignore_after_end(prompt_path)
+def extract_raw_prompt
+  array_of_strings = ignore_after_end
   print_header_comment(array_of_strings)
 
   array_of_strings.reject do |a_line|
@@ -105,8 +108,9 @@ def extract_raw_prompt(prompt_path)
                   .join("\n")
 end
 
-def ignore_after_end(prompt_path)
-  array_of_strings  = prompt_path.readlines
+
+def ignore_after_end
+  array_of_strings  = configatron.prompt_path.readlines
                         .map{|a_line| a_line.chomp.strip}
 
   x = array_of_strings.index("__END__")
@@ -117,6 +121,7 @@ def ignore_after_end(prompt_path)
 
   array_of_strings
 end
+
 
 def print_header_comment(array_of_strings)
   print "\n\n" if verbose?
@@ -131,6 +136,7 @@ def print_header_comment(array_of_strings)
   print "\n\n" if x>0 && verbose?
 end
 
+
 # Returns an Array of keywords or phrases that look like:
 #   [KEYWORD]
 #   [KEYWORD|KEYWORD]
@@ -143,14 +149,33 @@ end
 
 # get the replacements for the keywords
 def replacements_for(keywords)
-  replacements = {}
+  replacements = load_default_replacements
 
   keywords.each do |kw|
-    print "#{kw} ? "
-    replacements[kw] = STDIN.gets().chomp
+    default = replacements[kw]
+    print "#{kw} (#{default}) ? "
+    a_string          = STDIN.gets().chomp.strip
+    replacements[kw]  = a_string unless a_string.empty?
   end
 
+  save_default_replacements(replacements)
+
   replacements
+end
+
+
+def load_default_replacements
+  if configatron.defaults_path.exist?
+    JSON.parse(configatron.defaults_path.read)
+  else
+    {}
+  end
+end
+
+
+def save_default_replacements(a_hash)
+  defaults = a_hash.to_json
+  configatron.defaults_path.write defaults
 end
 
 # substitute the replacements for the keywords
@@ -179,7 +204,7 @@ end
 ap configatron.to_h  if debug?
 
 
-prompt_raw  = extract_raw_prompt(prompt_path)
+prompt_raw  = extract_raw_prompt
 
 
 keywords      = extract_keywords_from prompt_raw
