@@ -174,6 +174,7 @@ end
 
 
 def save_default_replacements(a_hash)
+  return if a_hash.empty?
   defaults = a_hash.to_json
   configatron.defaults_path.write defaults
 end
