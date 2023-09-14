@@ -1,0 +1,4 @@
+# ~/.prompts/__FILENAME__
+# Desc: __DESC__
+
+__PROMPT__

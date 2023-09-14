@@ -7,7 +7,10 @@
 ##  File: aip.rb
 ##  Desc: Use generative AI with saved prompts
 ##  By:   Dewayne VanHoozer (dvanhoozer@gmail.com)
-#
+##
+##  brew install mods the-silver-searcher
+#     mods is the AI client
+#     the-silver-searcher (aka ag) is the content searcher
 
 require 'pathname'
 
@@ -17,6 +20,7 @@ PROMPT_DIR        = HOME + ".prompts"
 PROMPT_EXTNAME    = ".txt"
 DEFAULTS_EXTNAME  = ".json"
 AI_COMMAND        = "mods --no-limit -f "
+SEARCH_COMMAND    = "ag -l"
 KEYWORD_REGEX     = /(\[[A-Z _|]+\])/
 
 AVAILABLE_PROMPTS = PROMPT_DIR
@@ -51,10 +55,10 @@ EOHELP
 
 cli_helper("Use generative AI with saved prompts") do |o|
 
-  o.string  '-p', '--prompt', 'The prompt name'
+  o.string  '-p', '--prompt', 'The prompt name',      default: ""
   o.bool    '-e', '--edit',   'Edit the prompt text', default: false
   o.path    '-o', '--output', 'The output file',      default: Pathname.pwd + "temp.md"
-
+  o.string  '-s', '--search', 'Search for prompt',    default: ""
 end
 
 # Display the usage info
@@ -63,29 +67,39 @@ if  ARGV.empty?
   exit
 end
 
+def choose_prompt(choices) = TTY::Prompt.new.select('Use which prompt:', choices)
 
-# Error check your stuff; use error('some message') and warning('some message')
+configatron.input_files = get_pathnames_from( configatron.arguments, %w[.rb .txt .md])
 
-configatron.input_files = get_pathnames_from( configatron.arguments, %w[.txt .md])
-
-# if configatron.input_files.empty?
-#   error 'No text files were provided'
-# end
-
-
-
-if configatron.prompt.nil?
-  chooser             = TTY::Prompt.new
+if configatron.prompt.empty? && configatron.search.empty?
   choices             = AVAILABLE_PROMPTS.map{|p| {name: p, value: p}}
-  configatron.prompt  = chooser.select('Use which prompt:', choices)
+  configatron.prompt  = choose_prompt(choices)
+end
+
+unless configatron.search.empty?
+  paths               = `#{SEARCH_COMMAND} "#{configatron.search}" #{PROMPT_DIR}/*#{PROMPT_EXTNAME}`.split("\n")
+  choices             = paths.map{|v| v.split('/').last.gsub(PROMPT_EXTNAME,'')}
+                          .map{|p| {name: p, value: p}}
+  configatron.prompt  = choose_prompt(choices)
 end
 
 configatron.prompt_path   = PROMPT_DIR + (configatron.prompt + PROMPT_EXTNAME)
 configatron.defaults_path = PROMPT_DIR + (configatron.prompt + DEFAULTS_EXTNAME)
 
-unless configatron.prompt_path.exist?
-  warn "This promps does not exist: #{configatron.prompt}\n"
+if  !configatron.prompt_path.exist? &&
+    !configatron.edit
+  choices             = AVAILABLE_PROMPTS.select{|p| p.start_with?(configatron.prompt)}
+                          .map{|p| {name: p, value: p}}
+  if choices.empty? && !configatron.edit
+    error "This prompt does not exist: #{configatron.prompt}\n"
+  else
+    configatron.prompt  = choose_prompt(choices)
+  end
 end
+
+configatron.prompt_path   = PROMPT_DIR + (configatron.prompt + PROMPT_EXTNAME)
+configatron.defaults_path = PROMPT_DIR + (configatron.prompt + DEFAULTS_EXTNAME)
+
 
 abort_if_errors
 
@@ -94,6 +108,7 @@ if configatron.edit
   system "#{EDITOR} #{configatron.prompt_path}"
   exit(0)
 end
+
 
 ######################################################
 # Local methods
@@ -206,6 +221,11 @@ ap configatron.to_h  if debug?
 
 
 prompt_raw  = extract_raw_prompt
+
+puts
+print "PROMPT: "
+puts prompt_raw
+puts
 
 
 keywords      = extract_keywords_from prompt_raw
