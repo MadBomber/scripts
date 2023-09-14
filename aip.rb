@@ -17,6 +17,7 @@ require 'pathname'
 EDITOR            = ENV['EDITOR']
 HOME              = Pathname.new( ENV['HOME'] )
 PROMPT_DIR        = HOME + ".prompts"
+PROMPT_LOG        = PROMPT_DIR + "_prompts.log"
 PROMPT_EXTNAME    = ".txt"
 DEFAULTS_EXTNAME  = ".json"
 AI_COMMAND        = "mods --no-limit -f "
@@ -206,6 +207,21 @@ def replace_keywords_with replacements, prompt_raw
 end
 
 
+def log(prompt_path, prompt_raw, answer)
+  f = File.open(PROMPT_LOG, "ab")
+
+  f.write <<~EOS
+    =======================================
+    == #{Time.now}
+    == #{prompt_path}
+
+    PROMPT: #{prompt_raw}
+
+    RESULT:
+    #{answer}
+
+  EOS
+end
 
 
 ######################################################
@@ -220,18 +236,18 @@ end
 ap configatron.to_h  if debug?
 
 
-prompt_raw  = extract_raw_prompt
+configatron.prompt_raw  = extract_raw_prompt
 
 puts
 print "PROMPT: "
-puts prompt_raw
+puts configatron.prompt_raw
 puts
 
 
-keywords      = extract_keywords_from prompt_raw
+keywords      = extract_keywords_from configatron.prompt_raw
 replacements  = replacements_for keywords
 
-prompt = replace_keywords_with replacements, prompt_raw
+prompt = replace_keywords_with replacements, configatron.prompt_raw
 ptompt = %Q{prompt}
 
 command = AI_COMMAND + '"' + prompt + '"'
@@ -250,4 +266,9 @@ if verbose?
   print "\n\n"
 end
 
-configatron.output.write `#{command}`
+result = `#{command}`
+
+
+configatron.output.write result
+
+log configatron.prompt_path, prompt, result
