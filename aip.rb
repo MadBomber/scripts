@@ -37,6 +37,7 @@ AVAILABLE_PROMPTS_HELP  = AVAILABLE_PROMPTS
 
 require 'amazing_print'
 require 'json'
+require 'readline'
 require 'tty-prompt'
 
 require 'debug_me'
@@ -170,7 +171,7 @@ def replacements_for(keywords)
   keywords.each do |kw|
     default = replacements[kw]
     print "#{kw} (#{default}) ? "
-    a_string          = STDIN.gets().chomp.strip
+    a_string          = Readline.readline('> ', true)
     replacements[kw]  = a_string unless a_string.empty?
   end
 
