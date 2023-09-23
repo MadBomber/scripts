@@ -5,22 +5,48 @@
 ##########################################################
 ###
 ##  File: aip.rb
-##  Desc: Use generative AI with saved prompts
+##  Desc: Use generative AI with saved parameterized prompts
 ##  By:   Dewayne VanHoozer (dvanhoozer@gmail.com)
 ##
 ##  brew install mods the-silver-searcher
-#     mods is the AI client
+#     mods is the AI CLI program
 #     the-silver-searcher (aka ag) is the content searcher
+#
+# Summary:
+#   The program is a Ruby script that utilizes the mods gpt-based CLI
+#   tool to use generative AI with saved parameterized prompts. The script
+#   allows the user to select a prompt from a list of available prompts,
+#   edit the text of a prompt, list the available prompts, or search for a
+#   prompt based on a keyword. The program also reads in input files and uses
+#   the AI CLI program to generate an output based on the chosen prompt. The
+#   output is then written to a file. The program also logs the prompt, the
+#   generated output, and the timestamp of the generation.
+#
+#
+# TODO: I think this script has readed the point where
+#       it is ready to become a proper gem.
+#
 
 require 'pathname'
+HOME = Pathname.new( ENV['HOME'] )
 
+AI_CLI_PROGRAM  = "mods"
+ai_default_opts = "--no-limit -f"
+ai_options      = ai_default_opts.dup
+
+extra_inx       = ARGV.index('--')
+
+if extra_inx
+  ai_options += " " + ARGV[extra_inx+1..].join(' ')
+  ARGV.pop(ARGV.size - extra_inx)
+end
+
+AI_COMMAND        = "#{AI_CLI_PROGRAM} #{ai_options} "
 EDITOR            = ENV['EDITOR']
-HOME              = Pathname.new( ENV['HOME'] )
 PROMPT_DIR        = HOME + ".prompts"
 PROMPT_LOG        = PROMPT_DIR + "_prompts.log"
 PROMPT_EXTNAME    = ".txt"
 DEFAULTS_EXTNAME  = ".json"
-AI_COMMAND        = "mods --no-limit -f "
 SEARCH_COMMAND    = "ag -l"
 KEYWORD_REGEX     = /(\[[A-Z _|]+\])/
 
@@ -28,8 +54,6 @@ AVAILABLE_PROMPTS = PROMPT_DIR
                       .children
                       .select{|c| PROMPT_EXTNAME == c.extname}
                       .map{|c| c.basename.to_s.split('.')[0]}
-
-
 
 AVAILABLE_PROMPTS_HELP  = AVAILABLE_PROMPTS
                             .map{|c| "  * " + c}
@@ -46,19 +70,31 @@ include DebugMe
 require 'cli_helper'
 include CliHelper
 
-configatron.version = '0.0.1'
+configatron.version = '1.0.0'
+
+AI_CLI_PROGRAM_HELP = `#{AI_CLI_PROGRAM} --help`
 
 HELP = <<EOHELP
-Available Prompts:
+AI CLI Program
+==============
 
-#{ AVAILABLE_PROMPTS_HELP }
+The AI cli program being used is: #{AI_CLI_PROGRAM}
+
+The defaul options to #{AI_CLI_PROGRAM} are:
+  "#{ai_default_opts}"
+
+You can pass additional CLI options to #{AI_CLI_PROGRAM} like this:
+  "#{my_name} my options -- options for #{AI_CLI_PROGRAM}"
+
+#{AI_CLI_PROGRAM_HELP}
 
 EOHELP
 
-cli_helper("Use generative AI with saved prompts") do |o|
+cli_helper("Use generative AI with saved parameterized prompts") do |o|
 
   o.string  '-p', '--prompt', 'The prompt name',      default: ""
   o.bool    '-e', '--edit',   'Edit the prompt text', default: false
+  o.bool    '-l', '--list',   'List the prompts',     default: false
   o.path    '-o', '--output', 'The output file',      default: Pathname.pwd + "temp.md"
   o.string  '-s', '--search', 'Search for prompt',    default: ""
 end
@@ -72,6 +108,20 @@ end
 def choose_prompt(choices) = TTY::Prompt.new.select('Use which prompt:', choices)
 
 configatron.input_files = get_pathnames_from( configatron.arguments, %w[.rb .txt .md])
+
+if configatron.list
+  puts <<~LIST
+
+    Available Prompts
+    =================
+
+    #{ AVAILABLE_PROMPTS_HELP }
+
+  LIST
+  exit(0)
+end
+
+
 
 if configatron.prompt.empty? && configatron.search.empty?
   choices             = AVAILABLE_PROMPTS.map{|p| {name: p, value: p}}
@@ -268,7 +318,6 @@ if verbose?
 end
 
 result = `#{command}`
-
 
 configatron.output.write result
 
