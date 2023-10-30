@@ -92,6 +92,7 @@ gem 'docopt'                  # A command line option parser, that will make you
 gem 'docx'                    # a ruby library/gem for interacting with .docx files
 gem 'dotenv'                  # Loads environment variables from `.env`.
 #
+gem 'dry-cli'                 # Common framework to build command line interfaces with Ruby
 gem 'dry-configurable'        # A mixin to add configuration functionality to your classes
 gem 'dry-container'           # A simple container intended for use as an IoC container
 gem 'dry-core'                # A toolset of small support modules used throughout the dry-rb ecosystem.
@@ -161,6 +162,7 @@ gem 'log_analyzer'            # log_analyzer gem is created to get statistics ab
 gem 'mail'                    # Mail provides a nice Ruby DSL for making, sending and reading emails.
 gem 'meta-tags'               # Collection of SEO helpers for Ruby on Rails.
 gem 'mini_sql'                # A fast, safe, simple direct SQL executor
+gem 'monotime'                # A sensible interface to the monotonic clock
 gem 'motor-admin'             # Low-code Admin panel and Business intelligence
 #
 gem 'n1_loader'               # Loader to solve N+1 issue for good.
