@@ -130,10 +130,18 @@ end
 
 unless configatron.search.empty?
   paths               = `#{SEARCH_COMMAND} "#{configatron.search}" #{PROMPT_DIR}/*#{PROMPT_EXTNAME}`.split("\n")
-  choices             = paths.map{|v| v.split('/').last.gsub(PROMPT_EXTNAME,'')}
-                          .map{|p| {name: p, value: p}}
-  configatron.prompt  = choose_prompt(choices)
+
+  if paths.empty?
+    warning "No prompt contains your search term: #{configatron.search}"
+  else
+    choices             = paths.map{|v| v.split('/').last.gsub(PROMPT_EXTNAME,'')}
+                            .map{|p| {name: p, value: p}}
+
+    configatron.prompt  = choose_prompt(choices)
+  end
 end
+
+abort_if_errors
 
 configatron.prompt_path   = PROMPT_DIR + (configatron.prompt + PROMPT_EXTNAME)
 configatron.defaults_path = PROMPT_DIR + (configatron.prompt + DEFAULTS_EXTNAME)
@@ -221,7 +229,7 @@ def replacements_for(keywords)
   keywords.each do |kw|
     default = replacements[kw]
     print "#{kw} (#{default}) ? "
-    a_string          = Readline.readline('> ', true)
+    a_string          = Readline.readline("\n> ", false)
     replacements[kw]  = a_string unless a_string.empty?
   end
 
@@ -322,3 +330,45 @@ result = `#{command}`
 configatron.output.write result
 
 log configatron.prompt_path, prompt, result
+
+
+__END__
+
+To specify a history and autocomplete options with the readline method in Ruby using the readline gem, you can follow these steps:
+
+1. **History** - To enable history functionality, create a Readline::HISTORY object:
+```ruby
+history = Readline::HISTORY
+```
+You can then use the `history` object to add and manipulate history entries.
+
+2. **Autocomplete** - To enable autocomplete functionality, you need to provide a completion proc to `Readline.completion_proc`:
+```ruby
+Readline.completion_proc = proc { |input|  ... }
+```
+You should replace `...` with the logic for determining the autocomplete options based on the input.
+
+For example, you can define a method that provides autocomplete options based on a predefined array:
+```ruby
+def autocomplete_options(input)
+  available_options = ['apple', 'banana', 'cherry']
+  available_options.grep(/^#{Regexp.escape(input)}/)
+end
+
+Readline.completion_proc = proc { |input| autocomplete_options(input) }
+```
+
+In this example, the `autocomplete_options` method takes the user's input and uses the `grep` method to filter the available options based on the input prefix.
+
+Remember to require the readline gem before using these features:
+```ruby
+require 'readline'
+```
+
+With the above steps in place, you can use the readline method in your code, and the specified history and autocomplete options will be available.
+
+Note: Keep in mind that autocomplete options will only appear when tab is pressed while entering input.
+
+
+
+
