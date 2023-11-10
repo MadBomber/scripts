@@ -53,7 +53,6 @@ comby                         # Tool for changing code across many languages
 coreutils                     # GNU File, Shell, and Text utilities
 crystal                       # Fast and statically typed, compiled language with Ruby-like syntax
 crystal-icr                   # Interactive console for Crystal programming language
-csv-fix                       # Tool for manipulating CSV data
 csview                        # High performance csv viewer for cli
 csvkit                        # Suite of command-line tools for converting to and working with CSV
 curl                          # Get a file from an HTTP, HTTPS or FTP server
@@ -149,7 +148,6 @@ gnupg                         # GNU Pretty Good Privacy (PGP) package
 gnutls                        # GNU Transport Layer Security (TLS) Library
 go                            # Open source programming language to build simple/reliable/efficient software
 gobject-introspection         # Generate introspection data for GObject libraries
-googler                       # Google Search and News from the command-line
 gource                        # Version Control Visualization Tool
 grafana                       # Gorgeous metric visualizations and dashboards for timeseries databases
 graphite2                     # Smart font renderer for non-Roman scripts
@@ -351,7 +349,6 @@ xxhash                        # Extremely fast non-cryptographic hash algorithm
 yadm                          # Yet Another Dotfiles Manager
 yank                          # Copy terminal output to clipboard
 youtube-dl                    # Download YouTube videos from the command-line
-youtube-dlc                   # Media downloader supporting various sites such as youtube
 yq                            # Process YAML documents from the CLI
 z                             # Tracks most-used directories to make cd smarter
 zebra                         # Information management system
