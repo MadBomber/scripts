@@ -30,8 +30,11 @@
 require 'pathname'
 HOME = Pathname.new( ENV['HOME'] )
 
+
+MODS_MODEL      = ENV['MODS_MODEL'] || 'gpt-4-1106-preview'
+
 AI_CLI_PROGRAM  = "mods"
-ai_default_opts = "--no-limit -f"
+ai_default_opts = "-m #{MODS_MODEL} --no-limit -f"
 ai_options      = ai_default_opts.dup
 
 extra_inx       = ARGV.index('--')
