@@ -81,8 +81,19 @@ end
 
 puts "="*65
 
-ap (bfh_keys - installed)
+not_installed = (bfh_keys - installed)
+
+ap not_installed
 
 File.open('bfh_keys.txt', 'w').write bfh_keys.join("\n")
 File.open('installed.txt', 'w').write installed.join("\n")
 
+if ARGV.include? "--install"
+  puts "Installing ..."
+
+  not_installed.each_slice(5) do |group|
+    command = "brew install #{group.join(' ')}"
+    puts command
+    `#{command}`
+  end
+end
