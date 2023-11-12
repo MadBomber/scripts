@@ -8,9 +8,10 @@
 ##  Desc: Use generative AI with saved parameterized prompts
 ##  By:   Dewayne VanHoozer (dvanhoozer@gmail.com)
 ##
-##  brew install mods the-silver-searcher
+##  brew install mods the-silver-searcher fzf
 #     mods is the AI CLI program
 #     the-silver-searcher (aka ag) is the content searcher
+#     fzf is a fuzzy file name finder
 #
 # Summary:
 #   The program is a Ruby script that utilizes the mods gpt-based CLI
@@ -102,13 +103,20 @@ cli_helper("Use generative AI with saved parameterized prompts") do |o|
   o.string  '-s', '--search', 'Search for prompt',    default: ""
 end
 
-# Display the usage info
-if  ARGV.empty?
-  show_usage
-  exit
-end
 
-def choose_prompt(choices) = TTY::Prompt.new.select('Use which prompt:', choices)
+AG_COMMAND        = "ag -l #{configatron.search}"
+CD_COMMAND        = "cd #{PROMPT_DIR}"
+FZF_PROMPT        = "--prompt='Use which prompt: '"
+FZF_COMMAND       = "#{CD_COMMAND} ; fzf --query=txt #{FZF_PROMPT}"
+AG_FZF_COMMAND    = "#{CD_COMMAND} ; #{AG_COMMAND} | fzf #{FZF_PROMPT}"
+
+def fzf = `#{FZF_COMMAND}`.strip.gsub('.txt','')
+
+# The fuzzy match choices are limited to files that contain
+# the search term entered on the command line.
+
+def ag_fzf = `#{AG_FZF_COMMAND}`.strip.gsub('.txt','')
+
 
 configatron.input_files = get_pathnames_from( configatron.arguments, %w[.rb .txt .md])
 
@@ -128,19 +136,14 @@ end
 
 if configatron.prompt.empty? && configatron.search.empty?
   choices             = AVAILABLE_PROMPTS.map{|p| {name: p, value: p}}
-  configatron.prompt  = choose_prompt(choices)
+  configatron.prompt  = fzf
 end
 
 unless configatron.search.empty?
-  paths               = `#{SEARCH_COMMAND} "#{configatron.search}" #{PROMPT_DIR}/*#{PROMPT_EXTNAME}`.split("\n")
+  configatron.prompt  = ag_fzf
 
-  if paths.empty?
-    warning "No prompt contains your search term: #{configatron.search}"
-  else
-    choices             = paths.map{|v| v.split('/').last.gsub(PROMPT_EXTNAME,'')}
-                            .map{|p| {name: p, value: p}}
-
-    configatron.prompt  = choose_prompt(choices)
+  if configatron.prompt.empty?
+    error "No prompt contains your search term: #{configatron.search}"
   end
 end
 
@@ -156,7 +159,7 @@ if  !configatron.prompt_path.exist? &&
   if choices.empty? && !configatron.edit
     error "This prompt does not exist: #{configatron.prompt}\n"
   else
-    configatron.prompt  = choose_prompt(choices)
+    configatron.prompt  = fzf
   end
 end
 
