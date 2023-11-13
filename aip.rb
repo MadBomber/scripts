@@ -8,23 +8,46 @@
 ##  Desc: Use generative AI with saved parameterized prompts
 ##  By:   Dewayne VanHoozer (dvanhoozer@gmail.com)
 ##
-##  brew install mods the-silver-searcher fzf
-#     mods is the AI CLI program
-#     the-silver-searcher (aka ag) is the content searcher
-#     fzf is a fuzzy file name finder
+##  This program makes use of the gem word_wrap's
+##  CLI tool: ww
 #
-# Summary:
-#   The program is a Ruby script that utilizes the mods gpt-based CLI
-#   tool to use generative AI with saved parameterized prompts. The script
-#   allows the user to select a prompt from a list of available prompts,
-#   edit the text of a prompt, list the available prompts, or search for a
-#   prompt based on a keyword. The program also reads in input files and uses
-#   the AI CLI program to generate an output based on the chosen prompt. The
-#   output is then written to a file. The program also logs the prompt, the
-#   generated output, and the timestamp of the generation.
+
+
+=begin
+
+brew install fzf mods the_silver_searcher
+
+fzf                  Command-line fuzzy finder written in Go
+                     |__ https://github.com/junegunn/fzf
+
+mods                 AI on the command-line
+                     |__ https://github.com/charmbracelet/mods
+
+the_silver_searcher  Code-search similar to ack
+                     |__ https://github.com/ggreer/the_silver_searcher
+
+Program Summary
+
+The program is a Ruby script that integrates with the `mods` CLI tool, which is built on a GPT-based generative AI model. This script is designed to make use of generative AI through a set of saved, parameterized prompts. Users can easily interact with the following features:
+
+- **Prompt Selection**: Users have the ability to choose a prompt from a curated list. This selection process is streamlined by allowing users to search and filter prompts using keywords.
+
+- **Prompt Editing**: There is functionality for a user to modify the text of an existing prompt, tailoring it to better meet their specific needs.
+
+- **File Input**: The script can read in data from input files, providing the necessary context or information required for the AI to generate relevant content.
+
+- **AI Integration**: Utilizing the `mods` GPT-based CLI tool, the script takes the chosen edited prompt to guide the AI in generating its output.
+
+- **Output Management**: After the generative process, the resulting output is saved to a designated file, ensuring that the user has a record of the AI's creations.
+
+- **Logging**: For tracking and accountability, the program records the details of each session, including the prompt used, the AI-generated output, and the precise timestamp when the generation occurred.
+
+This robust tool is excellent for users who wish to harness the power of generative AI for creating content, with an efficient and user-friendly system for managing the creation process.
+
+=end
+
 #
-#
-# TODO: I think this script has readed the point where
+# TODO: I think this script has reached the point where
 #       it is ready to become a proper gem.
 #
 
@@ -51,7 +74,7 @@ PROMPT_DIR        = HOME + ".prompts"
 PROMPT_LOG        = PROMPT_DIR + "_prompts.log"
 PROMPT_EXTNAME    = ".txt"
 DEFAULTS_EXTNAME  = ".json"
-SEARCH_COMMAND    = "ag -l"
+# SEARCH_COMMAND    = "ag -l"
 KEYWORD_REGEX     = /(\[[A-Z _|]+\])/
 
 AVAILABLE_PROMPTS = PROMPT_DIR
@@ -65,8 +88,10 @@ AVAILABLE_PROMPTS_HELP  = AVAILABLE_PROMPTS
 
 require 'amazing_print'
 require 'json'
-require 'readline'
-require 'tty-prompt'
+require 'readline'    # TODO: or reline ??
+require 'word_wrap'
+require 'word_wrap/core_ext'
+
 
 require 'debug_me'
 include DebugMe
@@ -74,7 +99,7 @@ include DebugMe
 require 'cli_helper'
 include CliHelper
 
-configatron.version = '1.0.0'
+configatron.version = '1.1.0'
 
 AI_CLI_PROGRAM_HELP = `#{AI_CLI_PROGRAM} --help`
 
@@ -96,54 +121,55 @@ EOHELP
 
 cli_helper("Use generative AI with saved parameterized prompts") do |o|
 
-  o.string  '-p', '--prompt', 'The prompt name',      default: ""
-  o.bool    '-e', '--edit',   'Edit the prompt text', default: false
-  o.bool    '-l', '--list',   'List the prompts',     default: false
-  o.path    '-o', '--output', 'The output file',      default: Pathname.pwd + "temp.md"
-  o.string  '-s', '--search', 'Search for prompt',    default: ""
+  o.string  '-p', '--prompt', 'The prompt name',        default: ""
+  o.bool    '-e', '--edit',   'Edit the prompt text',   default: false
+  o.bool    '-f', '--fuzzy',   'Allow fuzzy matching',  default: false
+  o.path    '-o', '--output', 'The output file',        default: Pathname.pwd + "temp.md"
 end
 
 
-AG_COMMAND        = "ag -l #{configatron.search}"
+AG_COMMAND        = "ag --file-search-regex '\.txt$' e"
 CD_COMMAND        = "cd #{PROMPT_DIR}"
-FZF_PROMPT        = "--prompt='Use which prompt: '"
-FZF_COMMAND       = "#{CD_COMMAND} ; fzf --query=txt #{FZF_PROMPT}"
-AG_FZF_COMMAND    = "#{CD_COMMAND} ; #{AG_COMMAND} | fzf #{FZF_PROMPT}"
+FIND_COMMAND      = "find . -name '*.txt'"
 
-def fzf = `#{FZF_COMMAND}`.strip.gsub('.txt','')
+FZF_OPTIONS       = [
+  "--tabstop=2",  # 2 soaces for a tab
+  "--header='Prompt contents below'",
+  "--header-first",
+  "--prompt='Search term: '",
+  '--delimiter :',
+  "--preview 'ww {1}'",              # ww comes from the word_wrap gem
+  "--preview-window=down:50%:wrap"
+].join(' ')
 
-# The fuzzy match choices are limited to files that contain
-# the search term entered on the command line.
+FZF_OPTIONS += "--exact" unless fuzzy?
 
-def ag_fzf = `#{AG_FZF_COMMAND}`.strip.gsub('.txt','')
+FZF_COMMAND       = "#{CD_COMMAND} ; #{FIND_COMMAND} | fzf #{FZF_OPTIONS}"
+AG_FZF_COMMAND    = "#{CD_COMMAND} ; #{AG_COMMAND}   | fzf #{FZF_OPTIONS}"
+
+# use `ag` ti build a list of text lines from each prompt
+# use `fzf` to search through that list to select a prompt file
+
+def ag_fzf = `#{AG_FZF_COMMAND}`.split(':')&.first&.strip&.gsub('.txt','')
 
 
 configatron.input_files = get_pathnames_from( configatron.arguments, %w[.rb .txt .md])
 
-if configatron.list
-  puts <<~LIST
 
-    Available Prompts
-    =================
+# TODO: Make the use of the "-p" flag optional.
+#       I find myself many times forgetting to use it
+#       and this program rejecting it because
+#       "the file does not exist" thinging that it
+#       was an input file file rather than a prompt
+#       name.
 
-    #{ AVAILABLE_PROMPTS_HELP }
-
-  LIST
-  exit(0)
-end
-
-
-
-if configatron.prompt.empty? && configatron.search.empty?
-  choices             = AVAILABLE_PROMPTS.map{|p| {name: p, value: p}}
-  configatron.prompt  = fzf
-end
-
-unless configatron.search.empty?
+if configatron.prompt.empty?
   configatron.prompt  = ag_fzf
+end
 
-  if configatron.prompt.empty?
-    error "No prompt contains your search term: #{configatron.search}"
+unless edit?
+  if configatron.prompt.nil? || configatron.prompt.empty?
+    error "No prompt provided"
   end
 end
 
@@ -152,29 +178,26 @@ abort_if_errors
 configatron.prompt_path   = PROMPT_DIR + (configatron.prompt + PROMPT_EXTNAME)
 configatron.defaults_path = PROMPT_DIR + (configatron.prompt + DEFAULTS_EXTNAME)
 
-if  !configatron.prompt_path.exist? &&
-    !configatron.edit
-  choices             = AVAILABLE_PROMPTS.select{|p| p.start_with?(configatron.prompt)}
-                          .map{|p| {name: p, value: p}}
-  if choices.empty? && !configatron.edit
-    error "This prompt does not exist: #{configatron.prompt}\n"
-  else
-    configatron.prompt  = fzf
-  end
+if  !configatron.prompt_path.exist? && !edit?
+  error "This prompt does not exist: #{configatron.prompt}\n"
 end
 
 configatron.prompt_path   = PROMPT_DIR + (configatron.prompt + PROMPT_EXTNAME)
 configatron.defaults_path = PROMPT_DIR + (configatron.prompt + DEFAULTS_EXTNAME)
 
-
 abort_if_errors
 
-if configatron.edit
-  configatron.prompt_path.write "# #{configatron.prompt_path}\n# DESC: " unless configatron.prompt_path.exist?
-  system "#{EDITOR} #{configatron.prompt_path}"
-  exit(0)
-end
+if edit?
+  unless configatron.prompt_path.exist?
+    configatron.prompt_path.write <<~PROMPT
+      # #{configatron.prompt_path.relative_path_from(HOME)}
+      # DESC: 
 
+    PROMPT
+  end
+
+  `#{EDITOR} #{configatron.prompt_path}`
+end
 
 ######################################################
 # Local methods
@@ -300,12 +323,11 @@ end
 
 ap configatron.to_h  if debug?
 
-
 configatron.prompt_raw  = extract_raw_prompt
 
 puts
-print "PROMPT: "
-puts configatron.prompt_raw
+puts "PROMPT:"
+puts configatron.prompt_raw.wrap
 puts
 
 
