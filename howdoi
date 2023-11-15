@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# ~/scripts/howdoi
+# brew install mods
+
+echo "$@" | mods "Please assist me as an expert on MacOS and bash with a concise terse answer to the following question:"

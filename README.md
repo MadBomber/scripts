@@ -1,111 +1,242 @@
-scripts
-=======
+# scripts
 
-Some of my everyday scripts that I like to keep sync'ed across machines.
+Some of my scripts that I like to keep sync'ed across machines.
 
-This is really just old stuff I needed to park in a place that I could find it
-again if I needed it.
+This is really just old stuff I needed to park in a place that I could find it again if I needed it.  The good stuff is in private repos.
 
-| Filename                          | Description |
-| --------------------------------- | --------------------------------------------- |
-| Gemfile                           | Used by bundle to install for common gems |
-| Gemfile.lock                      | Used by bundle |
-| README.md                         | this file |
-| _old_stuff_and_1offs/             | directory of old stuff |
-| ack*                              | Search for PATTERN in each source file in the tree from cwd on dow  |
-| anagram_code.rb*                  | plaything |
-| anagrams.rb*                      | plaything |
-| aw*                               | greps the all_words.txt file |
-| blessing.rb*                      | use text-to-speech to say a blessing |
-| bp.rb*                            | blood pressure reporting |
-| classpath*                        | runs $CLASSPATH value through the colon_splitter |
-| clone_all.rb*                     | clones all my github repos |
-| code*                             | uses tmux to setup a source file coding session |
-| colon_split*                      | splits STDIN based on ':' character |
-| comment_gemfile*                  | Adds single line description of gem to the Gemfile |
-| convert_html_to_text.rb*          | Extracts text from an HTML file |
-| cr2lf*                            | Changes <CR> characters to <LF> characters in a file |
-| create_install_gemset*            | Creates a bash script to install gems from an RVM gemset |
-| csv_reader.rb*                    | print to STDOUT a formatted report of a CSV file |
-| ct.rb*                            | colortail ?? |
-| delete_all_gems.s*                | does a 'gem uninstall' for all installed gems |
-| describe_gems.rb*                 | prints out a description for a set of gems from STDIN |
-| docx_appender.rb*                 | append paragraphs to an MS Word file |
-| docx_breakup.rb*                  | breakup a large MS Word file into a bunch of smaller ones |
-| docx_brf.rb*                      | bible reference finder (brf) in an MS Word file |
-| docx_draft_layout.rb*             | print an MS Word file in a draft layout |
-| docx_extract_bodytext.rb*         | extract paragraphs of style 'bodytext' from an MS Word file |
-| docx_rm_blank_paragraphs.rb*      | remove blank paragraphs from an MS Word file |
-| docx_rm_para_with_styles.rb*      | remove paragraphs with a certain style from an MS Word file |
-| docx_style_fixer.rb*              | replace the paragraph style definitions of one MS Word file with those from another |
-| docx_style_lister.rb*             | list the paragraph styles used in an MS Word file |
-| docx_to_txt.rb*                   | convert an MS Word file into a text file |
-| docx_translate.rb*                | translate an MS Word file from one language to another using google translate |
-| dumppdf*                          | doesn't work |
-| e*                                | shortcut to launch sublime text editor |
-| erb2haml*                         | convert erb files into haml files |
-| fake.rb*                          | generate some lorem text using the wordy gem |
-| file_templates/                   | directory of template files used by the 'new' command |
-| filename_fu.rb*                   | manipulate the filenames of - pretty useless outside of a specific convention |
-| fw*                               | grep the dictionary.txt file |
-| gem_ctags.rb*                     | build a .tags file for all ruby gems in the Gemfile |
-| gemd*                             | shortcut to the describe_gems.rb program -- prints description of gems |
-| gemt*                             | prints a short (1 line) description of a list of gems (like rake -T) |
-| imbibler.rb*                      | extract text from biblegateway.com of a specific bible chapter |
-| json*                             | pretty print a *.json file |
-| json2yaml.rb*                     | convert *.json file into a *.yaml file |
-| killall_ruby*                     | killall current ruby processes |
-| latest_gems*                      | shortcut to latest_gems.rb |
-| latest_gems.rb*                   | get a list of the latest gems from rubygems.org |
-| latin2ascii.py*                   | does something with text encoding |
-| lflf2lf*                          | removes duplicate <LF> characters |
-| lib/                              | directory of reusable methods etc. most have been moved to the lib_ruby repo |
-| lipsum.rb*                        | prints some lorem ipsum text; not as generic as fake.rb |
-| magic_8_ball.rb*                  | uses text to speech to say random answer from the 1950s toy |
-| mbox_finder.rb*                   | Finds mbox files and prints out subject and date lines |
-| merge2*                           | uses kdiff3 to merger 2 files into a combined output file |
-| my_docx_style_fixer.rb*           | a more generic ?? version of docx_style_fixer.rb |
-| my_qa*                            | some static analysis of ruby code - rubocop is better |
-| new*                              | shortcut to new.rb |
-| new.rb*                           | creates a new file from a template |
-| new_rails_app.s*                  | creates a new rails project using rails composer |
-| newgit_project*                   | creates a new git-backed project structure (the git stuff only) |
-| normalize_pathnames.rb*           | changes filenames by replacing special characters with underscore |
-| note.rb*                          | Adds a timestamped note to the $HOME/_notes.txt file |
-| number*                           | print the English name of a number of any size |
-| path*                             | sends $PATH to colon_spliter.rb |
-| pdf2txt*                          | extracts text from a pdf file |
-| phpinfo*                          | prints configuration information about the current PHP environment |
-| picnic_gems.rb*                   | installs a list of gems from a text file |
-| platform*                         | uses the gem ohai to maintain a file $HOME/platform.json |
-| ppsql.rb*                  | failure - an attempt to pretty pring sql files |
-| printenv*                         | report system environment things |
-| projxslt.rb*                      | Used by ruby2html.rb |
-| rawk.rb*                          | gives statistics for Ruby on Rails log files. |
-| release.rb*                       | Build and release a gem via @rultor in github |
-| relink_home_dirs.rb*              | (frank only)  Creates symbolic links in $HOME for the common directories |
-| rename_db_columns.rb*             | normalizes column names created by the tool csvsql |
-| replace_home_dots.rb*             | (frank only)  saves existing $HOME dot files then replaces them with dot_files content  |
-| retirement_home/                  | A directory where old programs go like _old_stuff_and_1offs/ |
-| reverse_gem_depends.rb*           | (not ready)  I forgot |
-| rpp*                              | Ruby pretty printer |
-| rtags*                            | generates .tags file from ruby code |
-| ruler*                            | prints a character ruler on the terminal |
-| rultor_init_project.rb*           | inits a project directory for use on github with the rultor tool |
-| s3_downloader.rb*                 | download a file from AWS S3 service |
-| s3_uploader.rb*                   | upload a file to the AWS S3 service |
-| set_upstream.rb*                  | set the upstream remote of a git clone |
-| sgi*                              | print general info about a version controled project (svn/git) |
-| squish_gem_list.rb*               | reduce the gems in a list based upon dependencies |
-| start_postgresql.sh               | outdated start the postgresql server |
-| stop_postgresql.sh                | outdated stop the postgresql server |
-| summarize_file.rb*                | provide a text summary of the content of a file |
-| sw*                               | does the same as fw - grep the file dictionary.txt |
-| sync_upstream.rb*                 | syncs the local git clones with their upstream remotes |
-| uninstall_all_gems.rb*            | uninstalls all gems |
-| unset_proxy.s*                    | unsets all proxy environment variables |
-| wcml_brf.rb*                      | bible reference finder for *.wcml files (Adobe Incopy/woodwing) |
-| wcml_draft_layout.rb*             | prints a draft layout of a *.wcml file |
-| where*                            | uses the $PATH to find all versions of a program and execs it with --version |
-| wl*                               | uses $wl to find all words/lines in a file of a specific length |
-| yaml2json.rb*                     | converts *.yaml files into *.json files |
+What the file is/does should be understood from its name; but, not always.  I will attempt to update the filenames or add a description here as I have time.
+
+| File Name                               | Description |
+|-----------------------------------------|-------------|
+| Brewfile                                |             |
+| _old_stuff_and_1offs                    |             |
+| aip.rb                                  | AI Prompt Management |
+| anagram_code.rb                         |             |
+| anagrams.rb                             |             |
+| apple_scripts                           |             |
+| applications.txt                        |             |
+| aw                                      | scrabble cheat |
+| backup_envrc.rb                         |             |
+| backup_just.rb                          |             |
+| bfh_keys.txt                            |             |
+| blessing.rb                             |             |
+| blessings.txt                           |             |
+| bp.rb                                   |             |
+| breakout_git_revisions.sh               |             |
+| brew_not_installed                      |             |
+| brewt                                   |             |
+| brewt_all.srt                           |             |
+| brewt_all.txt                           |             |
+| brewt_diff.txt                          |             |
+| brewt_venus.srt                         |             |
+| brewt_venus.txt                         |             |
+| bundler_inline_example.rb               |             |
+| buzz_words.rb                           |             |
+| c2s                                     |             |
+| camels2snakes2camels.rb                 |             |
+| cf                                      |             |
+| change_git_repos_to_ssh_access.rb       |             |
+| classpath                               |             |
+| clean_up_gems.rb                        |             |
+| clone_all.rb                            |             |
+| code                                    |             |
+| colon_split                             |             |
+| comment_brewfile                        |             |
+| comment_gemfile.rb                      |             |
+| comment_require.rb                      |             |
+| comment_shardfile.rb                    |             |
+| compare_gems_from_diff_rbenv_versions.sh|             |
+| compare_gems_from_diff_rvm_versions.sh  |             |
+| compare_to_master.rb                    |             |
+| concat_consecutive_non_blank_lines.rb   |             |
+| config                                  |             |
+| convert_html_to_text.rb                 |             |
+| convert_pdf_to_svg.sh                   |             |
+| convert_vcr_response_to_fixture.rb      |             |
+| copy_csv_to_rdb.rb                      |             |
+| copy_missing_files.rb                   |             |
+| copy_modified_files.rb                  |             |
+| cost_of_trip.rb                         |             |
+| cr2lf                                   |             |
+| create_changelog.rb                     |             |
+| create_data_dictionary                  |             |
+| create_db_system_users.s                |             |
+| create_erd_scripts_from_rails_models.rb|             |
+| create_gems_used_report.rb              |             |
+| create_install_gemset                   |             |
+| create_jira_summary_index.rb            |             |
+| create_working_directory.rb             |             |
+| csv_reader.rb                           |             |
+| ct.rb                                   |             |
+| daemon_control                          |             |
+| data_dictionary.rb                      |             |
+| database_dumps                          |             |
+| db_schema_visualizer.pl                 |             |
+| de_dog_da_log.rb                        |             |
+| delete_all_gems.s                       |             |
+| delete_docker_junk.rb                   |             |
+| describe_gems.rb                        |             |
+| disable.rb                              |             |
+| dit.rb                                  |             |
+| docker_info.rb                          |             |
+| docx_appender.rb                        |             |
+| docx_breakup.rb                         |             |
+| docx_brf.rb                             |             |
+| docx_draft_layout.rb                    |             |
+| docx_extract_bodytext.rb                |             |
+| docx_rm_blank_paragraphs.rb             |             |
+| docx_rm_para_with_styles.rb             |             |
+| docx_style_fixer.rb                     |             |
+| docx_style_lister.rb                    |             |
+| docx_to_txt.rb                          |             |
+| docx_translate.rb                       |             |
+| dot_tags_reporter.rb                    |             |
+| e                                       |             |
+| ec2_spot_pricing_recent_history         |             |
+| erb2haml                                |             |
+| erd_for.rb                              |             |
+| fake.rb                                 |             |
+| fetch_jira.sh                           |             |
+| ff                                      | find file to edit |
+| filename_fu.rb                          |             |
+| find_sev_used_in_a_project.rb           |             |
+| find_stuff_between_blank_lines.rb       |             |
+| find_unused_methods.rb                  |             |
+| fix_perms.rb                            |             |
+| freshen_up.rb                           |             |
+| freshen_up_git_repos.rb                 |             |
+| fw                                      | scrabble cheat |
+| gc.rb                                   |             |
+| gem_ctags.rb                            |             |
+| gemd                                    | gen descruotuib |
+| gemt                                    | like rake -T |
+| gemt_all.txt                            |             |
+| gemt_venus.txt                          |             |
+| gemu                                    |             |
+| get_db_relationships.rb                 |             |
+| get_historical_stock_data.rb            |             |
+| get_last_commit_message.rb              |             |
+| get_marketbeat_data_from_email.rb       |             |
+| get_video_frames.sh                     |             |
+| git-wtf                                 |             |
+| git_method_log.sh                       |             |
+| git_remove_old_remote_branches.s        |             |
+| github_batch_delete_repos.sh            |             |
+| github_clone_my_repos.rb                |             |
+| github_open_pr.rb                       |             |
+| go2work                                 |             |
+| gup.rb                                  |             |
+| howdoi                                  | Passes MacOS/Bash question to mods |
+| hr                                      |             |
+| image_dup_finder.rb                     |             |
+| image_metadata.rb                       |             |
+| image_renamer.rb                        |             |
+| image_resizer.rb                        |             |
+| image_rotater.rb                        |             |
+| imbibler.rb                             |             |
+| insert_ticket_into_changelog.rb         |             |
+| install_gems_from_file.rb               |             |
+| installed.txt                           |             |
+| jar_search.pl                           |             |
+| jarify                                  |             |
+| jira_open.rb                            |             |
+| jira_update.sh                          |             |
+| json                                    |             |
+| json2yaml.rb                            |             |
+| killall_ruby                            |             |
+| latest_gems                             |             |
+| latest_gems.rb                          |             |
+| latin2ascii.py                          |             |
+| lefthook.yml                            |             |
+| lflf2lf                                 |             |
+| lib                                     |             |
+| lipsum.rb                               |             |
+| load_gems_from_file.rb                  |             |
+| loripsum.rb                             |             |
+| magic_8_ball.rb                         |             |
+| markdown_to_docx.rb                     |             |
+| mbox_finder.rb                          |             |
+| md2html                                 |             |
+| merge2                                  |             |
+| mime_guesser.rb                         |             |
+| mock_web_app.rb                         |             |
+| monitor_websites.rb                     |             |
+| my_docx_style_fixer.rb                  |             |
+| my_qa                                   |             |
+| new                                     |             |
+| new.rb                                  |             |
+| new_branch.sh                           |             |
+| new_rails_app.s                         |             |
+| newgit_project                          |             |
+| normalize_pathnames.rb                  |             |
+| note.rb                                 |             |
+| number                                  |             |
+| organizer.rb                            |             |
+| path                                    |             |
+| phpinfo                                 |             |
+| picnic_gems.rb                          |             |
+| platform                                |             |
+| ppsql.rb                                |             |
+| pr_summary.rb                           |             |
+| prepend_to_path_exclusive.rb            |             |
+| printenv                                |             |
+| projxslt.rb                             |             |
+| pushd_to_gem_directory                  |             |
+| rab_list_all.sh                         |             |
+| rawk.rb                                 |             |
+| rb2html                                 |             |
+| release.rb                              |             |
+| relink_home_dirs.rb                     |             |
+| rename_db_columns.rb                    |             |
+| replace_home_dots.rb                    |             |
+| resize_images.rb                        |             |
+| restore_latest_dump.s                   |             |
+| retirement_home                         | where old scripts go |
+| reverse_gem_depends.rb                  |             |
+| revert_all.rb                           |             |
+| ripfzf                                  | rg and fzf |
+| ripfzfsubl                              | rq, fzf and subl |
+| rpp                                     | ruby pretty print |
+| rss_tracker.rb                          |             |
+| rtags                                   |             |
+| ruler                                   |             |
+| rultor_init_project.rb                  |             |
+| run_sql.rb                              |             |
+| s2c                                     |             |
+| s3_downloader.rb                        |             |
+| s3_uploader.rb                          |             |
+| schema_diff.rb                          |             |
+| seed_with_headers.rb                    |             |
+| set_upstream.rb                         |             |
+| sgem                                    |             |
+| sgi                                     |             |
+| shc.rb                                  |             |
+| slugify                                 |             |
+| spot                                    |             |
+| sql                                     | directory of SQL |
+| squish_gem_list.rb                      |             |
+| start_postgresql.sh                     |             |
+| stop_postgresql.sh                      |             |
+| summarize_file.rb                       |             |
+| sw                                      | scrabble cheat |
+| sync_upstream.rb                        |             |
+| tell                                    |             |
+| templates                               | used wiht `new` |
+| termall.rb                              |             |
+| uninstall_all_gems.rb                   |             |
+| unset_proxy.s                           |             |
+| update_jira.sh                          |             |
+| update_jira_json_txt.rb                 |             |
+| useful_gems.rb                          |             |
+| validate_csv_row_size.rb                |             |
+| vcr_hater_xref.rb                       |             |
+| vcr_hater_yaml2hash.rb                  |             |
+| wcml_brf.rb                             |             |
+| wcml_draft_layout.rb                    |             |
+| where                                   |             |
+| wl                                      | scrabble cheat |
+| working_directory_from.rb               |             |
+| yaml2json.rb                            |             |
+
+
+

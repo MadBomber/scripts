@@ -171,7 +171,6 @@ handbrake                     # Open-source video transcoder available for Linux
 harfbuzz                      # OpenType text shaping engine
 helix-editor/helix/helix      # Post-modern modal text editor
 hicolor-icon-theme            # Fallback theme for FreeDesktop.org icon themes
-howdoi                        # Instant coding answers via the command-line
 html2text                     # Advanced HTML-to-text converter
 htop                          # Improved top (interactive process viewer)
 httpie                        # User-friendly cURL replacement  (command-line HTTP client)
