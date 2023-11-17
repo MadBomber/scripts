@@ -155,9 +155,9 @@ notes_file = get_relevant_notes_file(Pathname.pwd) if notes_file.nil?
 
 File.open(notes_file, "a") do |f|
   f.print "\n--- #{Time.now}\n"
-  f.print "\t#{ARGV.join(' ')}\n\n" unless ARGV.empty?  # .join(' ')
-  f.print "\t" + Clipboard.paste.split("\n").join("\n\t")
-  f.print "\n\t"*3
+  f.print "    #{ARGV.join(' ')}\n\n" unless ARGV.empty?  # .join(' ')
+  f.print "  " + Clipboard.paste.split("\n").join("\n\t")
+  f.print "\n"*3
 end
 
 system "#{ENV['EDITOR']} #{notes_file} &" if ARGV.empty?  &&  !ENV['EDITOR'].nil?
