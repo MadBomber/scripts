@@ -11,7 +11,11 @@
 ##  This program makes use of the gem word_wrap's
 ##  CLI tool: ww
 #
-
+# See:  aip_completion.sh
+#       which sets up auto TAB completion for the prompts_dir
+#       source aip_completion.sh whenever a new prompt is added
+#       or an old one deleted.
+#
 
 =begin
 
@@ -50,6 +54,16 @@ This robust tool is excellent for users who wish to harness the power of generat
 # TODO: I think this script has reached the point where
 #       it is ready to become a proper gem.
 #
+# New Gem:  prompt_manager has been created using this
+# this script as its requirements.  Will be retrofitting that
+# new gem into here.
+#
+#
+
+require 'prompt_manager'
+
+# TODO: refactor aip.rb to use the prompt_manager gem.
+
 
 require 'pathname'
 HOME = Pathname.new( ENV['HOME'] )
@@ -128,7 +142,7 @@ cli_helper("Use generative AI with saved parameterized prompts") do |o|
 end
 
 
-AG_COMMAND        = "ag --file-search-regex '\.txt$' e"
+AG_COMMAND        = "ag --file-search-regex '\.txt$' e" # searching for the letter "e"
 CD_COMMAND        = "cd #{PROMPT_DIR}"
 FIND_COMMAND      = "find . -name '*.txt'"
 
@@ -142,7 +156,7 @@ FZF_OPTIONS       = [
   "--preview-window=down:50%:wrap"
 ].join(' ')
 
-FZF_OPTIONS += "--exact" unless fuzzy?
+FZF_OPTIONS += " --exact" unless fuzzy?
 
 FZF_COMMAND       = "#{CD_COMMAND} ; #{FIND_COMMAND} | fzf #{FZF_OPTIONS}"
 AG_FZF_COMMAND    = "#{CD_COMMAND} ; #{AG_COMMAND}   | fzf #{FZF_OPTIONS}"
@@ -156,15 +170,31 @@ def ag_fzf = `#{AG_FZF_COMMAND}`.split(':')&.first&.strip&.gsub('.txt','')
 configatron.input_files = get_pathnames_from( configatron.arguments, %w[.rb .txt .md])
 
 
-# TODO: Make the use of the "-p" flag optional.
-#       I find myself many times forgetting to use it
-#       and this program rejecting it because
-#       "the file does not exist" thinging that it
-#       was an input file file rather than a prompt
-#       name.
+def first_argument_is_a_prompt?
+  prompt = configatron.arguments.shift
+
+  if is_a_prompt?(prompt)
+    configatron.prompt = prompt
+    # SMELL: what-a-hack
+    configatron.errors = configatron.errors.reject{|e| e.end_with?(prompt)}
+    true
+  else
+    configatron.arguments.prepend prompt
+    false
+  end
+end
+
+
+def is_a_prompt?(prompt_candidate)
+  prompt_path = PROMPT_DIR + (prompt_candidate + PROMPT_EXTNAME)
+  prompt_path.exist?
+end
+
 
 if configatron.prompt.empty?
-  configatron.prompt  = ag_fzf
+  unless first_argument_is_a_prompt?
+    configatron.prompt  = ag_fzf
+  end
 end
 
 unless edit?
@@ -396,6 +426,63 @@ require 'readline'
 With the above steps in place, you can use the readline method in your code, and the specified history and autocomplete options will be available.
 
 Note: Keep in mind that autocomplete options will only appear when tab is pressed while entering input.
+
+### README for aip.rb Ruby Script
+
+#### Overview
+
+The `aip.rb` Ruby script is a command-line interface (CLI) tool designed to leverage generative AI with saved parameterized prompts. It integrates with the `mods` command-line tool that uses a GPT-based model to generate responses based on user-provided prompts. The script offers an array of features that make interacting with AI models more convenient and streamlined. 
+
+#### Features
+
+- **Prompt Management**
+  - Users can select prompts from a saved collection with the help of command-line searching and filtering.
+  - Prompts can be edited by the user to better fit their specific context or requirement.
+  - Support for reading input from files to provide context for AI generation is included.
+  
+- **AI Integration**
+  - The script interacts with `mods`, a generative AI utilizing GPT-based models, to produce outputs from the prompts.
+  
+- **Output Handling**
+  - Generated content is saved to a specified file for record-keeping and further use.
+  
+- **Activity Logging**
+  - All actions, including prompt usage and AI output, are logged with timestamps for review and auditing purposes.
+
+#### Dependencies
+
+The script requires the installation of the following command-line tools:
+
+- `fzf`: a powerful command-line fuzzy finder.
+- `mods`: an AI-powered CLI tool for generative AI interactions.
+- `the_silver_searcher (ag)`: a code-searching tool similar to ack and used for searching prompts.
+
+#### Usage
+
+The `aip.rb` script offers a set of command-line options to guide the interaction with AI:
+
+- `-p, --prompt`: Specify the prompt name to be used.
+- `-e, --edit`: Open the prompt text for editing before generation.
+- `-f, --fuzzy`: Allows fuzzy matching for prompt selection.
+- `-o, --output`: Sets the output file for the generated content.
+
+Additional flags and options can be passed to the `mods` tool by appending them after a `--` separator.
+
+#### Installation
+
+Before using the script, one must ensure the required command-line tools (`fzf`, `mods`, and `the_silver_searcher`) are installed, and the Ruby environment is correctly set up with the necessary gems.
+
+#### Development Notes
+
+The author suggests that the script has matured enough to be converted into a Ruby gem for easier distribution and installation.
+
+#### Getting Help
+
+For help with using the CLI tool or further understanding the `mods` command, users can refer to the AI CLI Program help section included in the script or by invoking the `--help` flag.
+
+#### Conclusion
+
+The `aip.rb` script is designed to offer a user-friendly and flexible approach to integrating generative AI into content creation processes. It streamlines the interactions and management of AI-generated content by providing prompt management, AI integration, and logging capabilities, packaged inside a simple command-line utility.
 
 
 
