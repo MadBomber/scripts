@@ -32,8 +32,11 @@ def usage
                     The search is up the directory tree
     _ <any text>  Adds <any text> and the clipboard to the closest project
 
-    _ +           Sets the current directory as a project in the ~/_notes_project_db.json file
+    _ +           Sets the current directory as a project in the file
+                  #{PROJECT_DB_FILE.basename}
+
     _ +project    Opens the _notes.txt file for the "project"
+
     _ +project <any text>   Add the text to the _notes.txt file for "project"
 
     _ [-s|--search] Will search all '_notes.txt' files using the 'agrep' command
@@ -72,6 +75,7 @@ if PROJECT_DB_FILE.exist?
   project_db = JSON.parse(PROJECT_DB_FILE.read)
 else
   project_db = Hash.new
+  PROJECT_DB_FILE.write project_db.to_json
 end
 
 notes_file = nil
