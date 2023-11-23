@@ -1,12 +1,12 @@
-# scripts/aip_completion.sh
+# scripts/aia_completion.sh
 # Setup a prompt completion for use with
-# aip.rb
+# aia (a Ruby program) AI Assistant
+#
+# Requires the $PROMPTS_DIR envar be set 
 
-export PROMPTS_DIR=~/.prompts
+# Function to generate prompt completions for aia
 
-# Function to generate prompt completions for aip.rb
-
-_aip_completion() {
+_aia_completion() {
   # The current word being completed
   local cur_word="${COMP_WORDS[COMP_CWORD]}"
 
