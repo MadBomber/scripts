@@ -25,6 +25,6 @@ rg --color=always --line-number --no-heading --smart-case "${*:-}" |
       --delimiter : \
       --preview 'bat --color=always {1} --highlight-line {2}' \
       --preview-window 'up,60%,border-bottom,+{2}+3/3,~3'
+      
 
-# Add this option to invoke the editor    
-# --bind 'enter:become(subl {1}:{2})'
+
