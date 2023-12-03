@@ -5,7 +5,7 @@
 ##########################################################
 ###
 ##  File: backup_just.rb
-##  Desc: Find all *.just and */justfile files and copy them
+##  Desc: Find all *.just, *.justfile and */justfile files and copy them
 ##        to ~/.just_backup directory
 ##  By:   Dewayne VanHoozer (dvanhoozer@gmail.com)
 #
@@ -14,6 +14,8 @@
 
 require 'date'
 require 'pathname'
+require 'tempfile'
+
 
 HOME            = Pathname.new(ENV['HOME'])
 BACKUP_DIR      = HOME + '.just_backup'
@@ -22,7 +24,7 @@ LAST_TIME_PATH  = BACKUP_DIR + 'last_backup_timestamp.txt'
 LAST_BACKUP_TIME  = LAST_TIME_PATH.mtime
 
 home_string       = HOME.to_s
-backup_dir_string = BACKUP_DIR.to_s
+BACKUP_DIR_STRING = BACKUP_DIR.to_s
 
 unless BACKUP_DIR.exist?
   BACKUP_DIR.mkdir
@@ -56,19 +58,40 @@ puts
 puts "Last backup was: #{LAST_BACKUP_TIME}"
 puts
 
-print "Finding all the files modified since then ... "
-source_files_string  = `mdfind -onlyin $HOME -name just`
+puts "Finding all the files modified since then ... "
 
-source_paths  = source_files_string
-                  .split("\n")
-                  .reject{|f| f.include?(backup_dir_string) }
-                  .select{|f| f.end_with?('.just') || f.end_with?('justfile')}
-                  .map{   |f| Pathname.new(f.chomp.strip)   }
+# Define a method to filter files with specific extensions
+def filter_files(tempfile_path)
+  File.readlines(tempfile_path)
+    .reject{|line| line.include?(BACKUP_DIR_STRING) }
+    .map{|line| line.strip}
+    .select{|line| 
+      line.end_with?('.just')     ||
+      line.end_with?('justfile')
+    }
+    .map{|line| Pathname.new(line)}
+end
 
+
+def with_tempfile
+  just_files = [] # set the context
+
+  Tempfile.create('tempfile') do |tempfile|
+    system("rg --files -uu ~/ 2> /dev/null > #{tempfile.path}")
+
+    just_files = filter_files(tempfile.path)
+  end
+
+  just_files
+end
+
+source_paths = with_tempfile
 
 total_file_count = source_paths.size
 
-source_paths.reject!{|f| f.mtime < LAST_BACKUP_TIME }
+source_paths.reject!{|f| 
+  f.mtime < LAST_BACKUP_TIME 
+}
 
 modified_file_count = source_paths.size
 
@@ -80,7 +103,7 @@ print "Creating target paths ... "
 target_paths = []
 
 source_paths.each do |source|
-  target_paths << Pathname.new( source.to_s.gsub(home_string, backup_dir_string) )
+  target_paths << Pathname.new( source.to_s.gsub(home_string, BACKUP_DIR_STRING) )
 end
 
 puts "done"
