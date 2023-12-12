@@ -1,4 +1,5 @@
-# lib/aia/temp.rb
+#!/usr/bin/env ruby
+# scripts/file_preable_template.rb
 
 require 'pathname'
 
@@ -17,7 +18,7 @@ def prepend_relative_paths(base_dir: Pathname.new(ENV['RR']), current_dir: Pathn
     updated_content = <<~EOS 
       # #{relative_path}
 
-      module AIA::#{relative_path.basename.to_s.gsub('.rb','').camelize}
+      module AIA::External::#{relative_path.basename.to_s.gsub('.rb','').camelize}
 
       end
 
