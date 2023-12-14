@@ -27,6 +27,7 @@ end
 # Using this form so that you can grab what you want for a Gemfile
 
 # my gems ...
+gem 'aia'                     # AI Assistant
 gem 'cli_helper'              # An encapsulation of an integration of slop, nenv, inifile and configatron.
 gem 'debug_me'                # A tool to print the labeled value of variables.
 gem 'rethinkdb_helper'        # A wrapper around the ruby rethinkdb gem
@@ -70,6 +71,7 @@ gem 'aws-sdk-s3'              # AWS SDK for Ruby - Amazon S3
 gem 'bible_gateway'           # An unofficial 'API' for BibleGateway.com.
 gem 'blazer'                  # Explore your data with SQL. Easily create charts and dashboards, and share them with your team.
 gem 'bond'                    # used in IRB completions
+gem 'boxcars'                 # Boxcars is a gem that enables you to create new systems with AI composability. Inspired by python langchain.
 gem 'bundler'                 # The best way to manage your application's dependencies
 gem 'bundler-audit'           # Patch-level verification for Bundler
 gem 'bunny'                   # Popular easy to use Ruby client for RabbitMQ
@@ -85,8 +87,8 @@ gem 'concurrent-ruby-ext'     # C extensions to optimize concurrent-ruby under M
 gem 'concurrent-ruby-edge'    # Edge features and additions to the concurrent-ruby gem.
 #
 gem 'daemons'                 # A toolkit to create and control daemons in different ways
-gem 'daru'                    # Data Analysis in RUby
-gem 'daru-plotly'             # Draw graph with daru
+# outdated gem 'daru'                    # Data Analysis in RUby
+# outdated gem 'daru-plotly'             # Draw graph with daru
 gem 'did_you_mean'            # "Did you mean?" experience in Ruby
 gem 'docopt'                  # A command line option parser, that will make you smile.
 gem 'docx'                    # a ruby library/gem for interacting with .docx files
@@ -109,7 +111,7 @@ gem 'ect'                     # Methods ending in ect
 gem 'email_address'           # This gem provides a ruby language library for working with and validating email addresses. By default, it validates against conventional usage, the format preferred for user email addresses. It can be configured to validate against RFC “Standard” formats, common email service provider formats, and perform DNS validation.
 gem 'event_bus'               # A simple pubsub event bus for Ruby applications
 #
-#v3.0.0 gem 'facter'                  # Facter, a system inventory tool
+gem 'facter'                  # Facter, a system inventory tool
 gem 'falcon'                  # A fast, asynchronous, rack-compatible web server.
 gem 'fast_excel'              # Ultra Fast Excel Writer (XLSX)
 gem 'fast_jsonparser'         # Fast Json Parser
@@ -149,11 +151,11 @@ gem 'htmlentities'            # Encode/decode HTML entities
 gem 'inspec'                  # Infrastructure and compliance testing.
 gem 'iodine'                  # iodine - a fast HTTP / Websocket Server with Pub/Sub support, optimized for Ruby MRI on Linux / BSD
 gem 'irbtools'                # Irbtools happy IRB.
-# 270p3 gem 'irbtools-more'           # adds bond and looksee to IRB.
 gem 'jira-ruby'               # Ruby Gem for use with the Atlassian JIRA REST API
 gem 'jirasync'                # jirasync synchronises jira projects to the local file system
 gem 'json'                    # This json is bundled with Ruby
 #
+gem 'langchainrb'             # Build LLM-backed Ruby applications with Ruby's LangChain
 gem 'lefthook'                # A single dependency-free binary to manage all your git hooks that works with any language in any environment, and in all common team workflows.
 gem 'linefit'                 # LineFit is a linear regression math class.
 gem 'lipsum'                  # Get placeholder text from lipsum.com
@@ -206,6 +208,7 @@ gem 'rssable'                 # Access the RSS channel of any website without wo
 gem 'rubocop'                 # Automatic Ruby code style checking tool.
 gem 'rubocop-performance'     # Automatic performance checking tool for Ruby code.
 gem 'ruby_crystal_codemod'    # Ruby => Crystal codemod
+gem 'ruby-openai'.            # OpenAI API + Ruby! 🤖❤️
 gem 'ruby-progressbar'        # never leave the user guessing
 gem 'rubyfmt'                 # Ruby port of gofmt
 gem 'rubytoolbox-api'         # A simple, dependency-free API client for The Ruby Toolbox
@@ -241,7 +244,7 @@ gem "timecop"                 # A gem providing "time travel" and "time freezing
 gem 'transitions'             # State machine extracted from ActiveModel
 gem 'trick_bag'               # Miscellaneous general useful tools.
 #
-# 3.0.0 gem 'virtualbox'              # Support functions for VM
+# 3.0.0 / 3.3rc1 gem 'virtualbox'              # Support functions for VM
 #
 gem 'wharel'                  # Arel + Where = Wharel
 gem 'word_wrap'               # Simple tool for word-wrapping text
