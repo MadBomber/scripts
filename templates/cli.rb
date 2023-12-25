@@ -9,6 +9,10 @@
 ##  By:   Dewayne VanHoozer (dvanhoozer@gmail.com)
 #
 
+if defined?(RubyVM::YJIT)
+  RubyVM::YJIT.enable if RubyVM::YJIT.respond_to? :enable
+end
+
 require 'amazing_print'
 
 require 'debug_me'
