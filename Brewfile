@@ -37,7 +37,6 @@ cgl                           # Cut Generation Library
 cgrep                         # Context-aware grep for source code
 cheat                         # Create and view interactive cheat sheets for *nix commands
 check_postgres                # Monitor Postgres databases
-cherrytree                    # Hierarchical note taking application featuring rich text and syntax highlighting
 chicken                       # Compiler for the Scheme programming language
 choose-rust                   # Human-friendly and fast alternative to cut and (sometimes) awk
 cloc                          # Statistics utility to count lines of code
