@@ -37,9 +37,11 @@ gem 'rethinkdb_helper'        # A wrapper around the ruby rethinkdb gem
 # geohash divides the world up into squars
 # Uber's H3 divides the world up into hexagons
 #
-# !3.0.0-p1 gem 'geohash36'               # Commandline interface and library to the Geohash36 Algorithm
+# !3.0.0-p1 gem 'geohash36'   # Commandline interface and library to the Geohash36 Algorithm
+
 # h3 requires the 'cmake' package; use brew, dnf, yum, apt=get etc
-unless OS.linux?
+if OS.mac?
+  `brew install cmake`
   gem 'h3'                      # C Bindings for Uber's H3 library
 end
 
@@ -198,6 +200,7 @@ gem 'rack-attack'             # Block & throttle abusive requests
 gem 'rails', '~> 5.2'         # Full-stack web application framework.
 gem 'rails-erd'               # Entity-relationship diagram for your Rails models.
 gem 'ripper-tags'             # ctags generator for ruby code
+# 3.3.0rc1 cannot install gem 're2'
 gem 'reform'                  # Form object decoupled from models with validation, population and presentation.
 gem 'rexe'                    # Ruby Command Line Executor
 gem 'rgeo'                    # RGeo is a geospatial data library for Ruby.
@@ -208,7 +211,7 @@ gem 'rssable'                 # Access the RSS channel of any website without wo
 gem 'rubocop'                 # Automatic Ruby code style checking tool.
 gem 'rubocop-performance'     # Automatic performance checking tool for Ruby code.
 gem 'ruby_crystal_codemod'    # Ruby => Crystal codemod
-gem 'ruby-openai'.            # OpenAI API + Ruby! 🤖❤️
+gem 'ruby-openai'             # OpenAI API + Ruby! 🤖❤️
 gem 'ruby-progressbar'        # never leave the user guessing
 gem 'rubyfmt'                 # Ruby port of gofmt
 gem 'rubytoolbox-api'         # A simple, dependency-free API client for The Ruby Toolbox
