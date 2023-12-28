@@ -150,7 +150,6 @@ gem 'hashdiff'                # Hashdiff is a diff lib to compute the smallest d
 gem 'holidays'                # A collection of Ruby methods to deal with statutory and other holidays.
 gem 'htmlentities'            # Encode/decode HTML entities
 #
-gem 'inspec'                  # Infrastructure and compliance testing.
 gem 'iodine'                  # iodine - a fast HTTP / Websocket Server with Pub/Sub support, optimized for Ruby MRI on Linux / BSD
 gem 'irbtools'                # Irbtools happy IRB.
 gem 'jira-ruby'               # Ruby Gem for use with the Atlassian JIRA REST API
