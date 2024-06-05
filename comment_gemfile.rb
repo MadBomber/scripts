@@ -10,15 +10,9 @@ require 'amazing_print'  # Pretty print Ruby objects with proper indentation and
 require 'pathname'       # STDLIB
 
 class NilClass
-  def split(*args)
-    [" "]
-  end
-  def strip
-    ""
-  end
-  def to_s
-    ""
-  end
+  def split(*args)  = [" "]
+  def strip         = ""
+  def to_s          = ""
 end
 
 $gem_hash = Hash.new
