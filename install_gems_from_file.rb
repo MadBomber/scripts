@@ -7,6 +7,16 @@
 ##  By:   Dewayne VanHoozer (dvanhoozer@gmail.com)
 #
 
+require 'bundler/inline'
+
+gemfile true do
+  source 'https://rubygems.org'
+  gem 'amazing_print'
+  gem 'debug_me'
+  gem 'cli_helper'
+end
+
+
 require 'yaml'  # STDLIB
 
 require 'amazing_print'     # Pretty print Ruby objects with proper indentation and colors
