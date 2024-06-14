@@ -69,6 +69,7 @@ class AcronymExtractor
       process_file(path)
     end
   end
+
   def process_file(file_path)
     puts "Processing file: #{file_path.basename}" if @verbose
     begin
@@ -96,13 +97,19 @@ class AcronymExtractor
     end
   end
 
-
   def extract_definition_for_standalone_acronym(acronym, content)
-    # This is a placeholder for a method that would attempt to find a definition for acronyms collected
-    # from the simple pattern. This might involve searching the content before the acronym occurrence for
-    # phrases that fit the acronym's letters. The implementation of this method depends on the specific
-    # requirements and assumptions about the document structure.
-    "Placeholder definition"  # This should be replaced with actual logic
+    inx   = content.index(acronym)
+    start = inx - (15*acronym.size)
+    start = start < 0 ? 0 : start
+    context = content[start..inx+5]
+
+    debug_me{[
+      :acronym,
+      "content.size",
+      :context,
+    ]}
+
+    return "unknown"
   end
 
   # Check if the acronym is valid and not an all-caps English word
@@ -110,7 +117,7 @@ class AcronymExtractor
     acronym_chars = acronym.upcase.split("") # Normalize to uppercase for comparison
     words_array = words.split(" ")
 
-    # Here, we check if any of the words are acronyms we've already encountered, 
+    # Here, we check if any of the words are acronyms we've already encountered,
     # and replace them with their first letter if so. It handles nested acronyms.
     acronym_words = words_array.map do |word|
       if @acronyms[word.upcase]
@@ -123,7 +130,7 @@ class AcronymExtractor
     is_acronym_chars_match = acronym_chars == acronym_words
     is_acronym_chars_match
   end
-  
+
   # Check if a word is a valid English word using WordNet
   def valid_english_word?(word)
     wn_result = !WordNet::Lemma.find_all(word.downcase).empty?
@@ -132,14 +139,6 @@ class AcronymExtractor
     FFI::Hunspell.dict do |dict|
       hs_result = dict.check?(word)
     end
-
-    debug_me {
-      [
-        :word,
-        :wn_result,
-        :hs_result,
-      ]
-    }
 
     wn_result || hs_result
   end

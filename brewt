@@ -104,7 +104,7 @@ installed_packages.each do |package|
   print package_full_name
   print " "*(desc_start_col - package_full_name.size)
   text = WordWrapper::MinimumRaggedness.new(width, package_desc.strip).wrap
-  text += package_link
+  text += package_link.nil? ? '' : package_link
   text_array = text.split("\n")
 
   last_x = text_array.size-1

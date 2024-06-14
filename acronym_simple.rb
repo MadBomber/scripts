@@ -25,18 +25,41 @@ class SimplifiedAcronymExtractor
 
   def print_acronyms
     puts "\nExtracted Acronyms and Possible Definitions:"
+    
+    # Drop acronyms without a best match and with over 3 unique definitions before printing
+    # drop_unmatched_acronyms
+    
     @acronyms.each do |acronym, definitions|
       puts "\n#{acronym}:"
-      definitions = definitions.uniq.reject { |defn| defn.strip.empty? }
-      # Sort the definitions based on the best match criteria
-      sorted_definitions = sort_definitions(acronym, definitions)
-      puts "  #{sorted_definitions.join("\n  ")}" unless definitions.empty?
+      puts "  #{definitions.join("\n  ")}"
     end
 
     puts
   end
 
   private
+
+  def drop_unmatched_acronyms
+    @acronyms.each do |acronym, in_definitions|
+      # Unique definitions and reject empty ones
+      definitions = in_definitions
+                      .uniq
+                      .reject { |defn| defn.strip.empty? }
+      
+      # Sort definitions by best match criteria
+      sorted_definitions = sort_definitions(acronym, definitions)
+      
+      # Check number of unique definitions and whether sorted_definitions.first is a best match
+      # Drop the acronym if conditions are not met
+      if definitions.size > 3 || sorted_definitions != definitions
+        @acronyms.delete(acronym)
+      else
+        @acronyms[acronym] = sorted_definitions # Update with sorted and filtered definitions
+      end
+    end
+  end
+  
+
 
   def process_path(path)
     return unless path.exist?

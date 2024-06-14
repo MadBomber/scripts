@@ -5,22 +5,26 @@ require 'pathname'
 
 require 'mods/string_mods.rb'
 
-def prepend_relative_paths(base_dir: Pathname.new(ENV['RR']), current_dir: Pathname.pwd)
+def prepend_relative_paths(
+      base_dir:     Pathname.new(ENV['RR']), 
+      current_dir:  Pathname.pwd,
+      ext:          '.rb'
+    )
   base_path     = Pathname.new(base_dir)
   current_path  = Pathname.new(current_dir)
 
-  # Find all Ruby files (*.rb) in the current directory
-  Dir.glob("#{current_path}/*.rb").each do |file|
+  # Find all files (*.ext) in the current directory
+  Dir.glob("#{current_path}/**/*#{ext}").each do |file|
     relative_path = Pathname.new(file).relative_path_from(base_path)
 
     content = File.read(file)
+
+    next if '#' == content[0]
+
     # Prepend the relative path as a comment at the top of the file
     updated_content = <<~EOS 
       # #{relative_path}
-
-      module AIA::External::#{relative_path.basename.to_s.gsub('.rb','').camelize}
-
-      end
+      # Desc: 
 
     EOS
 
@@ -31,6 +35,6 @@ def prepend_relative_paths(base_dir: Pathname.new(ENV['RR']), current_dir: Pathn
   end
 end
 
-prepend_relative_paths
+prepend_relative_paths ext: '.txt'
 
 
