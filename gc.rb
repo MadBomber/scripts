@@ -50,18 +50,20 @@ end
 JIRA_TICKET   = ENV.fetch('JIRA_TICKET', '')
 JIRA_SUMMARY  = ENV.fetch('JIRA_SUMMARY', '')
 JIRA_AC       = ENV.fetch('JIRA_AC', '') # Acceptance Critera
+JIRA_DESC     = ENV.fetch('JIRA_DESC', '') # Description sometimes has the AC
 
 replacements = {
   # New branches for a ticket are created in a working directory with the ticket name
   '[jira_ticket]'   => JIRA_TICKET,
   '[jira_summary]'  => JIRA_SUMMARY,
-  '[jira_ac]'       => JIRA_AC       
+  '[jira_ac]'       => JIRA_AC,
+  '[jira_desc]'     => JIRA_DESC
 }
 
 template = template_path.read
 
 replacements.each_pair do |key, value|
-  template.gsub!(key, value)
+  template.gsub!(key, value.gsub('\r\n', "\n"))
 end
 
 message_file = File.open(message_path, 'w')
