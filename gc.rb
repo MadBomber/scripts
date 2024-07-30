@@ -16,10 +16,16 @@
 #   by making replacements in the content as directed by the
 #   Hash object replacements.
 #
+# Do this to make 'git commit' pick up the
+# local commit message file.
+#
+#   git config --local commit.template .gitmessage.txt
+#
 #   You can
 #     alias gc='gc.rb && git commit'
 #   to take advantage of the new template capability.
 #
+
 
 require 'amazing_print'
 require 'pathname'
