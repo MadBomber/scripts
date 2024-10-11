@@ -27,6 +27,7 @@ end
 # Using this form so that you can grab what you want for a Gemfile
 
 # my gems ...
+gem 'ai_client'               # A generic AI Client for many providers
 gem 'aia'                     # AI Assistant
 gem 'cli_helper'              # An encapsulation of an integration of slop, nenv, inifile and configatron.
 gem 'debug_me'                # A tool to print the labeled value of variables.
@@ -293,6 +294,7 @@ gem 'test-kitchen'            # Test Kitchen is an integration tool for developi
 gem 'test-prof'               # Ruby applications tests profiling tools
 gem 'thruster'                # http/2 + ssl for puma and rails
 gem 'timecop'                 # A gem providing "time travel" and "time freezing" capabilities, making it dead simple to test time-dependent code.  It provides a unified method to mock Time.now, Date.today, and DateTime.now in a single call.
+gem 'tocer'                   # A command line interface for generating Markdown table of contents.
 gem 'transitions'             # State machine extracted from ActiveModel
 gem 'trick_bag'               # Miscellaneous general useful tools.
 gem 'tty-box'                 # Draw various frames and boxes in your terminal interface.

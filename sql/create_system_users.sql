@@ -1,4 +1,8 @@
--- ~/scripts/sql/create_system_users.sql
+-- ~/scripts/sql/create_system_users.
+-- may need to do this first:
+-- 		initdb -U postgres
+-- to create the $PGDATA directory and setup postgres as the SUPERUSER
+--
 -- psql -h localhost -d postgres -f ~/scripts/sql/create_system_users.sql
 
 DROP ROLE IF EXISTS dewayne;
