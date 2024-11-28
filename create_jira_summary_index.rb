@@ -68,6 +68,7 @@ configatron.input_files.each do |filename|
   stuff   = JSON.parse(filename.read)
   key     = stuff["key"]
   summary = stuff["fields"]["summary"]
+  desc    = stuff["fields"]["description"]
   status  = stuff["fields"]["status"]["name"]
   summaries << "#{key} - #{status} - #{summary}"
 end
