@@ -1,0 +1,72 @@
+#!/usr/bin/env bash
+
+# Function to convert a single HTML file to Markdown
+convert_file() {
+    local html_file="$1"
+    local md_file="${html_file%.html}.md"
+
+    if pandoc "$html_file" -o "$md_file"; then
+        echo "Converted: $html_file -> $md_file"
+    else
+        echo "Error converting: $html_file"
+    fi
+}
+
+# Function to convert HTML files in a directory
+convert_directory() {
+    local dir="$1"
+    local recursive="$2"
+
+    if [[ "$recursive" == true ]]; then
+        find "$dir" -type f -iname '*.html' | while read -r html_file; do
+            convert_file "$html_file"
+        done
+    else
+        for html_file in "$dir"/*.html; do
+            [[ -f "$html_file" ]] && convert_file "$html_file"
+        done
+    fi
+}
+
+# Check if pandoc is installed
+if ! command -v pandoc &> /dev/null; then
+    echo "Error: pandoc is not installed. Please install it before running this script."
+    exit 1
+fi
+
+# Check for command line arguments
+if [[ $# -eq 0 ]]; then
+    echo "Usage: $0 [-R] <html_file_or_directory>..."
+    exit 1
+fi
+
+recursive=false
+
+# Parse command line options
+while getopts ":R" opt; do
+    case ${opt} in
+        R )
+            recursive=true
+            ;;
+        \? )
+            echo "Usage: $0 [-R] <html_file_or_directory>..."
+            exit 1
+            ;;
+    esac
+done
+
+shift $((OPTIND -1))
+
+# Loop through all provided arguments
+for input in "$@"; do
+    # Check if the input is a directory or a file
+    if [[ -d "$input" ]]; then
+        convert_directory "$input" "$recursive"
+    elif [[ -f "$input" && "$input" == *.html ]]; then
+        convert_file "$input"
+    else
+        echo "Error: $input must be an HTML file or a directory containing HTML files."
+    fi
+done
+
+exit 0
