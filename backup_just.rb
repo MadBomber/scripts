@@ -17,11 +17,9 @@ require 'pathname'
 require 'tempfile'
 
 
-HOME            = Pathname.new(ENV['HOME'])
-BACKUP_DIR      = HOME + '.just_backup'
-LAST_TIME_PATH  = BACKUP_DIR + 'last_backup_timestamp.txt'
-
-LAST_BACKUP_TIME  = LAST_TIME_PATH.mtime
+HOME           = Pathname.new(ENV['HOME'])
+BACKUP_DIR     = HOME + '.just_backup'
+LAST_TIME_PATH = BACKUP_DIR + 'last_backup_timestamp.txt'
 
 home_string       = HOME.to_s
 BACKUP_DIR_STRING = BACKUP_DIR.to_s
@@ -34,6 +32,17 @@ unless BACKUP_DIR.directory?
   puts "\nERROR: Not a Directory ~/#{BACKUP_DIR.basename}"
   exit(1)
 end
+
+# Handle the case where LAST_TIME_PATH doesn't exist
+if LAST_TIME_PATH.exist?
+  LAST_BACKUP_TIME = LAST_TIME_PATH.mtime
+else
+  # If the file doesn't exist, use a default time (e.g., 24 hours ago)
+  LAST_BACKUP_TIME = Time.now - 86400*365 # set the time to last year
+  puts "No previous backup timestamp found. Using default: #{LAST_BACKUP_TIME}"
+end
+
+
 
 require 'amazing_print'
 
