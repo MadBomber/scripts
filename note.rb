@@ -56,7 +56,7 @@ require 'pathname'   # STDLIB
 require 'json'       # STDLIB
 require 'date'       # STDLIB
 
-require 'load_gems'
+require 'load_gems'   # from lib/ruby
 load_gems 'clipboard'
 
 
