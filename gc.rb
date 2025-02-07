@@ -9,6 +9,8 @@
 ##  By:   Dewayne VanHoozer (dvanhoozer@gmail.com)
 ##
 #
+# TODO: integrate "aicommit" (brew install aicommit)
+#
 #   brew install aspell
 #
 #   Add a file to the HOME directory called .gitmessage.template
