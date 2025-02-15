@@ -1,9 +1,8 @@
 #!/bin/bash
 
-# Set the target branch to compare against.
-TARGET_BRANCH="main"  # or "master"
+TARGET_BRANCH="main"
 
-# Get the list of commits unique to the current branch compared to the target branch.
+# Get the list of commits unique to the current branch.
 COMMITS=$(git rev-list --no-merges origin/$TARGET_BRANCH..HEAD)
 
 if [ -z "$COMMITS" ]; then
@@ -11,24 +10,66 @@ if [ -z "$COMMITS" ]; then
   exit 0
 fi
 
-# Use git diff to get the list of affected files and their status
-git diff --name-status --diff-filter=AMDR "$TARGET_BRANCH...HEAD" | while read -r status file; do
-  case "$status" in
-    A)
-      echo "Added: $file"
-      ;;
-    M)
-      echo "Modified: $file"
-      ;;
-    D)
-      echo "Deleted: $file"
-      ;;
-    R*)
-      old_file=$(echo "$file" | cut -d'>' -f1 | tr -d ' ')
-      new_file=$(echo "$file" | cut -d'>' -f2 | tr -d ' ')
-      echo "Renamed: $old_file -> $new_file"
-      ;;
-  esac
+affected_files=()
+renamed_files=()
+
+# Iterate through each commit to detect renames and other changes
+for commit in $COMMITS; do
+  # Detect renames in this commit
+  git diff --name-status --find-renames -M "$commit^..$commit" | while IFS= read -r line; do
+    status=$(echo "$line" | cut -c 1-2)
+    file=$(echo "$line" | cut -c 4-)
+
+    case "$status" in
+      RN)
+        # Renamed file:  RNXXX old_path    new_path
+        old_file=$(echo "$file" | awk '{print $1}')
+        new_file=$(echo "$file" | awk '{print $2}')
+        renamed_files+=("$new_file:$old_file")  # Store as new:old
+
+        # Record the *old* name as affected, since the file was "touched" under that name
+        affected_files+=("$old_file")
+        affected_files+=("$new_file") # Also add the new name
+
+        ;;
+      R*)
+        #Renamed and modified
+        old_file=$(echo "$file" | awk '{print $1}')
+        new_file=$(echo "$file" | awk '{print $2}')
+        renamed_files+=("$new_file:$old_file")  # Store as new:old
+        affected_files+=("$old_file")
+        affected_files+=("$new_file") # Also add the new name
+        ;;
+      A)
+        affected_files+=("$file")
+        ;;
+      M)
+        affected_files+=("$file")
+        ;;
+      D)
+        affected_files+=("$file")
+        ;;
+      *)
+        # Ignore other status codes (e.g., C for copied)
+        ;;
+    esac
+  done
 done
 
-    
+# Remove duplicates from the affected files list
+affected_files=($(printf "%s\n" "${affected_files[@]}" | sort -u))
+
+# Print the results
+
+echo "Added/Modified/Deleted Files:"
+for file in "${affected_files[@]}"; do
+    echo "  $file"
+done
+
+echo ""
+echo "Renamed Files:"
+for rename_pair in "${renamed_files[@]}"; do
+  new_file=$(echo "$rename_pair" | cut -d':' -f1)
+  old_file=$(echo "$rename_pair" | cut -d':' -f2)
+  echo "  $old_file -> $new_file"
+done
