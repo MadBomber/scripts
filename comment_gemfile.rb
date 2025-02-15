@@ -21,6 +21,10 @@ Gem::Specification.all.each do |gs|
   $gem_hash[gs.name] = gs.summary
 end
 
+def gemspec
+  # NOOP
+end
+
 def gem(*args)
   $gem_hash[args.first].to_s
 end
@@ -74,7 +78,7 @@ gemfile_bak.readlines.each do |a_line|
 
       summary     = eval(a_line)
 
-      unless summary.empty?
+      unless summary&.empty?
 
         sz          = a_line.length
         spacer_cnt  = last_desc_start_col - sz

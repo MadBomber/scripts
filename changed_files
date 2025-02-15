@@ -1,0 +1,35 @@
+      
+#!/bin/bash
+
+# Set the target branch to compare against.
+TARGET_BRANCH="main"
+
+# Get the list of commits unique to the current branch compared to the target branch.
+COMMITS=$(git rev-list --no-merges origin/$TARGET_BRANCH..HEAD)
+
+if [ -z "$COMMITS" ]; then
+  echo "No commits found that are unique to the current branch ($api-44751)."
+  exit 0
+fi
+
+# Use git diff to get the list of affected files and their status
+git diff --name-status --diff-filter=AMDR "$TARGET_BRANCH...HEAD" | while read -r status file; do
+  case "$status" in
+    A)
+      echo "Added: $file"
+      ;;
+    M)
+      echo "Modified: $file"
+      ;;
+    D)
+      echo "Deleted: $file"
+      ;;
+    R*)
+      old_file=$(echo "$file" | cut -d'>' -f1 | tr -d ' ')
+      new_file=$(echo "$file" | cut -d'>' -f2 | tr -d ' ')
+      echo "Renamed: $old_file -> $new_file"
+      ;;
+  esac
+done
+
+    
