@@ -1,75 +1,150 @@
-#!/bin/bash
+#!/bin/sh
 
-TARGET_BRANCH="main"
+# Debug function
+debug() {
+  echo "[DEBUG] $@" >&2  # Redirect to stderr
+}
+
+# Determine the base branch (main or master)
+if git show-ref --quiet "refs/remotes/origin/main"; then
+  TARGET_BRANCH="origin/main"
+elif git show-ref --quiet "refs/remotes/origin/master"; then
+  TARGET_BRANCH="origin/master"
+else
+  echo "Neither origin/main nor origin/master found.  Please set TARGET_BRANCH manually and ensure you are on the feature branch."
+  exit 1
+fi
+
+# Get the name of the current branch
+CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+
+# Check if we are on a detached HEAD
+if [ "$CURRENT_BRANCH" = "HEAD" ]; then
+    echo "You are in a detached HEAD state. Please checkout a branch to continue."
+    exit 1
+fi
+
+debug "TARGET_BRANCH:  $TARGET_BRANCH"
+debug "CURRENT_BRANCH: $CURRENT_BRANCH"
+
 
 # Get the list of commits unique to the current branch.
-COMMITS=$(git rev-list --no-merges origin/$TARGET_BRANCH..HEAD)
+COMMITS=$(git rev-list --no-merges "$TARGET_BRANCH..$CURRENT_BRANCH")
+
+debug "Commits found: $COMMITS"
 
 if [ -z "$COMMITS" ]; then
-  echo "No commits found that are unique to the current branch."
+  echo "No commits found that are unique to the current branch compared to $TARGET_BRANCH."
   exit 0
 fi
 
-affected_files=()
-renamed_files=()
+added_files=""
+deleted_files=""
+renamed_files=""
+modified_files=""
 
 # Iterate through each commit to detect renames and other changes
 for commit in $COMMITS; do
-  # Detect renames in this commit
-  git diff --name-status --find-renames -M "$commit^..$commit" | while IFS= read -r line; do
-    status=$(echo "$line" | cut -c 1-2)
-    file=$(echo "$line" | cut -c 4-)
+  echo
+  echo
+  debug "Processing commit: $commit"
+
+  # Detect renames and other changes in this commit
+  DIFF=$(git diff --name-status --find-renames -M "$commit^..$commit")
+  debug "Diff output: $DIFF"
+
+  echo "$DIFF" | while IFS= read -r line; do # Process the DIFF variable instead of running git diff again
+    echo
+    status=$(echo "$line" | cut -c 1) # Get only the first character
+
+    # Remove the status character and any following whitespace/tabs
+    file=$(echo "$line" | sed 's/^[A-Z][[:digit:]]*[[:space:]]*//')
+
+    debug "Line: $line"
+    debug "Status: \"$status\""
+    debug "File: $file"
 
     case "$status" in
-      RN)
+      R)
         # Renamed file:  RNXXX old_path    new_path
         old_file=$(echo "$file" | awk '{print $1}')
         new_file=$(echo "$file" | awk '{print $2}')
-        renamed_files+=("$new_file:$old_file")  # Store as new:old
-
-        # Record the *old* name as affected, since the file was "touched" under that name
-        affected_files+=("$old_file")
-        affected_files+=("$new_file") # Also add the new name
-
-        ;;
-      R*)
-        #Renamed and modified
-        old_file=$(echo "$file" | awk '{print $1}')
-        new_file=$(echo "$file" | awk '{print $2}')
-        renamed_files+=("$new_file:$old_file")  # Store as new:old
-        affected_files+=("$old_file")
-        affected_files+=("$new_file") # Also add the new name
+        renamed_files="$renamed_files$new_file:$old_file\n"  # Store as new:old
+        deleted_files="$deleted_files$old_file\n"
+        added_files="$added_files$new_file\n" # Also add the new name
+        debug "== R == $file"
+        debug "old_file: $old_file"
+        debug "new_file: $new_file"
+        debug "renamed_files: $renamed_files"
+        debug "deleted_files: $deleted_files"
+        debug "added_filtes: $added_files"
         ;;
       A)
-        affected_files+=("$file")
+        added_files="$added_files$file\n"
+        debug "== A == $file"
+        debug "added_filtes: $added_files"
         ;;
       M)
-        affected_files+=("$file")
+        modified_files="$modified_files$file\n"
+        debug "== M == $file"
+        debug "modified_files: $modified_files"
         ;;
       D)
-        affected_files+=("$file")
+        deleted_files="$deleted_files$file\n"
+        debug "== D == $file"
+        debug "deleted_files: $deleted_files"
         ;;
       *)
         # Ignore other status codes (e.g., C for copied)
+        debug "== * == $file"
         ;;
     esac
   done
 done
 
-# Remove duplicates from the affected files list
-affected_files=($(printf "%s\n" "${affected_files[@]}" | sort -u))
 
-# Print the results
+debug "added_files=$added_files"
+debug "deleted_files=$deleted_files"
+debug "renamed_files=$renamed_files"
+debug "modified_files=$modified_files"
 
-echo "Added/Modified/Deleted Files:"
-for file in "${affected_files[@]}"; do
+
+# Remove duplicates from the affected files list and sort
+echo "Added:"
+IFS=$'\n' sorted_added_files=($(sort -u <<< "$added_files"))
+unset IFS
+for file in "${sorted_added_files[@]}"; do
+  if [ -n "$file" ]; then
     echo "  $file"
+  fi
 done
 
-echo ""
-echo "Renamed Files:"
-for rename_pair in "${renamed_files[@]}"; do
-  new_file=$(echo "$rename_pair" | cut -d':' -f1)
-  old_file=$(echo "$rename_pair" | cut -d':' -f2)
-  echo "  $old_file -> $new_file"
+echo
+echo "Deleted:"
+IFS=$'\n' sorted_deleted_files=($(sort -u <<< "$deleted_files"))
+unset IFS
+for file in "${sorted_deleted_files[@]}"; do
+  if [ -n "$file" ]; then
+    echo "  $file"
+  fi
+done
+
+echo
+echo "Renamed:"
+while IFS=$'\n' read -r rename_pair; do
+  if [ -n "$rename_pair" ]; then
+    new_file=$(echo "$rename_pair" | cut -d':' -f1)
+    old_file=$(echo "$rename_pair" | cut -d':' -f2)
+    echo "  $old_file -> $new_file"
+  fi
+done <<< "$renamed_files"
+
+echo
+echo "Modified:"
+IFS=$'\n' sorted_modified_files=($(sort -u <<< "$modified_files"))
+unset IFS
+for file in "${sorted_modified_files[@]}"; do
+  if [ -n "$file" ]; then
+    echo "  $file"
+  fi
 done
