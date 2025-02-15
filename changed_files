@@ -1,14 +1,13 @@
-      
 #!/bin/bash
 
 # Set the target branch to compare against.
-TARGET_BRANCH="main"
+TARGET_BRANCH="main"  # or "master"
 
 # Get the list of commits unique to the current branch compared to the target branch.
 COMMITS=$(git rev-list --no-merges origin/$TARGET_BRANCH..HEAD)
 
 if [ -z "$COMMITS" ]; then
-  echo "No commits found that are unique to the current branch ($api-44751)."
+  echo "No commits found that are unique to the current branch."
   exit 0
 fi
 
