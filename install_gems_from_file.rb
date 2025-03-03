@@ -42,8 +42,9 @@ end
 abort_if_errors
 
 # Use Set for faster inclusion check
-installed_gems = Set.new(Gem::Specification.map(&:name))
-
+def installed_gems
+  Set.new(Gem::Specification.map(&:name))
+end
 ######################################################
 # Main
 
