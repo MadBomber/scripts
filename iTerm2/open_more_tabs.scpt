@@ -5,7 +5,7 @@ tell application "iTerm2"
   # directory jump with fuzzy match using the j bash function
   # See: ~/.bashrc__jump
 
-  set my_jump_commands to {"echo 2", "echo 3", "j okapi", "j okapi", "j okapi", "j experiments", "redis-server", "postgres"}
+  set my_jump_commands to {"echo 2", "echo 3", "j vaiu", "j vaiu", "j vaiu", "j experiments", "redis-server", "postgres"}
 
   repeat with my_command in my_jump_commands
     tell current window

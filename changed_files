@@ -5,6 +5,25 @@ debug() {
   echo "[DEBUG] $@" >&2  # Redirect to stderr
 }
 
+append_unique_existing_filepath() {
+    var_name="$1"
+    filepath="$2"
+
+    if [ ! -e "$filepath" ]; then
+        debug "Filepath does not exist: $filepath"
+        return
+    fi
+
+    current_value="$(eval "echo \$$var_name")"
+    
+    if [ -z "$current_value" ]; then
+        eval "$var_name=\"$filepath\""
+    elif [ "$(echo "$current_value" | grep -c -w "$filepath")" -eq 0 ]; then
+        eval "$var_name=\"$current_value:$filepath\""
+    fi
+}
+
+
 # Determine the base branch (main or master)
 if git show-ref --quiet "refs/remotes/origin/main"; then
   TARGET_BRANCH="origin/main"
@@ -53,7 +72,7 @@ for commit in $COMMITS; do
   DIFF=$(git diff --name-status --find-renames -M "$commit^..$commit")
   debug "Diff output: $DIFF"
 
-  echo "$DIFF" | while IFS= read -r line; do # Process the DIFF variable instead of running git diff again
+  while IFS= read -r line; do  # Use while loop directly instead of piping
     echo
     status=$(echo "$line" | cut -c 1) # Get only the first character
 
@@ -69,9 +88,9 @@ for commit in $COMMITS; do
         # Renamed file:  RNXXX old_path    new_path
         old_file=$(echo "$file" | awk '{print $1}')
         new_file=$(echo "$file" | awk '{print $2}')
-        renamed_files="$renamed_files$new_file:$old_file\n"  # Store as new:old
-        deleted_files="$deleted_files$old_file\n"
-        added_files="$added_files$new_file\n" # Also add the new name
+        append_unique_existing_filepath "renamed_files" "$old_file > $new_file"  # Store as new:old
+        append_unique_existing_filepath "deleted_files" "$old_file"
+        append_unique_existing_filepath "added_files" "$new_file" # Also add the new name
         debug "== R == $file"
         debug "old_file: $old_file"
         debug "new_file: $new_file"
@@ -80,17 +99,17 @@ for commit in $COMMITS; do
         debug "added_filtes: $added_files"
         ;;
       A)
-        added_files="$added_files$file\n"
+        append_unique_existing_filepath "added_files" "$file"
         debug "== A == $file"
         debug "added_filtes: $added_files"
         ;;
       M)
-        modified_files="$modified_files$file\n"
+        append_unique_existing_filepath "modified_files" "$file"
         debug "== M == $file"
         debug "modified_files: $modified_files"
         ;;
       D)
-        deleted_files="$deleted_files$file\n"
+        append_unique_existing_filepath "deleted_files" "$file"
         debug "== D == $file"
         debug "deleted_files: $deleted_files"
         ;;
@@ -99,52 +118,16 @@ for commit in $COMMITS; do
         debug "== * == $file"
         ;;
     esac
-  done
-done
-
-
-debug "added_files=$added_files"
-debug "deleted_files=$deleted_files"
-debug "renamed_files=$renamed_files"
-debug "modified_files=$modified_files"
-
-
-# Remove duplicates from the affected files list and sort
-echo "Added:"
-IFS=$'\n' sorted_added_files=($(sort -u <<< "$added_files"))
-unset IFS
-for file in "${sorted_added_files[@]}"; do
-  if [ -n "$file" ]; then
-    echo "  $file"
-  fi
+  done <<< "$DIFF"  # Use here-string to avoid subshell
 done
 
 echo
-echo "Deleted:"
-IFS=$'\n' sorted_deleted_files=($(sort -u <<< "$deleted_files"))
-unset IFS
-for file in "${sorted_deleted_files[@]}"; do
-  if [ -n "$file" ]; then
-    echo "  $file"
-  fi
-done
-
+echo "added_files=$added_files"
 echo
-echo "Renamed:"
-while IFS=$'\n' read -r rename_pair; do
-  if [ -n "$rename_pair" ]; then
-    new_file=$(echo "$rename_pair" | cut -d':' -f1)
-    old_file=$(echo "$rename_pair" | cut -d':' -f2)
-    echo "  $old_file -> $new_file"
-  fi
-done <<< "$renamed_files"
-
+echo "deleted_files=$deleted_files"
 echo
-echo "Modified:"
-IFS=$'\n' sorted_modified_files=($(sort -u <<< "$modified_files"))
-unset IFS
-for file in "${sorted_modified_files[@]}"; do
-  if [ -n "$file" ]; then
-    echo "  $file"
-  fi
-done
+echo "renamed_files=$renamed_files"
+echo
+echo "modified_files=$modified_files"
+echo
+
