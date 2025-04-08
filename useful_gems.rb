@@ -25,32 +25,110 @@ def gem(gem_name, version='')
 end
 
 # Using this form so that you can grab what you want for a Gemfile
-
+#
 # my gems ...
+#
+
+gem 'agent99'                 # An intelligent agent framework for Ruby
 gem 'ai_client'               # A generic AI Client for many providers
 gem 'aia'                     # AI Assistant
+gem 'aigcm'                   # AI-powered git commit message generator
 gem 'cli_helper'              # An encapsulation of an integration of slop, nenv, inifile and configatron.
 gem 'debug_me'                # A tool to print the labeled value of variables.
+gem 'prompt_manager'          # Manage prompts for use with gen-AI processes
+# WIP: gem 'ragdoll'                 # Ruby on Rails Engine
 gem 'rethinkdb_helper'        # A wrapper around the ruby rethinkdb gem
 
-
-# h3 requires the 'cmake' package; use brew, dnf, yum, apt=get etc
-if OS.mac?
-  `brew install cmake`
-  gem 'h3'                      # C Bindings for Uber's H3 library
-end
 
 
 #
 # Profilers
 #
-gem 'rack-mini-profiler'  # Profiles loading speed for rack applications.
-gem 'memory_profiler'     # Memory profiling routines for Ruby 2.1+
+
 gem 'flamegraph'          # Flamegraph support for arbitrary ruby apps
+gem 'memory_profiler'     # Memory profiling routines for Ruby 2.1+
+gem 'rack-mini-profiler'  # Profiles loading speed for rack applications.
 gem 'stackprof'           # sampling callstack-profiler for ruby 2.1+
+gem 'vernier'             # A next generation CRuby profiler
+
+#
+# AI-related support libraries and tools
+#
+
+gem 'action_prompt'         # ActionPrompt is a Rails plugin for managing templated LLM prompts
+gem 'actionmcp'             # Provides essential tooling for building Model Context Protocol (MCP) capable servers
+gem 'activeagent'           # Rails AI Agents Framework
+gem 'ai-engine'             # The fastest way to get AI Assistants into your Rails app!
+gem 'ai_client'             # A generic AI Client for many providers
+gem 'aia'                   # AI Assistant
+gem 'aicommit'              # Use your own spell against you.
+gem 'aigcm'                 # AI-powered git commit message generator
+gem 'anthropic'             # Anthropic API + Ruby! 🤖🌌
+gem 'baran'                 # Text Splitter for Large Language Model Datasets
+gem 'boxcars'               # Boxcars is a gem that enables you to create new systems with AI composability. Inspired by python langchain.
+gem 'clag'                  # Generate command line commands in your terminal using an LLM
+gem 'clip-rb'               # OpenAI CLIP embeddings, uses ONNX models
+gem 'cohere-ai'             # Interact with Cohere AI.
+gem 'faiss'                 # Efficient similarity search and clustering for Ruby
+gem 'fast-mcp'              # A Ruby implementation of the Model Context Protocol.
+gem 'gemini-ai'             # Interact with Google's Gemini AI.
+gem 'gen-ai'                # Generative AI toolset for Ruby.
+gem 'groq'                  # Client library for Groq API for fast LLM inference.
+gem 'honyaku'               # Translate your Rails application using OpenAI
+gem 'hugging-face'          # Ruby client for Hugging Face API
+gem 'ima'                   # ima is the ai agenic framework for super monkeys
+gem 'informers'             # Fast transformer inference for Ruby
+gem 'instructor-rb'         # Structured extraction in Ruby, powered by llms.
+gem 'intelligence'          # A Ruby gem for seamlessly and uniformly interacting with large languge and vision model (LLM) API's served by numerous services, including those of OpenAI, Anthropic, Google and others.
+gem 'irb-ai'                # IRB commands powered by AI.
+gem 'langchainrb'           # Build LLM-backed Ruby applications with Ruby's Langchain.rb
+gem 'langchainrb_rails'     # Rails wrapper for langchainrb gem
+gem 'llm_orchestrator'      # A lightweight ruby framework for orchestrating operations via LLM APIs
+gem 'mcp-rb'                # A lightweight Ruby framework for implementing MCP (Model Context Protocol) servers
+gem 'minds_sdk'             # Minds Ruby SDK provides an interface to interact with the Minds AI system API. It allows you to create and manage "minds" (artificial intelligences), create chat completions, and manage data sources.
+gem 'mistral-ai'            # Interact with Mistral AI.
+gem 'modelcontextprotocol'  # Wrap Thor command-line apps in model view context protocol
+gem 'nano-bots'             # Ruby Implementation of Nano Bots: small, AI-powered bots for OpenAI ChatGPT, Ollama, Mistral AI, Anthropic Claude, Cohere Command, Maritaca AI MariTalk, and Google Gemini.
+gem 'neighbor'              # Nearest neighbor search for Rails
+gem 'ollama-ai'             # Interact with Ollama API to run open source AI models locally.
+gem 'omniai'                # A generalized framework for interacting with many AI services
+gem 'omniai-anthropic'      # A generalized framework for interacting with Anthropic
+gem 'omniai-deepseek'       # A generalized framework for interacting with DeepSeek
+gem 'omniai-google'         # A generalized framework for interacting with Google
+gem 'omniai-mistral'        # A generalized framework for interacting with Mistral
+gem 'omniai-openai'         # A generalized framework for interacting with OpenAI
+gem 'open_router'           # Ruby library for OpenRouter API.
+gem 'pgvector'              # pgvector support for Ruby
+gem 'pinecone'              # Ruby client library for Pinecone Vector DB
+gem 'pragmatic_segmenter'   # A rule-based sentence boundary detection gem that works out-of-the-box across many languages
+gem 'pycall'                # Call python functions from Ruby
+gem 'rails-mcp-server'      # MCP server for Rails projects
+gem 'raix'                  # Ruby AI eXtensions
+gem 'raix-rails'            # Ruby AI eXtensions for Rails
+gem 'regent'                # Library for building AI Agents in Ruby
+gem 'rspec-llama'           # A versatile testing framework for different AI model configurations.
+gem 'ruby-openai'           # A Ruby gem for the OpenAI GPT-3 API
+gem 'ruby-openai-swarm'     # A Ruby implementation of OpenAI function calling swarm
+gem 'ruby_llm'              # Beautiful Ruby interface to modern AI
+gem 'simple_rag'            # Simple Rag is a lightweight library that transforms any Ruby project into a simple RAG application.
+gem 'sqlite-vec'            # A vector search SQLite extension.
+gem 'sublayer'              # A model-agnostic Ruby GenerativeAI DSL and Framework
+gem 'tiktoken_ruby'         # Ruby wrapper for Tiktoken
+gem 'weaviate-ruby'         # Ruby wrapper for the Weaviate.io API
+
+
+#########################################
+## gems that require something extra
+
+# h3 requires the 'cmake' package; use brew, dnf, yum, apt=get etc
+if OS.mac?
+  `brew install cmake`
+  gem 'h3'                      # C Bindings for Uber's H3 library for geospatial reference
+end
+
 
 #####################################
-# Stuff in alphabetic order
+## uncategorized gems in alphabetic order
 #
 # If a gem is commented out like this:
 #
@@ -81,7 +159,6 @@ gem 'bible_gateway'           # An unofficial 'API' for BibleGateway.com.
 gem 'blazer'                  # Explore your data with SQL. Easily create charts and dashboards, and share them with your team.
 gem 'bond'                    # used in IRB completions
 gem 'bootsnap'                # Boot large ruby/rails apps faster
-gem 'boxcars'                 # Boxcars is a gem that enables you to create new systems with AI composability. Inspired by python langchain.
 gem 'bundler'                 # The best way to manage your application's dependencies
 gem 'bundler-audit'           # Patch-level verification for Bundler
 gem 'bunny'                   # Popular easy to use Ruby client for RabbitMQ
@@ -177,6 +254,7 @@ gem 'isolator'                # Detect non-atomic interactions within DB transac
 gem 'jira-ruby'               # Ruby Gem for use with the Atlassian JIRA REST API
 gem 'jirasync'                # jirasync synchronises jira projects to the local file system
 gem 'json'                    # This json is bundled with Ruby
+gem 'jumon'                   # The Prompt testing library for LLM that allows comparing patterns of prompts.
 gem 'jwt_sessions'            # JWT Sessions
 #
 # 332/340p1 gem 'langchainrb'             # Build LLM-backed Ruby applications with Ruby's LangChain
@@ -220,13 +298,11 @@ gem 'pg_trunk'                # Empower PostgreSQL migrations in Rails app
 gem 'pgsync'                  # Sync Postgres data between databases
 gem 'postgresql_cursor'       # ActiveRecord PostgreSQL Adapter extension for using a cursor to return a large result set
 gem 'power_assert'            # Power Assert for Ruby
-# 332/340p1 gem 'pragmatic_segmenter'     # A rule-based sentence boundary detection gem that works out-of-the-box across many languages
 gem 'premailer-rails'         # Easily create styled HTML emails in Rails.
 gem 'progress_bar'            # Simple Progress Bar for output to a terminal
 gem 'prosopite'               # N+1 auto-detection for Rails with zero false positives / false negatives
 gem 'puma'                    # Puma is a simple, fast, threaded, and highly concurrent HTTP 1.1 server for Ruby/Rack applications
 gem 'pundit'                  # OO authorization for Rails
-gem 'pycall'                  # Call python functions from Ruby
 #
 gem 'rack-attack'             # Block & throttle abusive requests
 gem 'rails'                   # Full-stack web application framework.
@@ -290,6 +366,7 @@ gem 'systemu'                 # systemu
 #
 gem 'terjira'                 # Terjira is interactive command line application for Jira
 gem 'terminal-size'           # A tiny gem to accomplish a simple task: Determining the terminal size.
+gem 'terminalwire'            # Ship a CLI for your web app. No API required.
 gem 'test-kitchen'            # Test Kitchen is an integration tool for developing and testing infrastructure code and software on isolated target platforms.
 gem 'test-prof'               # Ruby applications tests profiling tools
 gem 'thruster'                # http/2 + ssl for puma and rails
@@ -324,7 +401,6 @@ gem 'tty-tree'                # Print directory or structured data in a tree lik
 gem 'tty-which'               # Platform independent implementation of Unix which command.
 gem 'turbo-rails'             # The speed of a single-page web application without having to write any JavaScript.
 #
-gem 'vernier'                 # A next generation CRuby profiler
 gem 'view_component'          # A framework for building reusable, testable & encapsulated view components in Ruby on Rails.
 gem 'view_component-contrib'  # A collection of extensions and developer tools for ViewComponent
 gem 'vite_rails'              # Use Vite in Rails and bring joy to your JavaScript experience
@@ -413,4 +489,3 @@ graphql_schema          Classes for convenient use of GraphQL introspection resu
                         |__ https://github.com/Shopify/graphql_schema
 rspec-graphql_matchers  Collection of rspec matchers to test your graphQL api schema.
                         |__ https://github.com/khamusa/rspec-graphql_matchers
-

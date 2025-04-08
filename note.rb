@@ -12,6 +12,11 @@
 #   agrep
 #   pr
 #
+# TODO: refactor this utility to use the power of obsidian and
+#       its daily notes system to become a more powerful PKM.
+
+
+
 # Usage:
 
 def usage
@@ -175,4 +180,3 @@ if backup_filename_path.exist?
 end
 
 `cp #{notes_file} #{backup_filename_path}`
-
