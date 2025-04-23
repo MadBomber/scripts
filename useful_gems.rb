@@ -106,6 +106,7 @@ gem 'rails-mcp-server'      # MCP server for Rails projects
 gem 'raix'                  # Ruby AI eXtensions
 gem 'raix-rails'            # Ruby AI eXtensions for Rails
 gem 'regent'                # Library for building AI Agents in Ruby
+gem 'ro'                    # all your content in github, as god intended
 gem 'rspec-llama'           # A versatile testing framework for different AI model configurations.
 gem 'ruby-openai'           # A Ruby gem for the OpenAI GPT-3 API
 gem 'ruby-openai-swarm'     # A Ruby implementation of OpenAI function calling swarm
