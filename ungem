@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+
+# Validate script usage
+if [ -z "$1" ]; then
+    echo "Usage: ungem <gem-name>"
+    exit 1
+fi
+
+gem_name="$1"
+
+# Check if the RR environment variable is set
+if [ -z "$RR" ]; then
+    echo "Error: Environment variable RR is not set."
+    exit 1
+fi
+
+# Define the directories based on RR
+vendor_dir="${RR}/vendor"
+cache_dir="${vendor_dir}/cache"
+source_dir="${vendor_dir}/source/${gem_name}"
+
+# Check if the cache directory exists
+if [ ! -d "$cache_dir" ]; then
+    echo "Cache directory does not exist. Running 'bundler cache' from RR directory."
+    (cd "$RR" && bundle cache) || {
+        echo "Failed to run 'bundle cache'"
+        exit 1
+    }
+fi
+
+# Determine the path to the gem file
+gem_file=$(ls -1 "${cache_dir}/${gem_name}-*.gem" 2>/dev/null)
+
+if [ -z "$gem_file" ]; then
+    echo "Error: Gem file for '${gem_name}' not found in '${cache_dir}'."
+    exit 1
+fi
+
+# Create the target gem directory
+mkdir -p "$gem_dir"
+
+# Navigate to the gem directory
+cd "$gem_dir" || exit
+
+# Extract the gem file
+echo "Extracting gem file: $gem_file"
+tar -xzf "$gem_file" -C "$gem_dir" data.tar.gz
+tar -xzf "$gem_dir/data.tar.gz" -C "$gem_dir"
+
+# Clean up the extraction
+echo "Cleaning up extracted files..."
+rm -f "$gem_dir/*.gz"
+
+echo "Extraction complete."

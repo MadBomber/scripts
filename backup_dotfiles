@@ -1,0 +1,38 @@
+#!/bin/bash
+# ~/SynologyDrive/backup_dotfiles
+
+# Get the lowercase hostname
+HOSTNAME=$(hostname | tr '[:upper:]' '[:lower:]')
+
+# Directory to store backups
+BACKUP_DIR="$(pwd)/$HOSTNAME"
+
+# Ensure the backup directory exists
+mkdir -p "$BACKUP_DIR"
+
+# Function to copy dot files
+backup_dotfiles() {
+    # Find all dot files and directories in the home directory
+    for file in $HOME/.* $HOME/_* $HOME/*.just $HOME/just*; do
+        # Get the basename to check for exclusion
+        basename=$(basename "$file")
+
+        # Exclude some common directories and specified folders
+        if [[ "$file" != "$HOME/." &&
+            "$file" != "$HOME/.." &&
+            "$file" != "$HOME/.DS_Store" &&
+            "$basename" != ".bundle" &&
+            "$basename" != ".cache" &&
+            "$basename" != ".git" &&
+            "$basename" != ".ollama" &&
+            "$basename" != ".rbenv" &&
+            "$basename" != ".prompts" &&
+            "$basename" != ".Trash" ]]; then
+            echo -n "Copying $file..."
+            cp -a "$file" "$BACKUP_DIR" && echo "done"
+        fi
+    done
+}
+
+# Run the backup function
+backup_dotfiles
