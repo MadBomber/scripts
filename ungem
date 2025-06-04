@@ -1,0 +1,67 @@
+#!/usr/bin/env ruby
+# ~/scripts/ungem.rb
+
+require "pathname"
+
+# Validate script usage
+if ARGV.empty?
+  puts "Usage: ungem <gem-name>"
+  exit 1
+end
+
+gem_name = ARGV[0]
+
+# Check if the RR environment variable is set
+rr_path = ENV["RR"]
+
+if rr_path.nil? || rr_path.strip.empty?
+  puts "Error: Environment variable RR is not set."
+  exit 1
+end
+
+# Define the directories based on RR
+vendor_dir  = Pathname.new("#{rr_path}/vendor")
+cache_dir   = vendor_dir + "cache"
+source_dir  = vendor_dir + "source"
+
+# Check if the cache directory exists
+unless cache_dir.directory?
+  puts "Cache directory does not exist. Running 'bundler cache' from RR directory."
+  Dir.chdir(rr_path) do
+    system("bundle cache") || begin
+      puts "Failed to run 'bundle cache'"
+      exit 1
+    end
+  end
+end
+
+# Determine the path to the gem file
+
+gem_files = cache_dir.children.select { |f| f.basename.to_s.start_with?(gem_name) && f.extname == ".gem" }
+
+# Check if gem_files is empty
+if gem_files.empty?
+  puts "Error: Gem file for '#{gem_name}' not found in '#{cache_dir}'."
+  exit 1
+end
+
+# Assuming we want to use the first matching gem file
+gem_file = gem_files.first
+
+# Create the target gem directory
+gem_dir = source_dir + gem_name # Assuming you want to create the source directory as the gem directory
+gem_dir.mkpath
+
+# Navigate to the gem directory
+Dir.chdir(gem_dir) do
+  # Extract the gem file
+  puts "Extracting gem file: #{gem_file}"
+  system("tar -xzf #{gem_file} -C #{gem_dir} data.tar.gz")
+  system("tar -xzf #{gem_dir}/data.tar.gz -C #{gem_dir}")
+
+  # Clean up the extraction
+  puts "Cleaning up extracted files..."
+  Dir.glob("#{gem_dir}/*.gz").each { |file| File.delete(file) }
+
+  puts "Extraction complete."
+end
