@@ -55,7 +55,7 @@ actionview                        Rendering framework putting the V in MVC (part
 active_flag                       Bit array for ActiveRecord
                                   |__ https://github.com/kenn/active_flag
 
-active_genie                      Transform your Ruby application with powerful, production-ready GenAI features
+active_genie                      The Lodash for GenAI: Real Value + Consistent + Model-Agnostic
                                   |__ https://github.com/Roriz/active_genie
 
 active_hash                       An ActiveRecord-like model that uses a hash or file as a datasource
@@ -155,6 +155,9 @@ after_commit_everywhere           Executes code after database commit wherever y
 
 agent99                           An intelligent agent framework for Ruby
                                   |__ https://github.com/MadBomber/agent99
+
+agentic                           An AI Agent builder and orchestrator
+                                  |__ https://github.com/codenamev/agentic
 
 agile_rails                       AgileRails: Agile business application development tool and CMS for Ruby on Rails
                                   |__ https://agile-rails.com
@@ -266,6 +269,9 @@ ar_lazy_preload                   lazy_preload implementation for ActiveRecord m
 arel                              Arel is a SQL AST manager for Ruby
                                   |__ http://github.com/rails/arel
 
+array_include_methods             Array#include_all?, Array#include_any?, and other methods missing from basic Ruby Array API
+                                  |__ http://github.com/AndyObtiva/array_include_methods
+
 arrayfields                       arrayfields
                                   |__ https://github.com/ahoward/arrayfields
 
@@ -301,6 +307,9 @@ async-http-faraday                Provides an adaptor between async-http and far
 
 async-io                          Provides support for asynchonous TCP, UDP, UNIX and SSL sockets.
                                   |__ https://github.com/socketry/async-io
+
+async-job                         An asynchronous job queue for Ruby.
+                                  |__ https://rubygems.org/gems/async-job
 
 async-pool                        A singleplex and multiplex resource pool for implementing robust clients.
                                   |__ https://github.com/socketry/async-pool
@@ -435,11 +444,17 @@ bidi2pdf                          A Ruby gem that generates PDFs from web pages 
 bigdecimal                        Arbitrary-precision decimal floating-point number library.
                                   |__ https://github.com/ruby/bigdecimal
 
+bin                               ActiveSupport MongoDB Cache store.
+                                  |__ http://github.com/jnunemaker/bin
+
 bindata                           A declarative way to read and write binary file formats
                                   |__ https://github.com/dmendel/bindata
 
 bindex                            Bindings for your Ruby exceptions
                                   |__ https://github.com/gsamokovarov/bindex
+
+binding_of_caller                 Retrieve the binding of a method's caller, or further up the stack.
+                                  |__ https://github.com/banister/binding_of_caller
 
 bitwise                           Fast, memory efficient bitwise operations on large binary strings
                                   |__ http://github.com/kenn/bitwise
@@ -460,12 +475,18 @@ bond                              Mission: Easy custom autocompletion for argume
 bootsnap                          Boot large ruby/rails apps faster
                                   |__ https://github.com/Shopify/bootsnap
 
+botrytis                          LLM-powered fuzzy matching for your cucumber steps
+                                  |__ https://github.com/sublayerapp/botrytis
+
 boxcars                           Boxcars is a gem that enables you to create new systems
                                   |   with AI composability. Inspired by python langchain.
                                   |__ https://github.com/BoxcarsAI/boxcars
 
 brakeman                          Security vulnerability scanner for Ruby on Rails.
                                   |__ https://brakemanscanner.org
+
+breaker_machines                  Circuit breaker implementation for Ruby with a clean DSL and state_machines under the hood
+                                  |__ https://github.com/seuros/breaker_machines
 
 bridgetown                        A next-generation, progressive site generator & fullstack framework, powered by Ruby
                                   |__ https://www.bridgetownrb.com
@@ -485,6 +506,9 @@ brotli                            Brotli compressor/decompressor
 
 browser                           Do some browser detection with Ruby.
                                   |__ https://github.com/fnando/browser
+
+bson                              Ruby implementation of the BSON specification
+                                  |__ https://www.mongodb.com/docs/ruby-driver/current/tutorials/bson-v4/
 
 builder                           Builders for MarkUp.
                                   |__ http://onestepback.org
@@ -600,6 +624,18 @@ clapton                           Clapton is a Ruby on Rails gem for building we
 classifier-reborn                 A general classifier module to allow Bayesian and other types of classifications.
                                   |__ https://jekyll.github.io/classifier-reborn/
 
+claude-code-sdk-ruby              Ruby SDK for Claude Code
+                                  |__ https://github.com/parruda/claude-code-sdk-ruby
+
+claude-on-rails                   Rails development framework powered by Claude swarm intelligence
+                                  |__ https://github.com/obie/claude-on-rails
+
+claude_code_slash_commands        A tool for distributing Claude Code slash commands.
+                                  |__ https://github.com/andyw8/claude_code_slash_commands
+
+claude_swarm                      Orchestrate multiple Claude Code instances as a collaborative AI development team
+                                  |__ https://github.com/parruda/claude-swarm
+
 clee                              `clee` is a tiny, 0 dependency, DSL for building über clean CLIs in Ruby
                                   |__ https://github.com/ahoward/clee
 
@@ -660,6 +696,10 @@ cogger                            A customizable and feature rich logger.
 cohere-ai                         Interact with Cohere AI.
                                   |__ https://github.com/gbaptista/cohere-ai
 
+color                             Color is a Ruby library to provide RGB, CMYK, HSL, and other
+                                  |   color space manipulation support to applications that require it
+                                  |__ https://github.com/halostatue/color
+
 colorator                         Colorize your text in the terminal.
                                   |__ https://github.com/octopress/colorator
 
@@ -706,6 +746,9 @@ config                            Effortless multi-environment settings in Rails
 configatron                       A powerful Ruby configuration system.
                                   |__ https://github.com/markbates/configatron
 
+configuration                     configuration
+                                  |__ https://github.com/ahoward/configuration
+
 connection_pool                   Generic connection pool for Ruby
                                   |__ https://github.com/mperham/connection_pool
 
@@ -717,6 +760,9 @@ constant_resolver                 Statically resolve any ruby constant
 
 containable                       A thread-safe dependency injection container.
                                   |__ https://alchemists.io/projects/containable
+
+content_disposition               Ruby gem to create HTTP Content-Disposition headers with proper escaping/encoding of filenames
+                                  |__ https://github.com/shrinerb/content_disposition
 
 contracts                         Contracts for Ruby.
                                   |__ https://github.com/egonSchiele/contracts.ruby
@@ -769,6 +815,30 @@ csvyaml                           csvyaml - read tabular data in the CSV <3 YAML
                                   |   CSV (line-by-line) records with yaml ain't markup language (YAML) encoding rules
                                   |__ https://github.com/csvreader/csvyaml
 
+cucumber                          cucumber-10.0.0
+                                  |__ https://cucumber.io/
+
+cucumber-ci-environment           cucumber-ci-environment-10.0.1
+                                  |__ https://github.com/cucumber/ci-environment
+
+cucumber-core                     cucumber-core-15.1.0
+                                  |__ https://cucumber.io
+
+cucumber-cucumber-expressions     cucumber-expressions-18.0.1
+                                  |__ https://github.com/cucumber/cucumber-expressions
+
+cucumber-gherkin                  cucumber-gherkin-30.0.4
+                                  |__ https://github.com/cucumber/gherkin
+
+cucumber-html-formatter           cucumber-html-formatter-21.13.0
+                                  |__ https://github.com/cucumber/html-formatter
+
+cucumber-messages                 cucumber-messages-27.2.0
+                                  |__ https://github.com/cucumber/messages#readme
+
+cucumber-tag-expressions          cucumber-tag-expressions-6.1.2
+                                  |__ https://cucumber.io/docs/cucumber/api/#tag-expressions
+
 cuprite                           Headless Chrome driver for Capybara
                                   |__ https://github.com/rubycdp/cuprite
 
@@ -817,6 +887,9 @@ dead_end                          Find syntax errors in your source in a snap
 debug                             Debugging functionality for Ruby
                                   |__ https://github.com/ruby/debug
 
+debug_inspector                   A Ruby wrapper for the MRI 2.0 debug_inspector API
+                                  |__ https://github.com/banister/debug_inspector
+
 debug_me                          A tool to print the labeled value of variables.
                                   |__ http://github.com/MadBomber/debug_me
 
@@ -828,6 +901,12 @@ debugging                         Print debugging helpers
 
 declarative                       DSL for nested schemas.
                                   |__ https://github.com/apotonick/declarative
+
+deep-cover                        In depth coverage of your Ruby code.
+                                  |__ https://github.com/deep-cover/deep-cover
+
+deep-cover-core                   In depth coverage of your Ruby code.
+                                  |__ https://github.com/deep-cover/deep-cover
 
 deep_merge                        Merge Deeply Nested Hashes
                                   |__ https://github.com/danielsdeleo/deep_merge
@@ -843,6 +922,9 @@ descendants_tracker               Module that adds descendant tracking to a clas
 
 descriptive_statistics            Descriptive Statistics
                                   |__ https://github.com/thirtysixthspan/descriptive_statistics
+
+desiru                            Declarative Self-Improving Ruby - A Ruby port of DSPy
+                                  |__ https://github.com/obie/desiru
 
 device_detector                   Precise and fast user agent parser and device detector
                                   |__ http://podigee.github.io/device_detector
@@ -926,6 +1008,9 @@ dotenv                            Loads environment variables from `.env`.
 dotum                             Dotum manages your dotfiles and allows for piecemeal sharing.
                                   |__ https://github.com/nevir/dotum
 
+down                              Robust streaming downloads using Net::HTTP, HTTP.rb or wget.
+                                  |__ https://github.com/janko/down
+
 dragonfly                         Ideal gem for handling attachments in Rails, Sinatra and Rack applications.
                                   |__ http://github.com/markevans/dragonfly
 
@@ -956,6 +1041,9 @@ dry-effects                       Algebraic effects
 dry-equalizer                     Module to define equality, equivalence and inspection methods
                                   |__ https://github.com/dry-rb/dry-equalizer
 
+dry-events                        Pub/sub system
+                                  |__ https://dry-rb.org/gems/dry-events
+
 dry-graphql                       Integrate dry-types/dry-struct with graphql-ruby
                                   |__ https://github.com/adhawk/dry-graphql
 
@@ -973,6 +1061,9 @@ dry-logic                         Predicate logic with rule composition
 
 dry-monads                        Common monads for Ruby
                                   |__ https://dry-rb.org/gems/dry-monads
+
+dry-monitor                       Monitoring and instrumentation APIs
+                                  |__ https://dry-rb.org/gems/dry-monitor
 
 dry-schema                        Coercion and validation for data structures
                                   |__ https://dry-rb.org/gems/dry-schema
@@ -1009,6 +1100,9 @@ ect                               Methods ending in ect
 
 ed25519                           An efficient digital signature library providing the Ed25519 algorithm
                                   |__ https://github.com/RubyCrypto/ed25519
+
+editor_opener                     Open source file in the editor from the Rails error page
+                                  |__ https://github.com/igorkasyanchuk/editor_opener
 
 ejson                             Asymmetric keywise encryption for JSON
                                   |__ https://github.com/Shopify/ejson
@@ -1110,6 +1204,9 @@ every_day_irb                     EveryDayIrb simplifies daily life in IRB.
 evil-seed                         Create partial and anonymized production database dumps for use in development
                                   |__ https://github.com/palkan/evil-seed
 
+evolvable                         Add evolutionary behavior to any Ruby object
+                                  |__ https://github.com/mattruzicka/evolvable
+
 excon                             speed, persistence, http(s)
                                   |__ https://github.com/excon/excon
 
@@ -1118,6 +1215,9 @@ execjs                            Run JavaScript code from Ruby
 
 exeggutor                         A Simple, Capable, and Unified Interface for Running Subprocesses in Ruby
                                   |__ https://github.com/michaeleisel/Exeggutor
+
+extpp                             Ext++ is a Ruby extension that provides C++ API for writing Ruby extension.
+                                  |__ https://github.com/red-data-tools/extpp
 
 facets                            The orginal well curated collection of extension methods for Ruby.
                                   |__ http://rubyworks.github.com/facets
@@ -1142,7 +1242,7 @@ facter                            Facter, a system inventory tool
 factory_bot                       factory_bot provides a framework and DSL for defining and using model instance factories.
                                   |__ https://github.com/thoughtbot/factory_bot
 
-factory_bot_rails                 factory_bot_rails provides integration between factory_bot and rails 5.0 or newer
+factory_bot_rails                 factory_bot_rails provides integration between factory_bot and Rails 6.1 or newer
                                   |__ https://github.com/thoughtbot/factory_bot_rails
 
 faiss                             Efficient similarity search and clustering for Ruby
@@ -1210,6 +1310,10 @@ faraday-typhoeus                  Faraday adapter for Typhoeus
 
 fast-mcp                          A Ruby implementation of the Model Context Protocol.
                                   |__ https://github.com/yjacquin/fast_mcp
+
+fast-mcp-annotations              A Ruby implementation of the Model Context Protocol.
+                                  |   Forked from yjacquin/fast_mcp to add annotations.
+                                  |__ https://github.com/parruda/fast-mcp
 
 fast-stemmer                      Fast Porter stemmer based on a C version of algorithm
                                   |__ http://github.com/romanbsd/fast-stemmer
@@ -1455,6 +1559,9 @@ getoptlong                        GetoptLong for Ruby
 gimuby                            Gimuby: genetic algorithm and island model for Ruby
                                   |__ https://frantzmiccoli.github.io/Gimuby
 
+gio2                              Ruby/GIO2 is a Ruby binding of gio-2.x.
+                                  |__ https://ruby-gnome.github.io/
+
 git                               An API to create, read, and manipulate Git repositories
                                   |__ http://github.com/ruby-git/ruby-git
 
@@ -1479,8 +1586,17 @@ gitt                              A monadic Object API for the Git CLI.
 gli                               Build command-suite CLI apps that are awesome.
                                   |__ http://davetron5000.github.io/gli
 
+glib2                             Ruby/GLib2 is a Ruby binding of GLib-2.x.
+                                  |__ https://ruby-gnome.github.io/
+
+glimmer                           Glimmer (DSL Framework for Ruby GUI and More)
+                                  |__ http://github.com/AndyObtiva/glimmer
+
 globalid                          Refer to any model with a URI: gid://app/class/id
                                   |__ http://www.rubyonrails.org
+
+gobject-introspection             Ruby/GObjectIntrospection is a Ruby binding of GObject Introspection.
+                                  |__ https://ruby-gnome.github.io/
 
 gollum                            A simple, Git-powered wiki.
                                   |__ http://github.com/gollum/gollum
@@ -1491,8 +1607,26 @@ gollum-lib                        A simple, Git-powered wiki.
 gollum-rugged_adapter             Adapter for Gollum to use Rugged (libgit2) at the backend.
                                   |__ https://github.com/gollum/rugged_adapter
 
+google-apis-core                  Common utility and base classes for legacy Google REST clients
+                                  |__ https://github.com/google/google-api-ruby-client
+
+google-apis-iamcredentials_v1     Simple REST client for IAM Service Account Credentials API V1
+                                  |__ https://github.com/google/google-api-ruby-client
+
+google-apis-storage_v1            Simple REST client for Cloud Storage JSON API V1
+                                  |__ https://github.com/google/google-api-ruby-client
+
+google-cloud-core                 Internal shared library for google-cloud-ruby
+                                  |__ https://github.com/googleapis/google-cloud-ruby/tree/master/google-cloud-core
+
 google-cloud-env                  Google Cloud Platform hosting environment information.
                                   |__ https://github.com/googleapis/ruby-cloud-env
+
+google-cloud-errors               Error classes for google-cloud-ruby
+                                  |__ https://github.com/googleapis/google-cloud-ruby/tree/master/google-cloud-errors
+
+google-cloud-storage              API Client library for Google Cloud Storage
+                                  |__ https://github.com/googleapis/google-cloud-ruby/tree/master/google-cloud-storage
 
 google-logging-utils              Utility classes for logging to Google Cloud Logging
                                   |__ https://github.com/googleapis/ruby-core-libraries
@@ -1543,6 +1677,9 @@ graphql_rails                     Rails style structure for GraphQL API.
 
 graphwerk                         Visualise dependencies between your application and it's Packwerk packages using Graphviz.
                                   |__ https://github.com/tricycle/graphwerk
+
+grepfruit                         A Ruby gem for searching text patterns in files with colorized output
+                                  |__ https://github.com/brownboxdev/grepfruit
 
 groq                              Client library for Groq API for fast LLM inference.
                                   |__ https://github.com/drnic/groq-ruby
@@ -1714,6 +1851,9 @@ htmlentities                      Encode/decode HTML entities
 http                              HTTP should be easy
                                   |__ https://github.com/httprb/http
 
+http-2                            Pure-ruby HTTP 2.0 protocol implementation
+                                  |__ https://github.com/igrigorik/http-2
+
 http-accept                       Parse Accept and Accept-Language HTTP headers.
                                   |__ https://github.com/ioquatix/http-accept
 
@@ -1737,6 +1877,9 @@ httpi                             Interface for Ruby HTTP libraries
 
 httplog                           Log outgoing HTTP requests.
                                   |__ http://github.com/trusche/httplog
+
+httpx                             HTTPX, to the future, and beyond
+                                  |__ https://gitlab.com/os85/httpx
 
 hugging-face                      Ruby client for Hugging Face API
                                   |__ https://rubygems.org/gems/hugging-face
@@ -1763,14 +1906,14 @@ ice_nine                          Deep Freeze Ruby Objects
 idn-ruby                          LibIDN Ruby Bindings.
                                   |__ http://github.com/deepfryed/idn-ruby
 
-ima                               ima is the ai agenic framework for super monkeys
-                                  |__ https://github.com/ahoward/ima
-
 image_processing                  High-level wrapper for processing images for the web with ImageMagick or libvips.
                                   |__ https://github.com/janko/image_processing
 
 image_size                        Measure image size/dimensions using pure Ruby
                                   |__ https://github.com/toy/image_size
+
+imagen                            Codebase as structure of locatable classes and methods based on the Ruby AST
+                                  |__ https://github.com/grodowski/imagen_rb
 
 imgproxy                          imgproxy URL generator
                                   |__ https://github.com/imgproxy/imgproxy.rb
@@ -2211,8 +2354,8 @@ llm-shell                         llm-shell is an extensible, developer-oriented
                                   |__ https://github.com/llmrb/llm-shell
 
 llm.rb                            llm.rb is a zero-dependency Ruby toolkit for Large Language Models that includes OpenAI,
-                                  |   Gemini, Anthropic, DeepSeek, Ollama, and LlamaCpp. It’s fast, simple and composable – with
-                                  |   full support for chat, tool calling, audio, images, files, and JSON Schema generation.
+                                  |   Gemini, Anthropic, DeepSeek, Ollama, and LlamaCpp. The toolkit includes full support
+                                  |   for chat, streaming, tool calling, audio, images, files, and JSON Schema generation.
                                   |__ https://github.com/llmrb/llm
 
 llm_orchestrator                  A lightweight ruby framework for orchestrating operations via LLM APIs
@@ -2291,6 +2434,9 @@ marcel                            Simple mime type detection using magic numbers
 
 maritaca-ai                       Interact with Maritaca AI.
                                   |__ https://github.com/gbaptista/maritaca-ai
+
+marksmith                         Marksmith is a GitHub-style markdown editor for Ruby on Rails applications.
+                                  |__ https://github.com/avo-hq/marksmith
 
 matrix                            An implementation of Matrix and Vector classes.
                                   |__ https://github.com/ruby/matrix
@@ -2373,6 +2519,9 @@ minds_sdk                         Minds Ruby SDK provides an interface to intera
 mini_histogram                    A small gem for building histograms out of Ruby arrays
                                   |__ https://github.com/zombocom/mini_histogram
 
+mini_i18n                         Minimalistic I18n library for Ruby
+                                  |__ https://github.com/markets/mini_i18n
+
 mini_magick                       Manipulate images with minimal use of memory via ImageMagick
                                   |__ https://github.com/minimagick/minimagick
 
@@ -2397,13 +2546,16 @@ minitar                           The minitar library is a pure-Ruby library tha
 
 minitest                          minitest provides a complete suite of testing facilities
                                   |   supporting TDD, BDD, mocking, and benchmarking
-                                  |__ https://github.com/minitest/minitest
+                                  |__ https://github.com/seattlerb/minitest
 
 minitest-difftastic               Minitest Plugin to use difftastic for failed assertions
                                   |__ https://github.com/marcoroth/minitest-difftastic
 
 minitest-ok                       'ok {1+1} == 2' instead of 'assert_equal 2, 1+1'
                                   |__ https://github.com/kwatch/minitest-ok
+
+minitest-power_assert             Power Assert for Minitest.
+                                  |__ https://github.com/hsbt/minitest-power_assert
 
 minitest-rails                    Minitest integration for Rails
                                   |__ http://minitest.github.io/minitest-rails/
@@ -2487,6 +2639,9 @@ money-heuristics                  Heuristic module for for the money gem
 money-rails                       Money gem integration with Rails
                                   |__ https://github.com/RubyMoney/money-rails
 
+mongo                             Ruby driver for the MongoDB
+                                  |__ http://www.mongodb.org
+
 monkeyspaw                        A prompt-driven web framework for Ruby - be careful what you wish for
                                   |__ https://github.com/sublayerapp/monkeyspaw
 
@@ -2503,13 +2658,19 @@ msgpack                           MessagePack, a binary-based efficient data int
                                   |__ http://msgpack.org/
 
 multi_json                        A common interface to multiple JSON libraries.
-                                  |__ https://github.com/intridea/multi_json
+                                  |__ https://github.com/sferik/multi_json
+
+multi_test                        multi-test-1.1.0
+                                  |__ http://cukes.info
 
 multi_xml                         Provides swappable XML backends utilizing LibXML, Nokogiri, Ox, or REXML.
                                   |__ https://github.com/sferik/multi_xml
 
 multipart-post                    A multipart form post accessory for Net::HTTP.
                                   |__ https://github.com/socketry/multipart-post
+
+mupdf                             A library for interacting with MuPDF.
+                                  |__ https://github.com/ksylvest/mupdf
 
 mustache                          Mustache is a framework-agnostic way to render logic-free views.
                                   |__ https://github.com/mustache/mustache
@@ -2551,6 +2712,9 @@ nats-pure                         NATS is an open-source, high-performance, ligh
 natto                             A gem leveraging FFI (foreign function interface), natto combines the Ruby programming
                                   |   language with MeCab, the part-of-speech and morphological analyzer for the Japanese language.
                                   |__ https://github.com/buruzaemon/natto
+
+naturally                         Sorts numbers according to the way people are used to seeing them.
+                                  |__ http://github.com/public-law/naturally
 
 necromancer                       Conversion from one object type to another with a bit of black magic.
                                   |__ https://github.com/piotrmurach/necromancer
@@ -2655,8 +2819,18 @@ nori                              XML to Hash translator
 notiffany                         Notifier library (extracted from Guard project)
                                   |__ https://github.com/guard/notiffany
 
+numbers_and_words                 Spell out numbers in several languages
+                                  |__ http://github.com/kslazarev/numbers_and_words
+
 numo-narray                       alpha release of Numo::NArray - New NArray class library in Ruby/Numo (NUmerical MOdule)
                                   |__ https://github.com/ruby-numo/numo-narray
+
+oas_core                          Generates OpenAPI Specification (OAS) documents by
+                                  |   analyzing and extracting routes from Rails applications.
+                                  |__ https://github.com/a-chacon/oas_core
+
+oas_rage                          OasRage is a tool for generating automatic interactive documentation for your APIs.
+                                  |__ https://github.com/a-chacon/oas_rage
 
 oas_rails                         OasRails is a Rails engine for generating automatic
                                   |   interactive documentation for your Rails APIs.
@@ -2737,6 +2911,15 @@ omniai-mistral                    A generalized framework for interacting with M
 omniai-openai                     A generalized framework for interacting with OpenAI
                                   |__ https://github.com/ksylvest/omniai-openai
 
+omniai-tools                      A set of tools built for usage with OmniAI.
+                                  |__ https://github.com/ksylvest/omniai-tools
+
+omniauth                          A generalized Rack framework for multiple-provider authentication.
+                                  |__ https://github.com/omniauth/omniauth
+
+omniauth-oauth2                   An abstract OAuth2 strategy for OmniAuth.
+                                  |__ https://github.com/omniauth/omniauth-oauth2
+
 one_time_pad                      A One-Time Pad encryption method for messages.
                                   |__ https://github.com/MadBomber/one_time_pad
 
@@ -2755,8 +2938,8 @@ open4                             open4
 open_router                       Ruby library for OpenRouter API.
                                   |__ https://github.com/OlympiaAI/open_router
 
-openai                            Wrapper for OpenAI / GPT-3's HTTP APIs
-                                  |__ https://github.com/nileshtrivedi/openai
+openai                            Ruby library to access the OpenAI API
+                                  |__ https://gemdocs.org/gems/openai
 
 openid_connect                    OpenID Connect Server & Client Library
                                   |__ https://github.com/nov/openid_connect
@@ -2860,6 +3043,9 @@ paper_trail-globalid              An extension to paper_trail, using this you ca
 parallel                          Run any kind of code in parallel processes
                                   |__ https://github.com/grosser/parallel
 
+parquet                           Parquet library for Ruby, written in Rust
+                                  |__ https://github.com/njaremko/parquet-ruby
+
 parse_packwerk                    A low-dependency gem for parsing and writing packwerk YML files
                                   |__ https://github.com/rubyatscale/parse_packwerk
 
@@ -2952,6 +3138,9 @@ pinecone                          Ruby client library for Pinecone Vector DB
 pipeable                          A domain specific language for building functionally composable steps.
                                   |__ https://alchemists.io/projects/pipeable
 
+pkce_challenge                    PKCE flow code verifier and code challenge generator
+                                  |__ https://github.com/samuelralak/pkce-challenge-ruby
+
 pkg-config                        A pkg-config implementation for Ruby
                                   |__ https://github.com/ruby-gnome/pkg-config
 
@@ -3027,7 +3216,7 @@ prism_ext                         extend ruby prism
 process-metrics                   Provide detailed OS-specific process metrics.
                                   |__ https://github.com/socketry/process-metrics
 
-process_executer                  An API for executing commands in a subprocess
+process_executer                  Enhanced subprocess execution with timeouts, output capture, and flexible redirection
                                   |__ https://github.com/main-branch/process_executer
 
 progress_bar                      Simple Progress Bar for output to a terminal
@@ -3157,8 +3346,8 @@ rack-test                         Simple testing API built on Rack
 rackup                            A general server command for Rack applications.
                                   |__ https://github.com/rack/rackup
 
-ragdoll                           Ruby on Rails Engine
-                                  |__ https://github.com/MadBomber/ragdoll
+ragdoll-cli                       Standalone CLI for Ragdoll RAG system
+                                  |__ https://github.com/MadBomber/ragdoll-cli
 
 rage-iodine                       iodine - a fast HTTP / Websocket Server with Pub/Sub
                                   |   support, optimized for Ruby MRI on Linux / BSD / Windows
@@ -3266,6 +3455,9 @@ rdoc                              RDoc produces HTML and command-line documentat
 
 re2                               Ruby bindings to RE2.
                                   |__ https://github.com/mudge/re2
+
+react_to_rails                    Converts React components to Rails using AI
+                                  |__ https://github.com/andyw8/react_to_rails
 
 readline                          Loader for "readline".
                                   |__ https://github.com/ruby/readline
@@ -3404,8 +3596,8 @@ rmagick                           Ruby binding to ImageMagick
 ro                                all your content in github, as god intended
                                   |__ https://github.com/ahoward/ro
 
-roast                             Roast helps you group and manage entries in your hosts file
-                                  |__ https://github.com/blahed/roast/
+roast-ai                          A framework for executing structured AI workflows in Ruby
+                                  |__ https://github.com/Shopify/roast
 
 roda                              Routing tree web toolkit
                                   |__ https://roda.jeremyevans.net
@@ -3453,7 +3645,7 @@ rrbayes                           Rrbayes: Ruby Redis Bayes
 rspec                             rspec-3.13.1
                                   |__ https://rspec.info
 
-rspec-core                        rspec-core-3.13.4
+rspec-core                        rspec-core-3.13.5
                                   |__ https://rspec.info
 
 rspec-difftastic                  Use difftastic in place of RSpec's default differ.
@@ -3615,7 +3807,7 @@ ruby_llm                          A single delightful Ruby way to work with AI.
                                   |__ https://rubyllm.com
 
 ruby_llm-mcp                      A RubyLLM MCP Client
-                                  |__ https://github.com/patvice/ruby_llm-mcp
+                                  |__ https://www.rubyllm-mcp.com
 
 ruby_parser                       ruby_parser (RP) is a ruby parser written in pure ruby
                                   |   (utilizing racc--which does by default use a C extension)
@@ -3814,13 +4006,13 @@ semver                            Semantic Versioning
                                   |__ http://github.com/flazz/semver
 
 sentry-rails                      A gem that provides Rails integration for the Sentry error logger
-                                  |__ https://github.com/getsentry/sentry-ruby/tree/5.24.0/sentry-rails
+                                  |__ https://github.com/getsentry/sentry-ruby/tree/5.26.0/sentry-rails
 
 sentry-ruby                       A gem that provides a client interface for the Sentry error logger
-                                  |__ https://github.com/getsentry/sentry-ruby/tree/5.24.0/sentry-ruby
+                                  |__ https://github.com/getsentry/sentry-ruby/tree/5.26.0/sentry-ruby
 
 sentry-sidekiq                    A gem that provides Sidekiq integration for the Sentry error logger
-                                  |__ https://github.com/getsentry/sentry-ruby/tree/5.24.0/sentry-sidekiq
+                                  |__ https://github.com/getsentry/sentry-ruby/tree/5.26.0/sentry-sidekiq
 
 sequel                            The Database Toolkit for Ruby
                                   |__ https://sequel.jeremyevans.net
@@ -3849,6 +4041,9 @@ sexpr                             A compilation framework around s-expressions
 shale                             Ruby object mapper and serializer for XML, JSON, TOML, CSV and YAML.
                                   |__ https://shalerb.org
 
+shared_tools                      Shared utilities and AI tools for Ruby applications with configurable logging
+                                  |__ https://github.com/madbomber/shared_tools
+
 shell_tools                       Some common shell utils
                                   |__ https://rubygems.org/gems/shell_tools
 
@@ -3857,6 +4052,18 @@ shellany                          Simple, somewhat portable command capturing
 
 shellwords                        Manipulates strings with word parsing rules of UNIX Bourne shell.
                                   |__ https://github.com/ruby/shellwords
+
+shoulda                           Making tests easy on the fingers and eyes
+                                  |__ https://github.com/thoughtbot/shoulda
+
+shoulda-context                   Context framework extracted from Shoulda
+                                  |__ http://thoughtbot.com/community/
+
+shoulda-matchers                  Simple one-liner tests for common Rails functionality
+                                  |__ https://matchers.shoulda.io/
+
+shrine                            Toolkit for file attachments in Ruby applications
+                                  |__ https://shrinerb.com
 
 sidekiq                           Simple, efficient background processing for Ruby
                                   |__ https://sidekiq.org
@@ -3928,7 +4135,7 @@ singleton                         The Singleton module implements the Singleton 
 site_prism                        A Page Object Model DSL for Capybara
                                   |__ https://github.com/site-prism/site_prism
 
-site_prism-all_there              A SitePrism extension that allows you to recurse through your SitePrism Pages or Sections
+site_prism-all_there              An extension to SitePrism that enables you to recurse through SitePrism Pages and Sections
                                   |__ https://github.com/site-prism/site_prism-all_there
 
 sixarm_ruby_unaccent              SixArm.com → Ruby → Unaccent
@@ -3952,6 +4159,9 @@ slop                              Simple Lightweight Option Parsing
 
 smart_colored                     Color and formatting in terminal
                                   |__ http://github.com/toy/smart_colored
+
+smart_init                        Remove Ruby initializer boilerplate code
+                                  |__ http://github.com/pawurb/smart_init
 
 smart_properties                  SmartProperties – Ruby accessors on steroids
                                   |__ https://rubygems.org/gems/smart_properties
@@ -3980,8 +4190,17 @@ solid_cache                       A database backed ActiveSupport::Cache::Store
 solid_queue                       Database-backed Active Job backend.
                                   |__ https://github.com/rails/solid_queue
 
+sorbet-result                     Adds T::Result to sorbet-runtime, which is a basic, strongly-typed monad
+                                  |__ https://github.com/maxveldink/sorbet-result
+
 sorbet-runtime                    Sorbet runtime
                                   |__ https://sorbet.org
+
+sorbet-schema                     Serialization and deserialization library into Sorbet structs.
+                                  |__ https://github.com/maxveldink/sorbet-schema
+
+sorbet-struct-comparable          Comparable T::Struct's for the equality focused typed Ruby developer.
+                                  |__ https://github.com/bellroy/sorbet-struct-comparable
 
 sorcery                           Magical authentication for Rails applications
                                   |__ https://github.com/Sorcery/sorcery
@@ -4041,6 +4260,9 @@ standard-custom                   Plugin containing implementations of custom co
 
 standard-performance              Standard Ruby Plugin providing configuration for rubocop-performance
                                   |__ https://github.com/standardrb/standard-performance
+
+state_machines                    State machines for attributes
+                                  |__ https://github.com/state-machines/state_machines
 
 steep                             Gradual Typing for Ruby
                                   |__ https://github.com/soutaro/steep
@@ -4145,6 +4367,9 @@ synvert-core                      convert ruby code to better syntax.
 
 sys-proctable                     An interface for providing process table information
                                   |__ http://github.com/djberg96/sys-proctable
+
+sys-uname                         An interface for returning uname (platform) information
+                                  |__ http://github.com/djberg96/sys-uname
 
 syslog                            Ruby interface for the POSIX system logging facility.
                                   |__ https://github.com/ruby/syslog
@@ -4444,6 +4669,9 @@ uglifier                          Ruby wrapper for UglifyJS JavaScript compresso
 un                                Utilities to replace common UNIX commands
                                   |__ https://github.com/ruby/un
 
+undercover                        Actionable code coverage - detects untested code blocks in recent changes
+                                  |__ https://github.com/grodowski/undercover
+
 unf                               A wrapper library to bring Unicode Normalization Form support to Ruby/JRuby
                                   |__ https://github.com/knu/ruby-unf
 
@@ -4468,11 +4696,11 @@ unicode_plot                      Plot your data by Unicode characters
 unicode_utils                     additional Unicode aware functions for Ruby 1.9
                                   |__ http://github.com/lang/unicode_utils
 
-unirest                           Unirest, the lightweight HTTP library
-                                  |__ https://unirest.io
-
 universalid                       Fast, recursive, optimized, URL-Safe serialization for any Ruby object
                                   |__ https://github.com/hopsoft/universalid
+
+unix_socks                        A Ruby library for inter-process communication via Unix sockets with dynamic message handling
+                                  |__ https://github.com/flori/unix_socks
 
 unparser                          Generate equivalent source for parser gem AST nodes
                                   |__ http://github.com/mbj/unparser
@@ -4547,6 +4775,12 @@ warden                            An authentication library compatible with all 
 wasabi                            A simple WSDL parser
                                   |__ https://github.com/rubiii/wasabi
 
+wasmtime                          Wasmtime bindings for Ruby
+                                  |__ https://github.com/BytecodeAlliance/wasmtime-rb
+
+watir                             Watir powered by Selenium
+                                  |__ https://github.com/watir/watir
+
 weakref                           Allows a referenced object to be garbage-collected.
                                   |__ https://github.com/ruby/weakref
 
@@ -4620,6 +4854,9 @@ wisper                            A micro library providing objects with Publish
 with_model                        Dynamically build a model within an RSpec context
                                   |__ https://github.com/Casecommons/with_model
 
+with_progress                     progressbar for enumerables
+                                  |__ http://github.com/marcandre/with_progress
+
 wmi-lite                          A lightweight utility library for accessing basic WMI
                                   |   (Windows Management Instrumentation) functionality on Windows
                                   |__ https://github.com/chef/wmi-lite
@@ -4636,9 +4873,6 @@ wordy                             Written to help us create sample data for our 
 
 wt_activerecord_index_spy         It checks if queries use an index
                                   |__ https://github.com/fabioperrella/wt_activerecord_index_spy
-
-wxruby3                           wxWidgets extension for Ruby
-                                  |__ https://github.com/mcorino/wxRuby3
 
 x                                 A Ruby interface to the X API.
                                   |__ https://sferik.github.io/x-ruby
