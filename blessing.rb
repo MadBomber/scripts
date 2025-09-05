@@ -21,12 +21,16 @@ finished = false
 
 until ( finished ) do
   blessing = blessings.sample
-
+  puts
   puts blessing
-  system "say '#{blessing}'" if OS.mac?
+  system "say '#{blessing}' &" if OS.mac?
 
-  print "\nWant another?  (Y/n) "
-  want_another = gets().downcase.chomp.strip
-  finished = true if !want_another.empty? && want_another.start_with?('n')
+  if ARGV.size > 0
+    finished = true
+  else
+    print "\nWant another?  (Y/n) "
+    want_another = gets().downcase.chomp.strip
+    finished = true if !want_another.empty? && want_another.start_with?('n')
+  end
   puts
 end

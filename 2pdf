@@ -1,0 +1,62 @@
+#!/bin/bash
+
+# 2pdf - Convert markdown files to PDF using md2pdf
+# Usage: 2pdf file1.md file2.md ...
+
+# Check if any arguments were provided
+if [ $# -eq 0 ]; then
+    echo "Usage: $0 <markdown_file1> [markdown_file2] ..."
+    echo "Converts markdown files to PDF using md2pdf"
+    exit 1
+fi
+
+# Check if we're in a resumes folder (current directory contains 'resumes' in path)
+if [[ "$PWD" == *"/resumes"* ]]; then
+    EXTRA_OPTIONS="--with-footer --author 'Dewayne VanHoozer'"
+else
+    EXTRA_OPTIONS=""
+fi
+
+# Process each markdown file
+for md_file in "$@"; do
+    # Check if it's a markdown file (case insensitive)
+    lowercase_file=$(echo "$md_file" | tr '[:upper:]' '[:lower:]')
+    if [[ ! "$lowercase_file" =~ \.(md|markdown)$ ]]; then
+        echo "Error: '$md_file' is not a markdown file. Only .md and .markdown extensions are allowed."
+        continue
+    fi
+    
+    # Check if file exists
+    if [ ! -f "$md_file" ]; then
+        echo "Error: File '$md_file' not found"
+        continue
+    fi
+    
+    # Get the directory and basename of the input file
+    input_dir=$(dirname "$md_file")
+    basename=$(basename "$md_file")
+    
+    # Remove the extension and add .pdf
+    filename_without_ext="${basename%.*}"
+    output_file="$input_dir/$filename_without_ext.pdf"
+    
+    echo "Converting '$md_file' to '$output_file'..."
+    
+    # Run md2pdf with conditional options and explicit -i/-o flags
+    if [ -n "$EXTRA_OPTIONS" ]; then
+        echo "Running in resumes folder - adding footer and author options"
+        eval "md2pdf -i \"$md_file\" -o \"$output_file\" $EXTRA_OPTIONS"
+    else
+        md2pdf -i "$md_file" -o "$output_file"
+    fi
+    
+    # Check if conversion was successful
+    if [ $? -eq 0 ]; then
+        echo "Successfully converted '$md_file' to '$output_file'"
+    else
+        echo "Error converting '$md_file'"
+    fi
+    echo
+done
+
+echo "Conversion process complete."

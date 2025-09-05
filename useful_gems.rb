@@ -40,7 +40,6 @@ gem 'prompt_manager'          # Manage prompts for use with gen-AI processes
 gem 'rethinkdb_helper'        # A wrapper around the ruby rethinkdb gem
 
 
-
 #
 # Profilers
 #
@@ -55,6 +54,23 @@ gem 'vernier'             # A next generation CRuby profiler
 # AI-related support libraries and tools
 #
 
+gem 'ragdoll'        # Multi-Modal Retrieval Augmented Generation
+gem 'ragdoll-cli'    # Multi-Modal Retrieval Augmented Generation for the CLI
+gem 'ragdoll-rails'  # Rails engine for Ragdoll RAG system
+gem 'smart_message'  # An abstraction to protect message content from the backend delivery transport.
+gem 'ruby_llm'       # A single delightful Ruby way to work with AI.
+gem 'ruby_llm-mcp'   # A RubyLLM MCP Client
+gem 'raix'           # Ruby AI eXtensions
+gem 'sublayer'       # A model-agnostic Ruby GenerativeAI DSL and Framework
+gem 'vsm'            # Async, recursive agent framework for Ruby (Viable System Model): capsules, tools-as-capsules, streaming tool calls, and observability.
+gem 'raif'           # Raif (Ruby AI Framework) is a Rails engine that helps you add AI-powered features to your Rails apps, such as tasks, conversations, and agents.
+
+gem 'omniai'                # A generalized framework for interacting with many AI services
+gem 'omniai-anthropic'      # A generalized framework for interacting with Anthropic
+gem 'omniai-deepseek'       # A generalized framework for interacting with DeepSeek
+gem 'omniai-google'         # A generalized framework for interacting with Google
+gem 'omniai-mistral'        # A generalized framework for interacting with Mistral
+gem 'omniai-openai'         # A generalized framework for interacting with OpenAI
 gem 'action_prompt'         # ActionPrompt is a Rails plugin for managing templated LLM prompts
 gem 'actionmcp'             # Provides essential tooling for building Model Context Protocol (MCP) capable servers
 gem 'activeagent'           # Rails AI Agents Framework
@@ -91,12 +107,6 @@ gem 'modelcontextprotocol'  # Wrap Thor command-line apps in model view context 
 gem 'nano-bots'             # Ruby Implementation of Nano Bots: small, AI-powered bots for OpenAI ChatGPT, Ollama, Mistral AI, Anthropic Claude, Cohere Command, Maritaca AI MariTalk, and Google Gemini.
 gem 'neighbor'              # Nearest neighbor search for Rails
 gem 'ollama-ai'             # Interact with Ollama API to run open source AI models locally.
-gem 'omniai'                # A generalized framework for interacting with many AI services
-gem 'omniai-anthropic'      # A generalized framework for interacting with Anthropic
-gem 'omniai-deepseek'       # A generalized framework for interacting with DeepSeek
-gem 'omniai-google'         # A generalized framework for interacting with Google
-gem 'omniai-mistral'        # A generalized framework for interacting with Mistral
-gem 'omniai-openai'         # A generalized framework for interacting with OpenAI
 gem 'open_router'           # Ruby library for OpenRouter API.
 gem 'pgvector'              # pgvector support for Ruby
 gem 'pinecone'              # Ruby client library for Pinecone Vector DB
