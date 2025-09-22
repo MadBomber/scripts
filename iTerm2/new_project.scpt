@@ -7,9 +7,24 @@ on run argv
 
   set project_name to item 1 of argv
 
+  -- Write project name to ~/.current_project
+  set home_path to system attribute "HOME"
+  set file_path to home_path & "/.current_project"
+
+  try
+    set file_ref to open for access POSIX file file_path with write permission
+    set eof of file_ref to 0
+    write project_name to file_ref
+    close access file_ref
+  on error
+    try
+      close access POSIX file file_path
+    end try
+  end try
+
   tell application "iTerm2"
     tell current window
-      repeat with tab_number from 3 to 5
+      repeat with tab_number from 4 to 6
         if (count of tabs) ≥ tab_number then
           tell tab tab_number
             select
