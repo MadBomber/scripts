@@ -1,0 +1,139 @@
+#!/usr/bin/env ruby
+# FIle: cfcsv2mintcsv
+# Desc: Change a checkfree web CSV export into ARGF
+#       mint.com CSV export so that quicken will import it
+#
+# Checkfree Web CSV format:
+#  0 Amount
+#  1 Fee
+#  2 TotalPayment
+#  3 Category
+#  4 Payment Type
+#  5 From
+#  6 To
+#  7 DeliveryOn
+#  8 Payment Date
+#  9 Status
+# 10 DeliverySpeed
+# 11 Street
+# 12 City
+# 13 State
+# 14 Zip
+# 15 ConfirmationNumber
+# 16 RecurringPayment
+# 17 ""
+# 18 ""
+#
+# mint.com CSV format used by Quicken
+#  0 Date
+#  1 Description
+#  2 Original Description
+#  3 Amount
+#  4 Transaction Type
+#  5 Category
+#  6 Account Name
+#  7 Labels
+#  8 Notes
+
+
+require 'csv'
+require 'date'
+
+if ARGV.empty?
+  puts "Usage: ruby cfcsv2mintcsv <input.csv>"
+  puts "Outputs <input>_mint.csv"
+  exit 1
+end
+
+input_file = ARGV[0]
+output_file = input_file.sub(/\.csv\z/i, '_mint.csv')
+
+transactions = []
+
+CSV.foreach(input_file, headers: false) do |row|
+  # Skip header row
+  next if row[0] == 'Amount'
+
+  # Use TotalPayment as amount
+  total_str = row[2].to_s.strip.gsub(/[\$,]/, '')
+  amount = total_str.to_f
+  next if amount.zero?
+
+  # Prefer DeliveryOn, fallback to Payment Date
+  date_str = row[7].to_s.strip
+  date_str = row[8].to_s.strip if date_str.empty?
+  next if date_str.empty?
+
+  begin
+    dt = Date.strptime(date_str, '%m/%d/%Y')
+    formatted_date = dt.strftime('%m/%d/%Y')
+  rescue ArgumentError
+    puts "Warning: Invalid date '#{date_str}' for transaction #{total_str}, skipping."
+    next
+  end
+
+  description   = row[6].to_s.strip  # Payment Type
+  original_desc = ""
+  account_name  = row[4].to_s.strip  # To (payee)
+  trn_type      = ""
+  category      = row[3].to_s.strip
+
+  # Notes: Recurring and address
+  notes_parts = []
+  recurring = row[16].to_s.strip.downcase == 'yes' ? 'Recurring' : ''
+  notes_parts << recurring if !recurring.empty?
+  addr_parts = [row[11], row[12], row[13], row[14]].map(&:to_s).map(&:strip).compact
+  notes_parts << addr_parts.join(', ') if addr_parts.any?
+  notes = notes_parts.join('; ')
+
+  transactions << [formatted_date, description, original_desc, amount, trn_type, category, account_name, '', notes]
+end
+
+if transactions.empty?
+  puts 'No valid transactions found.'
+  exit 1
+end
+
+CSV.open(output_file, 'w') do |csv|
+  csv << ['Date', 'Description', 'Original Description', 'Amount', 'Transaction Type', 'Category', 'Account Name', 'Labels', 'Notes']
+  transactions.each { |t| csv << t }
+end
+
+puts "Successfully converted #{transactions.size} transactions to #{output_file}"
+
+__END__
+
+Checkfree web example
+
+0. Amount............... (8) -$872.00
+1. Fee.................. (0)
+2. TotalPayment......... (8) -$872.00
+3. Category............. (15) Automobile Loan
+4. Payment Type......... (10) Check#8578
+5. From................. (0)
+6. To................... (28) Bossier Federal Credit Union
+7. DeliveryOn........... (10) 12/31/2024
+8. Payment Date......... (0)
+9. Status............... (9) Processed
+10. DeliverySpeed........ (0)
+11. Street............... (0)
+12. City................. (0)
+13. State................ (0)
+14. Zip.................. (0)
+15. ConfirmationNumber... (11) WTPLT-QFXR5
+16. RecurringPayment..... (3) yes
+17. ..................... (0)
+
+
+
+Mint.com example
+
+0. Date................... (10) 01/04/2024
+1. Description............ (10) Check#8427
+2. Original Description... (18) CenterPoint Energy
+3. Amount................. (7) -146.82
+4. Transaction Type....... (5) debit
+5. Category............... (9) Utilities
+6. Account Name........... (13) Checkfree Web
+7. Labels................. (0)
+8. Notes.................. (6) , , ,
