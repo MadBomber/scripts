@@ -1,0 +1,184 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+##########################################################
+###
+##  File: csv_to_qif.rb
+##  Desc: Convert CSV bank transactions to QIF format
+##  By:   Dewayne VanHoozer (dvanhoozer@gmail.com)
+#
+
+require 'csv'
+require 'date'
+require 'optparse'
+require 'pathname'
+
+# QIF Format Reference:
+# !Type:Bank
+# D - Date (MM/DD/YYYY)
+# T - Total amount
+# P - Payee
+# L - Category
+# M - Memo
+# N - Check number
+# ^ - End of transaction
+
+class CsvToQif
+  attr_reader :input_file, :output_file, :account_type
+
+  def initialize(input_file:, output_file: nil, account_type: 'Bank')
+    @input_file   = Pathname.new(input_file)
+    @output_file  = output_file ? Pathname.new(output_file) : derive_output_filename
+    @account_type = account_type
+
+    validate_input!
+  end
+
+  def convert
+    transactions = parse_csv
+    write_qif(transactions)
+
+    puts "Successfully converted #{transactions.size} transactions"
+    puts "Output file: #{output_file}"
+  end
+
+  private
+
+  def validate_input!
+    unless input_file.exist?
+      abort "Error: Input file not found: #{input_file}"
+    end
+
+    unless input_file.readable?
+      abort "Error: Cannot read input file: #{input_file}"
+    end
+  end
+
+  def derive_output_filename
+    input_file.sub_ext('.qif')
+  end
+
+  def parse_csv
+    transactions = []
+
+    CSV.foreach(input_file, headers: true, skip_blanks: true) do |row|
+      next if row['Amount'].nil? || row['Amount'].strip.empty?
+
+      transactions << build_transaction(row)
+    end
+
+    transactions
+  end
+
+  def build_transaction(row)
+    {
+      date:           parse_date(row['Payment Date']),
+      amount:         parse_amount(row['Amount']),
+      payee:          row['To']&.strip,
+      category:       row['Category']&.strip,
+      memo:           build_memo(row),
+      check_number:   extract_check_number(row['Payment Type']),
+      payment_type:   row['Payment Type']&.strip
+    }
+  end
+
+  def parse_date(date_string)
+    return '' if date_string.nil? || date_string.strip.empty?
+
+    begin
+      Date.strptime(date_string.strip, '%m/%d/%Y').strftime('%m/%d/%Y')
+    rescue ArgumentError
+      date_string.strip
+    end
+  end
+
+  def parse_amount(amount_string)
+    return '0.00' if amount_string.nil? || amount_string.strip.empty?
+
+    # Remove dollar sign and convert to float
+    amount_string.gsub(/[$,]/, '').strip
+  end
+
+  def extract_check_number(payment_type)
+    return nil if payment_type.nil?
+
+    match = payment_type.match(/Check#(\d+)/)
+    match ? match[1] : nil
+  end
+
+  def build_memo(row)
+    parts = []
+
+    parts << "Type: #{row['Payment Type']}" if row['Payment Type']&.strip && !row['Payment Type'].strip.empty?
+    parts << "Confirmation: #{row['ConfirmationNumber']}" if row['ConfirmationNumber']&.strip && !row['ConfirmationNumber'].strip.empty?
+    parts << "Recurring: #{row['RecurringPayment']}" if row['RecurringPayment']&.strip && row['RecurringPayment'].strip.downcase == 'yes'
+    parts << "Status: #{row['Status']}" if row['Status']&.strip && !row['Status'].strip.empty?
+
+    parts.join(' | ')
+  end
+
+  def write_qif(transactions)
+    File.open(output_file, 'w') do |file|
+      file.puts "!Type:#{account_type}"
+
+      transactions.each do |txn|
+        write_transaction(file, txn)
+      end
+    end
+  end
+
+  def write_transaction(file, txn)
+    file.puts "D#{txn[:date]}" unless txn[:date].empty?
+    file.puts "T#{txn[:amount]}"
+    file.puts "P#{txn[:payee]}" if txn[:payee] && !txn[:payee].empty?
+    file.puts "L#{txn[:category]}" if txn[:category] && !txn[:category].empty?
+    file.puts "M#{txn[:memo]}" unless txn[:memo].empty?
+    file.puts "N#{txn[:check_number]}" if txn[:check_number]
+    file.puts "^"
+  end
+end
+
+# CLI Interface
+def parse_options
+  options = {}
+
+  OptionParser.new do |opts|
+    opts.banner = "Usage: csv_to_qif.rb [options] INPUT_FILE"
+
+    opts.on("-o", "--output FILE", "Output QIF file (default: INPUT_FILE.qif)") do |file|
+      options[:output_file] = file
+    end
+
+    opts.on("-t", "--type TYPE", "Account type (default: Bank)", "Options: Bank, Cash, CCard, Invst, Oth A, Oth L") do |type|
+      options[:account_type] = type
+    end
+
+    opts.on("-h", "--help", "Display this help message") do
+      puts opts
+      exit
+    end
+
+    opts.on("-v", "--version", "Display version") do
+      puts "csv_to_qif.rb version 1.0.0"
+      exit
+    end
+  end.parse!
+
+  if ARGV.empty?
+    abort "Error: No input file specified. Use -h for help."
+  end
+
+  options[:input_file] = ARGV[0]
+  options
+end
+
+# Main execution
+if __FILE__ == $PROGRAM_NAME
+  begin
+    options = parse_options
+    converter = CsvToQif.new(**options)
+    converter.convert
+  rescue => e
+    abort "Error: #{e.message}"
+  end
+end

@@ -1,0 +1,352 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+##########################################################
+###
+##  File: csv_to_qfx.rb
+##  Desc: Convert CSV bank transactions to QFX/OFX format
+##  By:   Dewayne VanHoozer (dvanhoozer@gmail.com)
+#
+
+require 'csv'
+require 'date'
+require 'digest'
+require 'optparse'
+require 'pathname'
+
+# QFX/OFX Format Reference:
+# QFX is Quicken's implementation of OFX (Open Financial Exchange)
+# It's an XML-based format with specific headers
+# Transaction types: DEBIT, CREDIT, CHECK, PAYMENT, CASH, etc.
+
+class CsvToQfx
+  attr_reader :input_file, :output_file, :account_id, :account_type,
+              :bank_id, :start_date, :end_date
+
+  def initialize(input_file:, output_file: nil, account_id: '123456789',
+                 account_type: 'CHECKING', bank_id: '000000000')
+    @input_file   = Pathname.new(input_file)
+    @output_file  = output_file ? Pathname.new(output_file) : derive_output_filename
+    @account_id   = account_id
+    @account_type = account_type.upcase
+    @bank_id      = bank_id
+    @start_date   = nil
+    @end_date     = nil
+
+    validate_input!
+    validate_account_type!
+  end
+
+  def convert
+    transactions = parse_csv
+    calculate_date_range(transactions)
+    write_qfx(transactions)
+
+    puts "Successfully converted #{transactions.size} transactions"
+    puts "Date range: #{start_date} to #{end_date}"
+    puts "Output file: #{output_file}"
+  end
+
+  private
+
+  def validate_input!
+    unless input_file.exist?
+      abort "Error: Input file not found: #{input_file}"
+    end
+
+    unless input_file.readable?
+      abort "Error: Cannot read input file: #{input_file}"
+    end
+  end
+
+  def validate_account_type!
+    valid_types = %w[CHECKING SAVINGS CREDITCARD CREDITLINE MONEYMRKT]
+    unless valid_types.include?(account_type)
+      abort "Error: Invalid account type. Valid types: #{valid_types.join(', ')}"
+    end
+  end
+
+  def derive_output_filename
+    input_file.sub_ext('.qfx')
+  end
+
+  def parse_csv
+    transactions = []
+
+    CSV.foreach(input_file, headers: true, skip_blanks: true) do |row|
+      next if row['Amount'].nil? || row['Amount'].strip.empty?
+
+      transactions << build_transaction(row)
+    end
+
+    transactions
+  end
+
+  def build_transaction(row)
+    amount = parse_amount(row['Amount'])
+
+    {
+      type:           determine_transaction_type(row, amount),
+      date:           parse_date(row['Payment Date']),
+      amount:         amount,
+      fitid:          generate_fitid(row),
+      name:           build_name(row),
+      memo:           build_memo(row),
+      check_number:   extract_check_number(row['Payment Type']),
+      raw_row:        row
+    }
+  end
+
+  def determine_transaction_type(row, amount)
+    payment_type = row['Payment Type']&.strip&.upcase || ''
+
+    if payment_type.start_with?('CHECK')
+      'CHECK'
+    elsif amount.to_f < 0
+      'DEBIT'
+    else
+      'CREDIT'
+    end
+  end
+
+  def parse_date(date_string)
+    return Date.today if date_string.nil? || date_string.strip.empty?
+
+    begin
+      Date.strptime(date_string.strip, '%m/%d/%Y')
+    rescue ArgumentError
+      Date.today
+    end
+  end
+
+  def parse_amount(amount_string)
+    return '0.00' if amount_string.nil? || amount_string.strip.empty?
+
+    # Remove dollar sign and convert to float
+    amount_string.gsub(/[$,]/, '').strip
+  end
+
+  def generate_fitid(row)
+    # Create a unique transaction ID based on row data
+    # This helps prevent duplicate imports
+    data = [
+      row['Payment Date'],
+      row['Amount'],
+      row['To'],
+      row['ConfirmationNumber']
+    ].compact.join('|')
+
+    Digest::SHA256.hexdigest(data)[0..31]
+  end
+
+  def build_name(row)
+    payee = row['To']&.strip
+    category = row['Category']&.strip
+
+    if payee && !payee.empty?
+      payee
+    elsif category && !category.empty?
+      category
+    else
+      'Unknown'
+    end
+  end
+
+  def extract_check_number(payment_type)
+    return nil if payment_type.nil?
+
+    match = payment_type.match(/Check#(\d+)/)
+    match ? match[1] : nil
+  end
+
+  def build_memo(row)
+    parts = []
+
+    parts << row['Category'] if row['Category']&.strip && !row['Category'].strip.empty?
+    parts << "Type: #{row['Payment Type']}" if row['Payment Type']&.strip && !row['Payment Type'].strip.empty?
+    parts << "Conf: #{row['ConfirmationNumber']}" if row['ConfirmationNumber']&.strip && !row['ConfirmationNumber'].strip.empty?
+    parts << "Recurring" if row['RecurringPayment']&.strip&.downcase == 'yes'
+
+    parts.join(' | ')
+  end
+
+  def calculate_date_range(transactions)
+    dates = transactions.map { |t| t[:date] }.compact
+
+    @start_date = dates.min || Date.today
+    @end_date   = dates.max || Date.today
+  end
+
+  def write_qfx(transactions)
+    File.open(output_file, 'w') do |file|
+      write_ofx_header(file)
+      write_signon_message(file)
+      write_bank_message(file, transactions)
+      write_ofx_footer(file)
+    end
+  end
+
+  def write_ofx_header(file)
+    file.puts 'OFXHEADER:100'
+    file.puts 'DATA:OFXSGML'
+    file.puts 'VERSION:102'
+    file.puts 'SECURITY:NONE'
+    file.puts 'ENCODING:USASCII'
+    file.puts 'CHARSET:1252'
+    file.puts 'COMPRESSION:NONE'
+    file.puts 'OLDFILEUID:NONE'
+    file.puts 'NEWFILEUID:NONE'
+    file.puts ''
+  end
+
+  def write_signon_message(file)
+    file.puts '<OFX>'
+    file.puts '  <SIGNONMSGSRSV1>'
+    file.puts '    <SONRS>'
+    file.puts '      <STATUS>'
+    file.puts '        <CODE>0</CODE>'
+    file.puts '        <SEVERITY>INFO</SEVERITY>'
+    file.puts '      </STATUS>'
+    file.puts "      <DTSERVER>#{ofx_datetime(DateTime.now)}</DTSERVER>"
+    file.puts '      <LANGUAGE>ENG</LANGUAGE>'
+    file.puts '    </SONRS>'
+    file.puts '  </SIGNONMSGSRSV1>'
+  end
+
+  def write_bank_message(file, transactions)
+    file.puts '  <BANKMSGSRSV1>'
+    file.puts '    <STMTTRNRS>'
+    file.puts '      <TRNUID>1</TRNUID>'
+    file.puts '      <STATUS>'
+    file.puts '        <CODE>0</CODE>'
+    file.puts '        <SEVERITY>INFO</SEVERITY>'
+    file.puts '      </STATUS>'
+    file.puts '      <STMTRS>'
+    file.puts '        <CURDEF>USD</CURDEF>'
+
+    write_bank_account_info(file)
+    write_transaction_list(file, transactions)
+    write_ledger_balance(file, transactions)
+
+    file.puts '      </STMTRS>'
+    file.puts '    </STMTTRNRS>'
+    file.puts '  </BANKMSGSRSV1>'
+  end
+
+  def write_bank_account_info(file)
+    file.puts '        <BANKACCTFROM>'
+    file.puts "          <BANKID>#{bank_id}</BANKID>"
+    file.puts "          <ACCTID>#{account_id}</ACCTID>"
+    file.puts "          <ACCTTYPE>#{account_type}</ACCTTYPE>"
+    file.puts '        </BANKACCTFROM>'
+  end
+
+  def write_transaction_list(file, transactions)
+    file.puts '        <BANKTRANLIST>'
+    file.puts "          <DTSTART>#{ofx_date(start_date)}</DTSTART>"
+    file.puts "          <DTEND>#{ofx_date(end_date)}</DTEND>"
+
+    transactions.each do |txn|
+      write_transaction(file, txn)
+    end
+
+    file.puts '        </BANKTRANLIST>'
+  end
+
+  def write_transaction(file, txn)
+    file.puts '          <STMTTRN>'
+    file.puts "            <TRNTYPE>#{txn[:type]}</TRNTYPE>"
+    file.puts "            <DTPOSTED>#{ofx_date(txn[:date])}</DTPOSTED>"
+    file.puts "            <TRNAMT>#{txn[:amount]}</TRNAMT>"
+    file.puts "            <FITID>#{txn[:fitid]}</FITID>"
+    file.puts "            <NAME>#{escape_xml(txn[:name])}</NAME>"
+    file.puts "            <MEMO>#{escape_xml(txn[:memo])}</MEMO>" unless txn[:memo].empty?
+    file.puts "            <CHECKNUM>#{txn[:check_number]}</CHECKNUM>" if txn[:check_number]
+    file.puts '          </STMTTRN>'
+  end
+
+  def write_ledger_balance(file, transactions)
+    total = transactions.sum { |t| t[:amount].to_f }
+
+    file.puts '        <LEDGERBAL>'
+    file.puts "          <BALAMT>#{format('%.2f', total)}</BALAMT>"
+    file.puts "          <DTASOF>#{ofx_datetime(DateTime.now)}</DTASOF>"
+    file.puts '        </LEDGERBAL>'
+  end
+
+  def write_ofx_footer(file)
+    file.puts '</OFX>'
+  end
+
+  def ofx_date(date)
+    date.strftime('%Y%m%d')
+  end
+
+  def ofx_datetime(datetime)
+    datetime.strftime('%Y%m%d%H%M%S')
+  end
+
+  def escape_xml(text)
+    return '' if text.nil? || text.empty?
+
+    text.gsub('&', '&amp;')
+        .gsub('<', '&lt;')
+        .gsub('>', '&gt;')
+        .gsub('"', '&quot;')
+        .gsub("'", '&apos;')
+  end
+end
+
+# CLI Interface
+def parse_options
+  options = {}
+
+  OptionParser.new do |opts|
+    opts.banner = "Usage: csv_to_qfx.rb [options] INPUT_FILE"
+
+    opts.on("-o", "--output FILE", "Output QFX file (default: INPUT_FILE.qfx)") do |file|
+      options[:output_file] = file
+    end
+
+    opts.on("-a", "--account-id ID", "Account ID (default: 123456789)") do |id|
+      options[:account_id] = id
+    end
+
+    opts.on("-t", "--account-type TYPE", "Account type (default: CHECKING)",
+            "Options: CHECKING, SAVINGS, CREDITCARD, CREDITLINE, MONEYMRKT") do |type|
+      options[:account_type] = type
+    end
+
+    opts.on("-b", "--bank-id ID", "Bank routing number (default: 000000000)") do |id|
+      options[:bank_id] = id
+    end
+
+    opts.on("-h", "--help", "Display this help message") do
+      puts opts
+      exit
+    end
+
+    opts.on("-v", "--version", "Display version") do
+      puts "csv_to_qfx.rb version 1.0.0"
+      exit
+    end
+  end.parse!
+
+  if ARGV.empty?
+    abort "Error: No input file specified. Use -h for help."
+  end
+
+  options[:input_file] = ARGV[0]
+  options
+end
+
+# Main execution
+if __FILE__ == $PROGRAM_NAME
+  begin
+    options = parse_options
+    converter = CsvToQfx.new(**options)
+    converter.convert
+  rescue => e
+    abort "Error: #{e.message}"
+  end
+end

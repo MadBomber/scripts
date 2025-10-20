@@ -1,0 +1,430 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+# cfweb_budget_maker.rb
+# Takes a CSV file exported from Checkfree Web to create
+# an initial budget.
+
+
+require 'csv'
+require 'date'
+require 'optparse'
+require 'debug_me'
+
+include DebugMe
+
+##########################################################
+# Transaction represents a single bank transaction
+#
+class Transaction
+  attr_reader :amount, :fee, :total_payment, :category, :payment_type,
+              :from, :to, :delivery_on, :payment_date, :status,
+              :recurring_payment
+
+  def initialize(row)
+    @amount = parse_money(row['Amount'])
+    @fee = parse_money(row['Fee'])
+    @total_payment = parse_money(row['TotalPayment'])
+    @payment_type = row['Payment Type']&.strip
+    @from = row['From']&.strip
+    @to = row['To']&.strip
+    @delivery_on = parse_date(row['DeliveryOn'])
+    # Use Payment Date if available, otherwise fall back to DeliveryOn
+    @payment_date = parse_date(row['Payment Date']) || parse_date(row['DeliveryOn'])
+    @status = row['Status']&.strip
+    @recurring_payment = row['RecurringPayment']&.strip&.downcase == 'yes'
+
+    # Always use "To" field as the category
+    @category = @to
+  end
+
+  def month_key
+    @payment_date&.strftime('%Y-%m') || 'Unknown'
+  end
+
+  def year_month
+    @payment_date&.strftime('%B %Y') || 'Unknown'
+  end
+
+  private
+
+  def parse_money(value)
+    return 0.0 if value.nil? || value.empty?
+    value.to_s.gsub(/[^0-9.-]/, '').to_f.abs
+  end
+
+  def parse_date(value)
+    return nil if value.nil? || value.empty?
+    Date.parse(value)
+  rescue ArgumentError
+    nil
+  end
+end
+
+##########################################################
+# BudgetAnalyzer analyzes transactions and generates budgets
+#
+class BudgetAnalyzer
+  attr_reader :transactions, :monthly_data, :category_data
+
+  def initialize(transactions)
+    @transactions = transactions
+    @monthly_data = {}
+    @category_data = {}
+    analyze_transactions
+  end
+
+  def analyze_transactions
+    debug_me { [@transactions.size] }
+
+    @transactions.each do |txn|
+      month = txn.month_key
+      category = txn.category
+
+      # Monthly data
+      @monthly_data[month] ||= { total: 0.0, categories: {}, recurring: 0.0, one_time: 0.0 }
+      @monthly_data[month][:total] += txn.total_payment
+      @monthly_data[month][:categories][category] ||= 0.0
+      @monthly_data[month][:categories][category] += txn.total_payment
+
+      if txn.recurring_payment
+        @monthly_data[month][:recurring] += txn.total_payment
+      else
+        @monthly_data[month][:one_time] += txn.total_payment
+      end
+
+      # Category data across all months
+      @category_data[category] ||= { total: 0.0, count: 0, recurring_count: 0, transactions: [] }
+      @category_data[category][:total] += txn.total_payment
+      @category_data[category][:count] += 1
+      @category_data[category][:recurring_count] += 1 if txn.recurring_payment
+      @category_data[category][:transactions] << txn
+    end
+  end
+
+  def one_time_categories
+    # Identify categories that appear only once (single payment, non-recurring)
+    @category_data.select { |_category, data| data[:count] == 1 }.keys
+  end
+
+  def budget_categories
+    # Categories to include in budget (exclude one-time misc expenses)
+    one_time = one_time_categories
+    @category_data.keys.reject { |cat| one_time.include?(cat) }
+  end
+
+  def monthly_averages
+    return {} if @monthly_data.empty?
+
+    num_months = @monthly_data.size
+    debug_me { [num_months] }
+
+    averages = {
+      total: 0.0,
+      recurring: 0.0,
+      one_time: 0.0,
+      categories: {}
+    }
+
+    @monthly_data.each do |_month, data|
+      averages[:total] += data[:total]
+      averages[:recurring] += data[:recurring]
+      averages[:one_time] += data[:one_time]
+
+      data[:categories].each do |category, amount|
+        averages[:categories][category] ||= 0.0
+        averages[:categories][category] += amount
+      end
+    end
+
+    # Calculate averages
+    averages[:total] /= num_months
+    averages[:recurring] /= num_months
+    averages[:one_time] /= num_months
+    averages[:categories].transform_values! { |v| v / num_months }
+
+    averages
+  end
+
+  def recurring_payments_baseline
+    recurring_txns = @transactions.select(&:recurring_payment)
+    baseline = {}
+
+    recurring_txns.each do |txn|
+      category = txn.category
+      baseline[category] ||= { total: 0.0, count: 0, payees: [] }
+      baseline[category][:total] += txn.total_payment
+      baseline[category][:count] += 1
+      baseline[category][:payees] << txn.to unless baseline[category][:payees].include?(txn.to)
+    end
+
+    # Calculate average per month
+    num_months = @monthly_data.size
+    baseline.each do |_category, data|
+      data[:monthly_average] = data[:total] / num_months
+    end
+
+    baseline
+  end
+
+  def trend_analysis
+    sorted_months = @monthly_data.keys.sort
+    return {} if sorted_months.size < 2
+
+    trends = {
+      total_trend: calculate_trend(sorted_months, :total),
+      category_trends: {}
+    }
+
+    # Category trends
+    all_categories = @category_data.keys
+    all_categories.each do |category|
+      category_monthly = sorted_months.map do |month|
+        @monthly_data[month][:categories][category] || 0.0
+      end
+
+      next if category_monthly.all?(&:zero?)
+
+      avg = category_monthly.sum / category_monthly.size
+      latest = category_monthly.last
+      change = latest - avg
+
+      trends[:category_trends][category] = {
+        average: avg,
+        latest: latest,
+        change: change,
+        percent_change: avg.zero? ? 0.0 : (change / avg * 100)
+      }
+    end
+
+    trends
+  end
+
+  def spending_recommendations
+    averages = monthly_averages
+    trends = trend_analysis
+    recommendations = []
+
+    # Find categories with increasing trends (only if we have trend data)
+    if trends[:category_trends]
+      trends[:category_trends].each do |category, data|
+        if data[:percent_change] > 20
+          recommendations << {
+            type: :warning,
+            category: category,
+            message: "#{category} spending increased #{data[:percent_change].round(1)}% above average"
+          }
+        end
+      end
+    end
+
+    # Find high-spend categories
+    top_categories = averages[:categories].sort_by { |_k, v| -v }.first(3)
+    top_categories.each do |category, amount|
+      pct = (amount / averages[:total] * 100).round(1)
+      if pct > 25
+        recommendations << {
+          type: :info,
+          category: category,
+          message: "#{category} represents #{pct}% of monthly budget ($#{amount.round(2)})"
+        }
+      end
+    end
+
+    # Check recurring vs one-time ratio
+    recurring_pct = (averages[:recurring] / averages[:total] * 100).round(1)
+    recommendations << {
+      type: :info,
+      category: 'Overall',
+      message: "#{recurring_pct}% of spending is recurring, #{(100 - recurring_pct).round(1)}% is discretionary"
+    }
+
+    recommendations
+  end
+
+  private
+
+  def calculate_trend(sorted_months, key)
+    values = sorted_months.map { |m| @monthly_data[m][key] }
+    return { direction: 'stable', change: 0.0 } if values.size < 2
+
+    avg = values.sum / values.size
+    latest = values.last
+    change = latest - avg
+    percent_change = avg.zero? ? 0.0 : (change / avg * 100)
+
+    {
+      direction: percent_change > 5 ? 'increasing' : (percent_change < -5 ? 'decreasing' : 'stable'),
+      change: change,
+      percent_change: percent_change
+    }
+  end
+end
+
+##########################################################
+# BudgetReport generates output reports
+#
+class BudgetReport
+  def initialize(analyzer)
+    @analyzer = analyzer
+  end
+
+  def display_summary
+    puts "\n" + "=" * 80
+    puts "BUDGET ANALYSIS SUMMARY"
+    puts "=" * 80
+
+    # Overall statistics
+    puts "\nOVERALL STATISTICS:"
+    puts "-" * 80
+    averages = @analyzer.monthly_averages
+    puts "Number of months analyzed: #{@analyzer.monthly_data.size}"
+    puts "Total transactions: #{@analyzer.transactions.size}"
+    puts "Average monthly spending: $#{averages[:total].round(2)}"
+    puts "  Recurring: $#{averages[:recurring].round(2)} (#{(averages[:recurring] / averages[:total] * 100).round(1)}%)"
+    puts "  One-time: $#{averages[:one_time].round(2)} (#{(averages[:one_time] / averages[:total] * 100).round(1)}%)"
+
+    # Category breakdown
+    puts "\nTOP SPENDING CATEGORIES (Monthly Average):"
+    puts "-" * 80
+    one_time_cats = @analyzer.one_time_categories
+    averages[:categories].sort_by { |_k, v| -v }.first(10).each_with_index do |(category, amount), idx|
+      pct = (amount / averages[:total] * 100).round(1)
+      misc_marker = one_time_cats.include?(category) ? " [misc]" : ""
+      puts "#{idx + 1}. #{category.ljust(30)} $#{amount.round(2).to_s.rjust(10)} (#{pct}%)#{misc_marker}"
+    end
+
+    # Recurring payments
+    puts "\nRECURRING PAYMENTS BASELINE:"
+    puts "-" * 80
+    baseline = @analyzer.recurring_payments_baseline
+    total_recurring = 0.0
+    baseline.sort_by { |_k, v| -v[:monthly_average] }.each do |category, data|
+      puts "#{category.ljust(30)} $#{data[:monthly_average].round(2).to_s.rjust(10)} (#{data[:count]} payments)"
+      total_recurring += data[:monthly_average]
+    end
+    puts "#{'-' * 43} $#{total_recurring.round(2).to_s.rjust(10)}"
+
+    # Trend analysis
+    puts "\nTREND ANALYSIS:"
+    puts "-" * 80
+    trends = @analyzer.trend_analysis
+
+    if trends.empty?
+      puts "Not enough data for trend analysis (need at least 2 months)"
+    else
+      puts "Overall spending trend: #{trends[:total_trend][:direction]}"
+      if trends[:total_trend][:percent_change].abs > 1
+        puts "  Change: #{trends[:total_trend][:percent_change].round(1)}% vs average"
+      end
+
+      puts "\nCategory Trends (>10% change):"
+      significant_trends = trends[:category_trends]
+        .select { |_k, v| v[:percent_change].abs > 10 }
+        .sort_by { |_k, v| -v[:percent_change].abs }
+
+      if significant_trends.empty?
+        puts "  No significant category trends detected"
+      else
+        significant_trends.each do |category, data|
+          direction = data[:percent_change] > 0 ? "↑" : "↓"
+          puts "  #{direction} #{category}: #{data[:percent_change].round(1)}% change"
+        end
+      end
+    end
+
+    # Recommendations
+    puts "\nRECOMMENDATIONS:"
+    puts "-" * 80
+    @analyzer.spending_recommendations.each_with_index do |rec, idx|
+      icon = rec[:type] == :warning ? "⚠" : "ℹ"
+      puts "#{idx + 1}. #{icon}  #{rec[:message]}"
+    end
+
+    # One-time misc expenses
+    one_time_cats = @analyzer.one_time_categories
+    unless one_time_cats.empty?
+      puts "\nONE-TIME MISC EXPENSES (excluded from budget):"
+      puts "-" * 80
+      one_time_total = 0.0
+      one_time_cats.sort.each do |category|
+        amount = @analyzer.category_data[category][:total]
+        one_time_total += amount
+        puts "#{category.ljust(40)} $#{amount.round(2).to_s.rjust(10)}"
+      end
+      puts "#{'-' * 43} $#{one_time_total.round(2).to_s.rjust(10)}"
+    end
+
+    # Projected budget (exclude one-time misc expenses)
+    puts "\nPROJECTED MONTHLY BUDGET:"
+    puts "-" * 80
+    budget_cats = @analyzer.budget_categories
+    budget_total = 0.0
+
+    # Calculate budget total from recurring categories only
+    budget_categories_with_amounts = averages[:categories]
+      .select { |cat, _amount| budget_cats.include?(cat) }
+      .sort_by { |_k, v| -v }
+
+    budget_categories_with_amounts.each do |category, amount|
+      puts "#{category.ljust(40)} $#{amount.round(2).to_s.rjust(10)}"
+      budget_total += amount
+    end
+    puts "=" * 80
+    puts "#{'TOTAL PROJECTED MONTHLY BUDGET'.ljust(40)} $#{budget_total.round(2).to_s.rjust(10)}"
+    puts "=" * 80
+    puts
+  end
+end
+
+##########################################################
+# Main program
+#
+def main
+  options = {}
+
+  OptionParser.new do |opts|
+    opts.banner = "Usage: budget_maker.rb [options]"
+    opts.on("-i", "--input FILE", "Input CSV file (required)") { |v| options[:input] = v }
+    opts.on("-h", "--help", "Show this help message") do
+      puts opts
+      exit
+    end
+  end.parse!
+
+  # Validate options
+  if options[:input].nil?
+    puts "Error: --input is required"
+    puts "Usage: budget_maker.rb --input input.csv"
+    exit 1
+  end
+
+  unless File.exist?(options[:input])
+    puts "Error: Input file '#{options[:input]}' not found"
+    exit 1
+  end
+
+  debug_me { [options] }
+
+  # Read transactions
+  puts "Reading transactions from #{options[:input]}..."
+  transactions = []
+
+  CSV.foreach(options[:input], headers: true) do |row|
+    transactions << Transaction.new(row)
+  end
+
+  puts "Loaded #{transactions.size} transactions"
+
+  # Analyze
+  puts "Analyzing budget data..."
+  analyzer = BudgetAnalyzer.new(transactions)
+
+  # Display summary
+  report = BudgetReport.new(analyzer)
+  report.display_summary
+
+  puts "Budget analysis complete!"
+end
+
+# Run the program
+main if __FILE__ == $PROGRAM_NAME
