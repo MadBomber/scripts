@@ -339,7 +339,7 @@ cowsay                                      Apjanke's fork of the classic cowsay
                                             |__ https://cowsay.diamonds
 
 cppad                                       Differentiation of C++ Algorithms
-                                            |__ https://www.coin-or.org/CppAD
+                                            |__ https://cppad.readthedocs.io/latest/
 
 charmbracelet/tap/crush                     A powerful terminal-based AI assistant for
                                             |   developers, providing intelligent coding
@@ -1046,6 +1046,10 @@ hledger                                     Easy plain text accounting with
                                             |   command-line, terminal and web UIs
                                             |__ https://hledger.org/
 
+html-to-markdown                            Transforms HTML (even entire websites)
+                                            |   into clean, readable Markdown
+                                            |__ https://html-to-markdown.com
+
 html2markdown                               Convert HTML to Markdown
                                             |__ https://html-to-markdown.com
 
@@ -1640,13 +1644,23 @@ macchina                                    System information fetcher, with an
 context-labs/mactop/mactop                  Apple Silicon Monitor Top written in Go Lang
                                             |__ https://github.com/context-labs/mactop
 
+maigret                                     Collect a dossier on a person by
+                                            |   username from thousands of sites
+                                            |__ https://github.com/soxoj/maigret
+
 markdown                                    Text-to-HTML conversion tool
                                             |__ https://daringfireball.net/projects/markdown/
+
+matcha                                      Daily digest generator for your RSS feeds
+                                            |__ https://github.com/piqoni/matcha
 
 maven                                       Java-based project management
                                             |__ https://maven.apache.org/
 
 mbedtls                                     Cryptographic & SSL/TLS library
+                                            |__ https://tls.mbed.org/
+
+mbedtls@3                                   Cryptographic & SSL/TLS library
                                             |__ https://tls.mbed.org/
 
 mcfly                                       Fly through your shell history
@@ -2187,6 +2201,10 @@ qman                                        Modern man page viewer
 qp                                          Command-line (ND)JSON querying
                                             |__ https://github.com/f5io/qp
 
+qqqa                                        Fast, stateless LLM for your shell:
+                                            |   qq answers; qa runs commands
+                                            |__ https://github.com/iagooar/qqqa
+
 qsv                                         Ultra-fast CSV data-wrangling toolkit
                                             |__ https://qsv.dathere.com/
 
@@ -2574,6 +2592,10 @@ static-web-server                           High-performance and asynchronous
 stormy                                      Minimal, customizable and neofetch-like
                                             |   weather CLI based on rainy
                                             |__ https://github.com/ashish0kumar/stormy
+
+strands-agents-sops                         Standard Operating Procedures for
+                                            |   AI agents using natural language
+                                            |__ https://github.com/strands-agents/agent-sop
 
 suite-sparse                                Suite of Sparse Matrix Software
                                             |__ https://people.engr.tamu.edu/davis/suitesparse.html

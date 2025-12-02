@@ -11,6 +11,12 @@ Encoding.default_internal
 #       add --header --no-header (on no-header use column number as the header name)
 #       add prettier formatting
 
+class NilClass
+  def size
+    0
+  end
+end
+
 require 'debug_me'  # A tool to print the labeled value of variables.
 include DebugMe
 
@@ -148,8 +154,16 @@ column_sizes = Array.new
 
 def build_headers(an_array)
   if header?
-    max_size  = an_array.collect {|s| s.size}.max + 3
-    out_array = an_array.collect {|s| s+" "+( "."*(max_size-s.size) )+" "}
+    # Convert nil values to empty strings
+    string_array = an_array.collect {|s| s.to_s}
+    # Calculate width needed for index numbers (based on max index)
+    index_width = (an_array.size - 1).to_s.size
+    # Calculate max size for column names
+    max_size  = string_array.collect {|s| s.size}.max + 3
+    # Build headers with aligned index numbers
+    out_array = string_array.each_with_index.collect do |s, idx|
+      sprintf("%#{index_width}d. %s%s ", idx, s, "."*(max_size-s.size))
+    end
   else
     out_array = (1..an_array.size).collect { |x| sprintf("%3d ... ", x) }
   end
@@ -219,5 +233,3 @@ end
 require 'amazing_print'  # Pretty print Ruby objects with proper indentation and colors
 
 ap column_sizes
-
-
