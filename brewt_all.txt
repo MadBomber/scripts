@@ -261,6 +261,10 @@ cgns                                        CFD General Notation System
 cgrep                                       Context-aware grep for source code
                                             |__ https://github.com/awgn/cgrep
 
+chafa                                       Versatile and fast
+                                            |   Unicode/ASCII/ANSI graphics renderer
+                                            |__ https://hpjansson.org/chafa/
+
 changelogen                                 Generate Beautiful Changelogs
                                             |   using Conventional Commits
                                             |__ https://github.com/unjs/changelogen
@@ -356,6 +360,9 @@ crystal                                     Fast and statically typed, compiled
 crystal-icr                                 Interactive console for Crystal programming language
                                             |__ https://github.com/crystal-community/icr
 
+cspell                                      Spell checker for code
+                                            |__ https://cspell.org
+
 csview                                      High performance csv viewer for cli
                                             |__ https://github.com/wfxr/csview
 
@@ -414,7 +421,7 @@ desktop-file-utils                          Command-line utilities for
                                             |__ https://wiki.freedesktop.org/www/Software/desktop-file-utils/
 
 detach                                      Execute given command in detached process
-                                            |__ http://inglorion.net/software/detach/
+                                            |__ https://inglorion.net/software/detach/
 
 detox                                       Utility to replace problematic
                                             |   characters in filenames
@@ -848,7 +855,7 @@ gnu-prolog                                  Prolog compiler with constraint solv
 gnu-tar                                     GNU version of the tar archiving utility
                                             |__ https://www.gnu.org/software/tar/
 
-gnupg                                       GNU Pretty Good Privacy (PGP) package
+gnupg                                       GNU Privacy Guard (OpenPGP)
                                             |__ https://gnupg.org/
 
 gnutls                                      GNU Transport Layer Security (TLS) Library
@@ -1009,6 +1016,9 @@ helm-docs                                   Tool for automatically generating
 
 helm-ls                                     Language server for Helm
                                             |__ https://github.com/mrjosh/helm-ls
+
+helm@3                                      Kubernetes package manager
+                                            |__ https://helm.sh/
 
 helmfile                                    Deploy Kubernetes Helm Charts
                                             |__ https://github.com/helmfile/helmfile
@@ -1195,6 +1205,9 @@ json-c                                      JSON parser for C
 
 jsoncpp                                     Library for interacting with JSON
                                             |__ https://github.com/open-source-parsers/jsoncpp
+
+jsonfmt                                     Like gofmt, but for JSON files
+                                            |__ https://github.com/caarlos0/jsonfmt
 
 jump                                        Helps you navigate your file system
                                             |   faster by learning your habits
@@ -1432,9 +1445,6 @@ libsoxr                                     High quality, one-dimensional
 
 libspatialite                               Adds spatial SQL capabilities to SQLite
                                             |__ https://www.gaia-gis.it/fossil/libspatialite/index
-
-libspng                                     C library for reading and writing PNG format files
-                                            |__ https://libspng.org/
 
 libsql                                      Fork of SQLite that is both Open
                                             |   Source, and Open Contributions
@@ -1907,8 +1917,8 @@ open-mpi                                    High performance message passing lib
 openblas                                    Optimized BLAS library
                                             |__ https://www.openblas.net/
 
-sst/tap/opencode                            The AI coding agent built for the terminal.
-                                            |__ https://github.com/sst/opencode
+opencode                                    AI coding agent, built for the terminal
+                                            |__ https://opencode.ai
 
 opencore-amr                                Audio codecs extracted from
                                             |   Android open source project
@@ -2109,6 +2119,9 @@ proj                                        Cartographic Projections Library
 
 projectable                                 TUI file manager built for projects
                                             |__ https://dzfrias.dev/blog/projectable
+
+prometheus                                  Service monitoring system and time series database
+                                            |__ https://prometheus.io/
 
 promptfoo                                   Test your LLM app locally
                                             |__ https://promptfoo.dev/
@@ -2504,6 +2517,9 @@ semgrep                                     Easily detect and prevent bugs and
 semtag                                      Semantic tagging script for git
                                             |__ https://github.com/nico2sh/semtag
 
+sentencepiece                               Unsupervised text tokenizer and detokenizer
+                                            |__ https://github.com/google/sentencepiece
+
 sfcgal                                      C++ wrapper library around CGAL
                                             |__ https://sfcgal.gitlab.io/SFCGAL/
 
@@ -2537,6 +2553,9 @@ smenu                                       Powerful and versatile CLI selection
 snappy                                      Compression/decompression
                                             |   library aiming for high speed
                                             |__ https://google.github.io/snappy/
+
+snitch                                      Prettier way to inspect network connections
+                                            |__ https://github.com/karol-broda/snitch
 
 socat                                       SOcket CAT: netcat on steroids
                                             |__ http://www.dest-unreach.org/socat/
@@ -2614,6 +2633,9 @@ svg2png                                     SVG to PNG converter
 
 svt-av1                                     AV1 encoder
                                             |__ https://gitlab.com/AOMediaCodec/SVT-AV1
+
+svu                                         Semantic version utility
+                                            |__ https://github.com/caarlos0/svu
 
 swi-prolog                                  ISO/Edinburgh-style Prolog interpreter
                                             |__ https://www.swi-prolog.org/
@@ -2725,6 +2747,9 @@ tree                                        Display directories as trees
                                             |__ https://oldmanprogrammer.net/source.php?dir=projects/tree
 
 tree-sitter                                 Incremental parsing library
+                                            |__ https://tree-sitter.github.io/
+
+tree-sitter@0.25                            Incremental parsing library
                                             |__ https://tree-sitter.github.io/
 
 tuc                                         Text manipulation and cutting tool
