@@ -176,6 +176,10 @@ blake3                                      C implementation of the BLAKE3
 blis                                        BLAS-like Library Instantiation Software Framework
                                             |__ https://github.com/flame/blis
 
+block-goose-cli                             Open source, extensible AI agent
+                                            |   that goes beyond code suggestions
+                                            |__ https://block.github.io/goose/
+
 boost                                       Collection of portable C++ source libraries
                                             |__ https://www.boost.org/
 
@@ -1004,6 +1008,9 @@ harsh                                       Habit tracking for geeks
 hdf5                                        File format designed to store large amounts of data
                                             |__ https://www.hdfgroup.org/solutions/hdf5/
 
+headson                                     Head/tail for structured data
+                                            |__ https://docs.rs/headson/latest/headson/
+
 helix                                       Post-modern modal text editor
                                             |__ https://helix-editor.com
 
@@ -1637,6 +1644,9 @@ lychee                                      Fast, async, resource-friendly link 
 
 lz4                                         Extremely Fast Compression algorithm
                                             |__ https://lz4.github.io/lz4/
+
+lzlib                                       Data compression library
+                                            |__ https://www.nongnu.org/lzip/lzlib.html
 
 lzo                                         Real-time data compression library
                                             |__ https://www.oberhumer.com/opensource/lzo/
@@ -2959,7 +2969,7 @@ yaz                                         Toolkit for Z39.50/SRW/SRU clients/s
 
 yek                                         Fast Rust based tool to serialize
                                             |   text-based files for LLM consumption
-                                            |__ https://github.com/bodo-run/yek
+                                            |__ https://github.com/mohsen1/yek
 
 youplot                                     Command-line tool that draw plots on the terminal
                                             |__ https://github.com/red-data-tools/YouPlot/
@@ -3001,6 +3011,10 @@ zfind                                       Search for files (even inside
                                             |__ https://github.com/laktak/zfind
 
 zig                                         Programming language designed for
+                                            |   robustness, optimality, and clarity
+                                            |__ https://ziglang.org/
+
+zig@0.14                                    Programming language designed for
                                             |   robustness, optimality, and clarity
                                             |__ https://ziglang.org/
 
