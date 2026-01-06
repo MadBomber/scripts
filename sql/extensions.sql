@@ -24,7 +24,7 @@ CREATE EXTENSION IF NOT EXISTS ai;
 -- **vector**: Adds support for vector data types and 
 -- operations, useful for machine learning and AI 
 -- applications.
-CREATE EXTENSION IF NOT EXISTS vector;
+CREATE EXTENSION IF NOT EXISTS pgvector;
 
 -- **hstore**: Provides a key-value store within 
 -- PostgreSQL, allowing for dynamic attributes.
