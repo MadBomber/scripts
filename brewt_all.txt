@@ -19,6 +19,9 @@ aiac                                        Artificial Intelligence
 aichat                                      All-in-one AI-Powered CLI Chat & Copilot
                                             |__ https://github.com/sigoden/aichat
 
+amp                                         Text editor for your terminal
+                                            |__ https://amp.rs
+
 ampl-asl                                    AMPL Solver Library
                                             |__ https://ampl.com/
 
@@ -232,6 +235,9 @@ calc                                        Arbitrary precision calculator
 
 cbc                                         Mixed integer linear programming solver
                                             |__ https://github.com/coin-or/Cbc
+
+ccextractor                                 Tool for extracting closed captions from video files
+                                            |__ https://www.ccextractor.org
 
 ccusage                                     CLI tool for analyzing Claude
                                             |   Code usage from local JSONL files
@@ -552,9 +558,6 @@ edencommon                                  Shared library for Watchman and Eden
 
 eigen                                       C++ template library for linear algebra
                                             |__ https://gitlab.com/libeigen/eigen
-
-ejabberd                                    XMPP application server
-                                            |__ https://www.ejabberd.im
 
 elixir                                      Functional metaprogramming aware
                                             |   language built on Erlang VM
@@ -884,6 +887,10 @@ gorilla-cli                                 LLMs for your CLI
 
 gource                                      Version Control Visualization Tool
                                             |__ https://gource.io/
+
+gpac                                        Multimedia framework for
+                                            |   research and academic purposes
+                                            |__ https://gpac.io/
 
 gpgme                                       Library access to GnuPG
                                             |__ https://www.gnupg.org/related_software/gpgme/
@@ -2614,6 +2621,9 @@ sqruff                                      Fast SQL formatter/linter
 srt                                         Secure Reliable Transport
                                             |__ https://www.srtalliance.org/
 
+starship                                    Cross-shell prompt for astronauts
+                                            |__ https://starship.rs/
+
 static-web-server                           High-performance and asynchronous
                                             |   web server for static files-serving
                                             |__ https://static-web-server.net
@@ -2896,6 +2906,10 @@ wget2                                       Successor of GNU Wget, a file
 wrkflw                                      Validate and execute GitHub
                                             |   Actions workflows locally
                                             |__ https://github.com/bahdotsh/wrkflw
+
+max-sixty/worktrunk/wt                      CLI for Git worktree management,
+                                            |   designed for parallel AI agent workflows
+                                            |__ https://github.com/max-sixty/worktrunk
 
 wxwidgets                                   Cross-platform C++ GUI toolkit
                                             |__ https://www.wxwidgets.org
