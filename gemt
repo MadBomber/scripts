@@ -28,7 +28,29 @@ end
 require 'amazing_print'     # Pretty print Ruby objects with proper indentation and colors
 require 'pathname'          # STDLIB
 require 'terminal-size'     # A tiny gem to accomplish a simple task: Determining the terminal size.
-require 'word_wrapper'      # Pure ruby word wrapping
+
+# Simple word wrapper to replace word_wrapper gem (incompatible with Ruby 4.0+ frozen strings)
+def wrap_text(width, text)
+  return String.new if text.nil? || text.empty?
+
+  words = text.split
+  lines = []
+  current_line = String.new
+
+  words.each do |word|
+    if current_line.empty?
+      current_line = String.new(word)
+    elsif (current_line.length + 1 + word.length) <= width
+      current_line << " " << word
+    else
+      lines << current_line
+      current_line = String.new(word)
+    end
+  end
+
+  lines << current_line unless current_line.empty?
+  lines.join("\n")
+end
 
 if use_rubytoolbox?
   require 'pastel'          # Part of the TTY family; colorize text to terminal
@@ -139,14 +161,16 @@ end
 
 desc_start_col = longest_desc + 2
 
-width = Terminal.size[:width] - desc_start_col - 4
+terminal_width = Terminal.size[:width] || 80
+width = terminal_width - desc_start_col - 4
 
 gem_hash.each_pair do |name, gs|
   summary = gs.summary
   print "\n#{name}"
   print spaces(desc_start_col - name.size)
 
-  text = WordWrapper::MinimumRaggedness.new(width, summary.split("\n").first.strip).wrap
+  summary_text = summary&.split("\n")&.first&.strip || ""
+  text = wrap_text(width, summary_text)
 
   if use_rubytoolbox?
     rt_stuff = RT.compare(name)
@@ -158,7 +182,8 @@ gem_hash.each_pair do |name, gs|
     end
   end
 
-  text += gs.homepage.empty? ? "https://rubygems.org/gems/#{name}" : gs.homepage
+  homepage = gs.homepage.empty? ? "https://rubygems.org/gems/#{name}" : gs.homepage
+  text += "\n" + homepage
 
   text_array  = text.split("\n")
   last_x      = text_array.size-1

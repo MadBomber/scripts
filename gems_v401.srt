@@ -25,7 +25,9 @@ active_record_extended
 active_record_tracer
 active_record_union
 active_snapshot
+active_type
 activeagent
+activecypher
 activegraph
 activejob
 activematrix
@@ -35,6 +37,7 @@ activeproject
 activerecord
 activerecord-has_some_of_many
 activerecord-import
+activerecord-postgis
 activerecord-tenanted
 activeresource
 activestorage
@@ -141,6 +144,7 @@ aws-s3
 aws-sdk-bedrock
 aws-sdk-bedrockruntime
 aws-sdk-core
+aws-sdk-http-async
 aws-sdk-kms
 aws-sdk-s3
 aws-sdk-sqs
@@ -181,6 +185,7 @@ botrytis
 boxcars
 brakeman
 breadcrumbs_on_rails
+breaker_machines
 bridgetown
 bridgetown-builder
 bridgetown-core
@@ -219,10 +224,15 @@ certified
 cff
 CFPropertyList
 cgi
+chaos_to_the_rescue
 character_set
 chartkick
 chef-config
+chef-gyoku
 chef-utils
+chef-winrm
+chef-winrm-elevated
+chef-winrm-fs
 childprocess
 choice
 chromate
@@ -231,15 +241,18 @@ chronic
 chrono_machines
 chunky_png
 churn
+cia
 citrus
 clag
 claide
 claide-plugins
 clapton
+classifier
 classifier-reborn
 claude-code-sdk-ruby
 claude-on-rails
 claude_code_slash_commands
+claude_memory
 claude_swarm
 clee
 cli-kit
@@ -249,6 +262,7 @@ climate_control
 clipboard
 cliver
 closure_tree
+cmdx
 cocos
 code
 code_analyzer
@@ -335,7 +349,6 @@ debug_me
 debugbar
 debugging
 decant
-decision_agent
 declarative
 deep-cover
 deep-cover-core
@@ -371,7 +384,6 @@ docopt
 docopt_ng
 docx
 doll
-dolla
 domain_name
 dotenv
 dotenv-rails
@@ -400,6 +412,7 @@ dry-struct
 dry-types
 dry-validation
 dspy-schema
+ductwork
 dynamicschema
 e2mmap
 easy_talk
@@ -444,7 +457,9 @@ excon
 execjs
 exeggutor
 extpp
+extralite
 facets
+fact_db
 factbook
 factbook-codes
 factbook-fields
@@ -481,6 +496,8 @@ fast-stemmer
 fast_blank
 fast_excel
 fast_jsonparser
+fast_resize
+fastembed
 fastimage
 fasttext
 fattr
@@ -510,6 +527,7 @@ fileutils
 filterameter
 find
 fission
+fixturebot-rails
 flamegraph
 flay
 flickwerk
@@ -570,6 +588,7 @@ gio2
 git
 git-lint
 github-markup
+github-pages
 github-pages-health-check
 github_api
 gitingest
@@ -701,6 +720,7 @@ imagen
 imgproxy
 imgproxy-rails
 importmap-rails
+imprint
 inclusive
 infobar
 infusible
@@ -735,6 +755,7 @@ isolator
 ivar
 jaro_winkler
 jbuilder
+jemoji
 jira-ruby
 jirasync
 jmespath
@@ -790,6 +811,7 @@ lefthook
 letter_opener
 letter_opener_web
 leva
+libgd-gis
 libyajl2
 license-acceptance
 licensed
@@ -826,7 +848,6 @@ logutils
 loofah
 lookbook
 looksee
-low_type
 lp
 lrama
 lru_redux
@@ -877,6 +898,8 @@ mini_magick
 mini_mime
 mini_portile2
 mini_sql
+miniapm
+minima
 minitar
 minitest
 minitest-difftastic
@@ -920,6 +943,7 @@ monotime
 more_math
 motor-admin
 msgpack
+mudis
 multi_json
 multi_test
 multi_xml
@@ -930,6 +954,8 @@ mustache
 mustache-sinatra
 mustermann
 mutex_m
+my_news
+myway_config
 n1_loader
 n_plus_one_control
 nano-bots
@@ -978,6 +1004,7 @@ nori
 noticed
 notiffany
 ntcharts
+nukitori
 numbers_and_words
 numo-binrw
 numo-blis
@@ -1000,7 +1027,6 @@ numruby-plot
 numruby-stats
 numruby-ufunc
 oas_core
-oas_rage
 oas_rails
 oauth
 oauth-tty
@@ -1128,6 +1154,7 @@ playwright-ruby-client
 plist
 pmap
 pocketflow
+pocketrb
 podcast-buddy
 polyglot
 postgresql_cursor
@@ -1154,6 +1181,7 @@ progress_bar
 progressbar
 prometheus-client
 prompt_manager
+prompt_objects
 prompts
 prop_initializer
 props_template
@@ -1198,8 +1226,6 @@ rackup
 ragdoll
 ragdoll-cli
 ragdoll-rails
-rage-iodine
-rage-rb
 raif
 rails
 rails-data-migrations
@@ -1232,6 +1258,7 @@ rake-compiler
 rake-compiler-dock
 ransack
 rapitapir
+ratatui_ruby
 rb-fsevent
 rb-inotify
 rb_sys
@@ -1260,6 +1287,7 @@ reek
 refer
 refinements
 reform
+refract
 refrigerator
 regent
 regexp_parser
@@ -1288,6 +1316,8 @@ retriable
 reverse_markdown
 rexe
 rexml
+rgeo
+rgeo-activerecord
 rice
 rinda
 rinku
@@ -1296,8 +1326,10 @@ rllama
 rmagick
 ro
 roast-ai
+robot_lab
 roda
 rodf
+role_fu
 rolify
 rom
 rom-changeset
@@ -1346,6 +1378,7 @@ ruby-anthropic
 ruby-enum
 ruby-graphviz
 ruby-hmac
+ruby-libgd
 ruby-lsp
 ruby-lsp-rails
 ruby-mcp-client
@@ -1372,10 +1405,13 @@ ruby_info
 ruby_llm
 ruby_llm-agents
 ruby_llm-docker
+ruby_llm-instrumentation
 ruby_llm-mcp
+ruby_llm-monitoring
 ruby_llm-responses_api
 ruby_llm-schema
 ruby_llm-semantic_cache
+ruby_llm-skills
 ruby_llm-template
 ruby_llm_swarm
 ruby_llm_swarm-mcp
@@ -1390,6 +1426,7 @@ rubygems-update
 RubyInline
 rubyllm-semantic_router
 rubyntlm
+rubyshell
 rubysmith
 RubyToC
 rubytoolbox-api
@@ -1438,14 +1475,18 @@ search_ui
 searchkick
 securerandom
 selenium-webdriver
+self_agency
 selma
 sem_version
 semantic
 semantic_logger
+semian
+semian-postgres
 sentry-rails
 sentry-ruby
 sentry-sidekiq
 sequel
+sequel_pg
 serbea
 service_actor
 service_actor-promptable
@@ -1470,9 +1511,11 @@ sidekiq
 sidekiq-cron
 sidekiq-limit_fetch
 sidekiq-scheduler
+siglip2
 signalize
 signet
 silencer
+simple_acp
 simple_calendar
 simple_flow
 simple_form
@@ -1491,6 +1534,7 @@ sin_lru_redux
 sinatra
 sinatra-activerecord
 sinatra-contrib
+single_cov
 singleton
 sirop
 site_prism
@@ -1544,6 +1588,7 @@ state_machines-activerecord
 statesman
 steep
 stemmer
+stepped
 stimulus-rails
 stoplight
 stopwords-filters
@@ -1594,17 +1639,19 @@ tabulo
 tailwindcss-rails
 tailwindcss-ruby
 taskjuggler
+telegram-bot-ruby
 tempfile
 temple
 temporal
 temporary_tables
-terjira
 term-ansicolor
 terminal-size
 terminal-table
 terminalwire
 terminalwire-client
 terminalwire-core
+terminalwire-rails
+terminalwire-server
 terrapin
 test-cmd.rb
 test-kitchen
@@ -1615,6 +1662,7 @@ therubyrhino_jar
 thor
 thread
 thread_safe
+throttle_machines
 thruster
 tiktoken_ruby
 tilt
@@ -1631,6 +1679,7 @@ tmpdir
 to_bool
 to_llm
 tocer
+tokenizers
 toml
 toml-rb
 tomlrb
@@ -1685,6 +1734,7 @@ turbo-rails
 turbo_power
 twilio-ruby
 twitter-text
+typed_bus
 typeprof
 typhoeus
 tzinfo
@@ -1753,9 +1803,6 @@ whenever
 whois
 whois-parser
 wicked_pdf
-winrm
-winrm-elevated
-winrm-fs
 wirb
 wisper
 with_advisory_lock

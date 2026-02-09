@@ -1,0 +1,159 @@
+#!/usr/bin/env ruby
+##########################################
+###
+##  File: gemt2
+##  Desc: Like "rake -T" but for gems that are locally installed
+##        Searches gem names and descriptions for words or phrases.
+##        Outputs markdown-formatted text.
+##
+
+def use_rubytoolbox?
+  @use_rubytoolbox ||=  if '--rt' == ARGV.first
+                          ARGV.shift
+                          true
+                        else
+                          false
+                        end
+end
+
+require 'pathname'          # STDLIB
+
+if use_rubytoolbox?
+  require 'rubytoolbox/api' # API to the Ruby Toolbox database
+  RT = Rubytoolbox::Api.new
+end
+
+
+def usage
+  puts <<~EOS
+
+    Desc: Like "rake -T" but for gems that are locally installed
+          Searches gem names and descriptions for words or phrases.
+          Outputs markdown-formatted text.
+
+
+    Usage: #{Pathname.new(__FILE__).basename} [ --rt | -h | --help ] [search_items]
+
+    Where:
+
+      --rt          use the RubyToolbox to get health status of the gem
+                    NOTE: this is a slow https access to the RubyToolbox
+                          website
+
+      -h --help     Show this usage information
+
+      search_items  is an optional space delimited
+                    list of keyword(s) and/or phrase(s)
+                    used as search terms for gem name
+                    and/or description. Each word and
+                    phrase is used in an OR (i.e. any?)
+                    relationship to find local gems.
+
+    Examples:
+
+      gemt2            # shows list of all gems
+      gemt2 guard      # shows list of the guard gems
+      gemt2 --rt guard # shows list of guard gems and their health status
+                       # from the RubyToolbox
+
+      gemt2 guard reload   # finds local gems whose name+description contains
+                           # either the word "guard" or the word "reload"
+
+      gemt2 'schedule extension' # The use of quotes denotes a phrase
+
+      gemt2 'schedule extension' sidekiq # finds local gems whose name+description
+                                         # contains either the phrase or the word
+
+  EOS
+end # def usage
+
+
+class NilClass
+  def split(*args); [" "];  end
+  def strip;        '';     end
+  def to_s;         '';     end
+  def empty?;       true;   end
+end # class NilClass
+
+
+unless ARGV.empty?
+  if %w[ -h --help ].include? ARGV.first
+    usage
+    exit
+  end
+end
+
+
+search_strings = ARGV.map{ |a| a.downcase }
+
+gem_hash = Hash.new
+
+Gem::Specification.all.each do |gs|
+  unless search_strings.empty?
+    thing = "#{gs.name} #{gs.summary} #{gs.description}".downcase
+
+    found_one = false
+    search_strings.each do |want_this|
+      if thing.include?(want_this)
+        found_one = true
+        break
+      end
+    end
+
+    next unless found_one
+  end
+
+  gem_hash[gs.name] = gs
+end
+
+puts "# Installed Gems for Ruby #{RUBY_VERSION} (#{gem_hash.size})"
+puts
+
+gem_hash.each_pair do |name, gs|
+  summary_text = gs.summary&.split("\n")&.first&.strip || ""
+  homepage     = gs.homepage.empty? ? "https://rubygems.org/gems/#{name}" : gs.homepage
+
+  puts "## [#{name}](#{homepage})"
+  puts
+
+  puts "| | |"
+  puts "|---|---|"
+  puts "| **Version** | #{gs.version} |"
+  puts "| **Authors** | #{Array(gs.authors).join(', ')} |"
+
+  licenses = Array(gs.licenses)
+  puts "| **License** | #{licenses.join(', ')} |" unless licenses.empty?
+
+  ruby_req = gs.required_ruby_version.to_s
+  puts "| **Ruby** | #{ruby_req} |" unless ruby_req.empty? || ruby_req == ">= 0"
+
+  puts
+
+  puts summary_text unless summary_text.empty?
+
+  description = gs.description&.strip || ""
+  unless description.empty? || description == summary_text
+    puts
+    puts description.split("\n").map(&:strip).join(" ")
+  end
+
+  runtime_deps = gs.dependencies.select { |d| d.type == :runtime }
+  unless runtime_deps.empty?
+    puts
+    puts "**Dependencies:** #{runtime_deps.map { |d| "#{d.name} (#{d.requirement})" }.join(', ')}"
+  end
+
+  if use_rubytoolbox?
+    rt_stuff = RT.compare(name)
+
+    unless rt_stuff.empty?
+      rt    = rt_stuff.first
+      level = rt.health.statuses.last.level
+      label = rt.health.statuses.last.label
+      puts
+      puts "**RubyToolbox:** `#{level}` — #{label}"
+    end
+  end
+
+  puts
+end

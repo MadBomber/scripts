@@ -9,11 +9,14 @@ ack                                         Search tool like grep, but optimized
 act                                         Run your GitHub Actions locally
                                             |__ https://github.com/nektos/act
 
+ada-url                                     WHATWG-compliant and fast URL
+                                            |   parser written in modern C++
+                                            |__ https://github.com/ada-url/ada
+
 adwaita-icon-theme                          Icons for the GNOME project
                                             |__ https://developer.gnome.org
 
-aiac                                        Artificial Intelligence
-                                            |   Infrastructure-as-Code Generator
+aiac                                        Artificial Intelligence Infrastructure-as-Code Generator
                                             |__ https://github.com/gofireflyio/aiac
 
 aichat                                      All-in-one AI-Powered CLI Chat & Copilot
@@ -25,15 +28,14 @@ amp                                         Text editor for your terminal
 ampl-asl                                    AMPL Solver Library
                                             |__ https://ampl.com/
 
-antiword                                    Utility to read Word (.doc) files
-                                            |__ https://web.archive.org/web/20221207132720/http://www.winfield.demon.nl/
+ansible                                     Automate deployment, configuration, and upgrading
+                                            |__ https://www.ansible.com/
 
 julien040/anyquery/anyquery                 Anyquery is a query engine that allows
                                             |   you to query anything over SQL.
                                             |__ https://anyquery.dev
 
-aom                                         Codec library for encoding and
-                                            |   decoding AV1 video streams
+aom                                         Codec library for encoding and decoding AV1 video streams
                                             |__ https://aomedia.googlesource.com/aom
 
 apache-arrow                                Columnar in-memory analytics layer
@@ -47,15 +49,13 @@ aribb24                                     Library for ARIB STD-B24, decoding J
                                             |   8 bit characters and parsing MPEG-TS
                                             |__ https://code.videolan.org/jeeb/aribb24
 
-asciidoc                                    Formatter/translator for text
-                                            |   files to numerous formats
+asciidoc                                    Formatter/translator for text files to numerous formats
                                             |__ https://asciidoc-py.github.io/
 
 asciinema                                   Record and share terminal sessions
                                             |__ https://asciinema.org
 
-asio                                        Cross-platform C++ Library
-                                            |   for asynchronous programming
+asio                                        Cross-platform C++ Library for asynchronous programming
                                             |__ https://think-async.com/Asio/
 
 aspell                                      Spell checker with better logic than ispell
@@ -82,8 +82,7 @@ atkmm@2.28                                  Official C++ interface for the
 autoconf                                    Automatic configure script builder
                                             |__ https://www.gnu.org/software/autoconf/
 
-automake                                    Tool for generating GNU
-                                            |   Standards-compliant Makefiles
+automake                                    Tool for generating GNU Standards-compliant Makefiles
                                             |__ https://www.gnu.org/software/automake/
 
 autotrace                                   Convert bitmap to vector graphics
@@ -192,8 +191,7 @@ boxes                                       Draw boxes around text
 broot                                       New way to see and navigate directory trees
                                             |__ https://dystroy.org/broot/
 
-brotli                                      Generic-purpose lossless
-                                            |   compression algorithm by Google
+brotli                                      Generic-purpose lossless compression algorithm by Google
                                             |__ https://github.com/google/brotli
 
 btop                                        Resource monitor. C++ version and
@@ -209,8 +207,7 @@ bunster                                     Compile shell scripts to static bina
 c-ares                                      Asynchronous DNS library
                                             |__ https://c-ares.org/
 
-c-blosc                                     Blocking, shuffling and
-                                            |   loss-less compression library
+c-blosc                                     Blocking, shuffling and loss-less compression library
                                             |__ https://www.blosc.org/
 
 ca-certificates                             Mozilla CA certificate store
@@ -222,12 +219,10 @@ cabal-install                               Command-line interface for Cabal and
 cai                                         CLI tool for prompting LLMs
                                             |__ https://github.com/ad-si/cai
 
-cairo                                       Vector graphics library with
-                                            |   cross-device output support
+cairo                                       Vector graphics library with cross-device output support
                                             |__ https://cairographics.org/
 
-cairomm@1.14                                Vector graphics library with
-                                            |   cross-device output support
+cairomm@1.14                                Vector graphics library with cross-device output support
                                             |__ https://cairographics.org/cairomm/
 
 calc                                        Arbitrary precision calculator
@@ -271,12 +266,10 @@ cgns                                        CFD General Notation System
 cgrep                                       Context-aware grep for source code
                                             |__ https://github.com/awgn/cgrep
 
-chafa                                       Versatile and fast
-                                            |   Unicode/ASCII/ANSI graphics renderer
+chafa                                       Versatile and fast Unicode/ASCII/ANSI graphics renderer
                                             |__ https://hpjansson.org/chafa/
 
-changelogen                                 Generate Beautiful Changelogs
-                                            |   using Conventional Commits
+changelogen                                 Generate Beautiful Changelogs using Conventional Commits
                                             |__ https://github.com/unjs/changelogen
 
 cheat                                       Create and view interactive
@@ -333,9 +326,6 @@ colortail                                   Like tail(1), but with various
                                             |   colors for specified output
                                             |__ https://github.com/joakim666/colortail
 
-comby                                       Tool for changing code across many languages
-                                            |__ https://comby.dev
-
 hashicorp/tap/consul                        Consul
                                             |__ https://www.consul.io
 
@@ -379,11 +369,9 @@ csview                                      High performance csv viewer for cli
 csvlens                                     Command-line csv viewer
                                             |__ https://github.com/YS-L/csvlens
 
-csvtomd                                     CSV to Markdown table converter
-                                            |__ https://github.com/mplewis/csvtomd
-
-cyrus-sasl                                  Simple Authentication and Security Layer
-                                            |__ https://www.cyrusimap.org/sasl/
+cypher-shell                                Command-line shell where you can
+                                            |   execute Cypher against Neo4j
+                                            |__ https://neo4j.com
 
 d2                                          Modern diagram scripting language
                                             |   that turns text to diagrams
@@ -405,12 +393,10 @@ dasel                                       JSON, YAML, TOML, XML, and CSV
 dasht                                       Search API docs offline, in your terminal or browser
                                             |__ https://sunaku.github.io/dasht
 
-datasette                                   Open source multi-tool for
-                                            |   exploring and publishing data
+datasette                                   Open source multi-tool for exploring and publishing data
                                             |__ https://docs.datasette.io/en/stable/
 
-dateutils                                   Tools to manipulate dates with
-                                            |   a focus on financial data
+dateutils                                   Tools to manipulate dates with a focus on financial data
                                             |__ https://www.fresse.org/dateutils/
 
 dav1d                                       AV1 decoder targeted to be small and fast
@@ -426,19 +412,16 @@ decompose                                   Reverse-engineering tool for docker 
 deno                                        Secure runtime for JavaScript and TypeScript
                                             |__ https://deno.com/
 
-desktop-file-utils                          Command-line utilities for
-                                            |   working with desktop entries
+desktop-file-utils                          Command-line utilities for working with desktop entries
                                             |__ https://wiki.freedesktop.org/www/Software/desktop-file-utils/
 
 detach                                      Execute given command in detached process
                                             |__ https://inglorion.net/software/detach/
 
-detox                                       Utility to replace problematic
-                                            |   characters in filenames
+detox                                       Utility to replace problematic characters in filenames
                                             |__ https://detox.sourceforge.net/
 
-dialog                                      Display user-friendly message
-                                            |   boxes from shell scripts
+dialog                                      Display user-friendly message boxes from shell scripts
                                             |__ https://invisible-island.net/dialog/
 
 diff-pdf                                    Visually compare two PDF files
@@ -447,8 +430,7 @@ diff-pdf                                    Visually compare two PDF files
 diff-so-fancy                               Good-lookin' diffs with diff-highlight and more
                                             |__ https://github.com/so-fancy/diff-so-fancy
 
-diffoscope                                  In-depth comparison of files,
-                                            |   archives, and directories
+diffoscope                                  In-depth comparison of files, archives, and directories
                                             |__ https://diffoscope.org
 
 diffr                                       LCS based diff highlighting tool to
@@ -468,8 +450,7 @@ docbook                                     Standard XML representation
                                             |   system for technical documents
                                             |__ https://docbook.org/
 
-docbook-xsl                                 XML vocabulary to create
-                                            |   presentation-neutral documents
+docbook-xsl                                 XML vocabulary to create presentation-neutral documents
                                             |__ https://github.com/docbook/xslt10-stylesheets
 
 dockcheck                                   CLI tool to automate docker image updates
@@ -518,12 +499,10 @@ double-conversion                           Binary-decimal and decimal-binary
 doxx                                        Terminal document viewer for .docx files
                                             |__ https://github.com/bgreenwell/doxx
 
-doxygen                                     Generate documentation for
-                                            |   several programming languages
+doxygen                                     Generate documentation for several programming languages
                                             |__ https://www.doxygen.nl/
 
-dry                                         Terminal application to manage
-                                            |   Docker and Docker Swarm
+dry                                         Terminal application to manage Docker and Docker Swarm
                                             |__ https://moncho.github.io/dry/
 
 dsq                                         CLI tool for running SQL queries against
@@ -533,15 +512,10 @@ dsq                                         CLI tool for running SQL queries aga
 muesli/tap/duf                              Disk Usage/Free Utility
                                             |__ https://fribbledom.com/
 
-dupseek                                     Interactive program to find
-                                            |   and remove duplicate files
-                                            |__ http://www.beautylabs.net/software/dupseek.html
-
 dust                                        More intuitive version of du in rust
                                             |__ https://github.com/bootandy/dust
 
-dwarfutils                                  Dump and produce DWARF debug
-                                            |   information in ELF objects
+dwarfutils                                  Dump and produce DWARF debug information in ELF objects
                                             |__ https://www.prevanders.net/dwarf.html
 
 dwdiff                                      Diff that operates at the word level
@@ -559,6 +533,10 @@ edencommon                                  Shared library for Watchman and Eden
 eigen                                       C++ template library for linear algebra
                                             |__ https://gitlab.com/libeigen/eigen
 
+ekphos                                      Terminal-based markdown research
+                                            |   tool inspired by Obsidian
+                                            |__ https://ekphos.xyz
+
 elixir                                      Functional metaprogramming aware
                                             |   language built on Erlang VM
                                             |__ https://elixir-lang.org/
@@ -566,8 +544,7 @@ elixir                                      Functional metaprogramming aware
 enchant                                     Spellchecker wrapping library
                                             |__ https://rrthomas.github.io/enchant/
 
-envoy                                       Cloud-native high-performance
-                                            |   edge/middle/service proxy
+envoy                                       Cloud-native high-performance edge/middle/service proxy
                                             |__ https://www.envoyproxy.io/index.html
 
 epsilon                                     Powerful wavelet image compressor
@@ -580,9 +557,6 @@ erlang                                      Programming language for highly
                                             |   scalable real-time systems
                                             |__ https://www.erlang.org/
 
-espeak                                      Text to speech, software speech synthesizer
-                                            |__ https://espeak.sourceforge.net/
-
 expect                                      Program that can automate interactive applications
                                             |__ https://core.tcl-lang.org/expect/index
 
@@ -592,12 +566,7 @@ eza                                         Modern, maintained replacement for l
 fann                                        Fast artificial neural network library
                                             |__ https://sourceforge.net/projects/fann/
 
-fasttext                                    Library for fast text
-                                            |   representation and classification
-                                            |__ https://fasttext.cc
-
-fb303                                       Thrift functions for querying
-                                            |   information from a service
+fb303                                       Thrift functions for querying information from a service
                                             |__ https://github.com/facebook/fb303
 
 fbthrift                                    Facebook's branch of Apache
@@ -607,13 +576,18 @@ fbthrift                                    Facebook's branch of Apache
 fd                                          Simple, fast and user-friendly alternative to find
                                             |__ https://github.com/sharkdp/fd
 
+fence                                       Lightweight sandbox for commands with
+                                            |   network and filesystem restrictions
+                                            |__ https://github.com/Use-Tusk/fence
+
 fern-api                                    Stripe-level SDKs and Docs for your API
                                             |__ https://buildwithfern.com/
 
 fernflower                                  Advanced decompiler for Java bytecode
                                             |__ https://github.com/JetBrains/fernflower
 
-ffmpeg                                      Play, record, convert, and stream audio and video
+ffmpeg                                      Play, record, convert, and stream
+                                            |   select audio and video codecs
                                             |__ https://ffmpeg.org/
 
 ffmpeg@6                                    Play, record, convert, and stream audio and video
@@ -637,6 +611,9 @@ flyway                                      Database version control to control 
 
 fmt                                         Open-source formatting library for C++
                                             |__ https://fmt.dev/
+
+fnm                                         Fast and simple Node.js version manager
+                                            |__ https://github.com/Schniz/fnm
 
 folly                                       Collection of reusable C++ library
                                             |   artifacts developed at Facebook
@@ -671,8 +648,7 @@ fribidi                                     Implementation of the Unicode BiDi a
 frum                                        Fast and modern Ruby version manager written in Rust
                                             |__ https://github.com/TaKO8Ki/frum/
 
-fswatch                                     Monitor a directory for changes
-                                            |   and run a shell command
+fswatch                                     Monitor a directory for changes and run a shell command
                                             |__ https://github.com/emcrisostomo/fswatch
 
 funzzy                                      Lightweight file watcher
@@ -699,8 +675,7 @@ gdal                                        Geospatial Data Abstraction Library
 gdbm                                        GNU database manager
                                             |__ https://www.gnu.org.ua/software/gdbm/
 
-gdk-pixbuf                                  Toolkit for image loading and
-                                            |   pixel buffer manipulation
+gdk-pixbuf                                  Toolkit for image loading and pixel buffer manipulation
                                             |__ https://gtk.org
 
 gemini-cli                                  Interact with Google Gemini AI
@@ -783,8 +758,7 @@ git-revise                                  Rebase alternative for easy &
                                             |   efficient in-memory rebases and fixups
                                             |__ https://github.com/mystor/git-revise
 
-git-standup                                 Git extension to generate
-                                            |   reports for standup meetings
+git-standup                                 Git extension to generate reports for standup meetings
                                             |__ https://github.com/kamranahmedse/git-standup
 
 git-town                                    High-level command-line interface for Git
@@ -813,15 +787,11 @@ github-markdown-toc                         Easy TOC creation for GitHub README.
 github-mcp-server                           GitHub Model Context Protocol server for AI tools
                                             |__ https://github.com/github/github-mcp-server
 
-github-release                              Create and edit releases on
-                                            |   Github (and upload artifacts)
+github-release                              Create and edit releases on Github (and upload artifacts)
                                             |__ https://github.com/github-release/github-release
 
 gitleaks                                    Audit git repos for secrets
                                             |__ https://gitleaks.io/
-
-gitlint                                     Linting for your git commit messages
-                                            |__ https://jorisroovers.com/gitlint/
 
 gitql                                       Git query language
                                             |__ https://github.com/filhodanuvem/gitql
@@ -875,6 +845,9 @@ go                                          Open source programming language to
 gobject-introspection                       Generate introspection data for GObject libraries
                                             |__ https://gi.readthedocs.io/en/latest/
 
+gogcli                                      Google Suite CLI
+                                            |__ https://gogcli.sh
+
 gonzo                                       Log analysis TUI
                                             |__ https://gonzo.controltheory.com/
 
@@ -882,14 +855,10 @@ goocanvas                                   Canvas widget for GTK+ using the
                                             |   Cairo 2D library for drawing
                                             |__ https://wiki.gnome.org/Projects/GooCanvas
 
-gorilla-cli                                 LLMs for your CLI
-                                            |__ https://gorilla.cs.berkeley.edu/
-
 gource                                      Version Control Visualization Tool
                                             |__ https://gource.io/
 
-gpac                                        Multimedia framework for
-                                            |   research and academic purposes
+gpac                                        Multimedia framework for research and academic purposes
                                             |__ https://gpac.io/
 
 gpgme                                       Library access to GnuPG
@@ -938,8 +907,7 @@ grokmirror                                  Framework to smartly mirror git repo
 gron                                        Make JSON greppable
                                             |__ https://github.com/tomnomnom/gron
 
-grpc                                        Next generation open source
-                                            |   RPC library and framework
+grpc                                        Next generation open source RPC library and framework
                                             |__ https://grpc.io/
 
 gruyere                                     TUI program for viewing and killing
@@ -965,8 +933,7 @@ gtk+                                        GUI toolkit
 gtk+3                                       Toolkit for creating graphical user interfaces
                                             |__ https://gtk.org/
 
-gtk-mac-integration                         Integrates GTK macOS applications
-                                            |   with the Mac desktop
+gtk-mac-integration                         Integrates GTK macOS applications with the Mac desktop
                                             |__ https://www.gtk.org/docs/installations/macos
 
 gtk4                                        Toolkit for creating graphical user interfaces
@@ -1015,6 +982,9 @@ harsh                                       Habit tracking for geeks
 hdf5                                        File format designed to store large amounts of data
                                             |__ https://www.hdfgroup.org/solutions/hdf5/
 
+hdrhistogram_c                              C port of the HdrHistogram
+                                            |__ https://github.com/HdrHistogram/HdrHistogram_c
+
 headson                                     Head/tail for structured data
                                             |__ https://docs.rs/headson/latest/headson/
 
@@ -1059,8 +1029,7 @@ highway                                     Performance-portable, length-agnosti
                                             |   SIMD with runtime dispatch
                                             |__ https://github.com/google/highway
 
-hishtory                                    Your shell history: synced,
-                                            |   queryable, and in context
+hishtory                                    Your shell history: synced, queryable, and in context
                                             |__ https://hishtory.dev
 
 hjson                                       Convert JSON to HJSON and vice versa
@@ -1083,8 +1052,7 @@ html2text                                   Advanced HTML-to-text converter
 htop                                        Improved top (interactive process viewer)
                                             |__ https://htop.dev/
 
-httpie                                      User-friendly cURL replacement
-                                            |   (command-line HTTP client)
+httpie                                      User-friendly cURL replacement (command-line HTTP client)
                                             |__ https://httpie.io/
 
 hugo                                        Configurable static site generator
@@ -1113,30 +1081,26 @@ hyper-mcp                                   MCP server that extends its capabili
 icdiff                                      Improved colored diff
                                             |__ https://www.jefftk.com/icdiff
 
-icu4c@76                                    C/C++ and Java libraries for
-                                            |   Unicode and globalization
+icu4c@76                                    C/C++ and Java libraries for Unicode and globalization
                                             |__ https://icu.unicode.org/home
 
-icu4c@77                                    C/C++ and Java libraries for
-                                            |   Unicode and globalization
+icu4c@77                                    C/C++ and Java libraries for Unicode and globalization
                                             |__ https://icu.unicode.org/home
 
-icu4c@78                                    C/C++ and Java libraries for
-                                            |   Unicode and globalization
+icu4c@78                                    C/C++ and Java libraries for Unicode and globalization
                                             |__ https://icu.unicode.org/home
 
 ijq                                         Interactive jq
-                                            |__ https://sr.ht/~gpanders/ijq/
+                                            |__ https://codeberg.org/gpanders/ijq
 
 imagemagick                                 Tools and libraries to manipulate
-                                            |   images in many formats
+                                            |   images in select formats
                                             |__ https://imagemagick.org/index.php
 
 imap-backup                                 Backup GMail (or other IMAP) accounts to disk
                                             |__ https://github.com/joeyates/imap-backup
 
-imath                                       Library of 2D and 3D vector,
-                                            |   matrix, and math operations
+imath                                       Library of 2D and 3D vector, matrix, and math operations
                                             |__ https://imath.readthedocs.io/en/latest/
 
 imgp                                        High-performance CLI batch image resizer & rotator
@@ -1167,12 +1131,10 @@ ispell                                      International Ispell
 janet                                       Dynamic language and bytecode vm
                                             |__ https://janet-lang.org
 
-jansson                                     C library for encoding,
-                                            |   decoding, and manipulating JSON
+jansson                                     C library for encoding, decoding, and manipulating JSON
                                             |__ https://digip.org/jansson/
 
-jaq                                         JQ clone focussed on correctness,
-                                            |   speed, and simplicity
+jaq                                         JQ clone focussed on correctness, speed, and simplicity
                                             |__ https://github.com/01mf02/jaq
 
 jasper                                      Library for manipulating JPEG-2000 images
@@ -1201,8 +1163,7 @@ ynqa/tap/jnv                                JSON navigator and interactive filte
 jp2a                                        Convert JPG images to ASCII
                                             |__ https://github.com/Talinx/jp2a
 
-jpeg-turbo                                  JPEG image codec that aids
-                                            |   compression and decompression
+jpeg-turbo                                  JPEG image codec that aids compression and decompression
                                             |__ https://www.libjpeg-turbo.org/
 
 jpeg-xl                                     New file format for still image compression
@@ -1271,8 +1232,7 @@ lefthook                                    Fast and powerful Git hooks
 leptonica                                   Image processing and image analysis library
                                             |__ http://www.leptonica.org/
 
-libadwaita                                  Building blocks for modern
-                                            |   adaptive GNOME applications
+libadwaita                                  Building blocks for modern adaptive GNOME applications
                                             |__ https://gnome.pages.gitlab.gnome.org/libadwaita/
 
 libaec                                      Adaptive Entropy Coding
@@ -1294,9 +1254,11 @@ libavif                                     Library for encoding and decoding .a
 libb2                                       Secure hashing function
                                             |__ https://blake2.net/
 
-libbluray                                   Blu-Ray disc playback library
-                                            |   for media players like VLC
+libbluray                                   Blu-Ray disc playback library for media players like VLC
                                             |__ https://www.videolan.org/developers/libbluray.html
+
+libdatrie                                   Double-Array Trie Library
+                                            |__ https://github.com/tlwg/libdatrie
 
 libde265                                    Open h.265 video codec implementation
                                             |__ https://github.com/strukturag/libde265
@@ -1308,8 +1270,7 @@ libdeflate                                  Heavily optimized DEFLATE/zlib/gzip
 libdicom                                    DICOM WSI read library
                                             |__ https://github.com/ImagingDataCommons/libdicom
 
-libepoxy                                    Library for handling OpenGL
-                                            |   function pointer management
+libepoxy                                    Library for handling OpenGL function pointer management
                                             |__ https://github.com/anholt/libepoxy
 
 libev                                       Asynchronous event library
@@ -1320,6 +1281,9 @@ libevent                                    Asynchronous event library
 
 libexif                                     EXIF parsing library
                                             |__ https://libexif.github.io/
+
+libffi                                      Portable Foreign Function Interface library
+                                            |__ https://sourceware.org/libffi/
 
 libfyaml                                    Fully feature complete YAML parser and emitter
                                             |__ https://github.com/pantoniou/libfyaml
@@ -1425,8 +1389,7 @@ libpsl                                      C library for the Public Suffix List
 libraqm                                     Library for complex text layout
                                             |__ https://github.com/HOST-Oman/libraqm
 
-libraw                                      Library for reading RAW files
-                                            |   from digital photo cameras
+libraw                                      Library for reading RAW files from digital photo cameras
                                             |__ https://www.libraw.org/
 
 librist                                     Reliable Internet Stream Transport (RIST)
@@ -1481,6 +1444,9 @@ libsvm                                      Library for support vector machines
 
 libtasn1                                    ASN.1 structure parser library
                                             |__ https://www.gnu.org/software/libtasn1/
+
+libthai                                     Thai language support library
+                                            |__ https://linux.thai.net/projects/libthai
 
 libtiff                                     TIFF library and utilities
                                             |__ https://libtiff.gitlab.io/libtiff/
@@ -1540,8 +1506,7 @@ libxcb                                      X.Org: Interface to the X Window Sys
 libxdmcp                                    X.Org: X Display Manager Control Protocol library
                                             |__ https://www.x.org/
 
-libxext                                     X.Org: Library for common
-                                            |   extensions to the X11 protocol
+libxext                                     X.Org: Library for common extensions to the X11 protocol
                                             |__ https://www.x.org/
 
 libxfixes                                   X.Org: Header files for the XFIXES extension
@@ -1588,6 +1553,9 @@ lld@19                                      LLVM Project Linker
 lld@20                                      LLVM Project Linker
                                             |__ https://lld.llvm.org/
 
+llhttp                                      Port of http_parser to llparse
+                                            |__ https://llhttp.org/
+
 llm                                         Access large language models from the command-line
                                             |__ https://llm.datasette.io/
 
@@ -1609,8 +1577,7 @@ localai                                     OpenAI alternative
 localstack                                  Fully functional local AWS cloud stack
                                             |__ https://localstack.cloud/
 
-logtalk                                     Declarative object-oriented
-                                            |   logic programming language
+logtalk                                     Declarative object-oriented logic programming language
                                             |__ https://logtalk.org/
 
 lolcat                                      Rainbows and unicorns in your console!
@@ -1684,17 +1651,13 @@ matcha                                      Daily digest generator for your RSS 
 maven                                       Java-based project management
                                             |__ https://maven.apache.org/
 
-mbedtls                                     Cryptographic & SSL/TLS library
-                                            |__ https://tls.mbed.org/
-
 mbedtls@3                                   Cryptographic & SSL/TLS library
                                             |__ https://tls.mbed.org/
 
 mcfly                                       Fly through your shell history
                                             |__ https://github.com/cantino/mcfly
 
-mcp-get                                     CLI for discovering, installing,
-                                            |   and managing MCP servers
+mcp-get                                     CLI for discovering, installing, and managing MCP servers
                                             |__ https://github.com/michaellatman/mcp-get
 
 mcp-grafana                                 MCP server for Grafana
@@ -1703,8 +1666,7 @@ mcp-grafana                                 MCP server for Grafana
 mcp-inspector                               Visual testing tool for MCP servers
                                             |__ https://modelcontextprotocol.io/docs/tools/inspector
 
-mcp-proxy                                   Bridge between Streamable
-                                            |   HTTP and stdio MCP transports
+mcp-proxy                                   Bridge between Streamable HTTP and stdio MCP transports
                                             |__ https://github.com/sparfenyuk/mcp-proxy
 
 mcp-server-chart                            MCP with 25+ @antvis charts for
@@ -1732,9 +1694,6 @@ meilisearch                                 Ultra relevant, instant and
                                             |   typo-tolerant full-text search API
                                             |__ https://docs.meilisearch.com/
 
-mentat                                      Coding assistant that leverages GPT-4 to write code
-                                            |__ https://www.mentat.ai
-
 mermaid-cli                                 CLI for Mermaid library
                                             |__ https://github.com/mermaid-js/mermaid-cli
 
@@ -1758,9 +1717,6 @@ miniserve                                   High performance static file server
 minizip                                     C library for zip/unzip via zLib
                                             |__ https://www.winimage.com/zLibDll/minizip.html
 
-mise                                        Polyglot runtime manager (asdf rust clone)
-                                            |__ https://mise.jdx.dev/
-
 mist-cli                                    Mac command-line tool that automatically
                                             |   downloads macOS Firmwares / Installers
                                             |__ https://github.com/ninxsoft/mist-cli
@@ -1771,6 +1727,9 @@ mkcert                                      Simple tool to make locally
 
 mkdocs                                      Project documentation with Markdown
                                             |__ https://www.mkdocs.org/
+
+mkdocs-material                             Material Design theme for MkDocs
+                                            |__ https://squidfunk.github.io/mkdocs-material/
 
 mlc                                         Check for broken links in markup files
                                             |__ https://github.com/becheran/mlc
@@ -1833,8 +1792,13 @@ nats-streaming-server                       Lightweight cloud messaging system
 ncurses                                     Text-based UI library
                                             |__ https://invisible-island.net/ncurses/announce.html
 
-neovim                                      Ambitious Vim-fork focused
-                                            |   on extensibility and agility
+neo4j                                       Robust (fully ACID) transactional property graph database
+                                            |__ https://neo4j.com/
+
+neo4j-mcp                                   Neo4j official Model Context Protocol server for AI tools
+                                            |__ https://neo4j.com/docs/mcp/current/
+
+neovim                                      Ambitious Vim-fork focused on extensibility and agility
                                             |__ https://neovim.io/
 
 netcdf                                      Libraries and data formats for
@@ -1879,16 +1843,6 @@ no-more-secrets                             Recreates the SETEC ASTRONOMY effect
 node                                        Open-source, cross-platform
                                             |   JavaScript runtime environment
                                             |__ https://nodejs.org/
-
-node-build                                  Install NodeJS versions
-                                            |__ https://github.com/nodenv/node-build
-
-node@24                                     Open-source, cross-platform
-                                            |   JavaScript runtime environment
-                                            |__ https://nodejs.org/
-
-nodenv                                      Node.js version manager
-                                            |__ https://github.com/nodenv/nodenv
 
 nom                                         RSS reader for the terminal
                                             |__ https://github.com/guyfedwards/nom
@@ -1937,8 +1891,7 @@ openblas                                    Optimized BLAS library
 opencode                                    AI coding agent, built for the terminal
                                             |__ https://opencode.ai
 
-opencore-amr                                Audio codecs extracted from
-                                            |   Android open source project
+opencore-amr                                Audio codecs extracted from Android open source project
                                             |__ https://opencore-amr.sourceforge.net/
 
 opencv                                      Open source computer vision library
@@ -1973,9 +1926,6 @@ openslide                                   C library to read whole-slide
                                             |   images (a.k.a. virtual slides)
                                             |__ https://openslide.org/
 
-openssl@1.1                                 Cryptography and SSL/TLS Toolkit
-                                            |__ https://openssl.org/
-
 openssl@3                                   Cryptography and SSL/TLS Toolkit
                                             |__ https://openssl-library.org
 
@@ -2005,15 +1955,13 @@ otree                                       Command-line tool to view objects
 ov                                          Feature-rich terminal-based text viewer
                                             |__ https://noborus.github.io/ov/
 
-overmind                                    Process manager for Procfile-based
-                                            |   applications and tmux
+overmind                                    Process manager for Procfile-based applications and tmux
                                             |__ https://github.com/DarthSim/overmind
 
 p11-kit                                     Library to load and enumerate PKCS#11 modules
                                             |__ https://p11-glue.freedesktop.org
 
-p7zip                                       7-Zip (high compression file
-                                            |   archiver) implementation
+p7zip                                       7-Zip (high compression file archiver) implementation
                                             |__ https://github.com/p7zip-project/p7zip
 
 pandoc                                      Swiss-army knife of markup format conversion
@@ -2031,10 +1979,6 @@ pango                                       Framework for layout and rendering o
 
 pangomm@2.46                                C++ interface to Pango
                                             |__ https://www.gtk.org/docs/architecture/pango
-
-papilo                                      Parallel Presolve for Integer
-                                            |   and Linear Optimization
-                                            |__ https://www.scipopt.org
 
 parallel                                    Shell command parallelization utility
                                             |__ https://savannah.gnu.org/projects/parallel/
@@ -2055,8 +1999,7 @@ pex                                         Package manager for PostgreSQL
 pgvector                                    Open-source vector similarity search for Postgres
                                             |__ https://github.com/pgvector/pgvector
 
-pgxnclient                                  Command-line client for the
-                                            |   PostgreSQL Extension Network
+pgxnclient                                  Command-line client for the PostgreSQL Extension Network
                                             |__ https://pgxn.github.io/pgxnclient/
 
 pick                                        Utility to choose one option from a set of choices
@@ -2068,8 +2011,7 @@ pieces-cli                                  Command-line tool for Pieces.app
 pillow                                      Friendly PIL fork (Python Imaging Library)
                                             |__ https://python-pillow.github.io/
 
-pinentry                                    Passphrase entry dialog
-                                            |   utilizing the Assuan protocol
+pinentry                                    Passphrase entry dialog utilizing the Assuan protocol
                                             |__ https://www.gnupg.org/related_software/pinentry/
 
 pipe-rename                                 Rename your files using your favorite text editor
@@ -2087,8 +2029,7 @@ pkgconf                                     Package compiler and linker metadata
 playwright-mcp                              MCP server for Playwright
                                             |__ https://github.com/microsoft/playwright-mcp
 
-plotutils                                   C/C++ function library for
-                                            |   exporting 2-D vector graphics
+plotutils                                   C/C++ function library for exporting 2-D vector graphics
                                             |__ https://www.gnu.org/software/plotutils/
 
 plz-cli                                     Copilot for your terminal
@@ -2100,15 +2041,11 @@ pmix                                        Process Management Interface for HPC
 podman                                      Tool for managing OCI containers and pods
                                             |__ https://podman.io/
 
-poppler                                     PDF rendering library (based
-                                            |   on the xpdf-3.0 code base)
+poppler                                     PDF rendering library (based on the xpdf-3.0 code base)
                                             |__ https://poppler.freedesktop.org/
 
 popt                                        Library like getopt(3) with a number of enhancements
                                             |__ https://github.com/rpm-software-management/popt
-
-portaudio                                   Cross-platform library for audio I/O
-                                            |__ https://www.portaudio.com
 
 postgis                                     Adds support for geographic objects to PostgreSQL
                                             |__ https://postgis.net/
@@ -2116,12 +2053,14 @@ postgis                                     Adds support for geographic objects 
 postgresql@17                               Object-relational database system
                                             |__ https://www.postgresql.org/
 
+postgresql@18                               Object-relational database system
+                                            |__ https://www.postgresql.org/
+
 postgrest                                   Serves a fully RESTful API from
                                             |   any existing PostgreSQL database
                                             |__ https://github.com/PostgREST/postgrest
 
-pre-commit                                  Framework for managing
-                                            |   multi-language pre-commit hooks
+pre-commit                                  Framework for managing multi-language pre-commit hooks
                                             |__ https://pre-commit.com/
 
 presenterm                                  Terminal slideshow tool
@@ -2149,9 +2088,6 @@ protobuf                                    Protocol buffers (Google's data inte
 protobuf-c                                  Protocol buffers library
                                             |__ https://github.com/protobuf-c/protobuf-c
 
-protobuf@21                                 Protocol buffers (Google's data interchange format)
-                                            |__ https://protobuf.dev/
-
 pspg                                        Unix pager optimized for psql
                                             |__ https://github.com/okbob/pspg
 
@@ -2168,9 +2104,6 @@ psutils                                     Utilities for manipulating PostScrip
 pugixml                                     Light-weight C++ XML processing library
                                             |__ https://pugixml.org/
 
-pup                                         Parse HTML at the command-line
-                                            |__ https://github.com/EricChiang/pup
-
 py3cairo                                    Python 3 bindings for the Cairo graphics library
                                             |__ https://cairographics.org/pycairo/
 
@@ -2183,18 +2116,10 @@ pycparser                                   C parser in Python
 pydantic                                    Data validation using Python type hints
                                             |__ https://github.com/pydantic/pydantic
 
-pyenv                                       Python version management
-                                            |__ https://github.com/pyenv/pyenv
-
-pyenv-virtualenv                            Pyenv plugin to manage virtualenv
-                                            |__ https://github.com/pyenv/pyenv-virtualenv
-
-pygobject3                                  GNOME Python bindings (based
-                                            |   on GObject Introspection)
+pygobject3                                  GNOME Python bindings (based on GObject Introspection)
                                             |__ https://pygobject.gnome.org
 
-pymupdf                                     Python bindings for the PDF
-                                            |   toolkit and renderer MuPDF
+pymupdf                                     Python bindings for the PDF toolkit and renderer MuPDF
                                             |__ https://pymupdf.readthedocs.io/en/latest/
 
 python-build                                Simple, correct PEP 517 build frontend
@@ -2251,8 +2176,7 @@ qt5compat                                   Qt 5 Core APIs that were removed in 
 qtbase                                      Cross-platform application and UI framework
                                             |__ https://www.qt.io/
 
-qtcharts                                    UI Components for displaying
-                                            |   visually pleasing charts
+qtcharts                                    UI Components for displaying visually pleasing charts
                                             |__ https://www.qt.io/
 
 qtconnectivity                              Provides access to Bluetooth hardware
@@ -2267,8 +2191,7 @@ qtdeclarative                               QML, Qt Quick and several related mo
 qtgraphs                                    Provides functionality for 2D and 3D graphs
                                             |__ https://www.qt.io/
 
-qtgrpc                                      Provides support for
-                                            |   communicating with gRPC services
+qtgrpc                                      Provides support for communicating with gRPC services
                                             |__ https://www.qt.io/
 
 qthttpserver                                Framework for embedding an HTTP
@@ -2314,8 +2237,7 @@ qtquick3dphysics                            High-level QML module adding physica
 qtquickeffectmaker                          Tool to create custom Qt Quick shader effects
                                             |__ https://www.qt.io/
 
-qtquicktimeline                             Enables keyframe-based
-                                            |   animations and parameterization
+qtquicktimeline                             Enables keyframe-based animations and parameterization
                                             |__ https://www.qt.io/
 
 qtremoteobjects                             Provides APIs for inter-process communication
@@ -2325,8 +2247,7 @@ qtscxml                                     Provides functionality to create
                                             |   state machines from SCXML files
                                             |__ https://www.qt.io/
 
-qtsensors                                   Provides access to sensors
-                                            |   via QML and C++ interfaces
+qtsensors                                   Provides access to sensors via QML and C++ interfaces
                                             |__ https://www.qt.io/
 
 qtserialbus                                 Provides access to serial industrial bus interfaces
@@ -2336,8 +2257,7 @@ qtserialport                                Provides classes to interact with
                                             |   hardware and virtual serial ports
                                             |__ https://www.qt.io/
 
-qtshadertools                               Provides tools for the
-                                            |   cross-platform Qt shader pipeline
+qtshadertools                               Provides tools for the cross-platform Qt shader pipeline
                                             |__ https://www.qt.io/
 
 qtspeech                                    Enables access to text-to-speech engines
@@ -2365,8 +2285,7 @@ qtwebengine                                 Provides functionality for rendering
                                             |   regions of dynamic web content
                                             |__ https://www.qt.io/
 
-qtwebsockets                                Provides WebSocket communication
-                                            |   compliant with RFC 6455
+qtwebsockets                                Provides WebSocket communication compliant with RFC 6455
                                             |__ https://www.qt.io/
 
 qtwebview                                   Displays web content in a QML application
@@ -2429,15 +2348,11 @@ restview                                    Viewer for ReStructuredText document
 resvg                                       SVG rendering tool and library
                                             |__ https://github.com/linebender/resvg
 
-rethinkdb                                   Open-source database for the realtime web
-                                            |__ https://rethinkdb.com/
-
 rex                                         Command-line tool which executes
                                             |   commands on remote servers
                                             |__ https://www.rexify.org
 
-rhash                                       Utility for computing and
-                                            |   verifying hash sums of files
+rhash                                       Utility for computing and verifying hash sums of files
                                             |__ https://sourceforge.net/projects/rhash/
 
 ripgrep                                     Search tool like grep and The Silver Searcher
@@ -2454,8 +2369,7 @@ rqlite                                      Lightweight, distributed relational
                                             |   database built on SQLite
                                             |__ https://www.rqlite.io/
 
-rsql                                        CLI for relational databases
-                                            |   and common data file formats
+rsql                                        CLI for relational databases and common data file formats
                                             |__ https://github.com/theseus-rs/rsql
 
 rsync                                       Utility that provides fast incremental file transfer
@@ -2523,8 +2437,7 @@ sdl2                                        Low-level access to audio, keyboard,
                                             |   mouse, joystick, and graphics
                                             |__ https://www.libsdl.org/
 
-sdl2_image                                  Library for loading images
-                                            |   as SDL surfaces and textures
+sdl2_image                                  Library for loading images as SDL surfaces and textures
                                             |__ https://github.com/libsdl-org/SDL_image
 
 semgrep                                     Easily detect and prevent bugs and
@@ -2553,8 +2466,9 @@ shfmt                                       Autoformat shell script source code
 simdjson                                    SIMD-accelerated C++ JSON parser
                                             |__ https://simdjson.org
 
-six                                         Python 2 and 3 compatibility utilities
-                                            |__ https://github.com/benjaminp/six
+martinemde/tap/skillet                      Run Agent SKILL.md files as
+                                            |   shell commands with Claude Code
+                                            |__ https://github.com/martinemde/skillet
 
 slack-mcp-server                            Powerful MCP Slack Server with multiple
                                             |   transports and smart history fetch logic
@@ -2567,8 +2481,7 @@ smenu                                       Powerful and versatile CLI selection
                                             |   tool for interactive or scripting use
                                             |__ https://github.com/p-gen/smenu
 
-snappy                                      Compression/decompression
-                                            |   library aiming for high speed
+snappy                                      Compression/decompression library aiming for high speed
                                             |__ https://google.github.io/snappy/
 
 snitch                                      Prettier way to inspect network connections
@@ -2576,10 +2489,6 @@ snitch                                      Prettier way to inspect network conn
 
 socat                                       SOcket CAT: netcat on steroids
                                             |__ http://www.dest-unreach.org/socat/
-
-soplex                                      Optimization package for solving
-                                            |   linear programming problems (LPs)
-                                            |__ https://soplex.zib.de/
 
 source-highlight                            Source-code syntax highlighter
                                             |__ https://www.gnu.org/software/src-highlite/
@@ -2669,8 +2578,7 @@ swiftformat                                 Formatting tool for reformatting Swi
 swig                                        Generate scripting interfaces to C/C++ code
                                             |__ https://www.swig.org/
 
-syncthing                                   Open source continuous file
-                                            |   synchronization application
+syncthing                                   Open source continuous file synchronization application
                                             |__ https://syncthing.net/
 
 sysaidmin                                   GPT-powered sysadmin
@@ -2797,18 +2705,11 @@ universal-ctags                             Maintained ctags implementation
 unixodbc                                    ODBC 3 connectivity for UNIX
                                             |__ https://www.unixodbc.org/
 
-unoconv                                     Convert between any document
-                                            |   format supported by OpenOffice
-                                            |__ https://github.com/unoconv/unoconv
-
 uriparser                                   URI parsing library (strictly RFC 3986 compliant)
                                             |__ https://uriparser.github.io/
 
 urlwatch                                    Get notified when a webpage changes
                                             |__ https://thp.io/2008/urlwatch/
-
-usage                                       Tool for working with usage-spec CLIs
-                                            |__ https://usage.jdx.dev/
 
 xo/xo/usql                                  universal command-line SQL client interface
                                             |__ https://github.com/xo/usql
@@ -2869,8 +2770,7 @@ vulkan-loader                               Vulkan ICD Loader
 w3m                                         Pager/text based browser
                                             |__ https://w3m.sourceforge.net/
 
-wangle                                      Modular, composable client/server
-                                            |   abstractions framework
+wangle                                      Modular, composable client/server abstractions framework
                                             |__ https://github.com/facebook/wangle
 
 watchman                                    Watch files and take action when they change
@@ -2903,13 +2803,18 @@ wget2                                       Successor of GNU Wget, a file
                                             |   and recursive website downloader
                                             |__ https://gitlab.com/gnuwget/wget2
 
-wrkflw                                      Validate and execute GitHub
-                                            |   Actions workflows locally
+whosthere                                   LAN discovery tool with a modern TUI written in Go
+                                            |__ https://github.com/ramonvermeulen/whosthere
+
+wik                                         View Wikipedia pages from your terminal
+                                            |__ https://github.com/yashsinghcodes/wik
+
+wrkflw                                      Validate and execute GitHub Actions workflows locally
                                             |__ https://github.com/bahdotsh/wrkflw
 
-max-sixty/worktrunk/wt                      CLI for Git worktree management,
+max-sixty/worktrunk/wt                      A CLI for Git worktree management,
                                             |   designed for parallel AI agent workflows
-                                            |__ https://github.com/max-sixty/worktrunk
+                                            |__ https://worktrunk.dev
 
 wxwidgets                                   Cross-platform C++ GUI toolkit
                                             |__ https://www.wxwidgets.org
@@ -2925,6 +2830,9 @@ x264                                        H.264/AVC encoder
 
 x265                                        H.265/HEVC encoder
                                             |__ https://bitbucket.org/multicoreware/x265_git
+
+xan                                         CSV CLI magician written in Rust
+                                            |__ https://github.com/medialab/xan
 
 xdot                                        Interactive viewer for graphs
                                             |   written in Graphviz's dot language
@@ -2948,9 +2856,6 @@ xorgproto                                   X.Org: Protocol Headers
 
 xsimd                                       Modern, portable C++ wrappers for SIMD intrinsics
                                             |__ https://xsimd.readthedocs.io/en/latest/
-
-xsv                                         Fast CSV toolkit written in Rust
-                                            |__ https://github.com/BurntSushi/xsv
 
 xvid                                        High-performance, high-quality MPEG-4 video library
                                             |__ https://labs.xvid.com/
@@ -3039,8 +2944,7 @@ zim                                         Graphical text editor used to
                                             |   maintain a collection of wiki pages
                                             |__ https://zim-wiki.org/
 
-zimg                                        Scaling, colorspace conversion,
-                                            |   and dithering library
+zimg                                        Scaling, colorspace conversion, and dithering library
                                             |__ https://github.com/sekrit-twc/zimg
 
 zstd                                        Zstandard is a real-time compression algorithm
