@@ -998,9 +998,9 @@ combine_pdf                         Combine, stamp and watermark PDF files in pu
 command_kit                         An all-in-one modular Ruby CLI toolkit
                                     |__ https://github.com/postmodern/command_kit.rb#readme
 
-commonmarker                        CommonMark parser and renderer. Written in C, wrapped in
-                                    |   Ruby.
-                                    |__ http://github.com/gjtorikian/commonmarker
+commonmarker                        CommonMark parser and renderer. Written in Rust, wrapped
+                                    |   in Ruby.
+                                    |__ https://github.com/gjtorikian/commonmarker
 
 completely                          Bash Completions Generator
                                     |__ https://github.com/bashly-framework/completely
@@ -1969,7 +1969,7 @@ gemdiff                             Find source repositories for ruby gems. Open
 gemini-ai                           Interact with Google's Gemini AI.
                                     |__ https://github.com/gbaptista/gemini-ai
 
-gemoji                              Emoji library
+gemoji                              Unicode emoji library
                                     |__ https://github.com/github/gemoji
 
 gemojione                           A gem for EmojiOne
@@ -2024,9 +2024,6 @@ git-lint                            A command line interface for linting Git com
 
 github-markup                       The code GitHub uses to render README.markup
                                     |__ https://github.com/github/markup
-
-github-pages                        Track GitHub Pages dependencies.
-                                    |__ https://github.com/github/pages-gem
 
 github-pages-health-check           Checks your GitHub Pages site for commons DNS
                                     |   configuration issues
@@ -2581,6 +2578,15 @@ jaro_winkler                        An implementation of Jaro-Winkler distance a
 jbuilder                            Create JSON structures via a Builder-style DSL
                                     |__ https://github.com/rails/jbuilder
 
+jekyll-seo-tag                      A Jekyll plugin to add metadata tags for search engines
+                                    |   and social networks to better index and display your
+                                    |   site's content.
+                                    |__ https://github.com/jekyll/jekyll-seo-tag
+
+jekyll-watch                        Rebuild your Jekyll site when a file changes with the
+                                    |   `--watch` switch.
+                                    |__ https://github.com/jekyll/jekyll-watch
+
 jemoji                              GitHub-flavored emoji plugin for Jekyll
                                     |__ https://github.com/jekyll/jemoji
 
@@ -3080,9 +3086,6 @@ mini_sql                            A fast, safe, simple direct SQL executor
 
 miniapm                             Lightweight APM client for MiniAPM server
                                     |__ https://miniapm.com
-
-minima                              A beautiful, minimal theme for Jekyll.
-                                    |__ https://github.com/jekyll/minima
 
 minitar                             The minitar library is a pure-Ruby library that provides
                                     |   the ability to deal with POSIX tar(1) archive files

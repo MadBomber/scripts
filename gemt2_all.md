@@ -1118,18 +1118,18 @@ Alba is a JSON serializer for Ruby, JRuby and TruffleRuby. It focuses on perform
 
 | | |
 |---|---|
-| **Version** | 8.0.1 |
+| **Version** | 8.1.0 |
 | **Authors** | Thomas von Deyen |
 
 Devise based user authentication for AlchemyCMS.
 
-**Dependencies:** alchemy_cms (>= 8.0.0.a, < 9.0), devise (~> 4.9), flickwerk (~> 0.3.6)
+**Dependencies:** alchemy_cms (>= 8.1.0.a, < 9.0), devise (>= 4.9, < 6.0), flickwerk (~> 0.3.6)
 
 ## [alchemy_cms](https://alchemy-cms.com)
 
 | | |
 |---|---|
-| **Version** | 8.0.7 |
+| **Version** | 8.1.0 |
 | **Authors** | Thomas von Deyen, Robin Boening, Marc Schettke, Hendrik Mans, Carsten Fregin, Martin Meyerhoff |
 | **License** | BSD-3-Clause |
 | **Ruby** | >= 3.1.0 |
@@ -1138,7 +1138,7 @@ A powerful, userfriendly and flexible CMS for Rails
 
 Alchemy is a powerful, userfriendly and flexible Rails CMS.
 
-**Dependencies:** actionmailer (>= 7.1, < 8.1), actionpack (>= 7.1, < 8.1), actionview (>= 7.1, < 8.1), activejob (>= 7.1, < 8.1), activemodel (>= 7.1, < 8.1), activerecord (>= 7.1, < 8.1), activestorage (>= 7.1, < 8.1), activesupport (>= 7.1, < 8.1), railties (>= 7.1, < 8.1), active_model_serializers (~> 0.10.14), acts_as_list (>= 0.3, < 2), awesome_nested_set (~> 3.1, >= 3.7.0), cancancan (>= 2.1, < 4.0), csv (~> 3.3), dragonfly (~> 1.4), gutentag (>= 2.2.1, < 4.0), image_processing (~> 1.14), importmap-rails (~> 2.0), kaminari (~> 1.1), originator (~> 3.1), ransack (>= 1.8, < 5.0), simple_form (>= 4.0, < 6), turbo-rails (>= 1.4, < 2.1), view_component (>= 3, < 5)
+**Dependencies:** actionmailer (>= 7.2, < 8.2), actionpack (>= 7.2, < 8.2), actionview (>= 7.2, < 8.2), activejob (>= 7.2, < 8.2), activemodel (>= 7.2, < 8.2), activerecord (>= 7.2, < 8.2), activestorage (>= 7.2, < 8.2), activesupport (>= 7.2, < 8.2), railties (>= 7.2, < 8.2), active_model_serializers (~> 0.10.14), acts_as_list (>= 0.3, < 2), awesome_nested_set (>= 3.9.0, < 4.0), cancancan (>= 2.1, < 4.0), csv (~> 3.3), dragonfly (~> 1.4), gutentag (>= 2.2.1, < 4.0), image_processing (~> 1.14), importmap-rails (~> 2.0), kaminari (~> 1.1), originator (~> 3.1), ransack (>= 1.8, < 5.0), simple_form (>= 4.0, < 6), turbo-rails (>= 1.4, < 2.1), view_component (>= 3, < 5)
 
 ## [algolia_html_extractor](https://github.com/algolia/html-extractor)
 
@@ -1887,7 +1887,7 @@ Get suggestions to tune Ruby's garbage collector
 
 | | |
 |---|---|
-| **Version** | 3.29.0 |
+| **Version** | 3.29.1 |
 | **Authors** | Adrian Marin, Mihai Marin, Paul Bob |
 | **License** | LGPL-3.0, Commercial |
 | **Ruby** | >= 3.0.0 |
@@ -3715,7 +3715,7 @@ Ruby CoffeeScript is a bridge to the JS CoffeeScript compiler.
 
 | | |
 |---|---|
-| **Version** | 1.11.1 |
+| **Version** | 1.12.2 |
 | **Authors** | Jeremy Ashkenas |
 | **License** | MIT |
 
@@ -3727,14 +3727,14 @@ CoffeeScript is a little language that compiles into JavaScript. Underneath all 
 
 | | |
 |---|---|
-| **Version** | 1.7.0 |
+| **Version** | 2.1.0 |
 | **Authors** | Brooke Kuhlmann |
 | **License** | Hippocratic-2.1 |
-| **Ruby** | >= 3.4 |
+| **Ruby** | >= 4.0 |
 
 A customizable and feature rich logger.
 
-**Dependencies:** core (~> 2.0), logger (~> 1.7), refinements (~> 13.5), tone (~> 2.0), zeitwerk (~> 2.7)
+**Dependencies:** core (~> 3.0), logger (~> 1.7), refinements (~> 14.0), tone (~> 3.0), zeitwerk (~> 2.7)
 
 ## [cohere-ai](https://github.com/gbaptista/cohere-ai)
 
@@ -3853,20 +3853,18 @@ An all-in-one modular Ruby CLI toolkit
 
 A modular Ruby toolkit for building clean, correct, and robust CLI commands as plain-old Ruby classes.
 
-## [commonmarker](http://github.com/gjtorikian/commonmarker)
+## [commonmarker](https://github.com/gjtorikian/commonmarker)
 
 | | |
 |---|---|
-| **Version** | 0.17.13 |
+| **Version** | 2.6.3 |
 | **Authors** | Garen Torikian, Ashe Connor |
 | **License** | MIT |
-| **Ruby** | >= 2.0.0 |
+| **Ruby** | >= 3.2, < 4.1.dev |
 
-CommonMark parser and renderer. Written in C, wrapped in Ruby.
+CommonMark parser and renderer. Written in Rust, wrapped in Ruby.
 
-A fast, safe, extensible parser for CommonMark. This wraps the official libcmark library.
-
-**Dependencies:** ruby-enum (~> 0.5)
+A fast, safe, extensible parser for CommonMark. This wraps the comrak Rust crate.
 
 ## [completely](https://github.com/bashly-framework/completely)
 
@@ -4060,10 +4058,10 @@ Given a code base that adheres to certain conventions, ConstantResolver resolves
 
 | | |
 |---|---|
-| **Version** | 1.5.0 |
+| **Version** | 2.1.0 |
 | **Authors** | Brooke Kuhlmann |
 | **License** | Hippocratic-2.1 |
-| **Ruby** | >= 3.4 |
+| **Ruby** | >= 4.0 |
 
 A thread-safe dependency injection container.
 
@@ -4109,10 +4107,10 @@ Allows for parsing and returning cookies in Ruby HTTP client code
 
 | | |
 |---|---|
-| **Version** | 2.5.0 |
+| **Version** | 3.1.0 |
 | **Authors** | Brooke Kuhlmann |
 | **License** | Hippocratic-2.1 |
-| **Ruby** | >= 3.4 |
+| **Ruby** | >= 4.0 |
 
 A collection of foundational objects.
 
@@ -5926,14 +5924,14 @@ Ruby implementation of a service discovery tool based on etcd
 
 | | |
 |---|---|
-| **Version** | 3.5.0 |
+| **Version** | 4.1.0 |
 | **Authors** | Brooke Kuhlmann |
 | **License** | Hippocratic-2.1 |
-| **Ruby** | >= 3.4 |
+| **Ruby** | >= 4.0 |
 
 A monadic configuration loader, transformer, and validator.
 
-**Dependencies:** cogger (~> 1.0), core (~> 2.5), dry-monads (~> 1.9), dry-types (~> 1.7), refinements (~> 13.6), versionaire (~> 14.0), zeitwerk (~> 2.7)
+**Dependencies:** cogger (~> 2.0), core (~> 3.0), dry-monads (~> 1.9), dry-types (~> 1.9), refinements (~> 14.0), versionaire (~> 15.0), zeitwerk (~> 2.7)
 
 ## [ethon](https://github.com/typhoeus/ethon)
 
@@ -7578,14 +7576,14 @@ A Ruby Gem for interacting with Gemini through Vertex AI, Generative Language AP
 
 | | |
 |---|---|
-| **Version** | 3.0.1 |
+| **Version** | 4.0.1 |
 | **Authors** | GitHub |
 | **License** | MIT |
 | **Ruby** | > 1.9 |
 
-Emoji library
+Unicode emoji library
 
-Character information and metadata for standard and custom emoji.
+Character information and metadata for Unicode emoji.
 
 ## [gemojione](https://github.com/bonusly/gemojione)
 
@@ -7809,26 +7807,11 @@ The code GitHub uses to render README.markup
 
 This gem is used by GitHub to render any fancy markup such as Markdown, Textile, Org-Mode, etc. Fork it and add your own!
 
-## [github-pages](https://github.com/github/pages-gem)
-
-| | |
-|---|---|
-| **Version** | 223 |
-| **Authors** | GitHub, Inc. |
-| **License** | MIT |
-| **Ruby** | >= 2.3.0 |
-
-Track GitHub Pages dependencies.
-
-Bootstrap the GitHub Pages Jekyll environment locally.
-
-**Dependencies:** jekyll (= 3.9.0), jekyll-sass-converter (= 1.5.2), kramdown (= 2.3.1), kramdown-parser-gfm (= 1.1.0), jekyll-commonmark-ghpages (= 0.1.6), liquid (= 4.0.3), rouge (= 3.26.0), github-pages-health-check (= 1.17.9), jekyll-redirect-from (= 0.16.0), jekyll-sitemap (= 1.4.0), jekyll-feed (= 0.15.1), jekyll-gist (= 1.5.0), jekyll-paginate (= 1.1.0), jekyll-coffeescript (= 1.1.1), jekyll-seo-tag (= 2.7.1), jekyll-github-metadata (= 2.13.0), jekyll-avatar (= 0.7.0), jekyll-remote-theme (= 0.4.3), jekyll-include-cache (= 0.2.1), jemoji (= 0.12.0), jekyll-mentions (= 1.6.0), jekyll-relative-links (= 0.6.1), jekyll-optional-front-matter (= 0.3.2), jekyll-readme-index (= 0.3.0), jekyll-default-layout (= 0.1.4), jekyll-titles-from-headings (= 0.5.3), minima (= 2.5.1), jekyll-swiss (= 1.0.0), jekyll-theme-primer (= 0.6.0), jekyll-theme-architect (= 0.2.0), jekyll-theme-cayman (= 0.2.0), jekyll-theme-dinky (= 0.2.0), jekyll-theme-hacker (= 0.2.0), jekyll-theme-leap-day (= 0.2.0), jekyll-theme-merlot (= 0.2.0), jekyll-theme-midnight (= 0.2.0), jekyll-theme-minimal (= 0.2.0), jekyll-theme-modernist (= 0.2.0), jekyll-theme-slate (= 0.2.0), jekyll-theme-tactile (= 0.2.0), jekyll-theme-time-machine (= 0.2.0), mercenary (~> 0.3), nokogiri (>= 1.12.5, < 2.0), terminal-table (~> 1.4)
-
 ## [github-pages-health-check](https://github.com/github/github-pages-health-check)
 
 | | |
 |---|---|
-| **Version** | 1.17.9 |
+| **Version** | 1.19.1 |
 | **Authors** | GitHub, Inc. |
 | **License** | MIT |
 | **Ruby** | >= 2.2.0 |
@@ -7837,7 +7820,7 @@ Checks your GitHub Pages site for commons DNS configuration issues
 
 Checks your GitHub Pages site for commons DNS configuration issues.
 
-**Dependencies:** addressable (~> 2.3), dnsruby (~> 1.60), octokit (~> 4.0), public_suffix (>= 3.0, < 5.0), typhoeus (~> 1.3)
+**Dependencies:** addressable (~> 2.8.7), dnsruby (~> 1.60), octokit (>= 4, < 10), public_suffix (>= 3.0, < 7.0), typhoeus (~> 1.3)
 
 ## [github_api](http://piotrmurach.github.io/github/)
 
@@ -8083,7 +8066,7 @@ This is the simple REST client for IAM Service Account Credentials API V1. Simpl
 
 | | |
 |---|---|
-| **Version** | 0.59.0 |
+| **Version** | 0.60.0 |
 | **Authors** | Google LLC |
 | **License** | Apache-2.0 |
 | **Ruby** | >= 3.1 |
@@ -9624,14 +9607,14 @@ This gem displays progress of computations and additional information to the ter
 
 | | |
 |---|---|
-| **Version** | 4.6.0 |
+| **Version** | 5.1.0 |
 | **Authors** | Brooke Kuhlmann |
 | **License** | Hippocratic-2.1 |
-| **Ruby** | >= 3.4 |
+| **Ruby** | >= 4.0 |
 
 An automatic dependency injector.
 
-**Dependencies:** marameters (~> 4.1)
+**Dependencies:** marameters (~> 5.0)
 
 ## [inifile](http://rubygems.org/gems/inifile)
 
@@ -9900,14 +9883,14 @@ IPAddress is a Ruby library designed to make manipulation of IPv4 and IPv6 addre
 
 | | |
 |---|---|
-| **Version** | 1.16.0 |
+| **Version** | 1.17.0 |
 | **Authors** | aycabta, Keiju ISHITSUKA |
 | **License** | Ruby, BSD-2-Clause |
 | **Ruby** | >= 2.7 |
 
 Interactive Ruby command-line tool for REPL (Read Eval Print Loop).
 
-**Dependencies:** reline (>= 0.4.2), rdoc (>= 4.0.0), pp (>= 0.6.0)
+**Dependencies:** prism (>= 1.3.0), reline (>= 0.4.2), rdoc (>= 4.0.0), pp (>= 0.6.0)
 
 ## [irb-ai](https://github.com/st0012/irb-ai)
 
@@ -10034,18 +10017,44 @@ Create JSON structures via a Builder-style DSL
 
 **Dependencies:** activesupport (>= 7.0.0), actionview (>= 7.0.0)
 
+## [jekyll-seo-tag](https://github.com/jekyll/jekyll-seo-tag)
+
+| | |
+|---|---|
+| **Version** | 2.8.0 |
+| **Authors** | Ben Balter |
+| **License** | MIT |
+| **Ruby** | >= 2.5.0 |
+
+A Jekyll plugin to add metadata tags for search engines and social networks to better index and display your site's content.
+
+**Dependencies:** jekyll (>= 3.8, < 5.0)
+
+## [jekyll-watch](https://github.com/jekyll/jekyll-watch)
+
+| | |
+|---|---|
+| **Version** | 2.2.1 |
+| **Authors** | Parker Moore |
+| **License** | MIT |
+| **Ruby** | >= 2.3.0 |
+
+Rebuild your Jekyll site when a file changes with the `--watch` switch.
+
+**Dependencies:** listen (~> 3.0)
+
 ## [jemoji](https://github.com/jekyll/jemoji)
 
 | | |
 |---|---|
-| **Version** | 0.12.0 |
+| **Version** | 0.13.0 |
 | **Authors** | GitHub, Inc. |
 | **License** | MIT |
 | **Ruby** | >= 2.4.0 |
 
 GitHub-flavored emoji plugin for Jekyll
 
-**Dependencies:** gemoji (~> 3.0), html-pipeline (~> 2.2), jekyll (>= 3.0, < 5.0)
+**Dependencies:** gemoji (>= 3, < 5), html-pipeline (~> 2.2), jekyll (>= 3.0, < 5.0)
 
 ## [jira-ruby](http://www.sumoheavy.com)
 
@@ -10538,16 +10547,16 @@ k-means clustering. Uses NArray for fast calculations.
 
 | | |
 |---|---|
-| **Version** | 2.3.1 |
+| **Version** | 2.5.2 |
 | **Authors** | Thomas Leitner |
 | **License** | MIT |
-| **Ruby** | >= 2.3 |
+| **Ruby** | >= 2.5 |
 
 kramdown is a fast, pure-Ruby Markdown-superset converter.
 
 kramdown is yet-another-markdown-parser but fast, pure Ruby, using a strict syntax definition and supporting several common extensions.
 
-**Dependencies:** rexml (>= 0)
+**Dependencies:** rexml (>= 3.4.4)
 
 ## [kramdown-man](https://github.com/postmodern/kramdown-man#readme)
 
@@ -10932,10 +10941,10 @@ This class allow you to retrive "lorem ipsum" placeholder text from lipsum.com.
 
 | | |
 |---|---|
-| **Version** | 4.0.3 |
+| **Version** | 5.4.0 |
 | **Authors** | Tobias Lütke |
 | **License** | MIT |
-| **Ruby** | >= 2.1.0 |
+| **Ruby** | >= 2.7.0 |
 
 A secure, non-evaling end user template engine with aesthetic markup.
 
@@ -11403,14 +11412,14 @@ Map an input model to an output model using a mapping model.
 
 | | |
 |---|---|
-| **Version** | 4.6.0 |
+| **Version** | 5.1.0 |
 | **Authors** | Brooke Kuhlmann |
 | **License** | Hippocratic-2.1 |
-| **Ruby** | >= 3.4 |
+| **Ruby** | >= 4.0 |
 
 A dynamic method parameter enhancer.
 
-**Dependencies:** refinements (~> 13.6), zeitwerk (~> 2.7)
+**Dependencies:** refinements (~> 14.0), zeitwerk (~> 2.7)
 
 ## [marcel](https://github.com/rails/marcel)
 
@@ -11625,9 +11634,10 @@ Memory profiling routines for Ruby 3.1+
 
 | | |
 |---|---|
-| **Version** | 0.3.6 |
+| **Version** | 0.4.0 |
 | **Authors** | Tom Preston-Werner, Parker Moore |
 | **License** | MIT |
+| **Ruby** | >= 2.4.0 |
 
 Lightweight and flexible library for writing command-line apps in Ruby.
 
@@ -11904,18 +11914,6 @@ A fast, safe, simple direct SQL executor for PG
 Lightweight APM client for MiniAPM server
 
 Ruby gem for Rails APM integration with MiniAPM. Exports traces in OTLP format, captures errors, and provides comprehensive instrumentation for Rails, ActiveRecord, Sidekiq, HTTP clients, Redis, and search engines.
-
-## [minima](https://github.com/jekyll/minima)
-
-| | |
-|---|---|
-| **Version** | 2.5.1 |
-| **Authors** | Joel Glovier |
-| **License** | MIT |
-
-A beautiful, minimal theme for Jekyll.
-
-**Dependencies:** jekyll (>= 3.5, < 5.0), jekyll-feed (~> 0.9), jekyll-seo-tag (~> 2.1)
 
 ## [minitar](https://github.com/halostatue/minitar/)
 
@@ -13161,16 +13159,16 @@ visit ast nodes
 
 | | |
 |---|---|
-| **Version** | 1.18.10 |
+| **Version** | 1.19.0 |
 | **Authors** | Mike Dalessio, Aaron Patterson, Yoko Harada, Akinori MUSHA, John Shahid, Karol Bucek, Sam Ruby, Craig Barnes, Stephen Checkoway, Lars Kanis, Sergio Arbeo, Timothy Elliott, Nobuyoshi Nakada |
 | **License** | MIT |
-| **Ruby** | >= 3.1.0 |
+| **Ruby** | >= 3.2, < 4.1.dev |
 
 Nokogiri (鋸) makes it easy and painless to work with XML and HTML from Ruby.
 
 Nokogiri (鋸) makes it easy and painless to work with XML and HTML from Ruby. It provides a sensible, easy-to-understand API for reading, writing, modifying, and querying documents. It is fast and standards-compliant by relying on native parsers like libxml2, libgumbo, or xerces.
 
-**Dependencies:** mini_portile2 (~> 2.8.2), racc (~> 1.4)
+**Dependencies:** racc (~> 1.4)
 
 ## [nokolexbor](https://github.com/serpapi/nokolexbor)
 
@@ -13423,10 +13421,10 @@ Numo::NArray - New NArray class library in Ruby/Numo.
 
 | | |
 |---|---|
-| **Version** | 0.9.14 |
+| **Version** | 0.10.0 |
 | **Authors** | yoshoku |
 | **License** | BSD-3-Clause |
-| **Ruby** | >= 2.2 |
+| **Ruby** | >= 3.2.0 |
 
 Numo::NArray Alternative is a project forked from Numo::NArray.
 
@@ -13450,13 +13448,13 @@ Numo::OpenBLAS downloads and builds OpenBLAS during installation and uses that a
 
 | | |
 |---|---|
-| **Version** | 0.2.3 |
+| **Version** | 0.3.0 |
 | **Authors** | yoshoku |
 | **License** | BSD-3-Clause |
 
 Numo::Optimize provides functions for minimizing objective functions.
 
-**Dependencies:** numo-narray-alt (~> 0.9.9)
+**Dependencies:** numo-narray-alt (>= 0.9.9, < 0.11.0)
 
 ## [numo-pocketfft](https://github.com/yoshoku/numo-pocketfft)
 
@@ -13700,10 +13698,10 @@ A package that distributes Octicons in a gem
 
 | | |
 |---|---|
-| **Version** | 4.25.1 |
+| **Version** | 9.2.0 |
 | **Authors** | Wynn Netherland, Erik Michaels-Ober, Clint Shryock |
 | **License** | MIT |
-| **Ruby** | >= 2.0.0 |
+| **Ruby** | >= 2.7.0 |
 
 Ruby toolkit for working with the GitHub API
 
@@ -15594,7 +15592,7 @@ PM (PromptManager) parses YAML metadata from markdown strings or files. It expan
 
 | | |
 |---|---|
-| **Version** | 0.2.1 |
+| **Version** | 0.3.1 |
 | **Authors** | Scott Werner |
 | **License** | MIT |
 | **Ruby** | >= 3.2.0 |
@@ -15603,7 +15601,7 @@ LLM-backed entities as first-class autonomous objects
 
 A framework where markdown files with LLM-backed behavior act as first-class autonomous entities. Features inter-object communication and environment management.
 
-**Dependencies:** thor (~> 1.3), ruby_llm (~> 1.2), front_matter_parser (~> 1.0), sqlite3 (~> 2.0), falcon (~> 0.50), async-websocket (~> 0.28), rack (~> 3.0), listen (~> 3.9), mcp (~> 0.4)
+**Dependencies:** ruby-openai (~> 7.0), anthropic (~> 1.0), front_matter_parser (~> 1.0), sqlite3 (~> 2.0), falcon (~> 0.50), async-websocket (~> 0.28), rack (~> 3.0), listen (~> 3.9), mcp (~> 0.4)
 
 ## [prompts](https://github.com/fractaledmind/prompts)
 
@@ -17012,10 +17010,10 @@ Referral codes & affiliate links for Ruby on Rails apps
 
 | | |
 |---|---|
-| **Version** | 13.6.0 |
+| **Version** | 14.2.0 |
 | **Authors** | Brooke Kuhlmann |
 | **License** | Hippocratic-2.1 |
-| **Ruby** | >= 3.4 |
+| **Ruby** | >= 4.0 |
 
 A collection of core object refinements.
 
@@ -17445,7 +17443,7 @@ RGeo is a geospatial data library for Ruby. RGeo::ActiveRecord is an optional RG
 
 | | |
 |---|---|
-| **Version** | 4.9.1 |
+| **Version** | 4.10.0 |
 | **Authors** | Paul Brannan, Jason Roelofs, Charlie Savage |
 | **License** | MIT |
 | **Ruby** | >= 3.1 |
@@ -17599,7 +17597,7 @@ ODF generation library for Ruby
 
 | | |
 |---|---|
-| **Version** | 0.3.1 |
+| **Version** | 0.3.3 |
 | **Authors** | Alexey Poimtsev |
 | **License** | MIT |
 | **Ruby** | >= 3.2.0 |
@@ -18241,13 +18239,12 @@ Anthropic API + Ruby! 🤖🌌
 
 | | |
 |---|---|
-| **Version** | 0.9.0 |
+| **Version** | 1.0.0 |
 | **Authors** | Daniel Doubrovkine |
 | **License** | MIT |
+| **Ruby** | >= 2.7 |
 
 Enum-like behavior for Ruby.
-
-**Dependencies:** i18n (>= 0)
 
 ## [ruby-graphviz](https://github.com/glejeune/Ruby-Graphviz)
 
@@ -18292,7 +18289,7 @@ High-performance native Ruby bindings to libgd for image generation, drawing, fi
 
 | | |
 |---|---|
-| **Version** | 0.26.5 |
+| **Version** | 0.26.6 |
 | **Authors** | Shopify |
 | **License** | MIT |
 | **Ruby** | >= 3.0 |
@@ -18788,7 +18785,7 @@ ruby_parser (RP) is a ruby parser written in pure ruby (utilizing racc--which do
 
 | | |
 |---|---|
-| **Version** | 1.0.2 |
+| **Version** | 1.1.0 |
 | **Authors** | George Kettle |
 | **License** | MIT |
 | **Ruby** | >= 3.2 |
@@ -19012,7 +19009,7 @@ Rugged is a Ruby bindings to the libgit2 linkable C Git library. This is for tes
 
 | | |
 |---|---|
-| **Version** | 2.0.2 |
+| **Version** | 2.1.0 |
 | **Authors** | yoshoku |
 | **License** | BSD-3-Clause |
 
@@ -19020,13 +19017,13 @@ Rumale is a machine learning library in Ruby. Rumale supports Support Vector Mac
 
 Rumale is a machine learning library in Ruby. Rumale provides machine learning algorithms with interfaces similar to Scikit-Learn in Python. Rumale supports Support Vector Machine, Logistic Regression, Ridge, Lasso, Multi-layer Perceptron, Naive Bayes, Decision Tree, Gradient Tree Boosting, Random Forest, K-Means, Gaussian Mixture Model, DBSCAN, Spectral Clustering, Mutidimensional Scaling, t-SNE, Fisher Discriminant Analysis, Neighbourhood Component Analysis, Principal Component Analysis, Non-negative Matrix Factorization, and many other algorithms.
 
-**Dependencies:** numo-narray-alt (~> 0.9.10), rumale-clustering (~> 2.0.2), rumale-core (~> 2.0.2), rumale-decomposition (~> 2.0.2), rumale-ensemble (~> 2.0.2), rumale-evaluation_measure (~> 2.0.2), rumale-feature_extraction (~> 2.0.2), rumale-kernel_approximation (~> 2.0.2), rumale-kernel_machine (~> 2.0.2), rumale-linear_model (~> 2.0.2), rumale-manifold (~> 2.0.2), rumale-metric_learning (~> 2.0.2), rumale-model_selection (~> 2.0.2), rumale-naive_bayes (~> 2.0.2), rumale-nearest_neighbors (~> 2.0.2), rumale-neural_network (~> 2.0.2), rumale-pipeline (~> 2.0.2), rumale-preprocessing (~> 2.0.2), rumale-tree (~> 2.0.2)
+**Dependencies:** numo-narray-alt (>= 0.9.10, < 0.11.0), rumale-clustering (~> 2.1.0), rumale-core (~> 2.1.0), rumale-decomposition (~> 2.1.0), rumale-ensemble (~> 2.1.0), rumale-evaluation_measure (~> 2.1.0), rumale-feature_extraction (~> 2.1.0), rumale-kernel_approximation (~> 2.1.0), rumale-kernel_machine (~> 2.1.0), rumale-linear_model (~> 2.1.0), rumale-manifold (~> 2.1.0), rumale-metric_learning (~> 2.1.0), rumale-model_selection (~> 2.1.0), rumale-naive_bayes (~> 2.1.0), rumale-nearest_neighbors (~> 2.1.0), rumale-neural_network (~> 2.1.0), rumale-pipeline (~> 2.1.0), rumale-preprocessing (~> 2.1.0), rumale-tree (~> 2.1.0)
 
 ## [rumale-clustering](https://github.com/yoshoku/rumale)
 
 | | |
 |---|---|
-| **Version** | 2.0.2 |
+| **Version** | 2.1.0 |
 | **Authors** | yoshoku |
 | **License** | BSD-3-Clause |
 
@@ -19034,13 +19031,13 @@ Rumale::Clustering provides cluster analysis algorithms with Rumale interface.
 
 Rumale::Clustering provides cluster analysis algorithms, such as K-Means, Gaussian Mixture Model, DBSCAN, and Spectral Clustering, with Rumale interface.
 
-**Dependencies:** numo-narray-alt (~> 0.9.10), rumale-core (~> 2.0.2)
+**Dependencies:** numo-narray-alt (>= 0.9.10, < 0.11.0), rumale-core (~> 2.1.0)
 
 ## [rumale-core](https://github.com/yoshoku/rumale)
 
 | | |
 |---|---|
-| **Version** | 2.0.2 |
+| **Version** | 2.1.0 |
 | **Authors** | yoshoku |
 | **License** | BSD-3-Clause |
 
@@ -19048,13 +19045,13 @@ Rumale::Core provides base classes and utility functions for implementing machin
 
 Rumale::Core provides base classes and utility functions for implementing machine learning algorithm with Rumale interface.
 
-**Dependencies:** csv (>= 3.1.9), numo-narray-alt (~> 0.9.10)
+**Dependencies:** csv (>= 3.1.9), numo-narray-alt (>= 0.9.10, < 0.11.0)
 
 ## [rumale-decomposition](https://github.com/yoshoku/rumale)
 
 | | |
 |---|---|
-| **Version** | 2.0.2 |
+| **Version** | 2.1.0 |
 | **Authors** | yoshoku |
 | **License** | BSD-3-Clause |
 
@@ -19062,13 +19059,13 @@ Rumale::Decomposition provides matrix decomposition algorithms with Rumale inter
 
 Rumale::Decomposition provides matrix decomposition algorithms, such as Principal Component Analysis, Non-negative Matrix Factorization, Factor Analysis, and Independent Component Analysis, with Rumale interface.
 
-**Dependencies:** numo-narray-alt (~> 0.9.10), rumale-core (~> 2.0.2)
+**Dependencies:** numo-narray-alt (>= 0.9.10, < 0.11.0), rumale-core (~> 2.1.0)
 
 ## [rumale-ensemble](https://github.com/yoshoku/rumale)
 
 | | |
 |---|---|
-| **Version** | 2.0.2 |
+| **Version** | 2.1.0 |
 | **Authors** | yoshoku |
 | **License** | BSD-3-Clause |
 
@@ -19076,13 +19073,13 @@ Rumale::Ensemble provides ensemble learning algorithms with Rumale interface.
 
 Rumale::Ensemble provides ensemble learning algorithms, such as AdaBoost, Gradient Tree Boosting, and Random Forest, with Rumale interface.
 
-**Dependencies:** numo-narray-alt (~> 0.9.10), rumale-core (~> 2.0.2), rumale-linear_model (~> 2.0.2), rumale-model_selection (~> 2.0.2), rumale-preprocessing (~> 2.0.2), rumale-tree (~> 2.0.2)
+**Dependencies:** numo-narray-alt (>= 0.9.10, < 0.11.0), rumale-core (~> 2.1.0), rumale-linear_model (~> 2.1.0), rumale-model_selection (~> 2.1.0), rumale-preprocessing (~> 2.1.0), rumale-tree (~> 2.1.0)
 
 ## [rumale-evaluation_measure](https://github.com/yoshoku/rumale)
 
 | | |
 |---|---|
-| **Version** | 2.0.2 |
+| **Version** | 2.1.0 |
 | **Authors** | yoshoku |
 | **License** | BSD-3-Clause |
 
@@ -19090,13 +19087,13 @@ Rumale::EvaluationMeasure provides evaluation measures with Rumale interface.
 
 Rumale::EvaluationMeasure provides evaluation measures, such as accuracy, precision, recall, and f-score, with Rumale interface.
 
-**Dependencies:** numo-narray-alt (~> 0.9.10), rumale-core (~> 2.0.2)
+**Dependencies:** numo-narray-alt (>= 0.9.10, < 0.11.0), rumale-core (~> 2.1.0)
 
 ## [rumale-feature_extraction](https://github.com/yoshoku/rumale)
 
 | | |
 |---|---|
-| **Version** | 2.0.2 |
+| **Version** | 2.1.0 |
 | **Authors** | yoshoku |
 | **License** | BSD-3-Clause |
 
@@ -19104,13 +19101,13 @@ Rumale::FeatureExtraction provides feature extraction methods with Rumale interf
 
 Rumale::FeatureExtraction provides feature extraction methods, such as TF-IDF and feature hashing, with Rumale interface.
 
-**Dependencies:** mmh3 (~> 1.0), numo-narray-alt (~> 0.9.10), rumale-core (~> 2.0.2)
+**Dependencies:** mmh3 (~> 1.0), numo-narray-alt (>= 0.9.10, < 0.11.0), rumale-core (~> 2.1.0)
 
 ## [rumale-kernel_approximation](https://github.com/yoshoku/rumale)
 
 | | |
 |---|---|
-| **Version** | 2.0.2 |
+| **Version** | 2.1.0 |
 | **Authors** | yoshoku |
 | **License** | BSD-3-Clause |
 
@@ -19118,13 +19115,13 @@ Rumale::KernelApproximation provides kernel approximation algorithms with Rumale
 
 Rumale::KernelApproximation provides kernel approximation algorithms, such as RBF feature mapping and Nystroem method, with Rumale interface.
 
-**Dependencies:** numo-narray-alt (~> 0.9.10), rumale-core (~> 2.0.2)
+**Dependencies:** numo-narray-alt (>= 0.9.10, < 0.11.0), rumale-core (~> 2.1.0)
 
 ## [rumale-kernel_machine](https://github.com/yoshoku/rumale)
 
 | | |
 |---|---|
-| **Version** | 2.0.2 |
+| **Version** | 2.1.0 |
 | **Authors** | yoshoku |
 | **License** | BSD-3-Clause |
 
@@ -19132,13 +19129,13 @@ Rumale::KernelMachine provides kernel method-based algorithms with Rumale interf
 
 Rumale::KernelMachine provides kernel method-based algorithms, such as Kernel Support Vector Machine, Kernel Principal Componenet Analysis, and Kernel Ridge Regression, with Rumale interface.
 
-**Dependencies:** numo-narray-alt (~> 0.9.10), rumale-core (~> 2.0.2)
+**Dependencies:** numo-narray-alt (>= 0.9.10, < 0.11.0), rumale-core (~> 2.1.0)
 
 ## [rumale-linear_model](https://github.com/yoshoku/rumale)
 
 | | |
 |---|---|
-| **Version** | 2.0.2 |
+| **Version** | 2.1.0 |
 | **Authors** | yoshoku |
 | **License** | BSD-3-Clause |
 
@@ -19146,13 +19143,13 @@ Rumale::LinearModel provides linear model algorithms with Rumale interface.
 
 Rumale::LinearModel provides linear model algorithms, such as Logistic Regression, Support Vector Machine, Lasso, and Ridge Regression with Rumale interface.
 
-**Dependencies:** numo-narray-alt (~> 0.9.10), numo-optimize (~> 0.2.2), rumale-core (~> 2.0.2)
+**Dependencies:** numo-narray-alt (>= 0.9.10, < 0.11.0), numo-optimize (>= 0.2.2, < 1.0.0), rumale-core (~> 2.1.0)
 
 ## [rumale-manifold](https://github.com/yoshoku/rumale)
 
 | | |
 |---|---|
-| **Version** | 2.0.2 |
+| **Version** | 2.1.0 |
 | **Authors** | yoshoku |
 | **License** | BSD-3-Clause |
 
@@ -19160,13 +19157,13 @@ Rumale::Manifold provides data embedding algorithms with Rumale interface.
 
 Rumale::Manifold provides data embedding algorithms, such as Multi-dimensional Scaling, Locally Linear Embedding, Laplacian Eigenmaps, Hessian Eigenmaps, and t-distributed Stochastic Neighbor Embedding, with Rumale interface.
 
-**Dependencies:** numo-narray-alt (~> 0.9.10), rumale-core (~> 2.0.2), rumale-decomposition (~> 2.0.2)
+**Dependencies:** numo-narray-alt (>= 0.9.10, < 0.11.0), rumale-core (~> 2.1.0), rumale-decomposition (~> 2.1.0)
 
 ## [rumale-metric_learning](https://github.com/yoshoku/rumale)
 
 | | |
 |---|---|
-| **Version** | 2.0.2 |
+| **Version** | 2.1.0 |
 | **Authors** | yoshoku |
 | **License** | BSD-3-Clause |
 
@@ -19174,13 +19171,13 @@ Rumale::MetricLearning provides metric learning algorithms with Rumale interface
 
 Rumale::MetricLearning provides metric learning algorithms, such as Fisher Discriminant Analysis and Neighboourhood Component Analysis with Rumale interface.
 
-**Dependencies:** numo-narray-alt (~> 0.9.10), numo-optimize (~> 0.2.2), rumale-core (~> 2.0.2), rumale-decomposition (~> 2.0.2)
+**Dependencies:** numo-narray-alt (>= 0.9.10, < 0.11.0), numo-optimize (>= 0.2.2, < 1.0.0), rumale-core (~> 2.1.0), rumale-decomposition (~> 2.1.0)
 
 ## [rumale-model_selection](https://github.com/yoshoku/rumale)
 
 | | |
 |---|---|
-| **Version** | 2.0.2 |
+| **Version** | 2.1.0 |
 | **Authors** | yoshoku |
 | **License** | BSD-3-Clause |
 
@@ -19188,13 +19185,13 @@ Rumale::ModelSelection provides model validation techniques with Rumale interfac
 
 Rumale::ModelSelection provides model validation techniques, such as k-fold cross-validation, time series cross-validation, and grid search, with Rumale interface.
 
-**Dependencies:** numo-narray-alt (~> 0.9.10), rumale-core (~> 2.0.2), rumale-evaluation_measure (~> 2.0.2), rumale-preprocessing (~> 2.0.2)
+**Dependencies:** numo-narray-alt (>= 0.9.10, < 0.11.0), rumale-core (~> 2.1.0), rumale-evaluation_measure (~> 2.1.0), rumale-preprocessing (~> 2.1.0)
 
 ## [rumale-naive_bayes](https://github.com/yoshoku/rumale)
 
 | | |
 |---|---|
-| **Version** | 2.0.2 |
+| **Version** | 2.1.0 |
 | **Authors** | yoshoku |
 | **License** | BSD-3-Clause |
 
@@ -19202,25 +19199,25 @@ Rumale::NaiveBayes provides naive bayes models with Rumale interface.
 
 Rumale::NaiveBayes provides naive bayes models, such as Gaussian Naive Bayes, Multinomial Naive Bayes, and Bernoulli Naive Bayes, with Rumale interface.
 
-**Dependencies:** numo-narray-alt (~> 0.9.10), rumale-core (~> 2.0.2)
+**Dependencies:** numo-narray-alt (>= 0.9.10, < 0.11.0), rumale-core (~> 2.1.0)
 
 ## [rumale-nearest_neighbors](https://github.com/yoshoku/rumale)
 
 | | |
 |---|---|
-| **Version** | 2.0.2 |
+| **Version** | 2.1.0 |
 | **Authors** | yoshoku |
 | **License** | BSD-3-Clause |
 
 Rumale::NearestNeighbors provides classifier and regression based on nearest neighbors rule with Rumale interface.
 
-**Dependencies:** numo-narray-alt (~> 0.9.10), rumale-core (~> 2.0.2)
+**Dependencies:** numo-narray-alt (>= 0.9.10, < 0.11.0), rumale-core (~> 2.1.0)
 
 ## [rumale-neural_network](https://github.com/yoshoku/rumale)
 
 | | |
 |---|---|
-| **Version** | 2.0.2 |
+| **Version** | 2.1.0 |
 | **Authors** | yoshoku |
 | **License** | BSD-3-Clause |
 
@@ -19228,25 +19225,25 @@ Rumale::NeuralNetwork provides classifiers and regression algorithms based on mu
 
 Rumale::NeuralNetwork provides classifiers and regression algorithms based on multi-layer perceptron, radial basis function network, and random vector functional link network in the Rumale interface.
 
-**Dependencies:** numo-narray-alt (~> 0.9.10), rumale-core (~> 2.0.2)
+**Dependencies:** numo-narray-alt (>= 0.9.10, < 0.11.0), rumale-core (~> 2.1.0)
 
 ## [rumale-pipeline](https://github.com/yoshoku/rumale)
 
 | | |
 |---|---|
-| **Version** | 2.0.2 |
+| **Version** | 2.1.0 |
 | **Authors** | yoshoku |
 | **License** | BSD-3-Clause |
 
 Rumale::Pipeline provides classes for chaining transformers and estimators with Rumale interface.
 
-**Dependencies:** numo-narray-alt (~> 0.9.10), rumale-core (~> 2.0.2)
+**Dependencies:** numo-narray-alt (>= 0.9.10, < 0.11.0), rumale-core (~> 2.1.0)
 
 ## [rumale-preprocessing](https://github.com/yoshoku/rumale)
 
 | | |
 |---|---|
-| **Version** | 2.0.2 |
+| **Version** | 2.1.0 |
 | **Authors** | yoshoku |
 | **License** | BSD-3-Clause |
 
@@ -19254,32 +19251,32 @@ Rumale::Preprocessing provides preprocessing techniques with Rumale interface.
 
 Rumale::Preprocessing provides preprocessing techniques, such as L2 normalization, standard scaling, and one-hot encoding, with Rumale interface.
 
-**Dependencies:** numo-narray-alt (~> 0.9.10), rumale-core (~> 2.0.2)
+**Dependencies:** numo-narray-alt (>= 0.9.10, < 0.11.0), rumale-core (~> 2.1.0)
 
 ## [rumale-tree](https://github.com/yoshoku/rumale)
 
 | | |
 |---|---|
-| **Version** | 2.0.2 |
+| **Version** | 2.1.0 |
 | **Authors** | yoshoku |
 | **License** | BSD-3-Clause |
 
 Rumale::Tree provides classifier and regression based on decision tree algorithms with Rumale interface.
 
-**Dependencies:** numo-narray-alt (~> 0.9.10), rumale-core (~> 2.0.2)
+**Dependencies:** numo-narray-alt (>= 0.9.10, < 0.11.0), rumale-core (~> 2.1.0)
 
 ## [runcom](https://alchemists.io/projects/runcom)
 
 | | |
 |---|---|
-| **Version** | 12.5.0 |
+| **Version** | 13.1.0 |
 | **Authors** | Brooke Kuhlmann |
 | **License** | Hippocratic-2.1 |
-| **Ruby** | >= 3.4 |
+| **Ruby** | >= 4.0 |
 
 A XDG enhanced run command manager for command line interfaces.
 
-**Dependencies:** refinements (~> 13.6), xdg (~> 9.5), zeitwerk (~> 2.7)
+**Dependencies:** refinements (~> 14.0), xdg (~> 10.0), zeitwerk (~> 2.7)
 
 ## [rupkl](https://github.com/taichi-ishitani/rupkl)
 
@@ -19616,7 +19613,7 @@ Feature rich logging framework, and replacement for existing Ruby & Rails logger
 
 | | |
 |---|---|
-| **Version** | 0.27.0 |
+| **Version** | 0.27.1 |
 | **Authors** | Scott Francis, Simon Eskildsen, Dale Hamel |
 | **License** | MIT |
 | **Ruby** | >= 3.2.0 |
@@ -20532,14 +20529,14 @@ Analyze HTTP Requests
 
 | | |
 |---|---|
-| **Version** | 1.5.0 |
+| **Version** | 2.1.0 |
 | **Authors** | Brooke Kuhlmann |
 | **License** | Hippocratic-2.1 |
-| **Ruby** | >= 3.4 |
+| **Ruby** | >= 4.0 |
 
 A domain specific language for creating composable command line interfaces.
 
-**Dependencies:** cogger (~> 1.0), containable (~> 1.1), infusible (~> 4.0), optparse (~> 0.8), refinements (~> 13.6), tone (~> 2.0), zeitwerk (~> 2.7)
+**Dependencies:** cogger (~> 2.0), containable (~> 2.0), infusible (~> 5.0), optparse (~> 0.8), refinements (~> 14.0), tone (~> 3.0), zeitwerk (~> 2.7)
 
 ## [solargraph](https://solargraph.org)
 
@@ -20641,7 +20638,7 @@ Adds T::Result to sorbet-runtime, which is a basic, strongly-typed monad
 
 | | |
 |---|---|
-| **Version** | 0.6.12925 |
+| **Version** | 0.6.12929 |
 | **Authors** | Stripe |
 | **License** | Apache-2.0 |
 | **Ruby** | >= 3.0.0 |
@@ -20722,14 +20719,14 @@ Implements a variant of Set whose elements are sorted in ascending order
 
 | | |
 |---|---|
-| **Version** | 4.6.0 |
+| **Version** | 5.1.0 |
 | **Authors** | Brooke Kuhlmann |
 | **License** | Hippocratic-2.1 |
-| **Ruby** | >= 3.4 |
+| **Ruby** | >= 4.0 |
 
 An enhanced gem specification wrapper.
 
-**Dependencies:** core (~> 2.5), dry-monads (~> 1.9), refinements (~> 13.6), versionaire (~> 14.0), zeitwerk (~> 2.7)
+**Dependencies:** core (~> 3.0), dry-monads (~> 1.9), refinements (~> 14.0), versionaire (~> 15.0), zeitwerk (~> 2.7)
 
 ## [spoon](https://rubygems.org/gems/spoon)
 
@@ -21771,13 +21768,13 @@ A tiny gem to accomplish a simple task: Determining the terminal size.  == Usage
 
 | | |
 |---|---|
-| **Version** | 1.8.0 |
+| **Version** | 4.0.0 |
 | **Authors** | TJ Holowaychuk, Scott J. Goldman |
 | **License** | MIT |
 
 Simple, feature rich ascii table generation library
 
-**Dependencies:** unicode-display_width (~> 1.1, >= 1.1.1)
+**Dependencies:** unicode-display_width (>= 1.1.1, < 4)
 
 ## [terminalwire](https://terminalwire.com/ruby)
 
@@ -22182,14 +22179,14 @@ A simple gem that provides a Rails command or Rake tasks to export .rb, .erb, .j
 
 | | |
 |---|---|
-| **Version** | 19.5.0 |
+| **Version** | 20.1.0 |
 | **Authors** | Brooke Kuhlmann |
 | **License** | Hippocratic-2.1 |
-| **Ruby** | >= 3.4 |
+| **Ruby** | >= 4.0 |
 
 A command line interface for generating Markdown table of contents.
 
-**Dependencies:** cogger (~> 1.0), containable (~> 1.1), core (~> 2.5), dry-schema (~> 1.13), etcher (~> 3.0), infusible (~> 4.0), refinements (~> 13.6), runcom (~> 12.0), sod (~> 1.5), spek (~> 4.0), zeitwerk (~> 2.7)
+**Dependencies:** cogger (~> 2.0), containable (~> 2.0), core (~> 3.0), dry-schema (~> 1.15), etcher (~> 4.0), infusible (~> 5.0), refinements (~> 14.0), runcom (~> 13.0), sod (~> 2.0), spek (~> 5.0), zeitwerk (~> 2.7)
 
 ## [tokenizers](https://github.com/ankane/tokenizers-ruby)
 
@@ -22246,14 +22243,14 @@ A racc based toml parser
 
 | | |
 |---|---|
-| **Version** | 2.6.0 |
+| **Version** | 3.1.0 |
 | **Authors** | Brooke Kuhlmann |
 | **License** | Hippocratic-2.1 |
-| **Ruby** | >= 3.4 |
+| **Ruby** | >= 4.0 |
 
 A customizable ANSI text terminal colorizer.
 
-**Dependencies:** refinements (~> 13.6), zeitwerk (~> 2.7)
+**Dependencies:** refinements (~> 14.0), zeitwerk (~> 2.7)
 
 ## [tool_forge](https://github.com/afstanton/tool_forge)
 
@@ -22938,15 +22935,16 @@ TypeProf performs a type analysis of non-annotated Ruby code.  It abstractly exe
 
 | | |
 |---|---|
-| **Version** | 1.4.1 |
+| **Version** | 1.5.0 |
 | **Authors** | David Balatero, Paul Dix, Hans Hasselberg |
 | **License** | MIT |
+| **Ruby** | >= 2.6 |
 
 Parallel HTTP library on top of libcurl multi.
 
 Like a modern code version of the mythical beast with 100 serpent heads, Typhoeus runs HTTP requests in parallel while cleanly encapsulating handling logic.
 
-**Dependencies:** ethon (>= 0.9.0)
+**Dependencies:** ethon (>= 0.9.0, < 0.16.0)
 
 ## [tzinfo](http://tzinfo.github.io)
 
@@ -23348,14 +23346,14 @@ Text transformations such as truncation, wrapping, aligning, indentation and gro
 
 | | |
 |---|---|
-| **Version** | 14.5.0 |
+| **Version** | 15.1.0 |
 | **Authors** | Brooke Kuhlmann |
 | **License** | Hippocratic-2.1 |
-| **Ruby** | >= 3.4 |
+| **Ruby** | >= 4.0 |
 
 An immutable, thread-safe, and strict semantic version type.
 
-**Dependencies:** refinements (~> 13.6)
+**Dependencies:** refinements (~> 14.0)
 
 ## [vessel](https://github.com/route/vessel)
 
@@ -23986,10 +23984,10 @@ A Ruby interface to the X API.
 
 | | |
 |---|---|
-| **Version** | 9.5.0 |
+| **Version** | 10.1.0 |
 | **Authors** | Brooke Kuhlmann |
 | **License** | Hippocratic-2.1 |
-| **Ruby** | >= 3.4 |
+| **Ruby** | >= 4.0 |
 
 A XDG Base Directory Specification implementation.
 

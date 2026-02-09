@@ -588,7 +588,6 @@ gio2
 git
 git-lint
 github-markup
-github-pages
 github-pages-health-check
 github_api
 gitingest
@@ -755,6 +754,8 @@ isolator
 ivar
 jaro_winkler
 jbuilder
+jekyll-seo-tag
+jekyll-watch
 jemoji
 jira-ruby
 jirasync
@@ -899,7 +900,6 @@ mini_mime
 mini_portile2
 mini_sql
 miniapm
-minima
 minitar
 minitest
 minitest-difftastic
