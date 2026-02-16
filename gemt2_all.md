@@ -1,4 +1,4 @@
-# Installed Gems for Ruby 4.0.1 (1847)
+# Installed Gems for Ruby 4.0.1 (1873)
 
 ## [Ascii85](https://github.com/DataWraith/ascii85gem/)
 
@@ -102,6 +102,17 @@ AASM is a continuation of the acts-as-state-machine rails plugin, built for plai
 | **Ruby** | >= 2.3.0 |
 
 Calculates a set of unique abbreviations for a given set of strings
+
+## [abyss](https://rubygems.org/gems/abyss)
+
+| | |
+|---|---|
+| **Version** | 0.4.0 |
+| **Authors** | Jesse Trimble |
+
+Manage arbitrarily-deep configurations through a friendly DSL.
+
+**Dependencies:** activesupport (~> 3.2.0)
 
 ## [action_policy](https://github.com/palkan/action_policy)
 
@@ -763,6 +774,21 @@ Addressable is an alternative implementation to the URI implementation that is p
 
 **Dependencies:** public_suffix (>= 2.0.2, < 8.0)
 
+## [admin_suite](https://github.com/techwright-lab/admin_suite)
+
+| | |
+|---|---|
+| **Version** | 0.2.3 |
+| **Authors** | TechWright Labs |
+| **License** | MIT |
+| **Ruby** | >= 3.2 |
+
+Reusable admin suite engine
+
+A Rails engine providing a declarative resource DSL and a Hotwire/Tailwind admin UI.
+
+**Dependencies:** rails (>= 8.0, < 9.0), pagy (>= 6.0, < 11.0), lucide-rails (~> 0.7), redcarpet (~> 3.6), rouge (~> 4.7), tailwindcss-ruby (~> 4.1)
+
 ## [administrate](https://administrate-demo.herokuapp.com/)
 
 | | |
@@ -842,6 +868,79 @@ An intelligent agent framework for Ruby
 
 **Dependencies:** bunny (>= 0), nats-pure (>= 0), simple_json_schema_builder (>= 0), sinatra (>= 0)
 
+## [agent_c](https://github.com/petekinnecom/agent_c)
+
+| | |
+|---|---|
+| **Version** | 2.718281 |
+| **Authors** | Pete Kinnecom |
+| **License** | WTFPL |
+| **Ruby** | >= 3.0.0 |
+
+Batch processing for pipelines of steps for AI. AgentC, get it?
+
+**Dependencies:** zeitwerk (~> 2.7), activerecord (~> 8.1), sqlite3 (~> 2.9), async (~> 2.35), ruby_llm (~> 1.9), json-schema (~> 6.1)
+
+## [agent_ferrum](https://github.com/Alqemist-labs/agent_ferrum)
+
+| | |
+|---|---|
+| **Version** | 0.2.1 |
+| **Authors** | Florian |
+| **License** | MIT |
+| **Ruby** | >= 3.4.0 |
+
+Browser automation library optimized for AI agents
+
+Wraps Ferrum (Chrome headless via CDP) with AI-optimized content extraction: accessibility tree with refs, compact markdown snapshots, and stealth mode.
+
+**Dependencies:** ferrum (~> 0.17), nokogiri (~> 1.16), reverse_markdown (~> 3.0), zeitwerk (~> 2.7)
+
+## [agent_skill_parser](https://github.com/lucianghinda/agent_skill_parser)
+
+| | |
+|---|---|
+| **Version** | 0.2.2 |
+| **Authors** | Lucian Ghinda |
+| **License** | MIT |
+| **Ruby** | >= 3.4.0 |
+
+Parse agent skill files with YAML frontmatter and markdown body for agent/AI systems
+
+A Ruby gem for parsing skill files that use YAML frontmatter and markdown body content. Provides document splitting, YAML parsing, schema validation, and returns immutable Skill objects. Designed for agent/AI systems where skills are defined as structured markdown documents with metadata.
+
+**Dependencies:** zeitwerk (~> 2.6)
+
+## [agent_skills](https://github.com/rubyonai/agent_skills)
+
+| | |
+|---|---|
+| **Version** | 0.1.0 |
+| **Authors** | rubyonai |
+| **License** | MIT |
+| **Ruby** | >= 3.0.0 |
+
+Ruby implementation of the Agent Skills open standard
+
+Parse, validate, create, package, and load Agent Skills in Ruby. Agent Skills is an open format (by Anthropic) for giving AI agents new capabilities through structured instructions, scripts, and resources.
+
+**Dependencies:** rubyzip (~> 2.3), thor (~> 1.3)
+
+## [agent_skills_configurations](https://github.com/lucianghinda/agent_skills_configurations)
+
+| | |
+|---|---|
+| **Version** | 0.1.0 |
+| **Authors** | Lucian Ghinda |
+| **License** | MIT |
+| **Ruby** | >= 3.4.0 |
+
+Unified interface for discovering AI coding agent skill paths
+
+A Ruby library that provides a unified interface for discovering and accessing skill configuration paths for 49+ AI coding agents including Cursor, Claude Code, Codex, Windsurf, and more. Handles platform-specific path resolution, environment variable support, and automatic detection of installed agents.
+
+**Dependencies:** zeitwerk (~> 2.6)
+
 ## [agentic](https://github.com/codenamev/agentic)
 
 | | |
@@ -856,6 +955,21 @@ An AI Agent builder and orchestrator
 Easily build, manage, deploy, and run self-contained purpose-driven AI Agents.
 
 **Dependencies:** dry-schema (>= 0), ruby-openai (>= 0), zeitwerk (>= 0), async (~> 2.0), thor (~> 1.2), tty-spinner (~> 0.9), tty-progressbar (~> 0.18), tty-box (~> 0.7), tty-table (~> 0.12), tty-cursor (~> 0.7), pastel (~> 0.8), ostruct (>= 0)
+
+## [agents_skill_vault](https://github.com/lucianghinda/agents_skill_vault)
+
+| | |
+|---|---|
+| **Version** | 0.3.0 |
+| **Authors** | Lucian Ghinda |
+| **License** | Apache-2.0 |
+| **Ruby** | >= 3.4.0 |
+
+A Ruby gem for managing AI agent skills from GitHub repositories.
+
+AgentsSkillVault provides a simple interface to clone, sync, and manage AI agent skills stored in GitHub repositories, supporting full repos, folders, and individual files.
+
+**Dependencies:** addressable (~> 2.8), zeitwerk (~> 2.6)
 
 ## [agile_rails](https://agile-rails.com)
 
@@ -902,7 +1016,7 @@ Simple, powerful, first-party analytics for Rails
 
 | | |
 |---|---|
-| **Version** | 0.8.0 |
+| **Version** | 0.9.0 |
 | **Authors** | Shivam Mishra |
 | **Ruby** | >= 3.2.0 |
 
@@ -974,7 +1088,7 @@ AI Screen Analyzer é uma gem Rails que adiciona um botão flutuante em qualquer
 
 | | |
 |---|---|
-| **Version** | 1.0.0.pre.alpha |
+| **Version** | 1.0.0.pre.beta |
 | **Authors** | Dewayne VanHoozer |
 | **License** | MIT |
 | **Ruby** | >= 3.2.0 |
@@ -983,7 +1097,7 @@ Multi-model AI CLI with dynamic prompts, consensus responses, shell & Ruby integ
 
 AIA is a revolutionary CLI console application that brings multi-model AI capabilities to your command line, supporting 20+ providers including OpenAI, Anthropic, and Google. Run multiple AI models simultaneously for comparison, get consensus responses from collaborative AI teams, or compare individual outputs side-by-side. With dynamic prompt management, embedded directives, shell and Ruby integration, interactive chats, and comprehensive history tracking, AIA transforms how you interact with AI. Perfect for developers and AI enthusiasts who want to harness the collective intelligence of multiple AI models from a single, powerful interface.
 
-**Dependencies:** amazing_print (>= 0), async (>= 0), clipboard (>= 0), faraday (>= 0), lumberjack (>= 0), myway_config (>= 0), prompt_manager (~> 1.0.1), reline (>= 0), ruby_llm (>= 0), ruby_llm-mcp (>= 0), shellwords (>= 0), simple_flow (>= 0), tty-screen (>= 0), tty-spinner (>= 0), word_wrapper (>= 0)
+**Dependencies:** amazing_print (>= 0), async (>= 0), clipboard (>= 0), faraday (>= 0), lumberjack (>= 0), myway_config (>= 0), prompt_manager (~> 1.0.2), reline (>= 0), ruby_llm (>= 0), ruby_llm-mcp (>= 0), shellwords (>= 0), simple_flow (>= 0), tty-screen (>= 0), tty-spinner (>= 0), word_wrapper (>= 0)
 
 ## [aicommit](https://github.com/jackal998/aicommit)
 
@@ -1129,7 +1243,7 @@ Devise based user authentication for AlchemyCMS.
 
 | | |
 |---|---|
-| **Version** | 8.1.0 |
+| **Version** | 8.1.2 |
 | **Authors** | Thomas von Deyen, Robin Boening, Marc Schettke, Hendrik Mans, Carsten Fregin, Martin Meyerhoff |
 | **License** | BSD-3-Clause |
 | **Ruby** | >= 3.1.0 |
@@ -1278,7 +1392,7 @@ Annotates Rails/ActiveRecord Models, routes, fixtures, and others based on the d
 
 | | |
 |---|---|
-| **Version** | 4.21.0 |
+| **Version** | 4.22.0 |
 | **Authors** | Andrew W. Lee |
 | **License** | BSD-2-Clause |
 | **Ruby** | >= 3.0.0 |
@@ -1601,7 +1715,7 @@ An asynchronous adapter for ActionCable.
 
 | | |
 |---|---|
-| **Version** | 0.30.0 |
+| **Version** | 0.32.0 |
 | **Authors** | Samuel Williams, Olle Jonsson, Anton Sozontov, Juan Antonio Martín Lucas, Marc-André Cournoyer, Yuji Yaginuma |
 | **License** | MIT |
 | **Ruby** | >= 3.2 |
@@ -1744,7 +1858,7 @@ A Redis client library.
 
 | | |
 |---|---|
-| **Version** | 0.18.1 |
+| **Version** | 0.19.1 |
 | **Authors** | Samuel Williams |
 | **License** | MIT |
 | **Ruby** | >= 3.2 |
@@ -1962,7 +2076,7 @@ Amazon Web Services event stream library. Decodes and encodes binary stream unde
 
 | | |
 |---|---|
-| **Version** | 1.1213.0 |
+| **Version** | 1.1214.0 |
 | **Authors** | Amazon Web Services |
 | **License** | Apache-2.0 |
 | **Ruby** | >= 2.7 |
@@ -2046,7 +2160,7 @@ Provides an async-http based send handler for aws-sdk-core.
 
 | | |
 |---|---|
-| **Version** | 1.121.0 |
+| **Version** | 1.122.0 |
 | **Authors** | Amazon Web Services |
 | **License** | Apache-2.0 |
 | **Ruby** | >= 2.7 |
@@ -2467,10 +2581,10 @@ Bond is on a mission to improve autocompletion in ruby, especially for irb/ripl.
 
 | | |
 |---|---|
-| **Version** | 1.22.0 |
+| **Version** | 1.23.0 |
 | **Authors** | Burke Libbey |
 | **License** | MIT |
-| **Ruby** | >= 2.6.0 |
+| **Ruby** | >= 2.7.0 |
 
 Boot large ruby/rails apps faster
 
@@ -2668,14 +2782,14 @@ Do some browser detection with Ruby.
 
 | | |
 |---|---|
-| **Version** | 0.18.2 |
+| **Version** | 0.19.2 |
 | **Authors** | David Bryant Copeland |
 
 Web Framework Built around Ruby, Web Standards, Simplicity, and Object-Orientation
 
 An opinionated web framework build on web standards
 
-**Dependencies:** irb (>= 0), ostruct (>= 0), concurrent-ruby (>= 0), i18n (>= 0), nokogiri (>= 0), phlex (>= 0), prism (>= 0), rack-protection (>= 0), rackup (>= 0), semantic_logger (>= 0), sequel (>= 0), sinatra (>= 0), tzinfo (>= 0), tzinfo-data (>= 0), zeitwerk (>= 0), opentelemetry-sdk (>= 0), opentelemetry-exporter-otlp (>= 0), unicode-display_width (>= 0)
+**Dependencies:** irb (>= 0), ostruct (>= 0), concurrent-ruby (>= 0), i18n (>= 0), lipgloss (>= 0), nokogiri (>= 0), phlex (>= 0), prism (>= 0), rack-protection (>= 0), rackup (>= 0), semantic_logger (>= 0), sequel (>= 0), sinatra (>= 0), tzinfo (>= 0), tzinfo-data (>= 0), zeitwerk (>= 0), opentelemetry-sdk (>= 0), opentelemetry-exporter-otlp (>= 0), unicode-display_width (>= 0)
 
 ## [bson](https://www.mongodb.com/docs/ruby-driver/current/tutorials/bson-v4/)
 
@@ -3405,6 +3519,21 @@ A general classifier module to allow Bayesian and other types of classifications
 
 **Dependencies:** fast-stemmer (~> 1.0), matrix (~> 0.4)
 
+## [claude-agent-sdk](https://github.com/ya-luotao/claude-agent-sdk-ruby)
+
+| | |
+|---|---|
+| **Version** | 0.6.2 |
+| **Authors** | Community Contributors |
+| **License** | MIT |
+| **Ruby** | >= 3.2.0 |
+
+Unofficial Ruby SDK for Claude Agent
+
+Unofficial Ruby SDK for interacting with Claude Code, supporting bidirectional conversations, custom tools, and hooks. Not officially maintained by Anthropic.
+
+**Dependencies:** async (~> 2.0), mcp (~> 0.4)
+
 ## [claude-code-sdk-ruby](https://github.com/parruda/claude-code-sdk-ruby)
 
 | | |
@@ -4004,7 +4133,7 @@ Generic connection pool for Ruby
 
 | | |
 |---|---|
-| **Version** | 1.34.2 |
+| **Version** | 1.34.3 |
 | **Authors** | Samuel Williams, Robert Schulze, Bryan Powell, Michael Adams, Patrik Wenger, Anton Sozontov, Cyril Roelandt, Cédric Boutillier, Felix Yan, Olle Jonsson, Shigeru Nakajima, William T. Nelson, Yasha Krasnou |
 | **License** | MIT |
 | **Ruby** | >= 3.2 |
@@ -5536,10 +5665,10 @@ Provides DSPy::TypeSystem::SorbetJsonSchema without requiring the full DSPy stac
 
 | | |
 |---|---|
-| **Version** | 0.20.2 |
+| **Version** | 0.21.0 |
 | **Authors** | Tyler Ewing |
 | **License** | LGPL-3.0-or-later |
-| **Ruby** | >= 3.2.0 |
+| **Ruby** | >= 3.3.0 |
 
 A Ruby pipeline framework
 
@@ -5589,7 +5718,7 @@ Generate json-schema from plain Ruby classes.
 
 | | |
 |---|---|
-| **Version** | 1.1.2 |
+| **Version** | 1.1.3 |
 | **Authors** | a-chacon |
 | **License** | MIT |
 | **Ruby** | >= 3.2 |
@@ -5796,7 +5925,7 @@ Provide equality comparison methods for objects based on their attributes by gen
 
 | | |
 |---|---|
-| **Version** | 5.1.3 |
+| **Version** | 6.0.1 |
 | **Authors** | Masatoshi SEKI, Takashi Kokubun |
 | **License** | Ruby, BSD-2-Clause |
 | **Ruby** | >= 3.2.0 |
@@ -6050,7 +6179,7 @@ Add evolutionary behavior to any Ruby object
 
 | | |
 |---|---|
-| **Version** | 0.7.1 |
+| **Version** | 0.8.0 |
 | **Authors** | Benjamin Jackson |
 | **License** | MIT |
 | **Ruby** | >= 3.0.0 |
@@ -6059,7 +6188,7 @@ Ruby client for the Exa.ai API
 
 A Ruby gem for interacting with the Exa.ai search and discovery API
 
-**Dependencies:** faraday (~> 2.0), ld-eventsource (~> 2.0), toon-ruby (~> 0.1)
+**Dependencies:** faraday (~> 2.0), toon-ruby (~> 0.1), dotenv (~> 3.0)
 
 ## [excon](https://github.com/excon/excon)
 
@@ -6231,7 +6360,7 @@ factory_bot_rails provides integration between factory_bot and Rails 6.1 or newe
 
 | | |
 |---|---|
-| **Version** | 0.5.2 |
+| **Version** | 0.5.3 |
 | **Authors** | Andrew Kane |
 | **License** | MIT |
 | **Ruby** | >= 3.2 |
@@ -6285,14 +6414,14 @@ Ruby worker for Faktory.
 
 | | |
 |---|---|
-| **Version** | 0.54.1 |
+| **Version** | 0.54.2 |
 | **Authors** | Samuel Williams, dependabot[bot], Janko Marohnić, Bryan Powell, Trevor Turk, Claudiu Garba, Kyle Tam, Mitsutaka Mimura, Peter Schrammel, Sho Ito, Adam Daniels, Colby Swandale, Daniel Evans, Ismael Celis, Jared Smith, Kent Gruber, Martin Hrdlicka, Michael Adams, Mikel Kew, Nick Janetakis, Olle Jonsson, Pierre Montelle, Santiago Bartesaghi, Sh Lin, Stefan Buhrmester, Tad Thorley, Tasos Latsas, Yoji Shidara |
 | **License** | MIT |
 | **Ruby** | >= 3.2 |
 
 A fast, asynchronous, rack-compatible web server.
 
-**Dependencies:** async (>= 0), async-container (~> 0.20), async-container-supervisor (~> 0.6), async-http (~> 0.75), async-http-cache (~> 0.4), async-service (~> 0.16), bundler (>= 0), localhost (~> 1.1), openssl (>= 3.0), protocol-http (~> 0.31), protocol-rack (~> 0.7), samovar (~> 2.3)
+**Dependencies:** async (>= 0), async-container (~> 0.20), async-container-supervisor (~> 0.6), async-http (~> 0.75), async-http-cache (~> 0.4), async-service (~> 0.19), bundler (>= 0), localhost (~> 1.1), openssl (>= 3.0), protocol-http (~> 0.31), protocol-rack (~> 0.7), samovar (~> 2.3)
 
 ## [falcon-rails](https://github.com/socketry/falcon-rails)
 
@@ -7767,6 +7896,36 @@ Ruby/GIO2 provide Ruby binding to a VFS API and useful APIs for desktop applicat
 
 **Dependencies:** fiddle (>= 0), gobject-introspection (= 4.3.5)
 
+## [girb](https://github.com/rira100000000/girb)
+
+| | |
+|---|---|
+| **Version** | 0.4.2 |
+| **Authors** | rira100000000 |
+| **License** | MIT |
+| **Ruby** | >= 3.2.0 |
+
+AI-powered IRB assistant
+
+Ask questions in IRB and get AI-powered answers based on your runtime context. Access local variables, exception info, and Rails model data while debugging. Requires an LLM provider gem (e.g., girb-ruby_llm) or custom provider implementation.
+
+**Dependencies:** irb (>= 1.6.0)
+
+## [girb-ruby_llm](https://github.com/rira100000000/girb-ruby_llm)
+
+| | |
+|---|---|
+| **Version** | 0.3.0 |
+| **Authors** | rira100000000 |
+| **License** | MIT |
+| **Ruby** | >= 3.2.0 |
+
+RubyLLM provider for girb
+
+RubyLLM provider for girb (AI-powered IRB assistant). Install this gem to use OpenAI, Anthropic, Gemini and other LLMs via RubyLLM as your LLM backend.
+
+**Dependencies:** girb (~> 0.1), ruby_llm (~> 1.0)
+
 ## [git](http://github.com/ruby-git/ruby-git)
 
 | | |
@@ -8316,6 +8475,21 @@ interface to gpt4all
 
 **Dependencies:** faraday (~> 2.7), os (~> 1.1), tty-progressbar (~> 0.18.2)
 
+## [graph-agent](https://github.com/ai-firstly/graph-agent)
+
+| | |
+|---|---|
+| **Version** | 0.1.0 |
+| **Authors** | GraphAgent Contributors |
+| **License** | MIT |
+| **Ruby** | >= 3.1.0, < 5.0 |
+
+A Ruby framework for building stateful, multi-actor agent workflows
+
+Ruby port of LangGraph - build stateful, multi-actor applications with LLMs using a graph-based workflow engine with Pregel execution model
+
+**Dependencies:** concurrent-ruby (~> 1.2)
+
 ## [graphiti](https://github.com/graphiti-api/graphiti)
 
 | | |
@@ -8746,6 +8920,15 @@ Guard::Sidekiq automatically starts/stops/restarts sidekiq worker
 
 **Dependencies:** guard (>= 2), sidekiq (>= 0)
 
+## [guess_html_encoding](http://github.com/cantino/guess_html_encoding)
+
+| | |
+|---|---|
+| **Version** | 0.0.11 |
+| **Authors** | Andrew Cantino (Iteration Labs, LLC) |
+
+A small gem that attempts to guess and then force encoding of HTML documents for Ruby 1.9
+
 ## [gum](https://github.com/marcoroth/gum-ruby)
 
 | | |
@@ -8986,7 +9169,7 @@ A Ruby client that wraps the OpenAI API through the Helicone AI Gateway, providi
 
 | | |
 |---|---|
-| **Version** | 0.8.9 |
+| **Version** | 0.8.10 |
 | **Authors** | Marco Roth |
 | **License** | MIT |
 | **Ruby** | >= 3.0, < 4.1.dev |
@@ -9075,7 +9258,7 @@ gives objects the ability to 'histogram' in several useful ways
 
 | | |
 |---|---|
-| **Version** | 0.9.1 |
+| **Version** | 0.9.2 |
 | **Authors** | yoshoku |
 | **License** | Apache-2.0 |
 
@@ -9996,7 +10179,7 @@ Ivar is a Ruby gem that automatically checks for typos in instance variables.
 
 | | |
 |---|---|
-| **Version** | 1.6.1 |
+| **Version** | 1.7.0 |
 | **Authors** | Jian Weihang |
 | **License** | MIT |
 
@@ -10747,7 +10930,7 @@ LaunchDarkly SSE client for Ruby
 
 | | |
 |---|---|
-| **Version** | 2.1.0 |
+| **Version** | 2.1.1 |
 | **Authors** | A.A.Abroskin, Evil Martians |
 | **License** | MIT |
 
@@ -10798,7 +10981,7 @@ Leva is a Ruby on Rails framework for evaluating Language Models (LLMs) using Ac
 
 | | |
 |---|---|
-| **Version** | 0.4.0 |
+| **Version** | 0.4.1 |
 | **Authors** | Germán Alberto Giménez Silva |
 | **License** | MIT |
 | **Ruby** | >= 3.3 |
@@ -11080,7 +11263,7 @@ llm-shell is an extensible, developer-oriented command-line console that can int
 
 | | |
 |---|---|
-| **Version** | 4.0.0 |
+| **Version** | 4.1.0 |
 | **Authors** | Antar Azri, 0x1eef |
 | **License** | 0BSD |
 | **Ruby** | >= 3.2.0 |
@@ -11131,6 +11314,21 @@ Fix the billion-dollar mistake by spending billions on LLM tokens! 🤖💰
 LLM Rescuer uses artificial intelligence to guess what you probably meant when you called a method on nil. Instead of crashing with NoMethodError, it asks GPT to analyze your code and hallucinate a reasonable response. Because clearly, the best way to solve Tony Hoare's billion-dollar mistake is to throw AI at it until it works. What could possibly go wrong? 🎭
 
 **Dependencies:** binding_of_caller (~> 1.0.1), ruby_llm (~> 1.8.2), ruby_llm-schema (~> 0.2.1)
+
+## [llmemory](https://github.com/entaina/llmemory)
+
+| | |
+|---|---|
+| **Version** | 0.1.13 |
+| **Authors** | llmemory |
+| **License** | MIT |
+| **Ruby** | >= 3.0.0 |
+
+Persistent memory system for LLM agents
+
+Memory infrastructure for agents: short-term checkpointing, long-term file-based and graph-based memory, retrieval with time decay, and maintenance jobs.
+
+**Dependencies:** faraday (~> 2.0)
 
 ## [localhost](https://github.com/socketry/localhost)
 
@@ -11301,6 +11499,19 @@ LALR (1) parser generator written by Ruby
 
 An efficient implementation of an lru cache
 
+## [lucide-rails](https://github.com/heyvito/lucide-rails)
+
+| | |
+|---|---|
+| **Version** | 0.7.3 |
+| **Authors** | Vito Sartori |
+| **License** | MIT |
+| **Ruby** | >= 2.6.0 |
+
+Ruby on Rails views helper method for rendering Lucide icons.
+
+**Dependencies:** railties (>= 4.1.0)
+
 ## [lumberjack](https://github.com/bdurand/lumberjack)
 
 | | |
@@ -11376,7 +11587,7 @@ a class factory and dsl for generating command line programs real quick
 
 | | |
 |---|---|
-| **Version** | 2.13.0 |
+| **Version** | 2.14.0 |
 | **Authors** | Shopify Engineering |
 | **License** | MIT |
 | **Ruby** | >= 3.2 |
@@ -11658,7 +11869,7 @@ Generate Diagrams and Flowcharts with Mermaid
 
 | | |
 |---|---|
-| **Version** | 4.4.1 |
+| **Version** | 4.5.1 |
 | **Authors** | Sam Saffron |
 | **License** | MIT |
 | **Ruby** | >= 2.6.0 |
@@ -11666,7 +11877,7 @@ Generate Diagrams and Flowcharts with Mermaid
 
 A message bus for rack
 
-**Dependencies:** rack (>= 1.1.3)
+**Dependencies:** rack (> 2, < 4)
 
 ## [meta-tags](https://github.com/kpumuk/meta-tags)
 
@@ -12229,6 +12440,19 @@ Create a new Brut App
 
 mkbrut is how you go from zero to having a Brut app where you can start working.
 
+## [mlx](https://github.com/skryl/mlx-ruby)
+
+| | |
+|---|---|
+| **Version** | 0.30.7.3 |
+| **Authors** | MLX Contributors, Aleksey Skryl |
+| **License** | MIT |
+| **Ruby** | >= 3.3 |
+
+Ruby bindings for the native MLX library
+
+A Ruby wrapper for the native MLX machine learning runtime.
+
 ## [mmh3](https://github.com/yoshoku/mmh3)
 
 | | |
@@ -12243,7 +12467,7 @@ A pure Ruby implementation of MurmurHash3
 
 | | |
 |---|---|
-| **Version** | 3.0.1 |
+| **Version** | 3.0.2 |
 | **Authors** | James Mead |
 | **License** | MIT, BSD-2-Clause |
 | **Ruby** | >= 2.2 |
@@ -12310,10 +12534,10 @@ Enable model view context protocol for Thor command-line apps.
 
 | | |
 |---|---|
-| **Version** | 0.1.0 |
+| **Version** | 1.0.0 |
 | **Authors** | Alexander Popov |
 | **License** | MIT |
-| **Ruby** | >= 2.5 |
+| **Ruby** | >= 3.2, < 5 |
 
 Extendable module for modules with instance and class methods.
 
@@ -12925,7 +13149,7 @@ NetHttp2 is an HTTP2 client for Ruby.
 
 | | |
 |---|---|
-| **Version** | 0.6.2 |
+| **Version** | 0.6.3 |
 | **Authors** | Shugo Maeda, nicholas a. evans |
 | **License** | Ruby, BSD-2-Clause |
 | **Ruby** | >= 3.2.0 |
@@ -13380,7 +13604,7 @@ Ruby/Numo Linear Algebra library with interface to BLAS/LAPACK.
 
 | | |
 |---|---|
-| **Version** | 0.8.0 |
+| **Version** | 0.9.0 |
 | **Authors** | yoshoku |
 | **License** | BSD-3-Clause |
 
@@ -13421,7 +13645,7 @@ Numo::NArray - New NArray class library in Ruby/Numo.
 
 | | |
 |---|---|
-| **Version** | 0.10.0 |
+| **Version** | 0.10.2 |
 | **Authors** | yoshoku |
 | **License** | BSD-3-Clause |
 | **Ruby** | >= 3.2.0 |
@@ -13686,7 +13910,7 @@ Occassionally is a lightweight way to run Ruby code periodically in environments
 
 | | |
 |---|---|
-| **Version** | 19.21.2 |
+| **Version** | 19.22.0 |
 | **Authors** | GitHub Inc. |
 | **License** | MIT |
 
@@ -14064,7 +14288,7 @@ A simple Rails engine to log API usage from multiple LLM providers and provide m
 
 | | |
 |---|---|
-| **Version** | 0.45.0 |
+| **Version** | 0.49.0 |
 | **Authors** | OpenAI |
 | **License** | Apache-2.0 |
 | **Ruby** | >= 3.2.0 |
@@ -14167,7 +14391,7 @@ A stats collection and distributed tracing framework
 
 | | |
 |---|---|
-| **Version** | 0.11.2 |
+| **Version** | 0.12.0 |
 | **Authors** | OpenTelemetry Authors |
 | **License** | Apache-2.0 |
 | **Ruby** | >= 3.1 |
@@ -14637,14 +14861,14 @@ An extension to paper_trail, using this you can fetch actual object who was resp
 
 | | |
 |---|---|
-| **Version** | 3.2.0 |
+| **Version** | 3.2.1 |
 | **Authors** | Sharon Rosner |
 | **License** | MIT |
 | **Ruby** | >= 3.4 |
 
 Papercraft: functional HTML templating for Ruby
 
-**Dependencies:** sirop (~> 1.0.1), kramdown (~> 2.5.1), rouge (~> 4.6.1), kramdown-parser-gfm (~> 1.1.0), erb (~> 5.1.1)
+**Dependencies:** sirop (>= 0), kramdown (~> 2.5.2), rouge (~> 4.7.0), kramdown-parser-gfm (~> 1.1.0), erb (~> 6.0.1)
 
 ## [parallel](https://github.com/grosser/parallel)
 
@@ -15038,6 +15262,21 @@ A performance dashboard for Postgres
 
 **Dependencies:** activerecord (>= 7.1)
 
+## [pgmq-ruby](https://github.com/mensfeld/pgmq-ruby)
+
+| | |
+|---|---|
+| **Version** | 0.4.0 |
+| **Authors** | Maciej Mensfeld |
+| **License** | LGPL-3.0 |
+| **Ruby** | >= 3.2.0 |
+
+Ruby client for PGMQ (Postgres Message Queue)
+
+A Ruby driver for PGMQ - a lightweight message queue built on PostgreSQL. Like AWS SQS and RSMQ, but on Postgres.
+
+**Dependencies:** connection_pool (~> 2.4), pg (~> 1.5), zeitwerk (~> 2.6)
+
 ## [pgsync](https://github.com/ankane/pgsync)
 
 | | |
@@ -15134,6 +15373,17 @@ A domain specific language for building functionally composable steps.
 
 **Dependencies:** containable (~> 2.0), dry-monads (~> 1.9), marameters (~> 5.0), refinements (~> 14.0), zeitwerk (~> 2.7)
 
+## [pipes](http://www.github.com/mikepack/pipes)
+
+| | |
+|---|---|
+| **Version** | 0.3.0 |
+| **Authors** | Mike Pack |
+
+A Redis-backed concurrency management system
+
+**Dependencies:** resque (~> 1.23.0), redis-objects (~> 0.5.3), abyss (~> 0.4.0)
+
 ## [pkce_challenge](https://github.com/samuelralak/pkce-challenge-ruby)
 
 | | |
@@ -15186,12 +15436,12 @@ Parse user agent to deduce the platform.
 
 | | |
 |---|---|
-| **Version** | 1.58.0 |
+| **Version** | 1.58.1 |
 | **Authors** | YusukeIwaki |
 | **License** | MIT |
 | **Ruby** | >= 2.4 |
 
-The Ruby binding of playwright driver 1.58.0
+The Ruby binding of playwright driver 1.58.2
 
 **Dependencies:** base64 (>= 0), concurrent-ruby (>= 1.1.6), mime-types (>= 3.0)
 
@@ -15577,7 +15827,7 @@ A suite of instrumentation metric primitivesthat can be exposed through a web se
 
 | | |
 |---|---|
-| **Version** | 1.0.1 |
+| **Version** | 1.0.2 |
 | **Authors** | Dewayne VanHoozer |
 | **License** | MIT |
 | **Ruby** | >= 3.2.0 |
@@ -15592,7 +15842,7 @@ PM (PromptManager) parses YAML metadata from markdown strings or files. It expan
 
 | | |
 |---|---|
-| **Version** | 0.3.1 |
+| **Version** | 0.5.0 |
 | **Authors** | Scott Werner |
 | **License** | MIT |
 | **Ruby** | >= 3.2.0 |
@@ -15843,7 +16093,7 @@ Use Pry as your rails console
 
 | | |
 |---|---|
-| **Version** | 0.2.0 |
+| **Version** | 0.2.1 |
 | **Authors** | Yukihiro Matsumoto |
 | **License** | Ruby, BSD-2-Clause |
 
@@ -15939,6 +16189,21 @@ pycall
 SQL queries counter for Rails apps
 
 **Dependencies:** activerecord (>= 4.2), railties (>= 4.2)
+
+## [query_lens](https://querylens.ai)
+
+| | |
+|---|---|
+| **Version** | 0.2.0 |
+| **Authors** | Bryan Beshore |
+| **License** | MIT |
+| **Ruby** | >= 3.2.0 |
+
+Natural language SQL query builder for Rails, powered by AI
+
+A mountable Rails engine that lets users write natural language questions and get SQL queries generated by AI (OpenAI, Anthropic, Gemini, Ollama, and more via RubyLLM), executed against their database, with results displayed in a single interface.
+
+**Dependencies:** rails (>= 7.1), ruby_llm (>= 1.0)
 
 ## [raabro](https://github.com/floraison/raabro)
 
@@ -16508,6 +16773,21 @@ Ruby on Rails performance monitoring tool that provides insights into your appli
 
 **Dependencies:** rails (>= 7.1.0, < 9.0.0), css-zero (~> 1.1, >= 1.1.4), turbo-rails (~> 2.0.11), request_store (~> 1.5), ransack (~> 4.0), pagy (>= 8, < 44), groupdate (~> 6.0)
 
+## [rails_skills](https://github.com/smostovoy/rails_skills)
+
+| | |
+|---|---|
+| **Version** | 0.5.2 |
+| **Authors** | Sergii Mostovyi |
+| **License** | MIT |
+| **Ruby** | >= 3.0.0 |
+
+Organize AI skills for Rails projects, shared between Claude and Codex
+
+Organize your docs as Skills shared between Humans and Agents and keep them up-to-date automatically
+
+**Dependencies:** rails (>= 7.0)
+
 ## [railties](https://rubyonrails.org)
 
 | | |
@@ -16533,6 +16813,21 @@ Rails internals: application bootup, plugins, generators, and rake tasks.
 | **Ruby** | >= 2.3.0 |
 
 Colorize printed text on ANSI terminals
+
+## [rainbow_llm](https://github.com/a-chris/rainbow_llm)
+
+| | |
+|---|---|
+| **Version** | 0.1.1 |
+| **Authors** | a-chris |
+| **License** | MIT |
+| **Ruby** | >= 3.2.0 |
+
+A routing gem for multiple LLM providers with automatic failover.
+
+RainbowLLM provides intelligent routing and failover capabilities for multiple LLM providers. Automatically tries providers in sequence until one responds successfully, ensuring reliable access to LLM services.
+
+**Dependencies:** ruby_llm (~> 1.0)
 
 ## [raix](https://github.com/OlympiaAI/raix)
 
@@ -16613,6 +16908,19 @@ Easy to use and reliable cross compiler environment for building Windows and Lin
 
 Easy to use and reliable cross compiler environment for building Windows and Linux binary gems. Use rake-compiler-dock to enter an interactive shell session or add a task to your Rakefile to automate your cross build.
 
+## [ralph.rb](https://github.com/n-at-han-k/ralph.rb)
+
+| | |
+|---|---|
+| **Version** | 2.1.0 |
+| **Authors** | Nathan Kidd |
+| **License** | MIT |
+| **Ruby** | >= 3.3 |
+
+Autonomous agentic loop for Claude Code, Codex & OpenCode
+
+Ralph Wiggum Loop - Iterative AI development with AI agents. An autonomous agentic loop that drives Claude Code, Codex, and OpenCode.
+
 ## [ransack](https://github.com/activerecord-hackery/ransack)
 
 | | |
@@ -16643,18 +16951,18 @@ RapiTapir is a Ruby library inspired by Scala's Tapir for building type-safe HTT
 
 **Dependencies:** json (~> 2.0), rack (>= 2.0, < 4.0), webrick (~> 1.7), sinatra (>= 2.0, < 5.0)
 
-## [ratatui_ruby](https://sr.ht/~kerrick/ratatui_ruby/)
+## [ratatui_ruby](https://www.ratatui-ruby.dev)
 
 | | |
 |---|---|
-| **Version** | 1.3.0 |
+| **Version** | 1.4.1 |
 | **Authors** | Kerrick Long |
 | **License** | LGPL-3.0-or-later |
 | **Ruby** | >= 3.2.9, < 5 |
 
 💎 Unofficial Ruby wrapper for the Ratatui 👨‍🍳🐀.
 
-== Terminal UIs, the Ruby Way  RatatuiRuby[https://rubygems.org/gems/ratatui_ruby] is a RubyGem built on Ratatui[https://ratatui.rs], a leading TUI library written in Rust[https://rust-lang.org]. You get native performance with the joy of Ruby.  gem install ratatui_ruby  {rdoc-image:https://ratatui-ruby.dev/hero.gif}[https://www.ratatui-ruby.dev/docs/v0.10/examples/app_cli_rich_moments/README_md.html]  === Rich Moments  Add a spinner, a progress bar, or an inline menu to your CLI script. No full-screen takeover. Your terminal history stays intact.  ==== Inline Viewports  Standard TUIs erase themselves on exit. Your carefully formatted CLI output disappears. Users lose their scrollback.  <b>Inline viewports</b> solve this. They occupy a fixed number of lines, render rich UI, then leave the output in place when done.  Perfect for spinners, menus, progress indicators—any brief moment of richness.  require "ratatui_ruby"  RatatuiRuby.run(viewport: :inline, height: 1) do |tui| until connected? status = tui.paragraph(text: "\#{spin} Connecting...") tui.draw { |frame| frame.render_widget(status, frame.area) } end end  === Build Something Real  Full-screen applications with {keyboard and mouse input}[https://www.ratatui-ruby.dev/docs/v0.10/examples/app_all_events/README_md.html]. The managed loop sets up the terminal and restores it on exit, even after crashes.  RatatuiRuby.run do |tui| loop do tui.draw do |frame| frame.render_widget( tui.paragraph(text: "Hello, RatatuiRuby!", alignment: :center), frame.area ) end  case tui.poll_event in { type: :key, code: "q" } then break else nil end end end  ==== Widgets included:  [Layout] {Block}[https://www.ratatui-ruby.dev/docs/v0.10/examples/widget_block/README_md.html], {Center}[https://www.ratatui-ruby.dev/docs/v0.10/examples/widget_center/README_md.html], {Clear (Popup, Modal)}[https://www.ratatui-ruby.dev/docs/v0.10/examples/widget_popup/README_md.html], {Layout (Split, Grid)}[https://www.ratatui-ruby.dev/docs/v0.10/examples/widget_layout_split/README_md.html], {Overlay}[https://www.ratatui-ruby.dev/docs/v0.10/examples/widget_overlay/README_md.html] [Data] {Bar Chart}[https://www.ratatui-ruby.dev/docs/v0.10/examples/widget_barchart/README_md.html], {Chart}[https://www.ratatui-ruby.dev/docs/v0.10/examples/widget_chart/README_md.html], {Gauge}[https://www.ratatui-ruby.dev/docs/v0.10/examples/widget_gauge/README_md.html], {Line Gauge}[https://www.ratatui-ruby.dev/docs/v0.10/examples/widget_line_gauge/README_md.html], {Sparkline}[https://www.ratatui-ruby.dev/docs/v0.10/examples/widget_sparkline/README_md.html], {Table}[https://www.ratatui-ruby.dev/docs/v0.10/examples/widget_table/README_md.html] [Text] {Cell}[https://www.ratatui-ruby.dev/docs/v0.10/examples/widget_cell/README_md.html], {List}[https://www.ratatui-ruby.dev/docs/v0.10/examples/widget_list/README_md.html], {Rich Text (Line, Span)}[https://www.ratatui-ruby.dev/docs/v0.10/examples/widget_rich_text/README_md.html], {Scrollbar (Scroll)}[https://www.ratatui-ruby.dev/docs/v0.10/examples/widget_scrollbar/README_md.html], {Tabs}[https://www.ratatui-ruby.dev/docs/v0.10/examples/widget_tabs/README_md.html] [Graphics] {Calendar}[https://www.ratatui-ruby.dev/docs/v0.10/examples/widget_calendar/README_md.html], {Canvas}[https://www.ratatui-ruby.dev/docs/v0.10/examples/widget_canvas/README_md.html], {Map (World Map)}[https://www.ratatui-ruby.dev/docs/v0.10/examples/widget_map/README_md.html]  Need something else? {Build custom widgets}[https://www.ratatui-ruby.dev/docs/v0.10/doc/concepts/custom_widgets_md.html] in Ruby!   ---  === Testing Built In  TUI testing is tedious. You need a headless terminal, event injection, snapshot comparisons, and style assertions. RatatuiRuby bundles all of it.  require "ratatui_ruby/test_helper"  class TestColorPicker < Minitest::Test include RatatuiRuby::TestHelper  def test_swatch_widget with_test_terminal(10, 3) do RatatuiRuby.draw do |frame| frame.render_widget(Swatch.new(:red), frame.area) end assert_cell_style 2, 1, char: "█", bg: :red end end end  ==== What's inside:  - <b>Headless terminal</b> — No real TTY needed - <b>Snapshots</b> — Plain text and rich (ANSI colors) - <b>Event injection</b> — Keys, mouse, paste, resize - <b>Style assertions</b> — Color, bold, underline at any cell - <b>Test doubles</b> — Mock frames and stub rects - <b>UPDATE_SNAPSHOTS=1</b> — Regenerate baselines in one command   ---  ==== Inline Menu Example  require "ratatui_ruby"  # This example renders an inline menu. Arrow keys select, enter confirms. # The menu appears in-place, preserving scrollback. When the user chooses, # the TUI closes and the script continues with the selected value. class RadioMenu CHOICES = ["Production", "Staging", "Development"]         # ASCII strings are universally supported. PREFIXES = { active: "●", inactive: "○" }                  # Some terminals may not support Unicode. CONTROLS = "↑/↓: Select | Enter: Choose | Ctrl+C: Cancel"  # Let users know what keys you handle. TITLES = ["Select Environment",                            # The default title position is top left. { content: CONTROLS,                             # Multiple titles can save space. position: :bottom,                             # Titles go on the top or bottom, alignment: :right }]                           # aligned left, right, or center  def call                                                   # This method blocks until a choice is made. RatatuiRuby.run(viewport: :inline, height: 5) do |tui|   # RatauiRuby.run manages the terminal. @tui = tui                                             # The TUI instance is safe to store. show_menu until chosen?                                # You can use any loop keyword you like. end                                                      # `run` won't return until your block does, RadioMenu::CHOICES[@choice]                              # so you can use it synchronously. end # Classes like RadioMenu are convenient for private                                                    # CLI authors to offer "rich moments."  def show_menu = @tui.draw do |frame|                       # RatatuiRuby gives you low-level access. widget = @tui.paragraph(                                 # But the TUI facade makes it easy to use. text: menu_items,                                      # Text can be spans, lines, or paragraphs. block: @tui.block(borders: :all, titles: TITLES)       # Blocks give you boxes and titles, and hold )                                                        # one or more widgets. We only use one here, frame.render_widget(widget, frame.area)                  # but "area" lets you compose sub-views. end  def chosen?                                                # You are responsible for handling input. interaction = @tui.poll_event                            # Every frame, you receive an event object: return choose if interaction.enter?                      # Key, Mouse, Resize, Paste, FocusGained, # FocusLost, or None objects. They come with move_by(-1) if interaction.up?                           # predicates, support pattern matching, and move_by(1) if interaction.down?                          # can be inspected for properties directly. quit! if interaction.ctrl_c?                             # Your application must handle every input, false                                                    # even interrupts and other exit patterns. end  def choose                                                 # Here, the loop is about to exit, and the prepare_next_line                                        # block will return. The inline viewport @choice                                                  # will be torn down and the terminal will end                                                        # be restored, but you are responsible for # positioning the cursor. def prepare_next_line                                      # To ensure the next output is on a new area = @tui.viewport_area                                # line, query the viewport area and move RatatuiRuby.cursor_position = [0, area.y + area.height]  # the cursor to the start of the last line. puts                                                     # Then print a newline. end  def quit!                                                  # All of your familiar Ruby control flow prepare_next_line                                        # keywords work as expected, so we can exit 0                                                   # use them to leave the TUI. end  def move_by(line_count)                                    # You are in full control of your UX, so @choice = (@choice + line_count) % CHOICES.size          # you can implement any logic you need: end                                                        # Would you "wrap around" here, or not? # def menu_items = CHOICES.map.with_index do |choice, i|     # Notably, RatatuiRuby has no concept of "\#{prefix_for(i)} \#{choice}"                             # "menus" or "radio buttons". You are in end                                                        # full control, but it also means you must def prefix_for(choice_index)                               # implement the logic yourself. For larger return PREFIXES[:active] if choice_index == @choice      # applications, consider using Rooibos, PREFIXES[:inactive]                                      # an MVU framework built with RatatuiRuby. end                                                        # Or, use the upcoming ratatui-ruby-kit, # our object-oriented component library. def initialize = @choice = 0                               # However, those are both optional, and end                                                          # designed for full-screen Terminal UIs. # RatatuiRuby will always give you the most choice = RadioMenu.new.call                                  # control, and is enough for "rich CLI puts "You chose \#{choice}!"                                  # moments" like this one.  ---  === Full App Solutions  RatatuiRuby renders. For complex applications, add a framework that manages state and composition.  ==== Rooibos[https://git.sr.ht/~kerrick/rooibos] (Framework)  Model-View-Update architecture. Inspired by Elm, Bubble Tea, and React + Redux. Your UI is a pure function of state.  - Functional programming with MVU - Commands work off the main thread - Messages, not callbacks, drive updates  ==== {Kit}[https://sr.ht/~kerrick/ratatui_ruby/#chapter-3-the-object-path--kit] (Coming Soon)  Component-based architecture. Encapsulate state, input handling, and rendering in reusable pieces.  - OOP with stateful components - Separate UI state from domain logic - Built-in focus management & click handling  Both use the same widget library and rendering engine. Pick the paradigm that fits your brain.   ---  === Why RatatuiRuby?  Ruby deserves world-class terminal user interfaces. TUI developers deserve a world-class language.  RatatuiRuby wraps Rust's Ratatui via native extension. The Rust library handles rendering. Your Ruby code handles design.  >>> "Text UIs are seeing a renaissance with many new TUI libraries popping up. The Ratatui bindings have proven to be full featured and stable."  — {Mike Perham}[https://www.mikeperham.com/], creator of Sidekiq[https://sidekiq.org/] and Faktory[https://contribsys.com/faktory/]  ==== Why Rust? Why Ruby?  Rust excels at low-level rendering. Ruby excels at expressing domain logic and UI. RatatuiRuby puts each language where it performs best.  ==== Versus CharmRuby  CharmRuby[https://charm-ruby.dev/] wraps Charm's Go libraries. Both projects give Ruby developers TUI options.  [Integration] CharmRuby: Two runtimes, one process. RatatuiRuby: Native extension in Rust. [Runtime] CharmRuby: Go + Ruby (competing). RatatuiRuby: Ruby (Rust has no runtime). [Memory] CharmRuby: Two uncoordinated GCs. RatatuiRuby: One Garbage Collector. [Style] CharmRuby: The Elm Architecture (TEA). RatatuiRuby: TEA, OOP, or Imperative.   ---  === Links  [Get Started] {Quickstart}[https://www.ratatui-ruby.dev/docs/v0.10/doc/getting_started/quickstart_md.html], {Examples}[https://www.ratatui-ruby.dev/docs/v0.10/examples/app_cli_rich_moments/README_md.html], {API Reference}[https://www.ratatui-ruby.dev/docs/v0.10/], {Guides}[https://www.ratatui-ruby.dev/docs/v0.10/doc/index_md.html] [Ecosystem] Rooibos[https://git.sr.ht/~kerrick/rooibos], {Kit}[https://sr.ht/~kerrick/ratatui_ruby/#chapter-3-the-object-path--kit] (Planned), {Framework}[https://sr.ht/~kerrick/ratatui_ruby/#chapter-5-the-framework] (Planned), {UI Widgets}[https://sr.ht/~kerrick/ratatui_ruby/#chapter-6-licensing] (Planned) [Community] {Discuss and Chat}[https://lists.sr.ht/~kerrick/ratatui_ruby-discuss], {Announcements}[https://lists.sr.ht/~kerrick/ratatui_ruby-announce], {Development}[https://lists.sr.ht/~kerrick/ratatui_ruby-devel], {Bug Tracker}[https://todo.sr.ht/~kerrick/ratatui_ruby] [Contribute] {Contributing Guide}[https://man.sr.ht/~kerrick/ratatui_ruby/contributing.md], {Code of Conduct}[https://man.sr.ht/~kerrick/ratatui_ruby/code_of_conduct.md], {Project History}[https://man.sr.ht/~kerrick/ratatui_ruby/history/index.md], {Pull Requests}[https://lists.sr.ht/~kerrick/ratatui_ruby-devel/patches]   ---  [Website] https://www.ratatui-ruby.dev [Source] https://git.sr.ht/~kerrick/ratatui_ruby [RubyGems] https://rubygems.org/gems/ratatui_ruby [Upstream] https://ratatui.rs [Build Status] https://builds.sr.ht/~kerrick/ratatui_ruby  © 2026 Kerrick Long · Library: LGPL-3.0-or-later · Website: CC-BY-NC-ND-4.0 · Snippets: MIT-0
+== Terminal UIs, the Ruby Way  RatatuiRuby[https://rubygems.org/gems/ratatui_ruby] is a RubyGem built on Ratatui[https://ratatui.rs], a leading TUI library written in Rust[https://rust-lang.org]. You get native performance with the joy of Ruby.  gem install ratatui_ruby  {rdoc-image:https://ratatui-ruby.dev/hero.gif}[https://www.ratatui-ruby.dev/docs/v0.10/examples/app_cli_rich_moments/README_md.html]  === Rich Moments  Add a spinner, a progress bar, or an inline menu to your CLI script. No full-screen takeover. Your terminal history stays intact.  ==== Inline Viewports  Standard TUIs erase themselves on exit. Your carefully formatted CLI output disappears. Users lose their scrollback.  <b>Inline viewports</b> solve this. They occupy a fixed number of lines, render rich UI, then leave the output in place when done.  Perfect for spinners, menus, progress indicators—any brief moment of richness.  require "ratatui_ruby"  RatatuiRuby.run(viewport: :inline, height: 1) do |tui| until connected? status = tui.paragraph(text: "\#{spin} Connecting...") tui.draw { |frame| frame.render_widget(status, frame.area) } end end  === Build Something Real  Full-screen applications with {keyboard and mouse input}[https://www.ratatui-ruby.dev/docs/v0.10/examples/app_all_events/README_md.html]. The managed loop sets up the terminal and restores it on exit, even after crashes.  RatatuiRuby.run do |tui| loop do tui.draw do |frame| frame.render_widget( tui.paragraph(text: "Hello, RatatuiRuby!", alignment: :center), frame.area ) end  case tui.poll_event in { type: :key, code: "q" } then break else nil end end end  ==== Widgets included:  [Layout] {Block}[https://www.ratatui-ruby.dev/docs/v0.10/examples/widget_block/README_md.html], {Center}[https://www.ratatui-ruby.dev/docs/v0.10/examples/widget_center/README_md.html], {Clear (Popup, Modal)}[https://www.ratatui-ruby.dev/docs/v0.10/examples/widget_popup/README_md.html], {Layout (Split, Grid)}[https://www.ratatui-ruby.dev/docs/v0.10/examples/widget_layout_split/README_md.html], {Overlay}[https://www.ratatui-ruby.dev/docs/v0.10/examples/widget_overlay/README_md.html] [Data] {Bar Chart}[https://www.ratatui-ruby.dev/docs/v0.10/examples/widget_barchart/README_md.html], {Chart}[https://www.ratatui-ruby.dev/docs/v0.10/examples/widget_chart/README_md.html], {Gauge}[https://www.ratatui-ruby.dev/docs/v0.10/examples/widget_gauge/README_md.html], {Line Gauge}[https://www.ratatui-ruby.dev/docs/v0.10/examples/widget_line_gauge/README_md.html], {Sparkline}[https://www.ratatui-ruby.dev/docs/v0.10/examples/widget_sparkline/README_md.html], {Table}[https://www.ratatui-ruby.dev/docs/v0.10/examples/widget_table/README_md.html] [Text] {Cell}[https://www.ratatui-ruby.dev/docs/v0.10/examples/widget_cell/README_md.html], {List}[https://www.ratatui-ruby.dev/docs/v0.10/examples/widget_list/README_md.html], {Rich Text (Line, Span)}[https://www.ratatui-ruby.dev/docs/v0.10/examples/widget_rich_text/README_md.html], {Scrollbar (Scroll)}[https://www.ratatui-ruby.dev/docs/v0.10/examples/widget_scrollbar/README_md.html], {Tabs}[https://www.ratatui-ruby.dev/docs/v0.10/examples/widget_tabs/README_md.html] [Graphics] {Calendar}[https://www.ratatui-ruby.dev/docs/v0.10/examples/widget_calendar/README_md.html], {Canvas}[https://www.ratatui-ruby.dev/docs/v0.10/examples/widget_canvas/README_md.html], {Map (World Map)}[https://www.ratatui-ruby.dev/docs/v0.10/examples/widget_map/README_md.html]  Need something else? {Build custom widgets}[https://www.ratatui-ruby.dev/docs/v0.10/doc/concepts/custom_widgets_md.html] in Ruby!   ---  === Testing Built In  TUI testing is tedious. You need a headless terminal, event injection, snapshot comparisons, and style assertions. RatatuiRuby bundles all of it.  require "ratatui_ruby/test_helper"  class TestColorPicker < Minitest::Test include RatatuiRuby::TestHelper  def test_swatch_widget with_test_terminal(10, 3) do RatatuiRuby.draw do |frame| frame.render_widget(Swatch.new(:red), frame.area) end assert_cell_style 2, 1, char: "█", bg: :red end end end  ==== What's inside:  - <b>Headless terminal</b> — No real TTY needed - <b>Snapshots</b> — Plain text and rich (ANSI colors) - <b>Event injection</b> — Keys, mouse, paste, resize - <b>Style assertions</b> — Color, bold, underline at any cell - <b>Test doubles</b> — Mock frames and stub rects - <b>UPDATE_SNAPSHOTS=1</b> — Regenerate baselines in one command   ---  ==== Inline Menu Example  require "ratatui_ruby"  # This example renders an inline menu. Arrow keys select, enter confirms. # The menu appears in-place, preserving scrollback. When the user chooses, # the TUI closes and the script continues with the selected value. class RadioMenu CHOICES = ["Production", "Staging", "Development"]         # ASCII strings are universally supported. PREFIXES = { active: "●", inactive: "○" }                  # Some terminals may not support Unicode. CONTROLS = "↑/↓: Select | Enter: Choose | Ctrl+C: Cancel"  # Let users know what keys you handle. TITLES = ["Select Environment",                            # The default title position is top left. { content: CONTROLS,                             # Multiple titles can save space. position: :bottom,                             # Titles go on the top or bottom, alignment: :right }]                           # aligned left, right, or center  def call                                                   # This method blocks until a choice is made. RatatuiRuby.run(viewport: :inline, height: 5) do |tui|   # RatauiRuby.run manages the terminal. @tui = tui                                             # The TUI instance is safe to store. show_menu until chosen?                                # You can use any loop keyword you like. end                                                      # `run` won't return until your block does, RadioMenu::CHOICES[@choice]                              # so you can use it synchronously. end # Classes like RadioMenu are convenient for private                                                    # CLI authors to offer "rich moments."  def show_menu = @tui.draw do |frame|                       # RatatuiRuby gives you low-level access. widget = @tui.paragraph(                                 # But the TUI facade makes it easy to use. text: menu_items,                                      # Text can be spans, lines, or paragraphs. block: @tui.block(borders: :all, titles: TITLES)       # Blocks give you boxes and titles, and hold )                                                        # one or more widgets. We only use one here, frame.render_widget(widget, frame.area)                  # but "area" lets you compose sub-views. end  def chosen?                                                # You are responsible for handling input. interaction = @tui.poll_event                            # Every frame, you receive an event object: return choose if interaction.enter?                      # Key, Mouse, Resize, Paste, FocusGained, # FocusLost, or None objects. They come with move_by(-1) if interaction.up?                           # predicates, support pattern matching, and move_by(1) if interaction.down?                          # can be inspected for properties directly. quit! if interaction.ctrl_c?                             # Your application must handle every input, false                                                    # even interrupts and other exit patterns. end  def choose                                                 # Here, the loop is about to exit, and the prepare_next_line                                        # block will return. The inline viewport @choice                                                  # will be torn down and the terminal will end                                                        # be restored, but you are responsible for # positioning the cursor. def prepare_next_line                                      # To ensure the next output is on a new area = @tui.viewport_area                                # line, query the viewport area and move RatatuiRuby.cursor_position = [0, area.y + area.height]  # the cursor to the start of the last line. puts                                                     # Then print a newline. end  def quit!                                                  # All of your familiar Ruby control flow prepare_next_line                                        # keywords work as expected, so we can exit 0                                                   # use them to leave the TUI. end  def move_by(line_count)                                    # You are in full control of your UX, so @choice = (@choice + line_count) % CHOICES.size          # you can implement any logic you need: end                                                        # Would you "wrap around" here, or not? # def menu_items = CHOICES.map.with_index do |choice, i|     # Notably, RatatuiRuby has no concept of "\#{prefix_for(i)} \#{choice}"                             # "menus" or "radio buttons". You are in end                                                        # full control, but it also means you must def prefix_for(choice_index)                               # implement the logic yourself. For larger return PREFIXES[:active] if choice_index == @choice      # applications, consider using Rooibos, PREFIXES[:inactive]                                      # an MVU framework built with RatatuiRuby. end                                                        # Or, use the upcoming ratatui-ruby-kit, # our object-oriented component library. def initialize = @choice = 0                               # However, those are both optional, and end                                                          # designed for full-screen Terminal UIs. # RatatuiRuby will always give you the most choice = RadioMenu.new.call                                  # control, and is enough for "rich CLI puts "You chose \#{choice}!"                                  # moments" like this one.  ---  === Full App Solutions  RatatuiRuby renders. For complex applications, add a framework that manages state and composition.  ==== Rooibos[https://www.rooibos.run] (Framework)  Model-View-Update architecture. Inspired by Elm, Bubble Tea, and React + Redux. Your UI is a pure function of state.  - Functional programming with MVU - Commands work off the main thread - Messages, not callbacks, drive updates  ==== {Kit}[https://sr.ht/~kerrick/ratatui_ruby/#chapter-3-the-object-path--kit] (Coming Soon)  Component-based architecture. Encapsulate state, input handling, and rendering in reusable pieces.  - OOP with stateful components - Separate UI state from domain logic - Built-in focus management & click handling  Both use the same widget library and rendering engine. Pick the paradigm that fits your brain.   ---  === Why RatatuiRuby?  Ruby deserves world-class terminal user interfaces. TUI developers deserve a world-class language.  RatatuiRuby wraps Rust's Ratatui via native extension. The Rust library handles rendering. Your Ruby code handles design.  >>> "Text UIs are seeing a renaissance with many new TUI libraries popping up. The Ratatui bindings have proven to be full featured and stable."  — {Mike Perham}[https://www.mikeperham.com/], creator of Sidekiq[https://sidekiq.org/] and Faktory[https://contribsys.com/faktory/]  ==== Why Rust? Why Ruby?  Rust excels at low-level rendering. Ruby excels at expressing domain logic and UI. RatatuiRuby puts each language where it performs best.  ==== Versus CharmRuby  CharmRuby[https://charm-ruby.dev/] wraps Charm's Go libraries. Both projects give Ruby developers TUI options.  [Integration] CharmRuby: Two runtimes, one process. RatatuiRuby: Native extension in Rust. [Runtime] CharmRuby: Go + Ruby (competing). RatatuiRuby: Ruby (Rust has no runtime). [Memory] CharmRuby: Two uncoordinated GCs. RatatuiRuby: One Garbage Collector. [Style] CharmRuby: The Elm Architecture (TEA). RatatuiRuby: TEA, OOP, or Imperative.   ---  === Links  [Get Started] {Quickstart}[https://www.ratatui-ruby.dev/docs/v0.10/doc/getting_started/quickstart_md.html], {Examples}[https://www.ratatui-ruby.dev/docs/v0.10/examples/app_cli_rich_moments/README_md.html], {API Reference}[https://www.ratatui-ruby.dev/docs/v0.10/], {Guides}[https://www.ratatui-ruby.dev/docs/v0.10/doc/index_md.html] [Ecosystem] Rooibos[https://www.rooibos.run], {Kit}[https://sr.ht/~kerrick/ratatui_ruby/#chapter-3-the-object-path--kit] (Planned), {Framework}[https://sr.ht/~kerrick/ratatui_ruby/#chapter-5-the-framework] (Planned), {UI Widgets}[https://sr.ht/~kerrick/ratatui_ruby/#chapter-6-licensing] (Planned) [Community] {Forum}[https://forum.setdef.com/c/ratatui-ruby/6], {Announcements}[https://forum.setdef.com/tags/c/ratatui-ruby/6/announcement], {Discussion}[https://forum.setdef.com/tags/c/ratatui-ruby/6/discussion], {Bug Tracker}[https://forum.setdef.com/tags/c/ratatui-ruby/6/bug] [Contribute] {Contributing Guide}[https://man.sr.ht/~kerrick/ratatui_ruby/contributing.md], {Code of Conduct}[https://man.sr.ht/~kerrick/ratatui_ruby/code_of_conduct.md], {Project History}[https://man.sr.ht/~kerrick/ratatui_ruby/history/index.md], {Pull Requests}[https://forum.setdef.com/tags/c/ratatui-ruby/6/patch]   ---  [Website] https://www.ratatui-ruby.dev [Source] https://github.com/setdef/RatatuiRuby [RubyGems] https://rubygems.org/gems/ratatui_ruby [Upstream] https://ratatui.rs [Build Status] https://builds.sr.ht/~kerrick/ratatui_ruby  © 2026 Kerrick Long · Library: LGPL-3.0-or-later · Website: CC-BY-NC-ND-4.0 · Snippets: MIT-0
 
 **Dependencies:** rb_sys (~> 0.9), rexml (~> 3.4)
 
@@ -16755,7 +17063,7 @@ RBS is the language for type signatures for Ruby and standard library definition
 
 | | |
 |---|---|
-| **Version** | 0.12.0 |
+| **Version** | 0.13.0 |
 | **Authors** | Soutaro Matsumoto |
 | **License** | MIT |
 | **Ruby** | >= 3.1.0 |
@@ -16859,7 +17167,7 @@ Converts React components to Rails using AI
 
 | | |
 |---|---|
-| **Version** | 0.2.0 |
+| **Version** | 0.2.1 |
 | **Authors** | Marco Roth |
 | **License** | MIT |
 | **Ruby** | >= 3.2.0 |
@@ -16963,6 +17271,19 @@ Namespaces Redis commands.
 Adds a Redis::Namespace class which can be used to namespace calls to Redis. This is useful when using a single instance of Redis with multiple, different applications.
 
 **Dependencies:** redis (>= 4)
+
+## [redis-objects](http://github.com/nateware/redis-objects)
+
+| | |
+|---|---|
+| **Version** | 0.5.3 |
+| **Authors** | Nate Wiger |
+
+Map Redis types directly to Ruby objects
+
+Map Redis types directly to Ruby objects. Works with any class or ORM.
+
+**Dependencies:** redis (>= 2.1.1)
 
 ## [redlock](https://github.com/leandromoreira/redlock-rb)
 
@@ -17278,35 +17599,33 @@ A set of Rails responders to dry up your application
 
 **Dependencies:** railties (>= 7.0), actionpack (>= 7.0)
 
-## [resque](https://github.com/resque/resque)
+## [resque](http://github.com/defunkt/resque)
 
 | | |
 |---|---|
-| **Version** | 2.7.0 |
-| **Authors** | Chris Wanstrath, Steve Klabnik, Terence Lee, Michael Bianco |
-| **License** | MIT |
-| **Ruby** | >= 2.3.0 |
+| **Version** | 1.23.1 |
+| **Authors** | Chris Wanstrath, Terence Lee |
 
 Resque is a Redis-backed queueing system.
 
 Resque is a Redis-backed Ruby library for creating background jobs, placing those jobs on multiple queues, and processing them later.  Background jobs can be any Ruby class or module that responds to perform. Your existing classes can easily be converted to background jobs or you can create new classes specifically to do work. Or, you can do both.  Resque is heavily inspired by DelayedJob (which rocks) and is comprised of three parts:  * A Ruby library for creating, querying, and processing jobs * A Rake task for starting a worker which processes jobs * A Sinatra app for monitoring queues, jobs, and workers.
 
-**Dependencies:** redis-namespace (~> 1.6), sinatra (>= 0.9.2), multi_json (~> 1.0), mono_logger (~> 1)
+**Dependencies:** redis-namespace (~> 1.0), vegas (~> 0.1.2), sinatra (>= 0.9.2), multi_json (~> 1.0)
 
-## [resque-pool](http://github.com/nevans/resque-pool)
+## [resque-pool](http://github.com/resque/resque-pool)
 
 | | |
 |---|---|
-| **Version** | 0.7.1 |
+| **Version** | 0.8.0 |
 | **Authors** | nicholas a. evans |
 | **License** | MIT |
-| **Ruby** | >= 2.0 |
+| **Ruby** | >= 3.0 |
 
 quickly and easily fork a pool of resque workers
 
 quickly and easily fork a pool of resque workers, saving memory (w/REE) and monitoring their uptime
 
-**Dependencies:** resque (>= 1.22, < 3), rake (>= 10.0, < 14.0)
+**Dependencies:** resque (>= 2.2, < 4), rake (>= 10.0)
 
 ## [rest-client](https://github.com/rest-client/rest-client)
 
@@ -17554,7 +17873,7 @@ Roast is a Ruby library for running structured AI workflows along with many buil
 
 | | |
 |---|---|
-| **Version** | 0.0.1 |
+| **Version** | 0.0.4 |
 | **Authors** | Dewayne VanHoozer |
 | **License** | MIT |
 | **Ruby** | >= 3.2.0 |
@@ -17563,13 +17882,13 @@ Ruby framework for building and orchestrating multi-robot LLM workflows
 
 RobotLab is a Ruby framework for building and orchestrating multi-robot LLM workflows. Built on ruby_llm, it provides robots with template-based prompts, tools, and shared memory; networks for coordinating multiple robots with intelligent routing; MCP (Model Context Protocol) integration for external tool servers; a memory system with Redis backend and semantic caching; and Rails integration with generators and ActiveRecord- backed conversation history.
 
-**Dependencies:** zeitwerk (~> 2.6), ruby_llm (~> 1.0), ruby_llm-mcp (>= 0), ruby_llm-template (>= 0), ruby_llm-schema (>= 0), ruby_llm-semantic_cache (>= 0), fastembed (>= 0), async (~> 2.0), simple_flow (~> 0.3.0), state_machines (>= 0), state_machines-activemodel (>= 0), state_machines-activerecord (>= 0), async-http (~> 0.60), async-websocket (~> 0.30), railties (>= 7.0), activerecord (>= 7.0), activesupport (>= 7.0)
+**Dependencies:** myway_config (~> 0.1), zeitwerk (~> 2.6), activesupport (>= 7.0), ruby_llm (~> 1.12), ruby_llm-mcp (>= 0), prompt_manager (~> 1.0), ruby_llm-schema (>= 0), ruby_llm-semantic_cache (>= 0), fastembed (>= 0), async (~> 2.0), typed_bus (>= 0), simple_flow (~> 0.3.0), async-http (~> 0.60), async-websocket (~> 0.30)
 
 ## [roda](https://roda.jeremyevans.net)
 
 | | |
 |---|---|
-| **Version** | 3.100.0 |
+| **Version** | 3.101.0 |
 | **Authors** | Jeremy Evans |
 | **License** | MIT |
 | **Ruby** | >= 1.9.2 |
@@ -17597,7 +17916,7 @@ ODF generation library for Ruby
 
 | | |
 |---|---|
-| **Version** | 0.3.3 |
+| **Version** | 0.4.0 |
 | **Authors** | Alexey Poimtsev |
 | **License** | MIT |
 | **Ruby** | >= 3.2.0 |
@@ -18036,7 +18355,7 @@ Ruby library for working with the Tesseract OCR.
 
 | | |
 |---|---|
-| **Version** | 1.82.1 |
+| **Version** | 1.84.2 |
 | **Authors** | Bozhidar Batsov, Jonas Arvidsson, Yuji Nakayama |
 | **License** | MIT |
 | **Ruby** | >= 2.7.0 |
@@ -18045,7 +18364,7 @@ Automatic Ruby code style checking tool.
 
 RuboCop is a Ruby code style checking and code formatting tool. It aims to enforce the community-driven Ruby Style Guide.
 
-**Dependencies:** json (~> 2.3), language_server-protocol (~> 3.17.0.2), lint_roller (~> 1.1.0), parallel (~> 1.10), parser (>= 3.3.0.2), rainbow (>= 2.2.2, < 4.0), regexp_parser (>= 2.9.3, < 3.0), rubocop-ast (>= 1.48.0, < 2.0), ruby-progressbar (~> 1.7), unicode-display_width (>= 2.4.0, < 4.0)
+**Dependencies:** json (~> 2.3), language_server-protocol (~> 3.17.0.2), lint_roller (~> 1.1.0), parallel (~> 1.10), parser (>= 3.3.0.2), rainbow (>= 2.2.2, < 4.0), regexp_parser (>= 2.9.3, < 3.0), rubocop-ast (>= 1.49.0, < 2.0), ruby-progressbar (~> 1.7), unicode-display_width (>= 2.4.0, < 4.0)
 
 ## [rubocop-ast](https://github.com/rubocop/rubocop-ast)
 
@@ -18444,6 +18763,17 @@ Ruby/ProgressBar is an extremely flexible text progress bar library for Ruby. Th
 
 RubyRC4 is a pure Ruby implementation of the RC4 algorithm.
 
+## [ruby-readability](http://github.com/cantino/ruby-readability)
+
+| | |
+|---|---|
+| **Version** | 0.7.3 |
+| **Authors** | Andrew Cantino, starrhorne, libc, Kyle Maxwell |
+
+Port of arc90's readability project to ruby
+
+**Dependencies:** nokogiri (>= 1.6.0), guess_html_encoding (>= 0.0.4)
+
 ## [ruby-shell](https://isene.com/)
 
 | | |
@@ -18602,7 +18932,7 @@ One beautiful Ruby API for GPT, Claude, Gemini, and more. Easily build chatbots,
 
 | | |
 |---|---|
-| **Version** | 1.3.4 |
+| **Version** | 3.1.0 |
 | **Authors** | adham90 |
 | **License** | MIT |
 | **Ruby** | >= 3.1.0 |
@@ -18611,7 +18941,7 @@ Agent framework for building LLM-powered agents with RubyLLM
 
 A Rails engine for creating, managing, and monitoring LLM-powered agents. Includes a DSL for agent configuration, execution tracking, cost analytics, and a mountable dashboard UI.
 
-**Dependencies:** rails (>= 7.0), ruby_llm (>= 1.11.0), csv (>= 0), ostruct (>= 0)
+**Dependencies:** rails (>= 7.0), ruby_llm (>= 1.12.0), csv (>= 0), ostruct (>= 0)
 
 ## [ruby_llm-docker](https://github.com/afstanton/ruby_llm-docker)
 
@@ -18632,7 +18962,7 @@ A comprehensive Ruby gem that provides Docker management capabilities through Ru
 
 | | |
 |---|---|
-| **Version** | 0.2.0 |
+| **Version** | 0.2.1 |
 | **Authors** | Patricio Mac Adden |
 
 Rails instrumentation for RubyLLM
@@ -18658,25 +18988,25 @@ A Ruby client for the Model Context Protocol (MCP) that seamlessly integrates wi
 
 | | |
 |---|---|
-| **Version** | 0.1.0 |
+| **Version** | 0.2.0 |
 | **Authors** | Patricio Mac Adden |
 
 Monitoring engine for RubyLLM
 
-**Dependencies:** groupdate (>= 0), importmap-rails (>= 0), rails (>= 7.0.0), ruby_llm (>= 0), ruby_llm-instrumentation (>= 0.1), stimulus-rails (>= 0), turbo-rails (>= 0)
+**Dependencies:** groupdate (>= 0), importmap-rails (>= 0), rails (>= 7.2.0), ruby_llm (>= 0), ruby_llm-instrumentation (>= 0.1), stimulus-rails (>= 0), turbo-rails (>= 0)
 
 ## [ruby_llm-responses_api](https://github.com/khasinski/ruby_llm-responses_api)
 
 | | |
 |---|---|
-| **Version** | 0.2.0 |
+| **Version** | 0.3.0 |
 | **Authors** | Chris Hasinski |
 | **License** | MIT |
 | **Ruby** | >= 3.1.0 |
 
 OpenAI Responses API provider for RubyLLM
 
-A RubyLLM provider that implements OpenAI's Responses API, providing access to built-in tools (web search, code interpreter, file search), stateful conversations, background mode, and MCP support.
+A RubyLLM provider that implements OpenAI's Responses API, providing access to built-in tools (web search, code interpreter, file search, shell, apply patch), stateful conversations, server-side compaction, containers API, background mode, and MCP support.
 
 **Dependencies:** ruby_llm (>= 1.0)
 
@@ -19596,6 +19926,21 @@ Semantic Version utility class
 
 Semantic Version utility class for parsing, storing, and comparing versions. See: http://semver.org
 
+## [semantic-cache](https://github.com/stokry/semantic-cache)
+
+| | |
+|---|---|
+| **Version** | 0.2.0 |
+| **Authors** | stokry |
+| **License** | MIT |
+| **Ruby** | >= 3.0.0 |
+
+Semantic caching for LLM API calls — save 70%+ on costs
+
+Cache LLM responses using semantic similarity matching. Similar questions return cached answers instantly, cutting API costs by 70% or more. Works with OpenAI, Anthropic, and Gemini.
+
+**Dependencies:** ruby-openai (~> 7.0)
+
 ## [semantic_logger](https://logger.rocketjob.io)
 
 | | |
@@ -19637,44 +19982,44 @@ Semian adapter for Postgres
 
 **Dependencies:** concurrent-ruby (>= 0), pg (>= 1.5.0, < 1.7.0), semian (>= 0.16.0, < 1.0.0)
 
-## [sentry-rails](https://github.com/getsentry/sentry-ruby/tree/6.3.0/sentry-rails)
+## [sentry-rails](https://github.com/getsentry/sentry-ruby/tree/6.3.1/sentry-rails)
 
 | | |
 |---|---|
-| **Version** | 6.3.0 |
+| **Version** | 6.3.1 |
 | **Authors** | Sentry Team |
 | **License** | MIT |
 | **Ruby** | >= 2.7 |
 
 A gem that provides Rails integration for the Sentry error logger
 
-**Dependencies:** railties (>= 5.2.0), sentry-ruby (~> 6.3.0)
+**Dependencies:** railties (>= 5.2.0), sentry-ruby (~> 6.3.1)
 
-## [sentry-ruby](https://github.com/getsentry/sentry-ruby/tree/6.3.0/sentry-ruby)
+## [sentry-ruby](https://github.com/getsentry/sentry-ruby/tree/6.3.1/sentry-ruby)
 
 | | |
 |---|---|
-| **Version** | 6.3.0 |
+| **Version** | 6.3.1 |
 | **Authors** | Sentry Team |
 | **License** | MIT |
 | **Ruby** | >= 2.7 |
 
 A gem that provides a client interface for the Sentry error logger
 
-**Dependencies:** concurrent-ruby (~> 1.0, >= 1.0.2), bigdecimal (>= 0)
+**Dependencies:** concurrent-ruby (~> 1.0, >= 1.0.2), bigdecimal (>= 0), logger (>= 0)
 
-## [sentry-sidekiq](https://github.com/getsentry/sentry-ruby/tree/6.3.0/sentry-sidekiq)
+## [sentry-sidekiq](https://github.com/getsentry/sentry-ruby/tree/6.3.1/sentry-sidekiq)
 
 | | |
 |---|---|
-| **Version** | 6.3.0 |
+| **Version** | 6.3.1 |
 | **Authors** | Sentry Team |
 | **License** | MIT |
 | **Ruby** | >= 2.7 |
 
 A gem that provides Sidekiq integration for the Sentry error logger
 
-**Dependencies:** sentry-ruby (~> 6.3.0), sidekiq (>= 5.0)
+**Dependencies:** sentry-ruby (~> 6.3.1), sidekiq (>= 5.0)
 
 ## [sequel](https://sequel.jeremyevans.net)
 
@@ -20210,21 +20555,6 @@ Simple console output formatter for SimpleCov
 
 Default HTML formatter for SimpleCov code coverage tool for ruby 2.4+
 
-## [simplecov-mcp](https://github.com/keithrbennett/simplecov-mcp)
-
-| | |
-|---|---|
-| **Version** | 2.0.1 |
-| **Authors** | Keith R. Bennett |
-| **License** | MIT |
-| **Ruby** | >= 3.2 |
-
-MCP server + CLI for SimpleCov coverage data
-
-Provides an MCP (Model Context Protocol) server and a CLI to inspect SimpleCov coverage, including per-file summaries and uncovered lines.
-
-**Dependencies:** awesome_print (~> 1.9), mcp (~> 0.3), simplecov (>= 0.21, < 1.0)
-
 ## [simplecov_json_formatter](https://github.com/fede-moya/simplecov_json_formatter)
 
 | | |
@@ -20340,14 +20670,14 @@ The Singleton module implements the Singleton pattern.
 
 | | |
 |---|---|
-| **Version** | 1.0.1 |
+| **Version** | 1.0.3 |
 | **Authors** | Sharon Rosner |
 | **License** | MIT |
 | **Ruby** | >= 3.4 |
 
 Sirop: Ruby code rewriter
 
-**Dependencies:** prism (~> 1.6)
+**Dependencies:** prism (>= 0)
 
 ## [site_prism](https://github.com/site-prism/site_prism)
 
@@ -20638,7 +20968,7 @@ Adds T::Result to sorbet-runtime, which is a basic, strongly-typed monad
 
 | | |
 |---|---|
-| **Version** | 0.6.12929 |
+| **Version** | 0.6.12942 |
 | **Authors** | Stripe |
 | **License** | Apache-2.0 |
 | **Ruby** | >= 3.0.0 |
@@ -20889,7 +21219,7 @@ A comprehensive toolkit for remotely running commands in a structured manner on 
 
 | | |
 |---|---|
-| **Version** | 0.2.27 |
+| **Version** | 0.2.28 |
 | **Authors** | Aman Gupta |
 | **License** | MIT |
 | **Ruby** | >= 2.2 |
@@ -20902,13 +21232,13 @@ stackprof is a fast sampling profiler for ruby code, with cpu, wallclock and obj
 
 | | |
 |---|---|
-| **Version** | 1.53.0 |
+| **Version** | 1.54.0 |
 | **Authors** | Justin Searls |
 | **Ruby** | >= 3.0.0 |
 
 Ruby Style Guide, with linter & automatic code fixer
 
-**Dependencies:** rubocop (~> 1.82.0), lint_roller (~> 1.0), standard-custom (~> 1.0.0), standard-performance (~> 1.8), language_server-protocol (~> 3.17.0.2)
+**Dependencies:** rubocop (~> 1.84.0), lint_roller (~> 1.0), standard-custom (~> 1.0.0), standard-performance (~> 1.8), language_server-protocol (~> 3.17.0.2)
 
 ## [standard-custom](https://github.com/standardrb/standard-custom)
 
@@ -21378,7 +21708,7 @@ SwarmCLI provides a command-line interface for SwarmSDK, the lightweight multi-a
 
 | | |
 |---|---|
-| **Version** | 2.7.14 |
+| **Version** | 2.7.15 |
 | **Authors** | Paulo Arruda |
 | **License** | MIT |
 | **Ruby** | >= 3.2.0 |
@@ -23292,6 +23622,19 @@ Record your test suite's HTTP interactions and replay them during future test ru
 
 Interactive charts for Ruby, powered by Vega and Vega-Lite
 
+## [vegas](http://code.quirkey.com/vegas)
+
+| | |
+|---|---|
+| **Version** | 0.1.11 |
+| **Authors** | Aaron Quint |
+
+Vegas aims to solve the simple problem of creating executable versions of Sinatra/Rack apps.
+
+Vegas aims to solve the simple problem of creating executable versions of Sinatra/Rack apps. It includes a class Vegas::Runner that wraps Rack/Sinatra applications and provides a simple command line interface and launching mechanism.
+
+**Dependencies:** rack (>= 1.0.0)
+
 ## [verbal_expressions](http://github.com/ryan-endacott/verbal_expressions)
 
 | | |
@@ -23389,7 +23732,7 @@ Vial compiles programmable fixture intent into explicit, deterministic fixtures 
 
 | | |
 |---|---|
-| **Version** | 4.2.0 |
+| **Version** | 4.4.0 |
 | **Authors** | ViewComponent Team |
 | **License** | MIT |
 | **Ruby** | >= 3.2.0 |
@@ -23750,6 +24093,19 @@ Cron jobs in ruby.
 Clean ruby syntax for writing and deploying cron jobs.
 
 **Dependencies:** chronic (>= 0.6.3)
+
+## [whispercpp](https://github.com/ggml-org/whisper.cpp)
+
+| | |
+|---|---|
+| **Version** | 1.3.5 |
+| **Authors** | Georgi Gerganov, Todd A. Fisher |
+| **License** | MIT |
+| **Ruby** | >= 3.1.0 |
+
+Ruby whisper.cpp bindings
+
+High-performance inference of OpenAI's Whisper automatic speech recognition (ASR) model via Ruby
 
 ## [whois](https://whoisrb.org/)
 
@@ -24239,7 +24595,7 @@ A comprehensive linter for YARD documentation that checks for undocumented code,
 
 | | |
 |---|---|
-| **Version** | 0.5.0 |
+| **Version** | 0.6.0 |
 | **Authors** | Stanislav (Stas) Katkov |
 | **License** | MIT |
 | **Ruby** | >= 2.6.0 |
@@ -24248,7 +24604,7 @@ yard plugin to generate markdown documentation
 
 yard plugin to generate markdown documentation for gems
 
-**Dependencies:** yard (>= 0), csv (>= 0)
+**Dependencies:** yard (>= 0), csv (>= 0), rdoc (>= 0)
 
 ## [yard-solargraph](https://solargraph.org)
 

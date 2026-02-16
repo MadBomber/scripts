@@ -1,5 +1,6 @@
 aasm
 abbrev
+abyss
 action_policy
 action_prompt
 action_push_native
@@ -48,13 +49,20 @@ acts_as_paranoid
 acts_as_recursive_tree
 address_extractor
 addressable
+admin_suite
 administrate
 aes_key_wrap
 afm
 after_commit_everywhere
 agent-context
 agent99
+agent_c
+agent_ferrum
+agent_skill_parser
+agent_skills
+agent_skills_configurations
 agentic
+agents_skill_vault
 agile_rails
 ahoy
 ahoy_matey
@@ -249,6 +257,7 @@ claide-plugins
 clapton
 classifier
 classifier-reborn
+claude-agent-sdk
 claude-code-sdk-ruby
 claude-on-rails
 claude_code_slash_commands
@@ -585,6 +594,8 @@ getoptlong
 ghub
 gimuby
 gio2
+girb
+girb-ruby_llm
 git
 git-lint
 github-markup
@@ -624,6 +635,7 @@ googleapis-common-protos-types
 googleauth
 gosu
 gpt4all
+graph-agent
 graphiti
 graphiti_errors
 graphlient
@@ -656,6 +668,7 @@ guard-rubycritic
 guard-s3
 guard-shell
 guard-sidekiq
+guess_html_encoding
 gum
 gutentag
 gyoku
@@ -838,6 +851,7 @@ llm.rb
 llm_classifier
 llm_orchestrator
 llm_rescuer
+llmemory
 localhost
 lockfile
 lode
@@ -852,6 +866,7 @@ looksee
 lp
 lrama
 lru_redux
+lucide-rails
 lumberjack
 macos
 madmin
@@ -924,6 +939,7 @@ mixlib-shellout
 mixlib-versioning
 mize
 mkbrut
+mlx
 mmh3
 mocha
 mock_redis
@@ -1139,6 +1155,7 @@ pg_query
 pg_search
 pg_trunk
 pghero
+pgmq-ruby
 pgsync
 pgvector
 phash-rb
@@ -1146,6 +1163,7 @@ phlex
 phlex-rails
 pinecone
 pipeable
+pipes
 pkce_challenge
 pkg-config
 plat4m
@@ -1208,6 +1226,7 @@ puma
 pundit
 pycall
 query_count
+query_lens
 raabro
 racc
 rack
@@ -1248,14 +1267,17 @@ rails_live_reload
 rails_performance
 rails_prompts
 rails_pulse
+rails_skills
 railties
 rainbow
+rainbow_llm
 raix
 raix-openai-eight
 raix-rails
 rake
 rake-compiler
 rake-compiler-dock
+ralph.rb
 ransack
 rapitapir
 ratatui_ruby
@@ -1282,6 +1304,7 @@ redcarpet
 redis
 redis-client
 redis-namespace
+redis-objects
 redlock
 reek
 refer
@@ -1391,6 +1414,7 @@ ruby-openai-swarm
 ruby-pg-extras
 ruby-progressbar
 ruby-rc4
+ruby-readability
 ruby-shell
 ruby-statistics
 ruby-stemmer
@@ -1479,6 +1503,7 @@ self_agency
 selma
 sem_version
 semantic
+semantic-cache
 semantic_logger
 semian
 semian-postgres
@@ -1526,7 +1551,6 @@ simplecov
 simplecov-cobertura
 simplecov-console
 simplecov-html
-simplecov-mcp
 simplecov_json_formatter
 simplecov_lcov_formatter
 simpleidn
@@ -1765,6 +1789,7 @@ validate_url
 validates_timeliness
 vcr
 vega
+vegas
 verbal_expressions
 vernier
 verse
@@ -1800,6 +1825,7 @@ websocket-driver
 websocket-extensions
 wharel
 whenever
+whispercpp
 whois
 whois-parser
 wicked_pdf
