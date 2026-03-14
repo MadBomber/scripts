@@ -20,12 +20,19 @@ ada-url                                     WHATWG-compliant and fast URL
 adwaita-icon-theme                          Icons for the GNOME project
                                             |__ https://developer.gnome.org
 
+eugene1g/safehouse/agent-safehouse          macOS sandbox wrapper for coding agents
+                                            |__ https://github.com/eugene1g/agent-safehouse
+
 aiac                                        Artificial Intelligence
                                             |   Infrastructure-as-Code Generator
                                             |__ https://github.com/gofireflyio/aiac
 
 aichat                                      All-in-one AI-Powered CLI Chat & Copilot
                                             |__ https://github.com/sigoden/aichat
+
+vjeantet/tap/alerter                        macOS notification CLI — send native
+                                            |   notifications and capture user interactions
+                                            |__ https://github.com/vjeantet/alerter
 
 amp                                         Text editor for your terminal
                                             |__ https://amp.rs
@@ -277,7 +284,7 @@ cgns                                        CFD General Notation System
                                             |__ https://cgns.github.io/
 
 cgrep                                       Context-aware grep for source code
-                                            |__ https://github.com/awgn/cgrep
+                                            |__ https://awgn.github.io/cgrep/
 
 chafa                                       Versatile and fast
                                             |   Unicode/ASCII/ANSI graphics renderer
@@ -294,6 +301,10 @@ cheat                                       Create and view interactive
 chicken                                     Compiler for the Scheme programming language
                                             |__ https://www.call-cc.org/
 
+minicodemonkey/chief/chief                  Autonomous agent loop for working
+                                            |   through PRDs with Claude Code
+                                            |__ https://chiefloop.com
+
 choose-rust                                 Human-friendly and fast alternative
                                             |   to cut and (sometimes) awk
                                             |__ https://github.com/theryangeary/choose
@@ -303,6 +314,9 @@ chroma                                      General purpose syntax highlighter i
 
 cjson                                       Ultralightweight JSON parser in ANSI C
                                             |__ https://github.com/DaveGamble/cJSON
+
+claude-agent-acp                            Use Claude Code from any ACP client such as Zed!
+                                            |__ https://github.com/zed-industries/claude-agent-acp
 
 claude-squad                                Manage multiple AI agents like Claude
                                             |   Code, Aider and Codex in your terminal
@@ -327,9 +341,6 @@ cmake                                       Cross-platform make
 code2prompt                                 CLI tool to convert your codebase
                                             |   into a single LLM prompt
                                             |__ https://code2prompt.dev/
-
-codex                                       OpenAI's coding agent that runs in your terminal
-                                            |__ https://github.com/openai/codex
 
 coinutils                                   COIN-OR utilities
                                             |__ https://github.com/coin-or/CoinUtils
@@ -396,7 +407,7 @@ daemonize                                   Run a command as a UNIX daemon
                                             |__ https://software.clapper.org/daemonize/
 
 dagu                                        Lightweight and powerful workflow engine
-                                            |__ https://dagu.cloud
+                                            |__ https://dagu.sh
 
 dapr/tap/dapr-cli                           Client for Dapr.
                                             |__ https://dapr.io
@@ -449,6 +460,10 @@ diff-pdf                                    Visually compare two PDF files
 
 diff-so-fancy                               Good-lookin' diffs with diff-highlight and more
                                             |__ https://github.com/so-fancy/diff-so-fancy
+
+dlvhdr/formulae/diffnav                     Git diff pager based on delta but
+                                            |   with a file tree, à la GitHub
+                                            |__ https://github.com/dlvhdr/diffnav
 
 diffoscope                                  In-depth comparison of files,
                                             |   archives, and directories
@@ -688,6 +703,9 @@ fx                                          Terminal JSON viewer
 fzf                                         Command-line fuzzy finder written in Go
                                             |__ https://github.com/junegunn/fzf
 
+garden                                      Grow and cultivate collections of Git trees
+                                            |__ https://github.com/garden-rs/garden
+
 gawk                                        GNU awk utility
                                             |__ https://www.gnu.org/software/gawk/
 
@@ -739,6 +757,9 @@ ghc                                         Glorious Glasgow Haskell Compilation
 ghostscript                                 Interpreter for PostScript and PDF
                                             |__ https://www.ghostscript.com/
 
+steipete/tap/gifgrep                        Grep the GIF. Stick the landing
+                                            |__ https://github.com/steipete/gifgrep
+
 giflib                                      Library and utilities for processing GIFs
                                             |__ https://giflib.sourceforge.net/
 
@@ -786,10 +807,6 @@ git-quick-stats                             Simple and efficient way to access s
 git-revise                                  Rebase alternative for easy &
                                             |   efficient in-memory rebases and fixups
                                             |__ https://github.com/mystor/git-revise
-
-git-standup                                 Git extension to generate
-                                            |   reports for standup meetings
-                                            |__ https://github.com/kamranahmedse/git-standup
 
 git-town                                    High-level command-line interface for Git
                                             |__ https://www.git-town.com/
@@ -885,6 +902,10 @@ gonzo                                       Log analysis TUI
 goocanvas                                   Canvas widget for GTK+ using the
                                             |   Cairo 2D library for drawing
                                             |__ https://wiki.gnome.org/Projects/GooCanvas
+
+googleworkspace-cli                         CLI for Drive, Gmail, Calendar,
+                                            |   Sheets, Docs, Chat, Admin, and more
+                                            |__ https://developers.google.com/workspace
 
 gource                                      Version Control Visualization Tool
                                             |__ https://gource.io/
@@ -1078,9 +1099,6 @@ html-to-markdown                            Transforms HTML (even entire website
                                             |   into clean, readable Markdown
                                             |__ https://html-to-markdown.com
 
-html2markdown                               Convert HTML to Markdown
-                                            |__ https://html-to-markdown.com
-
 html2text                                   Advanced HTML-to-text converter
                                             |__ https://gitlab.com/grobian/html2text
 
@@ -1116,14 +1134,6 @@ hyper-mcp                                   MCP server that extends its capabili
 
 icdiff                                      Improved colored diff
                                             |__ https://www.jefftk.com/icdiff
-
-icu4c@76                                    C/C++ and Java libraries for
-                                            |   Unicode and globalization
-                                            |__ https://icu.unicode.org/home
-
-icu4c@77                                    C/C++ and Java libraries for
-                                            |   Unicode and globalization
-                                            |__ https://icu.unicode.org/home
 
 icu4c@78                                    C/C++ and Java libraries for
                                             |   Unicode and globalization
@@ -1261,9 +1271,6 @@ lame                                        High quality MPEG Audio Layer III (M
 
 lapack                                      Linear Algebra PACKage
                                             |__ https://www.netlib.org/lapack/
-
-lazycontainer                               Terminal UI for Apple Containers
-                                            |__ https://github.com/andreybleme/lazycontainer
 
 lazygit                                     Simple terminal UI for git commands
                                             |__ https://github.com/jesseduffield/lazygit/
@@ -1622,6 +1629,9 @@ llvm@19                                     Next-gen compiler infrastructure
 llvm@20                                     Next-gen compiler infrastructure
                                             |__ https://llvm.org/
 
+llvm@21                                     Next-gen compiler infrastructure
+                                            |__ https://llvm.org/
+
 localai                                     OpenAI alternative
                                             |__ https://localai.io
 
@@ -1761,6 +1771,10 @@ metabase                                    Business intelligence report server
 metis                                       Programs that partition graphs and order matrices
                                             |__ https://karypis.github.io/glaros/software/metis/overview.html
 
+micasa                                      TUI for tracking home projects, maintenance
+                                            |   schedules, appliances and quotes
+                                            |__ https://micasa.dev
+
 miller                                      Like sed, awk, cut, join & sort
                                             |   for name-indexed data such as CSV
                                             |__ https://github.com/johnkerl/miller
@@ -1844,9 +1858,6 @@ nanobot                                     Build MCP Agents
 nats-server                                 Lightweight cloud messaging system
                                             |__ https://nats.io
 
-nats-streaming-server                       Lightweight cloud messaging system
-                                            |__ https://nats.io
-
 ncurses                                     Text-based UI library
                                             |__ https://invisible-island.net/ncurses/announce.html
 
@@ -1892,6 +1903,9 @@ nifi                                        Easy to use, powerful, and reliable
 nifi-toolkit                                Command-line utilities to setup and support NiFi
                                             |__ https://nifi.apache.org
 
+ninja                                       Small build system for use with gyp or CMake
+                                            |__ https://ninja-build.org/
+
 nlohmann-json                               JSON for modern C++
                                             |__ https://json.nlohmann.me/
 
@@ -1907,6 +1921,10 @@ node                                        Open-source, cross-platform
 
 nom                                         RSS reader for the terminal
                                             |__ https://github.com/guyfedwards/nom
+
+nono                                        Capability-based sandbox shell for
+                                            |   AI agents with OS-enforced isolation
+                                            |__ https://github.com/always-further/nono
 
 notion-mcp-server                           MCP Server for Notion
                                             |__ https://github.com/makenotion/notion-mcp-server
@@ -1937,9 +1955,6 @@ yakitrak/yakitrak/obsidian-cli
 oh-my-posh                                  Prompt theme engine for any shell
                                             |__ https://ohmyposh.dev
 
-omnara                                      Talk to Your AI Agents from Anywhere
-                                            |__ https://omnara.com/
-
 oniguruma                                   Regular expressions library
                                             |__ https://github.com/kkos/oniguruma/
 
@@ -1954,9 +1969,6 @@ openai-whisper                              General-purpose speech recognition m
 
 openblas                                    Optimized BLAS library
                                             |__ https://www.openblas.net/
-
-openclaw-cli                                Your own personal AI assistant
-                                            |__ https://openclaw.ai/
 
 opencode                                    AI coding agent, built for the terminal
                                             |__ https://opencode.ai
@@ -2053,9 +2065,6 @@ pango                                       Framework for layout and rendering o
 pangomm@2.46                                C++ interface to Pango
                                             |__ https://www.gtk.org/docs/architecture/pango
 
-parallel                                    Shell command parallelization utility
-                                            |__ https://savannah.gnu.org/projects/parallel/
-
 pcre                                        Perl compatible regular expressions library
                                             |__ https://www.pcre.org/
 
@@ -2134,9 +2143,6 @@ portaudio                                   Cross-platform library for audio I/O
 postgis                                     Adds support for geographic objects to PostgreSQL
                                             |__ https://postgis.net/
 
-postgresql@17                               Object-relational database system
-                                            |__ https://www.postgresql.org/
-
 postgresql@18                               Object-relational database system
                                             |__ https://www.postgresql.org/
 
@@ -2172,6 +2178,9 @@ protobuf                                    Protocol buffers (Google's data inte
 
 protobuf-c                                  Protocol buffers library
                                             |__ https://github.com/protobuf-c/protobuf-c
+
+protobuf@33                                 Protocol buffers (Google's data interchange format)
+                                            |__ https://protobuf.dev/
 
 pspg                                        Unix pager optimized for psql
                                             |__ https://github.com/okbob/pspg
@@ -2485,9 +2494,6 @@ ruby-build                                  Install various Ruby versions and im
 rubyfmt                                     Ruby autoformatter
                                             |__ https://github.com/fables-tales/rubyfmt
 
-rulesync                                    Unified AI rules management CLI tool
-                                            |__ https://github.com/dyoshikawa/rulesync
-
 rumdl                                       Markdown Linter and Formatter written in Rust
                                             |__ https://github.com/rvben/rumdl
 
@@ -2508,6 +2514,10 @@ rv                                          Ruby version manager
 
 s-lang                                      Library for creating multi-platform software
                                             |__ https://www.jedsoft.org/slang/
+
+s2geometry                                  Computational geometry and
+                                            |   spatial indexing on the sphere
+                                            |__ https://github.com/google/s2geometry
 
 sad                                         CLI search and replace | Space Age seD
                                             |__ https://github.com/ms-jpq/sad
@@ -2539,6 +2549,10 @@ sdl2_image                                  Library for loading images
                                             |   as SDL surfaces and textures
                                             |__ https://github.com/libsdl-org/SDL_image
 
+sem-cli                                     Semantic version control CLI with
+                                            |   entity-level diffs and blame
+                                            |__ https://github.com/Ataraxy-Labs/sem
+
 semgrep                                     Easily detect and prevent bugs and
                                             |   anti-patterns in your codebase
                                             |__ https://semgrep.dev
@@ -2568,6 +2582,9 @@ simdjson                                    SIMD-accelerated C++ JSON parser
 martinemde/tap/skillet                      Run Agent SKILL.md files as
                                             |   shell commands with Claude Code
                                             |__ https://github.com/martinemde/skillet
+
+skills                                      Open agent skills ecosystem
+                                            |__ https://skills.sh
 
 skillshare                                  Sync skills across AI CLI tools
                                             |__ https://skillshare.runkids.cc
@@ -2722,6 +2739,9 @@ tcl-tk@8                                    Tool Command Language
 telnet                                      User interface to the TELNET protocol
                                             |__ https://opensource.apple.com/
 
+termframe                                   Terminal output SVG screenshot tool
+                                            |__ https://github.com/pamburus/termframe
+
 termsvg                                     Record, share and export your
                                             |   terminal as a animated SVG image
                                             |__ https://github.com/MrMarble/termsvg
@@ -2865,6 +2885,10 @@ viddy                                       Modern watch command
 vips                                        Image processing library
                                             |__ https://github.com/libvips/libvips
 
+visidata                                    Terminal spreadsheet multitool for
+                                            |   discovering and arranging data
+                                            |__ https://www.visidata.org/
+
 vroom                                       Vehicle Routing Open-Source Optimization Machine
                                             |__ http://vroom-project.org/
 
@@ -3006,9 +3030,6 @@ yek                                         Fast Rust based tool to serialize
 youplot                                     Command-line tool that draw plots on the terminal
                                             |__ https://github.com/red-data-tools/YouPlot/
 
-youtube-dl                                  Download YouTube videos from the command-line
-                                            |__ https://ytdl-org.github.io/youtube-dl/
-
 youtubedr                                   Download Youtube Video in Golang
                                             |__ https://github.com/kkdai/youtube
 
@@ -3063,6 +3084,10 @@ zimg                                        Scaling, colorspace conversion,
 
 zstd                                        Zstandard is a real-time compression algorithm
                                             |__ https://facebook.github.io/zstd/
+
+madbomber/zvec/zvec                         Embedded vector database for
+                                            |   high-dimensional similarity search
+                                            |__ https://github.com/alibaba/zvec
 
 zzz                                         Command-line tool to put Macs to sleep
                                             |__ https://github.com/Orc/Zzz
