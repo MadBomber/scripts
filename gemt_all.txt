@@ -359,6 +359,10 @@ amq-protocol                        AMQP 0.9.1 encoding & decoding library.
 anbt-sql-formatter                  A tool for SQL formatting written in Ruby.
                                     |__ https://github.com/sonota88/anbt-sql-formatter
 
+anima-core                          A personal AI agent with desires, personality, and
+                                    |   personal growth
+                                    |__ https://github.com/hoblin/anima
+
 annotate                            Annotates Rails Models, routes, fixtures, and others
                                     |   based on the database schema.
                                     |__ http://github.com/ctran/annotate_models
@@ -1072,6 +1076,9 @@ color                               Color is a Ruby library to provide RGB, CMYK
                                     |   that require it
                                     |__ https://github.com/halostatue/color
 
+color-logger                        Colorized ruby logger
+                                    |__ http://github.com/hoblin/color-logger
+
 colorator                           Colorize your text in the terminal.
                                     |__ https://github.com/octopress/colorator
 
@@ -1490,8 +1497,8 @@ dotum                               Dotum manages your dotfiles and allows for p
                                     |   sharing.
                                     |__ https://github.com/nevir/dotum
 
-down                                Robust streaming downloads using Net::HTTP, HTTP.rb or
-                                    |   wget.
+down                                Robust streaming downloads using Net::HTTP, http.rb or
+                                    |   HTTPX.
                                     |__ https://github.com/janko/down
 
 dragonfly                           Ideal gem for handling attachments in Rails, Sinatra and
@@ -1500,6 +1507,9 @@ dragonfly                           Ideal gem for handling attachments in Rails,
 
 dragonfly_svg                       Dragonfly analyser and processor for SVGs.
                                     |__ https://github.com/tomasc/dragonfly_svg
+
+draper                              View Models for Rails
+                                    |__ https://github.com/drapergem/draper
 
 drb                                 Distributed object system for Ruby
                                     |__ https://github.com/ruby/drb
@@ -2506,6 +2516,10 @@ helicone-rb                         Ruby client for Helicone AI Gateway with age
                                     |   support
                                     |__ https://github.com/genevere-inc/helicone-rb
 
+helmsman                            Steers your navigation through the ocean of your
+                                    |   application
+                                    |__ http://github.com/xijo/helmsman
+
 herb                                The modern HTML+ERB Toolchain
                                     |__ https://herb-tools.dev
 
@@ -2811,6 +2825,12 @@ jaro_winkler                        An implementation of Jaro-Winkler distance a
 jbuilder                            Create JSON structures via a Builder-style DSL
                                     |__ https://github.com/rails/jbuilder
 
+jekyll                              A simple, blog aware, static site generator.
+                                    |__ https://jekyllrb.com
+
+jekyll-sass-converter               A basic Sass converter for Jekyll.
+                                    |__ https://github.com/jekyll/jekyll-sass-converter
+
 jekyll-seo-tag                      A Jekyll plugin to add metadata tags for search engines
                                     |   and social networks to better index and display your
                                     |   site's content.
@@ -3099,6 +3119,9 @@ live                                Live HTML tags updated via a WebSocket.
 llama-rb                            Ruby interface for Llama
                                     |__ https://github.com/zfletch/llama-rb
 
+llhttp                              Ruby bindings for llhttp.
+                                    |__ https://github.com/bryanp/llhttp/
+
 llhttp-ffi                          Ruby FFI bindings for llhttp.
                                     |__ https://github.com/bryanp/llhttp/
 
@@ -3306,7 +3329,7 @@ messageformat-wrapper               A wrapper around the @messageformat/core npm
                                     |   compile MessageFormat messages in Ruby
                                     |__ https://github.com/discourse/messageformat
 
-meta-tags                           Collection of SEO helpers for Ruby on Rails.
+meta-tags                           Collection of metadata helpers for Ruby on Rails.
                                     |__ https://github.com/kpumuk/meta-tags
 
 method_locator                      method_locator provides a way to traverse an object's
@@ -3577,10 +3600,6 @@ mustermann                          Your personal string matching expert.
 mutex_m                             Mixin to extend objects to be handled like a Mutex.
                                     |__ https://github.com/ruby/mutex_m
 
-my_news                             RSS feed pipeline that transforms feeds into themed
-                                    |   bulletins
-                                    |__ https://github.com/madbomber/my_news
-
 myway_config                        Configuration management extending anyway_config with
                                     |   XDG support and auto-configuration
                                     |__ https://github.com/madbomber/myway_config
@@ -3728,6 +3747,9 @@ nkeys                               NKEYS for Ruby
 
 nkf                                 Ruby extension for Network Kanji Filter
                                     |__ https://github.com/ruby/nkf
+
+nng                                 Ruby bindings for nng (nanomsg-ng).
+                                    |__ https://github.com/paddor/rbnng
 
 no_proxy_fix                        A fix for a no_proxy bug on ruby 2.4.0 and 2.4.1
                                     |__ https://github.com/ermaker/no_proxy_fix
@@ -4200,6 +4222,10 @@ patience_diff                       A Ruby implementation of the Patience diff a
 
 patron                              Patron HTTP Client
                                     |__ https://github.com/toland/patron
+
+pattern-ruby                        Deterministic pattern detection and intent matching
+                                    |   engine for Ruby
+                                    |__ https://github.com/johannesdwicahyo/pattern-ruby
 
 pdf-core                            Low level PDF generator.
                                     |__ http://prawnpdf.org/
@@ -4874,7 +4900,7 @@ rethinkdb_helper                    A wrapper around the ruby rethinkdb gem
 
 retriable                           Retriable is a simple DSL to retry failed code blocks
                                     |   with randomized exponential backoff
-                                    |__ http://github.com/kamui/retriable
+                                    |__ https://github.com/kamui/retriable
 
 reverse_markdown                    Convert html code into markdown.
                                     |__ http://github.com/xijo/reverse_markdown
@@ -4956,6 +4982,9 @@ rom-sql                             SQL databases support for ROM
 roo                                 Roo can access the contents of various spreadsheet
                                     |   files.
                                     |__ https://github.com/roo-rb/roo
+
+rooibos                             ☕ Confidently Build Terminal Apps
+                                    |__ https://rooibos.run
 
 rotp                                A Ruby library for generating and verifying one time
                                     |   passwords
@@ -5238,6 +5267,9 @@ ruby_llm-template                   Template management system for RubyLLM - org
                                     |   reuse ERB templates for AI chat interactions
                                     |__ https://github.com/danielfriis/ruby_llm-template
 
+ruby_llm-ups                        ups.dev integration for RubyLLM
+                                    |__ https://github.com/codenamev/ruby_llm-ups
+
 ruby_llm_swarm                      Fork of RubyLLM with features to power Swarm, a
                                     |   multi-agent orchestration framework.
                                     |__ https://github.com/parruda/ruby_llm
@@ -5261,6 +5293,9 @@ rubyai                              A Ruby gem for the OpenAI (GPT-4) API
 
 rubycritic                          RubyCritic is a Ruby code quality reporter
                                     |__ https://github.com/whitesmith/rubycritic
+
+rubydex                             A rolodex for Ruby
+                                    |__ https://github.com/paracycle/rubydex
 
 rubyfmt                             Ruby port of gofmt
                                     |__ https://rubygems.org/gems/rubyfmt
@@ -5506,15 +5541,15 @@ semian-postgres                     Semian adapter for Postgres
 
 sentry-rails                        A gem that provides Rails integration for the Sentry
                                     |   error logger
-                                    |__ https://github.com/getsentry/sentry-ruby/tree/6.4.1/sentry-rails
+                                    |__ https://github.com/getsentry/sentry-ruby/tree/6.5.0/sentry-rails
 
 sentry-ruby                         A gem that provides a client interface for the Sentry
                                     |   error logger
-                                    |__ https://github.com/getsentry/sentry-ruby/tree/6.4.1/sentry-ruby
+                                    |__ https://github.com/getsentry/sentry-ruby/tree/6.5.0/sentry-ruby
 
 sentry-sidekiq                      A gem that provides Sidekiq integration for the Sentry
                                     |   error logger
-                                    |__ https://github.com/getsentry/sentry-ruby/tree/6.4.1/sentry-sidekiq
+                                    |__ https://github.com/getsentry/sentry-ruby/tree/6.5.0/sentry-sidekiq
 
 sequel                              The Database Toolkit for Ruby
                                     |__ https://sequel.jeremyevans.net
@@ -6792,7 +6827,7 @@ zonebie                             Zonebie prevents bugs in code that deals wit
                                     |   by randomly assigning a zone on every run
                                     |__ https://github.com/alindeman/zonebie
 
-zvec                                EXPERIMENTAL - DO NOT INSTALL - Ruby bindings for
-                                    |   Alibaba zvec vector database
-                                    |__ https://github.com/MadBomber/zvec
+zvec                                Fast vector database for Ruby — native bindings to
+                                    |   Alibaba's zvec C++ library
+                                    |__ https://github.com/MadBomber/zvec-ruby
 

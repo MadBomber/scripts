@@ -826,6 +826,8 @@ isolator
 ivar
 jaro_winkler
 jbuilder
+jekyll
+jekyll-sass-converter
 jekyll-seo-tag
 jekyll-watch
 jemoji
@@ -1048,7 +1050,6 @@ mustache
 mustache-sinatra
 mustermann
 mutex_m
-my_news
 myway_config
 n1_loader
 n_plus_one_control
