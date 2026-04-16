@@ -55,8 +55,9 @@ apache-arrow                                Columnar in-memory analytics layer
                                             |   designed to accelerate big data
                                             |__ https://arrow.apache.org/
 
-appstream                                   Tools and libraries to work with AppStream metadata
-                                            |__ https://www.freedesktop.org/wiki/Distributions/AppStream/
+apfel                                       Apple Intelligence from the command-line,
+                                            |   with OpenAi-compatible API server
+                                            |__ https://apfel.franzai.com
 
 aribb24                                     Library for ARIB STD-B24, decoding JIS
                                             |   8 bit characters and parsing MPEG-TS
@@ -322,6 +323,9 @@ claude-squad                                Manage multiple AI agents like Claud
                                             |   Code, Aider and Codex in your terminal
                                             |__ https://smtg-ai.github.io/claude-squad/
 
+cline                                       AI-powered coding agent for complex work
+                                            |__ https://cline.bot
+
 clippy                                      Copy files from your terminal
                                             |   that actually paste into GUI apps
                                             |__ https://github.com/neilberkman/clippy
@@ -395,9 +399,15 @@ csview                                      High performance csv viewer for cli
 csvlens                                     Command-line csv viewer
                                             |__ https://github.com/YS-L/csvlens
 
+ctx7                                        Manage AI coding skills and documentation context
+                                            |__ https://context7.com
+
 cypher-shell                                Command-line shell where you can
                                             |   execute Cypher against Neo4j
                                             |__ https://neo4j.com
+
+czmq                                        High-level C binding for ZeroMQ
+                                            |__ http://czmq.zeromq.org/
 
 d2                                          Modern diagram scripting language
                                             |   that turns text to diagrams
@@ -478,6 +488,10 @@ difftastic                                  Diff that understands syntax
 
 direnv                                      Load/unload environment variables based on $PWD
                                             |__ https://direnv.net/
+
+displayplacer                               Utility to configure multi-display
+                                            |   resolutions and arrangements
+                                            |__ https://github.com/jakehilborn/displayplacer
 
 dnote                                       Simple command-line notebook
                                             |__ https://www.getdnote.com
@@ -745,6 +759,9 @@ gflags                                      Library for processing command-line 
 ggc                                         Modern Git CLI
                                             |__ https://github.com/bmf-san/ggc
 
+ggml                                        Tensor library for machine learning
+                                            |__ https://github.com/ggml-org/ggml
+
 gh                                          GitHub command-line tool
                                             |__ https://cli.github.com/
 
@@ -936,9 +953,6 @@ grafana                                     Gorgeous metric visualizations and
                                             |   dashboards for timeseries databases
                                             |__ https://grafana.com
 
-graphene                                    Thin layer of graphic data types
-                                            |__ https://ebassi.github.io/graphene/
-
 graphite2                                   Smart font renderer for non-Roman scripts
                                             |__ https://graphite.sil.org/
 
@@ -990,9 +1004,6 @@ gtk+3                                       Toolkit for creating graphical user 
 gtk-mac-integration                         Integrates GTK macOS applications
                                             |   with the Mac desktop
                                             |__ https://www.gtk.org/docs/installations/macos
-
-gtk4                                        Toolkit for creating graphical user interfaces
-                                            |__ https://gtk.org/
 
 gtkmm3                                      C++ interfaces for GTK+ and GNOME
                                             |__ https://www.gtkmm.org/
@@ -1163,6 +1174,9 @@ infat                                       Tool to set default openers for file
                                             |   formats and url schemes on macOS
                                             |__ https://github.com/philocalyst/infat
 
+inxi                                        Full featured CLI system information tool
+                                            |__ https://smxi.org/docs/inxi.htm
+
 ipinfo-cli                                  Official CLI for the IPinfo IP Address API
                                             |__ https://ipinfo.io/
 
@@ -1285,10 +1299,6 @@ lefthook                                    Fast and powerful Git hooks
 leptonica                                   Image processing and image analysis library
                                             |__ http://www.leptonica.org/
 
-libadwaita                                  Building blocks for modern
-                                            |   adaptive GNOME applications
-                                            |__ https://gnome.pages.gitlab.gnome.org/libadwaita/
-
 libaec                                      Adaptive Entropy Coding
                                             |   implementing Golomb-Rice algorithm
                                             |__ https://gitlab.dkrz.de/k202009/libaec
@@ -1341,9 +1351,6 @@ libexif                                     EXIF parsing library
 libffi                                      Portable Foreign Function Interface library
                                             |__ https://sourceware.org/libffi/
 
-libfyaml                                    Fully feature complete YAML parser and emitter
-                                            |__ https://github.com/pantoniou/libfyaml
-
 libgcrypt                                   Cryptographic library based on the code from GnuPG
                                             |__ https://gnupg.org/related_software/libgcrypt/
 
@@ -1386,7 +1393,7 @@ libkml                                      Library to parse, generate and opera
 libksba                                     X.509 and CMS library
                                             |__ https://www.gnupg.org/related_software/libksba/
 
-liblerc                                     Ersi LERC library (Limited Error Raster Compression)
+liblerc                                     Esri LERC library (Limited Error Raster Compression)
                                             |__ https://github.com/Esri/lerc
 
 liblinear                                   Library for large linear classification
@@ -1460,9 +1467,6 @@ librttopo                                   RT Topology Library
 
 libsamplerate                               Library for sample rate conversion of audio data
                                             |__ https://github.com/libsndfile/libsamplerate
-
-libsass                                     C implementation of a Sass compiler
-                                            |__ https://github.com/sass/libsass
 
 libsigc++@2                                 Callback framework for C++
                                             |__ https://libsigcplusplus.github.io/libsigcplusplus/
@@ -1576,9 +1580,6 @@ libxi                                       X.Org: Library for the X Input Exten
 libxml2                                     GNOME XML library
                                             |__ http://xmlsoft.org/
 
-libxmlb                                     Library for querying compressed XML metadata
-                                            |__ https://github.com/hughsie/libxmlb
-
 libxrender                                  X.Org: Library for the Render
                                             |   Extension to the X11 protocol
                                             |__ https://www.x.org/
@@ -1605,10 +1606,17 @@ lla                                         High-performance, extensible alterna
 llama.cpp                                   LLM inference in C/C++
                                             |__ https://github.com/ggml-org/llama.cpp
 
+run-llama/liteparse/llamaindex-liteparse    Open-source PDF parsing with spatial
+                                            |   text extraction and OCR processing
+                                            |__ https://github.com/run-llama/liteparse#readme
+
 lld@19                                      LLVM Project Linker
                                             |__ https://lld.llvm.org/
 
 lld@20                                      LLVM Project Linker
+                                            |__ https://lld.llvm.org/
+
+lld@21                                      LLVM Project Linker
                                             |__ https://lld.llvm.org/
 
 llhttp                                      Port of http_parser to llparse
@@ -1635,8 +1643,8 @@ llvm@21                                     Next-gen compiler infrastructure
 localai                                     OpenAI alternative
                                             |__ https://localai.io
 
-localstack                                  Fully functional local AWS cloud stack
-                                            |__ https://localstack.cloud/
+localstack/tap/localstack-cli               Localstack cli packaged using pyinstaller
+                                            |__ https://github.com/localstack/localstack-cli
 
 logtalk                                     Declarative object-oriented
                                             |   logic programming language
@@ -1657,6 +1665,9 @@ ls-lint                                     Extremely fast file and directory na
 lsd                                         Clone of ls with colorful output,
                                             |   file type icons, and more
                                             |__ https://github.com/lsd-rs/lsd
+
+lsix                                        Shows thumbnails in terminal using sixel graphics
+                                            |__ https://github.com/hackerb9/lsix
 
 lstr                                        Fast, minimalist directory tree viewer
                                             |__ https://github.com/bgreenwell/lstr
@@ -1713,6 +1724,9 @@ matcha                                      Daily digest generator for your RSS 
 maven                                       Java-based project management
                                             |__ https://maven.apache.org/
 
+mbedtls                                     Cryptographic & SSL/TLS library
+                                            |__ https://tls.mbed.org/
+
 mbedtls@3                                   Cryptographic & SSL/TLS library
                                             |__ https://tls.mbed.org/
 
@@ -1765,6 +1779,10 @@ antoniorodr/memo/memo                       CLI app to manage your Apple
 mermaid-cli                                 CLI for Mermaid library
                                             |__ https://github.com/mermaid-js/mermaid-cli
 
+merve                                       C++ lexer for extracting named
+                                            |   exports from CommonJS modules
+                                            |__ https://github.com/nodejs/merve
+
 metabase                                    Business intelligence report server
                                             |__ https://www.metabase.com/
 
@@ -1807,7 +1825,7 @@ mlc                                         Check for broken links in markup fil
                                             |__ https://github.com/becheran/mlc
 
 mlx                                         Array framework for Apple silicon
-                                            |__ https://github.com/ml-explore/mlx
+                                            |__ https://ml-explore.github.io/mlx/build/html/index.html
 
 mlx-lm                                      Run LLMs with MLX
                                             |__ https://github.com/ml-explore/mlx-lm
@@ -1857,6 +1875,10 @@ nanobot                                     Build MCP Agents
 
 nats-server                                 Lightweight cloud messaging system
                                             |__ https://nats.io
+
+nbytes                                      Library of byte handling functions
+                                            |   extracted from Node.js core
+                                            |__ https://github.com/nodejs/nbytes
 
 ncurses                                     Text-based UI library
                                             |__ https://invisible-island.net/ncurses/announce.html
@@ -1912,6 +1934,10 @@ nlohmann-json                               JSON for modern C++
 nmap                                        Port scanning utility for large networks
                                             |__ https://nmap.org/
 
+nng                                         Nanomsg-next-generation --
+                                            |   light-weight brokerless messaging
+                                            |__ https://nng.nanomsg.org/
+
 no-more-secrets                             Recreates the SETEC ASTRONOMY effect from 'Sneakers'
                                             |__ https://github.com/bartobri/no-more-secrets
 
@@ -1951,6 +1977,10 @@ nushell                                     Modern shell for the GitHub era
 
 yakitrak/yakitrak/obsidian-cli              
                                             |__ https://github.com/Yakitrak/obsidian-cli
+
+oh-my-agent                                 Portable multi-agent harness for
+                                            |   .agents-based skills and workflows
+                                            |__ https://github.com/first-fluke/oh-my-agent
 
 oh-my-posh                                  Prompt theme engine for any shell
                                             |__ https://ohmyposh.dev
@@ -2140,6 +2170,10 @@ popt                                        Library like getopt(3) with a number
 portaudio                                   Cross-platform library for audio I/O
                                             |__ https://www.portaudio.com
 
+portless                                    Replace port numbers with stable,
+                                            |   named local URLs for humans and agents
+                                            |__ https://port1355.dev
+
 postgis                                     Adds support for geographic objects to PostgreSQL
                                             |__ https://postgis.net/
 
@@ -2272,6 +2306,10 @@ qt5compat                                   Qt 5 Core APIs that were removed in 
 qtbase                                      Cross-platform application and UI framework
                                             |__ https://www.qt.io/
 
+qtcanvaspainter                             Accelerated 2D painting solution for
+                                            |   Qt Quick and QRhi-based render targets
+                                            |__ https://www.qt.io/
+
 qtcharts                                    UI Components for displaying
                                             |   visually pleasing charts
                                             |__ https://www.qt.io/
@@ -2365,6 +2403,10 @@ qtspeech                                    Enables access to text-to-speech eng
                                             |__ https://www.qt.io/
 
 qtsvg                                       Classes for displaying the contents of SVG files
+                                            |__ https://www.qt.io/
+
+qttasktree                                  General purpose library for
+                                            |   asynchronous task execution
                                             |__ https://www.qt.io/
 
 qttools                                     Facilitate the design, development,
@@ -2578,6 +2620,9 @@ shfmt                                       Autoformat shell script source code
 
 simdjson                                    SIMD-accelerated C++ JSON parser
                                             |__ https://simdjson.org
+
+simdutf                                     Unicode conversion routines, fast
+                                            |__ https://simdutf.github.io/simdutf/
 
 martinemde/tap/skillet                      Run Agent SKILL.md files as
                                             |   shell commands with Claude Code
@@ -2909,6 +2954,10 @@ wangle                                      Modular, composable client/server
                                             |   abstractions framework
                                             |__ https://github.com/facebook/wangle
 
+watch                                       Executes a program periodically,
+                                            |   showing output fullscreen
+                                            |__ https://gitlab.com/procps-ng/procps
+
 watchman                                    Watch files and take action when they change
                                             |__ https://github.com/facebook/watchman
 
@@ -2944,6 +2993,9 @@ whosthere                                   LAN discovery tool with a modern TUI
 
 wik                                         View Wikipedia pages from your terminal
                                             |__ https://github.com/yashsinghcodes/wik
+
+wordnet                                     Lexical database for the English language
+                                            |__ https://wordnet.princeton.edu/
 
 wrkflw                                      Validate and execute GitHub
                                             |   Actions workflows locally
@@ -3048,9 +3100,6 @@ z3                                          High-performance theorem prover
 
 zebra                                       Information management system
                                             |__ https://www.indexdata.com/resources/software/zebra/
-
-zenity                                      GTK+ dialog boxes for the command-line
-                                            |__ https://wiki.gnome.org/Projects/Zenity
 
 zeromq                                      High-performance, asynchronous messaging library
                                             |__ https://zeromq.org/
