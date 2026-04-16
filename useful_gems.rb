@@ -30,14 +30,30 @@ end
 #
 
 gem 'agent99'                 # An intelligent agent framework for Ruby
-gem 'ai_client'               # A generic AI Client for many providers
+# gem 'ai_client'               # A generic AI Client for many providers
 gem 'aia'                     # AI Assistant
+gem 'aias'                    # AIA Scheduler - Running prompts with CRON
 gem 'aigcm'                   # AI-powered git commit message generator
-gem 'cli_helper'              # An encapsulation of an integration of slop, nenv, inifile and configatron.
+gem 'api_key_manager'         # Manage API keys
+# gem 'cli_helper'              # An encapsulation of an integration of slop, nenv, inifile and configatron.
 gem 'debug_me'                # A tool to print the labeled value of variables.
+gem 'fact_db'                 # Event Clock concept for capturing organizational knowledge
+gem 'justprep'                # Pre-processor for the just command line utility
+gem 'myway_config'            # Configuration Flexibility Trumps Convention
+gem 'ocassionally'            # Sometimes it works; and, sometimes it doesn't
 gem 'prompt_manager'          # Manage prompts for use with gen-AI processes
+gem 'ractor_queue'            # Sharable Queue for Ractor Processes in Ruby
 # WIP: gem 'ragdoll'                 # Ruby on Rails Engine
-gem 'rethinkdb_helper'        # A wrapper around the ruby rethinkdb gem
+# gem 'rethinkdb_helper'        # A wrapper around the ruby rethinkdb gem
+gem 'self_agency'             # Exploring the agency of Objects in the LLM era
+gem 'shared_tools'            # Local tool definitions for Ruby-based AI libraries
+gem 'simple_flow'             # Simple workflow orchestration
+gem 'smart_message'           # Like an ORM for messages
+gem 'sqa'                     # Stock Quantitative Analysis library
+gem 'sqa-cli'                 # CLI tool for the SQA library
+gem 'trak_flow'               # Dependency graph-based task tracker
+gem 'typed_bus'               # In-memory fiber-async typed bus for pub/sub
+gem 'writers_room'            # Projects, setups, acts, scenes, characters, and dialog
 
 
 #
@@ -54,12 +70,25 @@ gem 'vernier'             # A next generation CRuby profiler
 # AI-related support libraries and tools
 #
 
-gem 'ragdoll'        # Multi-Modal Retrieval Augmented Generation
-gem 'ragdoll-cli'    # Multi-Modal Retrieval Augmented Generation for the CLI
-gem 'ragdoll-rails'  # Rails engine for Ragdoll RAG system
-gem 'smart_message'  # An abstraction to protect message content from the backend delivery transport.
-gem 'ruby_llm'       # A single delightful Ruby way to work with AI.
-gem 'ruby_llm-mcp'   # A RubyLLM MCP Client
+# gem 'ragdoll'        # Multi-Modal Retrieval Augmented Generation
+# gem 'ragdoll-cli'    # Multi-Modal Retrieval Augmented Generation for the CLI
+# gem 'ragdoll-rails'  # Rails engine for Ragdoll RAG system
+# gem 'smart_message'  # An abstraction to protect message content from the backend delivery transport.
+#
+gem 'ruby_llm'                  # A single delightful Ruby way to work with AI.
+gem 'ruby_llm-agents'           # Agent framework for building LLM-powered agents with RubyLLM
+gem 'ruby_llm-docker'           # Docker management tools for RubyLLM - comprehensive container, image, network, and volume operations
+gem 'ruby_llm-instrumentation'  # Rails instrumentation for RubyLLM
+gem 'ruby_llm-mcp'              # A RubyLLM MCP Client
+gem 'ruby_llm-monitoring'       # Monitoring engine for RubyLLM
+gem 'ruby_llm-pollinations'     # Pollinations AI provider for RubyLLM
+gem 'ruby_llm-responses_api'    # OpenAI Responses API provider for RubyLLM
+gem 'ruby_llm-schema'           # A simple and clean Ruby DSL for creating JSON schemas.
+gem 'ruby_llm-semantic_cache'   # Semantic caching for RubyLLM applications
+gem 'ruby_llm-skills'           # Agent Skills extension for RubyLLM
+gem 'ruby_llm-template'         # Template management system for RubyLLM - organize and reuse ERB templates for AI chat interactions
+gem 'ruby_llm-ups'              # ups.dev integration for RubyLLM
+#
 gem 'raix'           # Ruby AI eXtensions
 gem 'sublayer'       # A model-agnostic Ruby GenerativeAI DSL and Framework
 gem 'vsm'            # Async, recursive agent framework for Ruby (Viable System Model): capsules, tools-as-capsules, streaming tool calls, and observability.
@@ -170,6 +199,7 @@ gem 'bible_gateway'           # An unofficial 'API' for BibleGateway.com.
 gem 'blazer'                  # Explore your data with SQL. Easily create charts and dashboards, and share them with your team.
 gem 'bond'                    # used in IRB completions
 gem 'bootsnap'                # Boot large ruby/rails apps faster
+gem 'brakeman'                # Static analysis security vulnerability scanner for Rails
 gem 'bundler'                 # The best way to manage your application's dependencies
 gem 'bundler-audit'           # Patch-level verification for Bundler
 gem 'bunny'                   # Popular easy to use Ruby client for RabbitMQ
@@ -500,3 +530,79 @@ graphql_schema          Classes for convenient use of GraphQL introspection resu
                         |__ https://github.com/Shopify/graphql_schema
 rspec-graphql_matchers  Collection of rspec matchers to test your graphQL api schema.
                         |__ https://github.com/khamusa/rspec-graphql_matchers
+
+#
+# Background Jobs
+#
+
+gem 'solid_queue'           # DB-backed Active Job queue built into Rails 8
+gem 'mission_control-jobs'  # Web UI dashboard for Solid Queue and Good Job
+gem 'good_job'              # Postgres-based multithreaded background job processor
+gem 'schked'                # Cron-style job scheduler for Sidekiq/Good Job
+
+#
+# Active Record / Database
+#
+
+gem 'active_record-associated_object'  # Attach plain Ruby objects to ActiveRecord models
+gem 'data_migrate'                     # Data migrations separate from schema migrations
+gem 'pghero'                           # Postgres performance dashboard for Rails
+
+#
+# Active Job
+#
+
+gem 'active_job-performs'  # Declarative, typed Active Job interface
+
+#
+# Authentication
+#
+
+gem 'devise'  # Flexible authentication solution for Rails
+
+#
+# Frontend / Inertia / API
+#
+
+gem 'bundlebun'      # Bun.js integration for Rails (replaces esbuild/Webpacker)
+gem 'inertia_rails'  # Inertia.js adapter for Rails
+gem 'alba-inertia'   # Alba serializer integration for Inertia.js responses
+gem 'typelizer'      # Generates TypeScript types from Ruby serializers
+gem 'js-routes'      # JavaScript helpers for named Rails routes
+gem 'reactionview'   # React-like reactive views for Rails
+
+#
+# GraphQL
+#
+
+gem 'graphql'                    # GraphQL language and runtime for Ruby
+gem 'graphql-connections'        # Relay-compatible pagination for graphql-ruby
+gem 'graphql-fragment_cache'     # Fragment caching for graphql-ruby
+gem 'graphql-persisted_queries'  # Persisted query support for graphql-ruby
+gem 'action_policy-graphql'      # Action Policy integration for graphql-ruby
+gem 'graphql-schema_comparator'  # Compare and diff GraphQL schemas
+
+#
+# Performance / Security
+#
+
+gem 'freezolite'  # Automatically freeze string literals for memory savings
+
+#
+# Testing
+#
+
+gem 'factory_bot_rails'  # Rails integration for factory_bot (generators, fixtures)
+gem 'capybara'           # Acceptance test framework for web applications
+gem 'capybara-lockstep'  # Synchronize Capybara with asynchronous JavaScript
+gem 'vcr'                # Record and replay HTTP interactions for deterministic tests
+
+#
+# Development Utilities
+#
+
+gem 'letter_opener-web'  # Browser-based email preview in development
+gem 'flipper'            # Feature flag system for Ruby and Rails
+gem 'pay'                # Subscription payments for Rails (Stripe, Braintree, etc.)
+gem 'stoplight'          # Circuit breaker pattern for Ruby
+gem 'anyway_config'      # Unified configuration from env vars, YAML, and credentials
