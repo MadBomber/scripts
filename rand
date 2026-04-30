@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+# ~/scripts/rand
+
+require 'securerandom'
+
+out_of = ARGV[0]
+out_of = out_of.nil? ? out_of : out_of.to_i.abs
+
+# when out_of is nil returns float less than 1.0
+# when is an integer then returns a positive integer less than out_of
+
+print SecureRandom.rand out_of

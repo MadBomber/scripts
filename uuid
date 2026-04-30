@@ -1,3 +1,5 @@
 #!/usr/bin/env ruby
+# ~/scripts/uuid
+
 require 'securerandom'
-print SecureRandom.uuid
+print SecureRandom.uuid   # same as the v4

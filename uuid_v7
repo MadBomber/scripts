@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+# ~/scripts/uuid_v7
+# Default is zero extra timestamp bits
+# maximum is 12 extra timestamp bits
+
+ets = Integer(ARGV[0] || 0)
+ets = ets > 12 ? 12 : ets
+ets = ets < 0 ? 0 : ets
+
+require 'securerandom'
+print SecureRandom.uuid_v7(extra_timestamp_bits: ets)
