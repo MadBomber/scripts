@@ -8,6 +8,7 @@ ace-support-cli
 ace-support-config
 ace-support-core
 ace-support-fs
+ace-support-models
 action_policy
 action_prompt
 action_push_native
@@ -194,7 +195,10 @@ benry-cmdopt
 benry-recorder
 better_errors
 better_html
+bible_bot
 bible_gateway
+bible_parser
+bible_ref
 bidi2pdf
 bigdecimal
 bin
@@ -398,6 +402,7 @@ ddmetrics
 ddplugin
 dead_end
 debug
+debug-mcp
 debug_inspector
 debug_me
 debugbar
@@ -660,7 +665,6 @@ ghub
 gimuby
 gio2
 girb
-girb-mcp
 girb-ruby_llm
 git
 git-lint
@@ -770,6 +774,7 @@ hnswlib
 hocon
 hoe
 holidays
+honker
 honyaku
 hotwire-livereload
 hotwire-spark
@@ -821,6 +826,7 @@ inifile
 iniparse
 iniparser
 initable
+inkmark
 inline
 inline_svg
 inspectable
@@ -889,6 +895,7 @@ kaminari-core
 karafka-core
 karafka-rdkafka
 kbs
+kernai
 keynote
 keyword-ruby
 kgio
@@ -898,6 +905,8 @@ kramdown
 kramdown-man
 kramdown-parser-gfm
 kredis
+kreuzberg
+kreuzcrawl
 kwalify
 L2
 lacci
@@ -949,6 +958,7 @@ lex-conditioner
 lex-detect
 lex-gemini
 lex-knowledge
+lex-llm
 lex-mesh
 lex-node
 lex-openai
@@ -974,6 +984,7 @@ liquid
 listen
 lite-memoize
 lite-statistics
+liter_llm
 literal
 literate_randomizer
 little-plugger
@@ -981,7 +992,6 @@ live
 llama-rb
 llhttp
 llhttp-ffi
-llm
 llm-docs-builder
 llm-shell
 llm.rb
@@ -989,7 +999,9 @@ llm_classifier
 llm_orchestrator
 llm_rescuer
 llmemory
+locale
 localhost
+lockf.rb
 lockfile
 lode
 log_analyzer
@@ -1003,6 +1015,7 @@ logutils
 loofah
 lookbook
 looksee
+lowfidelity
 lp
 lrama
 lru_redux
@@ -1054,6 +1067,7 @@ milestoner
 mime-types
 mime-types-data
 minds_sdk
+mini_embed
 mini_histogram
 mini_i18n
 mini_magick
@@ -1139,6 +1153,7 @@ nats-pure
 natto
 naturally
 naught
+ncursesw
 necromancer
 neighbor
 nenv
@@ -1254,6 +1269,8 @@ openssl-signature_algorithm
 opentelemetry-api
 opentelemetry-common
 opentelemetry-exporter-otlp
+opentelemetry-instrumentation-base
+opentelemetry-instrumentation-ruby_llm
 opentelemetry-metrics-api
 opentelemetry-metrics-sdk
 opentelemetry-registry
@@ -1499,6 +1516,7 @@ regent
 regexp_parser
 regexp_property_values
 rein
+relay.app
 reline
 repl_type_completor
 reporter
@@ -1534,6 +1552,7 @@ ripper-tags
 riteway
 rllama
 rmagick
+rmail
 ro
 roast
 roast-ai
@@ -1548,7 +1567,6 @@ rom-core
 rom-repository
 rom-sql
 roo
-rooibos
 rotp
 rouge
 rover-df
@@ -1628,6 +1646,7 @@ ruby_engine
 ruby_info
 ruby_llm
 ruby_llm-agents
+ruby_llm-contract
 ruby_llm-docker
 ruby_llm-instrumentation
 ruby_llm-mcp
@@ -1638,6 +1657,8 @@ ruby_llm-schema
 ruby_llm-semantic_cache
 ruby_llm-skills
 ruby_llm-template
+ruby_llm-test
+ruby_llm-top_secret
 ruby_llm-ups
 ruby_llm_swarm
 ruby_llm_swarm-mcp
@@ -1652,6 +1673,7 @@ rubygems-tasks
 rubygems-update
 RubyInline
 rubyllm-semantic_router
+rubyn-code
 rubyntlm
 rubypp
 rubyshell
@@ -1854,6 +1876,7 @@ stuff-classifier
 sublayer
 sugar_refinery
 summary
+sup
 super_diff
 superform
 superglue
@@ -2033,6 +2056,7 @@ view_component-contrib
 virtus
 vite_rails
 vite_ruby
+votd
 vsm
 warden
 wasabi
@@ -2080,6 +2104,8 @@ writers_room
 wt_activerecord_index_spy
 wxruby3
 x
+xapian-ruby
+xchan.rb
 xdg
 xml-simple
 xmlrpc
@@ -2108,6 +2134,7 @@ youplot
 zeitwerk
 zendesk_api
 ZenTest
+zfp
 zlib
 zonebie
 zvec
