@@ -1,3 +1,6 @@
+a2a
+a2a-ruby
+a2a-test-framework
 aasm
 abbrev
 abyss
@@ -65,12 +68,14 @@ aes_key_wrap
 afm
 after_commit_everywhere
 agent-context
+agent2agent
 agent99
 agent_c
 agent_ferrum
 agent_skill_parser
 agent_skills
 agent_skills_configurations
+agentd
 agentf
 agentic
 agents_skill_vault
@@ -155,6 +160,7 @@ attr_json
 attr_required
 attractor
 audited
+auth-sanitizer
 auto_decorator
 auto_html
 autotuner
@@ -232,6 +238,7 @@ bridgetown-sitemap
 bridgetown_obsidian
 brotli
 browser
+browserctl
 brut
 bson
 bubbles
@@ -257,6 +264,7 @@ capybara-mechanize
 capybara-playwright-driver
 capybara-thruster
 caracal
+carbon_fiber
 carrot-top
 case_transform
 caxlsx
@@ -328,6 +336,7 @@ color-logger
 colorator
 colored2
 colorize
+colorize-extended
 colortail
 colsole
 combine_pdf
@@ -882,6 +891,7 @@ json_schemer
 json_skooma
 jsonapi-renderer
 jsonapi-serializable
+jsonrpc-middleware
 jsonrpc-rails
 jumon
 justprep
@@ -920,6 +930,7 @@ lapsoss
 launchy
 lbfgsb
 ld-eventsource
+leann
 lefthook
 legion-apollo
 legion-cache
@@ -1362,6 +1373,7 @@ pmap
 pocketflow
 pocketrb
 podcast-buddy
+polars-df
 polyglot
 postgresql_cursor
 power_assert
@@ -1557,6 +1569,11 @@ ro
 roast
 roast-ai
 robot_lab
+robot_lab-a2a
+robot_lab-document_store
+robot_lab-durable
+robot_lab-ractor
+robot_lab-rails
 roda
 rodf
 role_fu
@@ -1622,6 +1639,7 @@ ruby-lsp
 ruby-lsp-rails
 ruby-lsp-rspec
 ruby-mcp-client
+ruby-merge
 ruby-next
 ruby-next-core
 ruby-next-parser
@@ -1722,6 +1740,7 @@ sassc-rails
 savon
 sawyer
 sax-machine
+scampi
 scanf
 scarpe
 scarpe-components
@@ -1739,6 +1758,7 @@ semantic-cache
 semantic_logger
 semian
 semian-postgres
+senren-ui
 sentry-rails
 sentry-ruby
 sentry-sidekiq
@@ -1773,6 +1793,7 @@ siglip2
 signalize
 signet
 silencer
+simple_a2a
 simple_acp
 simple_calendar
 simple_flow
@@ -1782,6 +1803,7 @@ simple_json_schema_builder
 simple_po_parser
 simple_rag
 simplecov
+simplecov-ai
 simplecov-cobertura
 simplecov-console
 simplecov-html
@@ -1847,6 +1869,7 @@ stackprof
 standard
 standard-custom
 standard-performance
+standardwebhooks
 state_machines
 state_machines-activemodel
 state_machines-activerecord
@@ -1971,6 +1994,7 @@ trak_flow
 transitions
 transproc
 tree_haver
+tree_sitter_language_pack
 treetop
 trick_bag
 trollop

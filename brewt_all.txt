@@ -81,6 +81,9 @@ assimp                                      Portable library for importing
                                             |   many well-known 3D model formats
                                             |__ https://www.assimp.org/
 
+ast-grep                                    Code searching, linting, rewriting
+                                            |__ https://github.com/ast-grep/ast-grep
+
 astro                                       To build and run Airflow DAGs locally
                                             |   and interact with the Astronomer API
                                             |__ https://www.astronomer.io/
@@ -90,6 +93,10 @@ at-spi2-core                                Protocol definitions and daemon for 
 
 atac                                        Simple API client (Postman-like) in your terminal
                                             |__ https://atac.julien-cpsn.com/
+
+atkmm                                       Official C++ interface for the
+                                            |   ATK accessibility toolkit library
+                                            |__ https://www.gtkmm.org/
 
 atkmm@2.28                                  Official C++ interface for the
                                             |   ATK accessibility toolkit library
@@ -568,6 +575,10 @@ muesli/tap/duf                              Disk Usage/Free Utility
 dust                                        More intuitive version of du in rust
                                             |__ https://github.com/bootandy/dust
 
+duti                                        Select default apps for documents
+                                            |   and URL schemes on macOS
+                                            |__ https://github.com/moretension/duti/
+
 dwarfutils                                  Dump and produce DWARF debug
                                             |   information in ELF objects
                                             |__ https://www.prevanders.net/dwarf.html
@@ -876,6 +887,9 @@ glew                                        OpenGL Extension Wrangler Library
 glib                                        Core application library for C
                                             |__ https://docs.gtk.org/glib/
 
+glibmm                                      C++ interface to glib
+                                            |__ https://gtkmm.gnome.org/
+
 glibmm@2.66                                 C++ interface to glib
                                             |__ https://gtkmm.gnome.org/
 
@@ -1079,6 +1093,10 @@ helmify                                     Create Helm chart from Kubernetes ya
 helmsman                                    Helm Charts as Code tool
                                             |__ https://github.com/mkubaczyk/helmsman
 
+hermes-agent                                Self-improving AI agent that
+                                            |   creates skills from experience
+                                            |__ https://hermes-agent.nousresearch.com
+
 heroku/brew/heroku                          Everything you need to get started with Heroku
                                             |__ https://cli.heroku.com
 
@@ -1168,7 +1186,7 @@ imgp                                        High-performance CLI batch image res
                                             |__ https://github.com/jarun/imgp
 
 steipete/tap/imsg                           Send and read iMessage / SMS from the terminal
-                                            |__ https://github.com/steipete/imsg
+                                            |__ https://github.com/openclaw/imsg
 
 infat                                       Tool to set default openers for file
                                             |   formats and url schemes on macOS
@@ -1348,9 +1366,6 @@ libevent                                    Asynchronous event library
 libexif                                     EXIF parsing library
                                             |__ https://libexif.github.io/
 
-libffi                                      Portable Foreign Function Interface library
-                                            |__ https://sourceware.org/libffi/
-
 libgcrypt                                   Cryptographic library based on the code from GnuPG
                                             |__ https://gnupg.org/related_software/libgcrypt/
 
@@ -1467,6 +1482,9 @@ librttopo                                   RT Topology Library
 
 libsamplerate                               Library for sample rate conversion of audio data
                                             |__ https://github.com/libsndfile/libsamplerate
+
+libsigc++                                   Callback framework for C++
+                                            |__ https://libsigcplusplus.github.io/libsigcplusplus/
 
 libsigc++@2                                 Callback framework for C++
                                             |__ https://libsigcplusplus.github.io/libsigcplusplus/
@@ -1611,9 +1629,6 @@ run-llama/liteparse/llamaindex-liteparse    Open-source PDF parsing with spatial
                                             |__ https://github.com/run-llama/liteparse#readme
 
 lld@19                                      LLVM Project Linker
-                                            |__ https://lld.llvm.org/
-
-lld@20                                      LLVM Project Linker
                                             |__ https://lld.llvm.org/
 
 lld@21                                      LLVM Project Linker
@@ -1945,6 +1960,10 @@ node                                        Open-source, cross-platform
                                             |   JavaScript runtime environment
                                             |__ https://nodejs.org/
 
+node@24                                     Open-source, cross-platform
+                                            |   JavaScript runtime environment
+                                            |__ https://nodejs.org/
+
 nom                                         RSS reader for the terminal
                                             |__ https://github.com/guyfedwards/nom
 
@@ -1990,9 +2009,6 @@ oniguruma                                   Regular expressions library
 
 onnx                                        Open standard for machine learning interoperability
                                             |__ https://onnx.ai/
-
-open-mpi                                    High performance message passing library
-                                            |__ https://www.open-mpi.org/
 
 openai-whisper                              General-purpose speech recognition model
                                             |__ https://github.com/openai/whisper
@@ -2154,9 +2170,6 @@ plotutils                                   C/C++ function library for
 plz-cli                                     Copilot for your terminal
                                             |__ https://github.com/m1guelpf/plz-cli
 
-pmix                                        Process Management Interface for HPC environments
-                                            |__ https://openpmix.github.io/
-
 podman                                      Tool for managing OCI containers and pods
                                             |__ https://podman.io/
 
@@ -2213,9 +2226,6 @@ protobuf                                    Protocol buffers (Google's data inte
 protobuf-c                                  Protocol buffers library
                                             |__ https://github.com/protobuf-c/protobuf-c
 
-protobuf@33                                 Protocol buffers (Google's data interchange format)
-                                            |__ https://protobuf.dev/
-
 pspg                                        Unix pager optimized for psql
                                             |__ https://github.com/okbob/pspg
 
@@ -2234,9 +2244,6 @@ pugixml                                     Light-weight C++ XML processing libr
 
 py3cairo                                    Python 3 bindings for the Cairo graphics library
                                             |__ https://cairographics.org/pycairo/
-
-pybind11                                    Seamless operability between C++11 and Python
-                                            |__ https://github.com/pybind/pybind11
 
 pycparser                                   C parser in Python
                                             |__ https://github.com/eliben/pycparser
@@ -2285,10 +2292,6 @@ qman                                        Modern man page viewer
 
 qp                                          Command-line (ND)JSON querying
                                             |__ https://github.com/f5io/qp
-
-qqqa                                        Fast, stateless LLM for your shell:
-                                            |   qq answers; qa runs commands
-                                            |__ https://github.com/iagooar/qqqa
 
 qsv                                         Ultra-fast CSV data-wrangling toolkit
                                             |__ https://qsv.dathere.com/
@@ -2440,6 +2443,10 @@ qwen-code                                   AI-powered command-line workflow too
 
 rabbitmq                                    Messaging and streaming broker
                                             |__ https://www.rabbitmq.com
+
+rabbitmqadmin                               Command-line tool for RabbitMQ
+                                            |   that uses the HTTP API
+                                            |__ https://www.rabbitmq.com/docs/management-cli
 
 rainfrog                                    Database management TUI for PostgreSQL/MySQL/SQLite
                                             |__ https://github.com/achristmascarl/rainfrog
@@ -2713,8 +2720,8 @@ strands-agents-sops                         Standard Operating Procedures for
 suite-sparse                                Suite of Sparse Matrix Software
                                             |__ https://people.engr.tamu.edu/davis/suitesparse.html
 
-steipete/tap/summarize                      Link → clean text → summary
-                                            |__ https://github.com/steipete/summarize
+summarize                                   Multi-modal AI tool to extract and summarize content
+                                            |__ https://summarize.sh
 
 supabase-mcp-server                         MCP Server for Supabase
                                             |__ https://supabase.com/docs/guides/getting-started/mcp
@@ -2847,9 +2854,6 @@ tree                                        Display directories as trees
                                             |__ https://oldmanprogrammer.net/source.php?dir=projects/tree
 
 tree-sitter                                 Incremental parsing library
-                                            |__ https://tree-sitter.github.io/
-
-tree-sitter@0.25                            Incremental parsing library
                                             |__ https://tree-sitter.github.io/
 
 try-rs                                      Temporary workspace manager for fast
@@ -3111,6 +3115,10 @@ zet                                         CLI utility to find the union,
 zfind                                       Search for files (even inside
                                             |   tar/zip/7z/rar) using a SQL-WHERE filter
                                             |__ https://github.com/laktak/zfind
+
+zfp                                         Compressed numerical arrays that
+                                            |   support high-speed random access
+                                            |__ https://zfp.llnl.gov
 
 zig                                         Programming language designed for
                                             |   robustness, optimality, and clarity
