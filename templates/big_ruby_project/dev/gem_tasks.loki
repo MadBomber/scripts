@@ -1,0 +1,58 @@
+# frozen_string_literal: true
+# MadBomber-level gem lifecycle tasks. Universal across all projects.
+# Import from a project-level loki (e.g. `import "../dev/gem_tasks.loki"`).
+#
+# @@gem_name defaults to the current directory's basename (the gem repo name);
+# a component/project may set it earlier if it differs.
+
+class Tasks
+  @@gem_name ||= File.basename(Dir.pwd).freeze
+
+  helper(:gem_version) do
+    file = Dir.glob("lib/**/version.rb").first
+    file ? File.read(file)[/VERSION\s*=\s*['"]([^'"]+)['"]/, 1] : "?.?.?" rescue "?.?.?"
+  end
+
+  desc "Open IRB console with gem loaded"
+  def console
+    if File.exist?("bin/console")
+      sh "bin/console"
+    else
+      sh "bundle exec irb -Ilib -r #{@@gem_name.tr('-', '/')}"
+    end
+  end
+
+  desc "Build gem package"
+  def build
+    sh "bundle exec rake build"
+  end
+
+  desc "Build and install gem locally"
+  depends_on :build
+  def install
+    sh "bundle exec rake install"
+  end
+
+  desc "release", "Release gem to RubyGems (runs quality gate first)"
+  option :yes, aliases: "-y", type: :boolean, default: false, desc: "Skip confirmation prompt"
+  depends_on [:quality, :build]
+  def release
+    version = gem_version
+
+    unless options[:yes]
+      print "Release #{@@gem_name} v#{version} to RubyGems? [y/N] "
+      $stdout.flush
+      return puts "Aborted." unless $stdin.gets.strip.downcase == "y"
+    end
+
+    abort "Working directory is not clean — commit or stash changes first." unless `git status --porcelain`.strip.empty?
+
+    tag = "v#{version}"
+    abort "Tag #{tag} already exists." unless `git tag -l "#{tag}"`.strip.empty?
+
+    sh "git tag #{tag}"
+    sh "git push origin #{tag}"
+    sh "gem push pkg/#{@@gem_name}-#{version}.gem"
+    puts "\nReleased #{@@gem_name} v#{version}."
+  end
+end

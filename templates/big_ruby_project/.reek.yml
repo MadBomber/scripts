@@ -1,0 +1,109 @@
+---
+detectors:
+
+  # Disabled: conflicts with project no-comment coding style.
+  IrresponsibleModule:
+    enabled: false
+
+  # Disabled: private helpers that don't reference self are fine where they are.
+  UtilityFunction:
+    enabled: false
+
+  # Disabled: respond_to? duck-typing is intentional in this codebase.
+  ManualDispatch:
+    enabled: false
+
+  # Disabled: attr_accessor is standard Ruby; public attributes are a design choice.
+  Attribute:
+    enabled: false
+
+  # Disabled: bang methods without non-bang counterparts are common in internal APIs.
+  MissingSafeMethod:
+    enabled: false
+
+  # Disabled: explicit nil checks are idiomatic Ruby (nil? / unless nil, etc.).
+  NilCheck:
+    enabled: false
+
+  # Disabled: framework/tool methods accept the full interface signature even
+  # when individual implementations don't use every parameter.
+  UnusedParameters:
+    enabled: false
+
+  # Default is 1 — fires whenever a method is called even twice. Raise to 2.
+  DuplicateMethodCall:
+    max_calls: 2
+
+  # Default is 5 — too tight for orchestrator/dispatch methods post-extraction.
+  TooManyStatements:
+    max_statements: 8
+
+  # Default is 3 — too low for value objects and git/commit helpers.
+  LongParameterList:
+    max_params: 5
+    overrides:
+      initialize:
+        max_params: 8
+
+  # Default is 15; central framework objects legitimately carry more methods.
+  TooManyMethods:
+    max_methods: 25
+
+  # Default is 4 — too low for orchestrator/config/state objects with many fields.
+  TooManyInstanceVariables:
+    max_instance_variables: 20
+
+  # Default is 5; some modules carry more constants by design.
+  TooManyConstants:
+    max_constants: 8
+
+  # Raise min_clump_size so only truly repeated parameter groups are flagged.
+  DataClump:
+    max_copies: 2
+    min_clump_size: 3
+
+  # Accept standard Ruby short-name conventions for limited-scope variables.
+  UncommunicativeVariableName:
+    accept:
+      - _    # intentionally ignored
+      - a    # array / argument
+      - b    # body / block
+      - c    # char / count / config
+      - d    # data / dir / decision
+      - e    # rescue => e
+      - f    # file / format / flag
+      - h    # hash
+      - i    # index
+      - k    # key
+      - l    # line / list
+      - m    # match / message
+      - n    # number / name
+      - p    # path / param / parser
+      - q    # query
+      - r    # result / response / request
+      - s    # string / source
+      - t    # time / token / type
+      - v    # value
+
+  UncommunicativeParameterName:
+    accept:
+      - e
+      - i
+      - f
+      - k
+      - v
+      - t
+      - r
+      - s
+      - m
+      - n
+      - q
+      - b
+      - p
+
+exclude_paths:
+  - test
+  - examples
+  - docs
+  - coverage
+  - pkg

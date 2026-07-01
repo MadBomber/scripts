@@ -1,0 +1,13 @@
+# frozen_string_literal: true
+# Project-level component tasks for the RobotLab gems.
+#
+# Pulls in the shared MadBomber-level per-component tasks (DRY: one source of
+# truth in madbomber/dev/) and is itself imported by each gem's .loki via
+# `import_up`. Using `import_up "dev/*.loki"` (rather than a fixed ../dev path)
+# means this keeps working no matter how deeply the project is nested under
+# madbomber/ — it walks up from the component until it finds dev/.
+#
+# Add RobotLab-project-specific component overrides below the import; a task
+# defined here (or in a gem's own .loki) overrides the shared one.
+
+import_up "dev/*.loki"

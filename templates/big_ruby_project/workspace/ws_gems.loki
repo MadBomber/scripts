@@ -1,0 +1,100 @@
+# frozen_string_literal: true
+# Gem lifecycle tasks across all repos.
+
+class Tasks
+
+  desc "Run `bundle update` in all repos (refresh locked dependencies to newest allowed)"
+  def bundle_update_all
+    bundle_across_repos("bundle update")
+  end
+
+  desc "Run `bundle install` in all repos (install the locked dependencies)"
+  def bundle_install_all
+    bundle_across_repos("bundle install")
+  end
+
+  desc "Build gem packages in all repos"
+  def build_all
+    @@gems.each do |repo|
+      printf "\e[1;32m%-32s\e[0m building...\n", repo
+      sh "cd \"#{repo}\" && bundle exec rake build"
+    end
+    puts "\nAll gems built."
+  end
+
+  desc "Install all gems locally (core first, then extensions)"
+  def install_all
+    printf "\e[1;32m%-32s\e[0m installing...\n", @@core
+    sh "cd #{@@core} && bundle exec rake install"
+
+    @@extensions.each do |repo|
+      printf "\e[1;32m%-32s\e[0m installing...\n", repo
+      sh "cd \"#{repo}\" && bundle exec rake install"
+    end
+    puts "\nAll gems installed locally."
+  end
+
+  desc "Wire all extension Gemfiles to use local path: sibling (for cross-gem dev)"
+  def wire_local
+    @@extensions.each do |repo|
+      gemfile = "#{repo}/Gemfile"
+      next unless File.exist?(gemfile)
+      content = File.read(gemfile)
+      if content.include?("path:")
+        printf "\e[1;33m%-32s\e[0m already wired\n", repo
+      else
+        updated = content.sub(
+          /^(gem ["']#{@@core}["'])(.*)$/,
+          "gem \"#{@@core}\", path: \"../#{@@core}\""
+        )
+        if updated == content
+          printf "\e[1;31m%-32s\e[0m no #{@@core} gem line found\n", repo
+        else
+          File.write(gemfile, updated)
+          printf "\e[1;32m%-32s\e[0m wired to ../#{@@core}\n", repo
+        end
+      end
+    end
+    puts "\nRun `asgard paths` to verify wiring."
+  end
+
+  desc "Restore all extension Gemfiles to use the released core gem"
+  def unwire_local
+    @@extensions.each do |repo|
+      gemfile = "#{repo}/Gemfile"
+      next unless File.exist?(gemfile)
+      content = File.read(gemfile)
+      updated = content.sub(
+        /^gem ["']#{@@core}["'], path: ["'][^"']+["'].*$/,
+        "gem \"#{@@core}\""
+      )
+      if updated == content
+        printf "\e[1;33m%-32s\e[0m no path: override to remove\n", repo
+      else
+        File.write(gemfile, updated)
+        printf "\e[1;32m%-32s\e[0m restored to released gem\n", repo
+      end
+    end
+    puts "\nRun `asgard paths` to verify. Run `bundle install` in each extension."
+  end
+
+  no_commands do
+    # Run a bundler command in every repo (core first, then extensions, since
+    # extensions path-depend on robot_lab). Continues past a failing repo and
+    # reports a summary rather than aborting on the first error.
+    def bundle_across_repos(cmd)
+      failed = []
+      @@gems.each do |repo|
+        printf "\e[1;32m%-32s\e[0m %s...\n", repo, cmd
+        failed << repo unless system("cd \"#{repo}\" && #{cmd}")
+      end
+
+      puts ""
+      if failed.empty?
+        puts "\e[32mAll #{@@gems.size} repos: `#{cmd}` succeeded.\e[0m"
+      else
+        abort "\e[31m`#{cmd}` failed in: #{failed.join(', ')}\e[0m"
+      end
+    end
+  end
+end

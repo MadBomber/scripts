@@ -1,0 +1,123 @@
+# frozen_string_literal: true
+# Cross-repo quality gates — per-gate status table.
+
+class Tasks
+
+  desc "Run tests in all repos (parallel, output buffered)"
+  def test_all
+    run_across_repos("rake test", label: "Tests")
+  end
+
+  desc "Run RuboCop in all repos (parallel)"
+  def rubocop_all
+    run_across_repos("rubocop", label: "RuboCop")
+  end
+
+  desc "Run RuboCop auto-fix in all repos (sequential)"
+  def rubocop_fix_all
+    @@gems.each do |repo|
+      puts "\n\e[1;33m── #{repo}\e[0m"
+      system("cd \"#{repo}\" && bundle exec rubocop -a")
+    end
+  end
+
+  desc "Run all quality gates and display per-gate status table"
+  def quality_all
+    puts "\nRunning quality gates across all repos...\n"
+
+    mutex   = Mutex.new
+    results = {}
+
+    threads = @@gems.map do |repo|
+      Thread.new do
+        gate_threads = {
+          test:    Thread.new { system("cd \"#{repo}\" && bundle exec rake test         > /dev/null 2>&1") },
+          flay:    Thread.new { system("cd \"#{repo}\" && bundle exec rake flay_check   > flay_output.txt 2>&1") },
+          flog:    Thread.new { system("cd \"#{repo}\" && bundle exec rake flog_check   > flog_output.txt 2>&1") },
+          rubocop: Thread.new { system("cd \"#{repo}\" && bundle exec rubocop           > rubocop_output.txt 2>&1") },
+          reek:    Thread.new { system("cd \"#{repo}\" && asgard reek                   > reek_output.txt 2>&1") }
+        }
+        gates   = gate_threads.transform_values(&:value)
+        branch  = `git -C "#{repo}" rev-parse --abbrev-ref HEAD 2>/dev/null`.strip
+        version = extract_gem_version(repo)
+        mutex.synchronize { results[repo] = { gates: gates, branch: branch, version: version } }
+      end
+    end
+    threads.each(&:join)
+
+    print_quality_table(results)
+  end
+
+  no_commands do
+    def print_quality_table(results)
+      c_lib = 26
+      c_br  = 10
+      c_ver = 10
+
+      header = "  #{"Library".ljust(c_lib)} #{"Branch".ljust(c_br)} #{"Version".ljust(c_ver)} Test   Flay   Flog   RuboCop   Reek"
+      bar    = "  " + "─" * (header.length - 2)
+
+      puts ""
+      puts header
+      puts bar
+
+      all_pass = true
+      @@gems.each do |repo|
+        data    = results[repo] || { gates: { test: false, flay: false, flog: false, rubocop: false, reek: false }, branch: "?", version: "?" }
+        branch  = data[:branch].ljust(c_br)
+        version = data[:version].ljust(c_ver)
+        gates   = data[:gates]
+        all_pass = false if gates.values.any?(&:!)
+
+        cells = %i[test flay flog rubocop reek].map { |g| gate_badge(gates[g]) }.join("   ")
+        puts "  #{repo.ljust(c_lib)} #{branch} #{version} #{cells}"
+      end
+
+      puts bar
+      puts ""
+      if all_pass
+        puts "  \e[32mAll quality gates passed.\e[0m"
+      else
+        puts "  \e[31mOne or more quality gates failed.\e[0m"
+      end
+      puts ""
+    end
+
+    def gate_badge(ok)
+      ok ? "\e[32mPASS\e[0m" : "\e[31mFAIL\e[0m"
+    end
+
+    def run_across_repos(cmd, label:)
+      mutex   = Mutex.new
+      results = {}
+
+      threads = @@gems.map do |repo|
+        Thread.new do
+          output = `cd "#{repo}" && bundle exec #{cmd} 2>&1`
+          ok     = $?.success?
+          mutex.synchronize { results[repo] = { ok: ok, output: output } }
+        end
+      end
+      threads.each(&:join)
+
+      puts "\n#{"=" * 60}"
+      puts "#{label} Results"
+      puts "=" * 60
+
+      results.each do |repo, data|
+        badge = data[:ok] ? "\e[32mPASS\e[0m" : "\e[31mFAIL\e[0m"
+        puts "\n[#{badge}] #{repo}"
+        puts data[:output] if !data[:ok] || verbose?
+      end
+
+      puts "=" * 60
+
+      failed = results.reject { |_, v| v[:ok] }.keys
+      if failed.any?
+        puts ""
+        abort "#{label} failed in: #{failed.join(", ")}"
+      end
+      puts "\nAll repos passed #{label}."
+    end
+  end
+end

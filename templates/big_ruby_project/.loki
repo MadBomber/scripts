@@ -1,0 +1,24 @@
+# frozen_string_literal: true
+# Workspace entry point for a multi-gem Ruby project (core gem + extensions).
+# Run `asgard help` for available tasks. The toolkit is self-contained in
+# ./dev (per-component tasks) and ./workspace (cross-repo orchestration);
+# both are found by walk-up, so nothing here hardcodes the project's location.
+
+import_up "workspace/ws_repos.loki"   # repo lists + @@core/@@github (load first)
+import_up "workspace/*.loki"          # git / overview / quality / gems / sync
+
+class Tasks
+  helper(:workspace_version) do
+    file = @@core ? Dir.glob("#{@@core}/lib/**/version.rb").first : nil
+    file ? File.read(file)[/VERSION\s*=\s*['"]([^'"]+)['"]/, 1] : "?.?.?" rescue "?.?.?"
+  end
+
+  helper(:workspace_name) do
+    (@@core || File.basename(Dir.pwd)).split(/[-_]/).map(&:capitalize).join(" ")
+  end
+
+  header "#{workspace_name} workspace v#{workspace_version} — #{@@gems.size} gems (core: #{@@core || '?'})"
+  footer "Run `asgard help <task>` for usage details"
+
+  default_task :check
+end

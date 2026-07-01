@@ -1,0 +1,123 @@
+# frozen_string_literal: true
+# Sync shared files and bump versions across repos.
+
+class Tasks
+
+  desc "set_env [ENV]", "Switch gems between local (path:) and released. ENV: local|real (omit to toggle)"
+  def set_env(env = nil)
+    envrc   = File.read(".envrc")
+    current = envrc[/BUNDLE_GEMFILE=(\S+)/, 1]
+    abort "BUNDLE_GEMFILE not found in .envrc" unless current
+
+    target = case env
+             when "local" then "Gemfile.local"
+             when "real"  then "Gemfile"
+             when nil     then current == "Gemfile.local" ? "Gemfile" : "Gemfile.local"
+             else abort "Unknown env '#{env}' — use 'local' or 'real'"
+             end
+
+    if current == target
+      puts "Already using \e[1m#{target}\e[0m — no change."
+      return
+    end
+
+    File.write(".envrc", envrc.sub(/BUNDLE_GEMFILE=\S+/, "BUNDLE_GEMFILE=#{target}"))
+
+    label = target == "Gemfile.local" ? "\e[32mlocal (path: ../#{@@core})\e[0m" : "\e[33mreleased gems\e[0m"
+    puts "Switched to #{label}"
+    system("direnv allow")
+  end
+
+  desc "Sync Rakefile, .rubocop.yml, and version to all repos in parallel"
+  depends_on [:sync_rakefiles, :sync_rubocop, :sync_versions]
+  def sync; end
+
+  desc "Set all extension version.rb files to match the core gem's version"
+  def sync_versions
+    core = read_version_file(@@core)
+    abort "Could not read core version" if core.start_with?("(")
+
+    puts "\nSyncing extensions to core version \e[1;36m#{core}\e[0m\n\n"
+    @@extensions.each do |repo|
+      old = read_version_file(repo)
+      if old == core
+        printf "  \e[33m==\e[0m  %-32s already at %s\n", repo, core
+      else
+        write_version_file(repo, core)
+        printf "  \e[32m->\e[0m  %-32s %s -> %s\n", repo, old, core
+      end
+    end
+    puts "\nDone. Run `asgard versions` to verify."
+  end
+
+  desc "Propagate Rakefile.common to all extension repos"
+  def sync_rakefiles
+    abort "Rakefile.common not found" unless File.exist?("Rakefile.common")
+    @@extensions.each do |repo|
+      sh "cp Rakefile.common \"#{repo}/Rakefile\""
+      printf "\e[1;32m%-32s\e[0m updated\n", repo
+    end
+  end
+
+  desc "Propagate .rubocop.yml to all gem-family repos (copy-based projects only)"
+  def sync_rubocop
+    source = ".rubocop.yml.common"
+    unless File.exist?(source)
+      puts "No #{source} — this project uses inherited RuboCop config (.rubocop-base.yml); nothing to sync."
+      return
+    end
+    @@family.each do |repo|
+      sh "cp \"#{source}\" \"#{repo}/.rubocop.yml\""
+      printf "\e[1;32m%-32s\e[0m updated\n", repo
+    end
+  end
+
+  desc "bump_versions [VERSION]", "Bump all version.rb files. Omit VERSION to sync extensions to core."
+  option :version, aliases: "-v", type: :string, default: "", desc: "Target version e.g. 1.2.3 or 1.2.3.1"
+  option :yes,     aliases: "-y", type: :boolean, default: false, desc: "Skip confirmation prompt"
+  def bump_versions
+    target = options[:version]
+
+    if target.empty?
+      target = read_version_file(@@core)
+      repos_to_update = @@extensions
+      action = "Sync extensions to core version #{target}"
+    else
+      abort "Invalid version '#{target}' — expected N.N.N or N.N.N.N" unless target.match?(/\A\d+\.\d+\.\d+(\.\d+)?\z/)
+      repos_to_update = @@family
+      action = "Bump all #{@@core} gems to #{target}"
+    end
+
+    unless options[:yes]
+      print "#{action} — continue? [y/N] "
+      $stdout.flush
+      return puts "Aborted." unless $stdin.gets.strip.downcase == "y"
+    end
+
+    puts "#{action}...\n\n"
+    repos_to_update.each do |repo|
+      old   = read_version_file(repo)
+      write_version_file(repo, target)
+      arrow = old == target ? "\e[33m==\e[0m" : "\e[32m->\e[0m"
+      printf "  %-32s %s %s %s\n", repo, old, arrow, target
+    end
+
+    puts "\nDone. Run `asgard versions` to verify."
+  end
+
+  no_commands do
+    def read_version_file(repo)
+      file = Dir.glob("#{repo}/lib/**/version.rb").first
+      return "(not found)" unless file
+      File.read(file)[/VERSION\s*=\s*['"]([^'"]+)['"]/, 1] || "(parse error)"
+    end
+
+    def write_version_file(repo, new_version)
+      file = Dir.glob("#{repo}/lib/**/version.rb").first
+      return unless file
+      content = File.read(file)
+      updated = content.sub(/VERSION\s*=\s*(['"])([^'"]+)\1/, "VERSION = \\1#{new_version}\\1")
+      File.write(file, updated)
+    end
+  end
+end

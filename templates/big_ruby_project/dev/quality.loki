@@ -1,0 +1,182 @@
+# frozen_string_literal: true
+# MadBomber-level quality-gate tasks. Universal across all projects.
+# Import from a project-level loki (e.g. `import "../dev/quality.loki"`), which
+# component .loki files then reach via `import_up "repo_dev.loki"`.
+
+class Tasks
+  desc "Run the test suite"
+  def test
+    sh "bundle exec rake test"
+  end
+
+  desc "Run tests with verbose output"
+  def test_verbose
+    sh "bundle exec rake test_verbose"
+  end
+
+  desc "Check code style with RuboCop"
+  def rubocop
+    sh "bundle exec rubocop"
+  end
+
+  desc "Auto-correct RuboCop offenses"
+  def rubocop_fix
+    sh "bundle exec rubocop -a"
+  end
+
+  desc "Check code complexity with Flog (warn >=20, fail >=50)"
+  def flog
+    sh "bundle exec rake flog_check"
+  end
+
+  desc "Check for structural code duplication with Flay (mass >= 150)"
+  def flay
+    sh "bundle exec rake flay_check"
+  end
+
+  desc "Check code smells with Reek (fails only on new or worsened files)"
+  def reek
+    current  = reek_scan
+    baseline = load_reek_baseline
+
+    new_files = current.reject { |f, _| baseline.key?(f) }
+    worsened  = current.select { |f, c| baseline.key?(f) && c > baseline[f] }
+    improved  = baseline.count { |f, c| current.key?(f) && current[f] < c }
+    cleaned   = baseline.keys - current.keys
+
+    total_current  = current.values.sum
+    total_baseline = baseline.values.sum
+
+    puts "\nReek: #{total_current} warning(s) across #{current.size} file(s) " \
+         "(#{total_baseline} grandfathered across #{baseline.size} file(s))."
+    puts "  #{cleaned.size} file(s) fully clean — run `asgard reek_baseline` to prune." unless cleaned.empty?
+    puts "  #{improved} file(s) improved — run `asgard reek_baseline` to ratchet down." unless improved.zero?
+
+    problems = new_files.map { |f, c| format("NEW      %3d warning(s): %s", c, f) } +
+               worsened.map  { |f, c| format("WORSENED %3d -> %3d: %s", baseline[f], c, f) }
+
+    if problems.empty?
+      puts "Reek quality gate passed (no new or worsened files)."
+    else
+      puts "\nReek quality gate FAILED:"
+      problems.each { |p| puts "  #{p}" }
+      abort "\nReek: #{problems.size} file(s) regressed. Fix smells, or `asgard reek_baseline` if intentional."
+    end
+  end
+
+  desc "Regenerate the Reek baseline (grandfathers current smell counts per file)"
+  def reek_baseline
+    require "fileutils"
+    FileUtils.mkdir_p(".quality")
+    warnings = reek_scan
+    body = warnings.sort_by { |f, _| f }.map { |f, c| "#{c}\t#{f}" }.join("\n")
+    File.write(".quality/reek_baseline.txt", body.empty? ? "" : "#{body}\n")
+    puts "Wrote #{warnings.size} file(s) with smells to .quality/reek_baseline.txt"
+  end
+
+  desc "Run all quality gates: tests + RuboCop + Flog + Flay + Reek"
+  def quality
+    gates = [
+      ["Tests + Coverage", "bundle exec rake test"],
+      ["RuboCop",          "bundle exec rubocop"],
+      ["Flog Complexity",  "bundle exec rake flog_check"],
+      ["Flay Duplication", "bundle exec rake flay_check"],
+      ["Reek Smells",      -> { reek_gate }]
+    ]
+
+    results = gates.map do |label, command|
+      puts "\n#{"=" * 60}"
+      puts "Quality Gate: #{label}"
+      puts "=" * 60
+      ok = command.respond_to?(:call) ? command.call : system(command)
+      [label, ok ? :pass : :fail]
+    end
+
+    print_quality_summary(results)
+  end
+
+  no_commands do
+    # Smell count per file (only files with >0 smells). The .reek.yml is
+    # resolved by walking up from the cwd (like import_up): a gem-level config
+    # wins, otherwise the shared project-level one is used — DRY by default,
+    # tailorable per gem.
+    def reek_scan
+      require "reek"
+      require "reek/configuration/app_configuration"
+      config_file = find_up(".reek.yml")
+      config = config_file ? Reek::Configuration::AppConfiguration.from_path(Pathname.new(config_file)) : nil
+      sources = Dir.glob("lib/**/*.rb") + Dir.glob("plugins/**/*.rb")
+      sources.each_with_object({}) do |f, acc|
+        count = Reek::Examiner.new(File.read(f), configuration: config).smells.size
+        acc[f] = count if count.positive?
+      end
+    end
+
+    # Nearest ancestor (including cwd) containing +name+, or nil.
+    def find_up(name, from: Dir.pwd)
+      dir = Pathname.new(from).expand_path
+      loop do
+        candidate = dir.join(name)
+        return candidate.to_s if candidate.exist?
+        break if dir.root?
+
+        dir = dir.parent
+      end
+      nil
+    end
+
+    # Grandfathered smell counts from .quality/reek_baseline.txt ("count\tfile").
+    def load_reek_baseline
+      path = File.join(".quality", "reek_baseline.txt")
+      return {} unless File.exist?(path)
+
+      File.readlines(path).each_with_object({}) do |line, acc|
+        count, file = line.strip.split("\t", 2)
+        acc[file] = count.to_i if file && !file.empty?
+      end
+    end
+
+    # Non-aborting gate for the quality summary: true when no new/worsened files.
+    def reek_gate
+      current  = reek_scan
+      baseline = load_reek_baseline
+      new_files = current.reject { |f, _| baseline.key?(f) }
+      worsened  = current.select { |f, c| baseline.key?(f) && c > baseline[f] }
+      (new_files.empty? && worsened.empty?).tap do |ok|
+        report = ok ? "Reek quality gate passed.\n" : reek_failure_report(new_files, worsened, baseline)
+        File.write("reek_output.txt", report)
+      end
+    end
+
+    def reek_failure_report(new_files, worsened, baseline)
+      lines  = ["Reek quality gate FAILED:\n"]
+      lines += new_files.map { |f, c| format("  NEW      %3d warning(s): %s\n", c, f) }
+      lines += worsened.map  { |f, c| format("  WORSENED %3d -> %3d: %s\n", baseline[f], c, f) }
+      lines.join
+    end
+
+    def print_quality_summary(results)
+      green = ->(s) { "\e[32m#{s}\e[0m" }
+      red   = ->(s) { "\e[31m#{s}\e[0m" }
+      width = results.map { |label, _| label.length }.max
+
+      puts "\n#{"=" * 60}"
+      puts "Quality Gate Summary"
+      puts "=" * 60
+      results.each do |label, status|
+        badge = status == :pass ? green.call("PASS") : red.call("FAIL")
+        puts "  [#{badge}] #{label.ljust(width)}"
+      end
+      puts "-" * 60
+
+      passed = results.count { |_, s| s == :pass }
+      failed = results.count { |_, s| s == :fail }
+      tally  = "#{passed} passed, #{failed} failed"
+      puts "  #{failed.zero? ? green.call(tally) : red.call(tally)}"
+      puts "=" * 60
+
+      abort "\n#{red.call("Quality gate failed.")}" unless failed.zero?
+      puts "\n#{green.call("All quality gates passed.")}"
+    end
+  end
+end

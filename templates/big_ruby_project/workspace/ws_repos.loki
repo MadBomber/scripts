@@ -1,0 +1,69 @@
+# frozen_string_literal: true
+# Shared workspace repo lists — the intermediate (projects/) toolkit layer.
+# Imported by each project's .loki via `import_up "workspace/*.loki"`. Every
+# list is auto-derived from the filesystem and parameterized by @@core, so this
+# one file serves any core+extensions gem family (robot_lab, sqa, ...) with no
+# per-project editing.
+
+class Tasks
+  # All component repos = immediate subdirectories that are git repos (contain a
+  # .git dir or file). Used for git ops and status across the whole workspace.
+  @@repos ||= Dir.children(".")
+                 .select { |d| File.directory?(d) && File.exist?(File.join(d, ".git")) }
+                 .sort.freeze
+
+  # Ruby gems = repos that carry a *.gemspec. Used for gem-lifecycle tasks
+  # (build / bundle / quality). Includes independent apps that ship as gems.
+  @@gems ||= @@repos.select { |d| Dir.glob(File.join(d, "*.gemspec")).any? }.freeze
+
+  # The core gem: the gem whose name (plus "-") prefixes an extension family —
+  # "robot_lab" for robot_lab-*, "sqa" for sqa-*. Auto-detected as the shortest
+  # such prefix, so the toolkit adapts to whichever family it runs in.
+  @@core ||= @@gems.select { |g| @@gems.any? { |o| o != g && o.start_with?("#{g}-") } }
+                   .min_by(&:length)
+
+  # Extensions = gems named "<core>-*" that ALSO declare a dependency on the core
+  # gem. Requiring BOTH signals keeps look-alikes out: an app that depends on
+  # core but isn't named "<core>-*" (independent), or a "<core>-*"-named repo
+  # with no core dependency (auto-joins once it declares one).
+  @@extensions ||= if @@core
+                     dep = /add_(?:runtime_)?dependency[\s(]+["']#{Regexp.escape(@@core)}["']/
+                     @@gems.select { |d|
+                       d.start_with?("#{@@core}-") &&
+                         Dir.glob(File.join(d, "*.gemspec")).any? { |gs| File.read(gs).match?(dep) }
+                     }.sort
+                   else
+                     []
+                   end.freeze
+
+  # The release family = core + extensions. Target of shared config (rubocop)
+  # and explicit version bumps. Excludes independent apps and non-dependent repos.
+  @@family ||= (([@@core].compact & @@repos) + @@extensions).freeze
+
+  # Git host/org for the `clone` task, auto-derived from the core gem's origin
+  # remote: git@github.com:Org/core.git -> git@github.com:Org (works for https
+  # remotes too). Falls back to a clearly-marked placeholder for a fresh project
+  # with no remotes yet.
+  @@github ||= begin
+    url = @@repos.map { |r| `git -C "#{r}" remote get-url origin 2>/dev/null`.strip }.reject(&:empty?).first
+    (url ? url.sub(/\.git\z/, "").sub(%r{/[^/]+\z}, "") : "git@github.com:CHANGE_ME").freeze
+  end
+
+  no_commands do
+    # Run `asgard <task>` inside each repo's own context, so a component can
+    # override the project-level behavior by defining its own `<task>`. Repos
+    # that don't define the task are reported and skipped (asgard exits 0 on an
+    # unknown task, so we detect it from the message, not the exit code).
+    def in_each(task, *args)
+      @@repos.each do |repo|
+        printf "\n\e[1;32m── %s\e[0m\n", repo
+        out = `cd "#{repo}" && asgard #{task} #{args.join(" ")} 2>&1`
+        if out.include?("Could not find command")
+          puts "  \e[33mskipped\e[0m — no '#{task}' task in this repo"
+        else
+          print out
+        end
+      end
+    end
+  end
+end

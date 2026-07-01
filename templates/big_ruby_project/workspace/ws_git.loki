@@ -1,0 +1,44 @@
+# frozen_string_literal: true
+# Git operations across all repos.
+
+class Tasks
+
+  desc "Clone all repos (safe to run on an existing workspace)"
+  def clone
+    @@repos.each do |repo|
+      if Dir.exist?(repo)
+        printf "\e[1;33m%-32s\e[0m already exists — skipping\n", repo
+      else
+        printf "\e[1;32m%-32s\e[0m cloning...\n", repo
+        sh "git clone \"#{@@github}/#{repo}.git\""
+      end
+    end
+  end
+
+  desc "Fetch in all repos (delegates to each repo's `fetch` task)"
+  def fetch = in_each("fetch")
+
+  desc "Pull in all repos (delegates to each repo's `pull` task)"
+  def pull = in_each("pull")
+
+  desc "Push in all repos (delegates to each repo's `push` task, so a component can override)"
+  def push = in_each("push")
+
+  desc "each CMD", "Run a shell command in every repo (e.g. asgard each 'git log -1')"
+  def each(cmd)
+    @@repos.each do |repo|
+      puts "\n\e[1;32m── #{repo}\e[0m"
+      system("cd \"#{repo}\" && #{cmd}")
+    end
+  end
+
+  desc "Show current branch in all repos"
+  def branches
+    @@repos.each do |repo|
+      branch = `git -C "#{repo}" rev-parse --abbrev-ref HEAD 2>/dev/null`.strip
+      status = `git -C "#{repo}" status --short 2>/dev/null`.strip
+      dirty  = status.empty? ? "" : " \e[1;33m(dirty)\e[0m"
+      printf "  %-32s %s%s\n", repo, branch, dirty
+    end
+  end
+end

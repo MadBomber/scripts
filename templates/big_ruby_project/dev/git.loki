@@ -1,0 +1,15 @@
+# frozen_string_literal: true
+# MadBomber-level per-repo git tasks. These run in ONE repo's context. A
+# component may override any of them in its own .loki (e.g. aia's `push` also
+# pushes tags), and the project-level cross-repo dispatchers will honor it.
+
+class Tasks
+  desc "Push the current branch to its remote"
+  def push = sh "git push"
+
+  desc "Pull (fast-forward only) from the remote"
+  def pull = sh "git pull --ff-only"
+
+  desc "Fetch from the remote"
+  def fetch = sh "git fetch"
+end
