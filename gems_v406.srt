@@ -37,12 +37,14 @@ active_model-relation
 active_model_serializers
 active_pinecone
 active_record-associated_object
+active_record_doctor
 active_record_extended
 active_record_tracer
 active_record_union
 active_snapshot
 active_type
 activeagent
+activeagents-telemetry
 activecypher
 activegraph
 activejob
@@ -129,6 +131,7 @@ apnotic
 apple_id
 appraisal
 ar_lazy_preload
+archspec
 arel
 array_include_methods
 arrayfields
@@ -263,6 +266,7 @@ byebug
 cafeznik
 callback_hell
 cancancan
+canvas_erd
 capistrano
 capybara
 capybara-mechanize
@@ -382,6 +386,7 @@ crass
 cri
 crimson-code
 cronex
+cruise
 crypt19-rb
 crystalball
 crystalruby
@@ -404,6 +409,7 @@ cuprite
 curses
 cztop
 daemons
+dag_me
 dagwood
 dalli
 danger
@@ -592,6 +598,7 @@ fast_excel
 fast_jsonparser
 fast_resize
 fastembed
+fasterer
 fastimage
 fasttext
 fattr
@@ -927,13 +934,13 @@ keynote
 keyword-ruby
 kgio
 kimurai
+kino
 kmeans-clusterer
 kramdown
 kramdown-man
 kramdown-parser-gfm
 kredis
 kreuzberg
-kreuzcrawl
 kwalify
 kward
 L2
@@ -1580,6 +1587,7 @@ require_all
 requires
 reranker-ruby
 rerun
+rescue_registry
 resend
 resolv
 resolv-replace
@@ -1594,6 +1602,7 @@ retriable
 reverse_markdown
 rexe
 rexml
+rfc-web-link
 rgeo
 rgeo-activerecord
 rgeo-geojson
@@ -1609,11 +1618,16 @@ ro
 roast
 robot_lab
 robot_lab-a2a
+robot_lab-am
+robot_lab-audit
+robot_lab-cyborg
+robot_lab-discovery
 robot_lab-document_store
 robot_lab-durable
 robot_lab-ractor
 robot_lab-rails
 robot_lab-to
+robot_lab-web
 roda
 rodf
 role_fu
@@ -1724,6 +1738,7 @@ ruby_llm-test
 ruby_llm-top_secret
 ruby_llm-tribunal
 ruby_llm-ups
+ruby_llm_mesh
 ruby_llm_swarm
 ruby_llm_swarm-mcp
 ruby_parser
@@ -1792,6 +1807,7 @@ scanf
 scarpe
 scarpe-components
 scenic
+schematist
 screen-recorder
 search_ui
 searchkick
@@ -1823,6 +1839,7 @@ servolux
 set
 sexp_processor
 sexpr
+sghtmltopdf
 shai-cli
 shale
 shared_tools
@@ -2036,6 +2053,7 @@ tmuxinator
 to_bool
 to_llm
 tocer
+token-resolver
 tokenizers
 toml
 toml-rb

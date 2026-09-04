@@ -32,10 +32,10 @@ class Tasks
       Thread.new do
         gate_threads = {
           test:    Thread.new { system("cd \"#{repo}\" && bundle exec rake test         > /dev/null 2>&1") },
-          flay:    Thread.new { system("cd \"#{repo}\" && bundle exec rake flay_check   > flay_output.txt 2>&1") },
-          flog:    Thread.new { system("cd \"#{repo}\" && bundle exec rake flog_check   > flog_output.txt 2>&1") },
+          flay:    Thread.new { system("cd \"#{repo}\" && asgard flay_check             > flay_output.txt 2>&1") },
+          flog:    Thread.new { system("cd \"#{repo}\" && asgard flog_check             > flog_output.txt 2>&1") },
           rubocop: Thread.new { system("cd \"#{repo}\" && bundle exec rubocop           > rubocop_output.txt 2>&1") },
-          reek:    Thread.new { system("cd \"#{repo}\" && asgard reek                   > reek_output.txt 2>&1") }
+          reek:    Thread.new { system("cd \"#{repo}\" && asgard reek_check             > reek_output.txt 2>&1") }
         }
         gates   = gate_threads.transform_values(&:value)
         branch  = `git -C "#{repo}" rev-parse --abbrev-ref HEAD 2>/dev/null`.strip
