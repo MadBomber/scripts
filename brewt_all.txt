@@ -1271,6 +1271,9 @@ jwt-cli                                     Super fast CLI tool to decode
                                             |   and encode JWTs built in Rust
                                             |__ https://github.com/mike-engel/jwt-cli
 
+ketch                                       Web search and scraping for agents
+                                            |__ https://github.com/1broseidon/ketch
+
 kimi-code                                   AI coding agent for your terminal
                                             |__ https://moonshotai.github.io/kimi-code/
 
@@ -2799,6 +2802,9 @@ tcl-tk@8                                    Tool Command Language
 
 telnet                                      User interface to the TELNET protocol
                                             |__ https://opensource.apple.com/
+
+termaid                                     Render Mermaid diagrams in the terminal
+                                            |__ https://github.com/fasouto/termaid
 
 termframe                                   Terminal output SVG screenshot tool
                                             |__ https://github.com/pamburus/termframe

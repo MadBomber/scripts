@@ -427,6 +427,10 @@ amazing_print                           Pretty print Ruby objects with proper in
                                         |   and colors
                                         |__ https://github.com/amazing-print/amazing_print
 
+amoeba                                  Easy copying of rails models and their child
+                                        |   associations.
+                                        |__ http://github.com/amoeba-rb/amoeba
+
 amq-protocol                            AMQP 0.9.1 encoding & decoding library.
                                         |__ https://github.com/ruby-amqp/amq-protocol
 
@@ -569,6 +573,9 @@ async-job-adapter-active_job            A asynchronous job queue for Ruby on Rai
 
 async-job-processor-redis               A asynchronous job queue for Ruby.
                                         |__ https://rubygems.org/gems/async-job-processor-redis
+
+async-limiter                           Execution rate limiting for Async
+                                        |__ https://github.com/socketry/async-limiter
 
 async-pool                              A singleplex and multiplex resource pool for
                                         |   implementing robust clients.
@@ -1325,6 +1332,9 @@ content_disposition                     Ruby gem to create HTTP Content-Disposit
                                         |   with proper escaping/encoding of filenames
                                         |__ https://github.com/shrinerb/content_disposition
 
+context.dev                             Ruby library to access the Context Dev API
+                                        |__ https://gemdocs.org/gems/context.dev
+
 contracts                               Contracts for Ruby.
                                         |__ https://github.com/egonSchiele/contracts.ruby
 
@@ -1472,6 +1482,9 @@ dalli                                   High performance memcached client for Ru
 
 danger                                  Like Unit Tests, but for your Team Culture.
                                         |__ https://github.com/danger/danger
+
+daru                                    Data Analysis in RUby
+                                        |__ http://github.com/SciRuby/daru
 
 darwinning                              A Ruby gem to aid in the use of genetic algorithms.
                                         |__ https://github.com/dorkrawk/darwinning
@@ -2018,6 +2031,10 @@ faktory_worker_ruby                     Ruby worker for Faktory
 falcon                                  A fast, asynchronous, rack-compatible web server.
                                         |__ https://github.com/socketry/falcon
 
+falcon-limiter                          Advanced concurrency control and resource limiting
+                                        |   for Falcon web server.
+                                        |__ https://github.com/socketry/falcon-limiter
+
 falcon-rails                            Easy Falcon and Rails integration.
                                         |__ https://github.com/socketry/falcon-rails
 
@@ -2134,6 +2151,10 @@ feedbag                                 RSS/Atom feed auto-discovery tool
 
 feedjira                                A feed parsing library
                                         |__ https://github.com/feedjira/feedjira
+
+feelings                                Probabilistic conditionals for Ruby:
+                                        |   Feelings(message).like?("genuinely urgent")
+                                        |__ https://github.com/obie/feelings
 
 ferrum                                  Ruby headless Chrome driver
                                         |__ https://github.com/rubycdp/ferrum
@@ -3572,6 +3593,10 @@ little-plugger                          LittlePlugger is a module that provides 
                                         |   plugin management.
                                         |__ http://gemcutter.org/gems/little-plugger
 
+little_ghost                            A Ruby framework for AI features with agents and
+                                        |   composable assemblies
+                                        |__ https://github.com/littleghostai/little_ghost
+
 live                                    Live HTML tags updated via a WebSocket.
                                         |__ https://github.com/socketry/live
 
@@ -4595,6 +4620,9 @@ opentelemetry-common                    Common helpers for OpenTelemetry
 opentelemetry-exporter-otlp             OTLP exporter for the OpenTelemetry framework
                                         |__ https://github.com/open-telemetry/opentelemetry-ruby
 
+opentelemetry-exporter-otlp-common      Common functionality for the OTLP exporters
+                                        |__ https://github.com/open-telemetry/opentelemetry-ruby
+
 opentelemetry-instrumentation-base      Instrumentation Base for the OpenTelemetry framework
                                         |__ https://github.com/open-telemetry/opentelemetry-ruby-contrib
 
@@ -4912,7 +4940,7 @@ plat4m                                  Runtime system detection.
 platform_agent                          Parse user agent to deduce the platform.
                                         |__ https://github.com/basecamp/platform_agent
 
-playwright-ruby-client                  The Ruby binding of playwright driver 1.62.1
+playwright-ruby-client                  The Ruby binding of playwright driver 1.63.0
                                         |__ https://github.com/YusukeIwaki/playwright-ruby-client
 
 plist                                   All-purpose Property List manipulation library
@@ -4932,6 +4960,38 @@ pocketrb                                Pocket-sized Ruby AI agent framework wit
 podcast-buddy                           A simple Ruby command-line tool for dropping in an
                                         |   AI buddy to your podcast.
                                         |__ https://github.com/codenamev/podcast-buddy
+
+poetry                                  Poetry: the AI-native UI component library for
+                                        |   Rails.
+                                        |__ https://poetryui.com
+
+poetry-agent                            Poetry's agent surfaces: MCP server, WebMCP runtime,
+                                        |   AG-UI relay, and A2UI catalog and renderer.
+                                        |__ https://poetryui.com
+
+poetry-charts                           Poetry's chart tier: server-rendered SVG charts for
+                                        |   Rails.
+                                        |__ https://poetryui.com
+
+poetry-core                             Rails engine and component DSL for Poetry, the
+                                        |   AI-native UI component library.
+                                        |__ https://poetryui.com
+
+poetry-extract                          Domain in, theme out: extract a DESIGN.md + design
+                                        |   tokens from any public website.
+                                        |__ https://poetryui.com
+
+poetry-lucide                           Lucide icons for Poetry, vendored and sanitized at a
+                                        |   pinned upstream commit.
+                                        |__ https://poetryui.com
+
+poetry-simple_form                      The simple_form migration bridge for Poetry: f.input
+                                        |   renders Poetry Fields.
+                                        |__ https://poetryui.com
+
+poetry-ui                               The Poetry component library: AI-native UI
+                                        |   components for Rails
+                                        |__ https://poetryui.com
 
 polars-df                               Blazingly fast DataFrames for Ruby
                                         |__ https://github.com/ankane/ruby-polars
@@ -5231,6 +5291,11 @@ rails-html-sanitizer                    This gem is responsible to sanitize HTML
                                         |   in Rails applications.
                                         |__ https://github.com/rails/rails-html-sanitizer
 
+rails-hyperdrive                        Dev-only Rails engine that bootstraps an MCP server
+                                        |   + stack-matched skills, guidelines, agents, and
+                                        |   commands for AI coding agents.
+                                        |__ https://github.com/rails-hyperdrive/rails-hyperdrive
+
 rails-llm                               RailsLLM integrates the llm.rb runtime and its
                                         |   features into Rails. RailsLLM extends the builtin
                                         |   ActiveRecord support available to the llm.rb runtime
@@ -5302,7 +5367,7 @@ rails_pulse                             Self-hosted performance monitoring engin
 
 rails_semantic_logger                   High-performance, asynchronous structured logging
                                         |   that replaces the Rails logger.
-                                        |__ https://logger.rocketjob.io
+                                        |__ https://logger.reidmorrison.com
 
 rails_skills                            Organize AI skills for Rails projects, shared
                                         |   between Claude and Codex
@@ -5660,6 +5725,9 @@ robot_lab-rails                         Rails integration for the robot_lab LLM 
                                         |   framework
                                         |__ https://github.com/MadBomber/robot_lab-rails
 
+robot_lab-sandbox                       OS-level confinement for RobotLab skill scripts.
+                                        |__ https://github.com/MadBomber/robot_lab-sandbox
+
 robot_lab-to                            Autonomous overnight agent loop for RobotLab — run
                                         |   robots while you sleep.
                                         |__ https://github.com/MadBomber/robot_lab-to
@@ -5667,6 +5735,10 @@ robot_lab-to                            Autonomous overnight agent loop for Robo
 robot_lab-web                           Browser console for robot_lab: stream a robot's run
                                         |   over Server-Sent Events.
                                         |__ https://github.com/madbomber/robot_lab-web
+
+robot_wars                              Turn-based last-robot-standing game for RobotLab
+                                        |   robots on a 2D grid board.
+                                        |__ https://github.com/MadBomber/robot_wars
 
 roda                                    Routing tree web toolkit
                                         |__ https://roda.jeremyevans.net
@@ -5954,13 +6026,17 @@ ruby2ruby                               ruby2ruby provides a means of generating
                                         |   code easily from RubyParser compatible Sexps
                                         |__ https://github.com/seattlerb/ruby2ruby
 
+ruby_decision_model                     Ruby client for decision models such as Typesafe Jev
+                                        |__ https://github.com/obie/ruby_decision_model
+
 ruby_engine                             Adds the RubyEngine pseudo-constant.
                                         |__ https://github.com/janlelis/ruby_engine
 
 ruby_info                               Adds the RubyInfo pseudo-constant.
                                         |__ https://github.com/janlelis/ruby_info
 
-ruby_llm                                A single delightful Ruby way to work with AI.
+ruby_llm                                A single, beautiful Ruby framework for all major AI
+                                        |   providers.
                                         |__ https://rubyllm.com
 
 ruby_llm-agents                         Agent framework for building LLM-powered agents with
@@ -5972,6 +6048,9 @@ ruby_llm-code                           AI-powered coding assistant for Ruby (co
 
 ruby_llm-contract                       Contracts + Evals for ruby_llm
                                         |__ https://github.com/justi/ruby_llm-contract
+
+ruby_llm-dagcache                       VCR cassettes for RubyLLM agent trajectories
+                                        |__ https://github.com/itstheraj/ruby_llm-dagcache
 
 ruby_llm-docker                         Docker management tools for RubyLLM - comprehensive
                                         |   container, image, network, and volume operations
@@ -5994,6 +6073,12 @@ ruby_llm-monitoring                     Monitoring engine for RubyLLM
 
 ruby_llm-pollinations                   Pollinations AI provider for RubyLLM
                                         |__ https://github.com/compasify/ruby_llm-pollinations
+
+ruby_llm-providers-apfel                RubyLLM provider for Apfel.
+                                        |__ https://github.com/madbomber/ruby_llm-providers-apfel
+
+ruby_llm-providers-lms                  RubyLLM provider for LM Studio.
+                                        |__ https://github.com/madbomber/ruby_llm-providers-lms
 
 ruby_llm-red_candle                     Red Candle provider for RubyLLM - local LLM
                                         |   execution using quantized GGUF models
@@ -6018,6 +6103,10 @@ ruby_llm-semantic_cache                 Semantic caching for RubyLLM application
 
 ruby_llm-skills                         Agent Skills extension for RubyLLM
                                         |__ https://github.com/kieranklaassen/ruby_llm-skills
+
+ruby_llm-team                           Team collaboration for RubyLLM: delegate work to
+                                        |   named coworkers.
+                                        |__ https://github.com/jetthoughts/ruby_llm-team
 
 ruby_llm-template                       Template management system for RubyLLM - organize
                                         |   and reuse ERB templates for AI chat interactions
@@ -6727,7 +6816,7 @@ sprockets-helpers                       Asset path helpers for Sprockets 2.x & 3
 sprockets-rails                         Sprockets Rails integration
                                         |__ https://github.com/rails/sprockets-rails
 
-sqa                                     sqa - Simple Qualitative Analysis
+sqa                                     sqa - Stock Qualitative Analysis
                                         |__ https://github.com/MadBomber/sqa
 
 sqa-tai                                 SQA::TAI - Technical Analysis Indicators
@@ -6971,6 +7060,10 @@ tabreader                               tabreader - read in tabular datafiles in
 tabulo                                  Terminal table generator
                                         |__ https://github.com/matt-harvey/tabulo
 
+tailwind_merge                          Utility function to efficiently merge Tailwind CSS
+                                        |   classes without style conflicts.
+                                        |__ https://github.com/gjtorikian/tailwind_merge/tree/v1.5.6
+
 tailwindcss-rails                       Integrate Tailwind CSS with the asset pipeline in
                                         |   Rails.
                                         |__ https://github.com/rails/tailwindcss-rails
@@ -7032,9 +7125,16 @@ terrapin                                Run shell commands safely, even with use
                                         |   values
                                         |__ https://github.com/thoughtbot/terrapin
 
-test-cmd.rb                             test-cmd.rb provides an object-oriented interface
-                                        |   for spawning a command
-                                        |__ https://github.com/0x1eef/test-cmd.rb#readme
+test-cmd.rb                             test-cmd.rb is a Go-inspired, object-oriented
+                                        |   interface for running commands on UNIX-like systems,
+                                        |   in the spirit of Go's `os/exec`. A command can be
+                                        |   built by chaining multiple method calls that impact
+                                        |   different command attributes. The environment the
+                                        |   command executes with can be set, its standard input
+                                        |   stream can be written to, and the standard output
+                                        |   and standard error streams are captured so the
+                                        |   parent process can read them.
+                                        |__ https://github.com/r-uby-dev/test-cmd.rb#readme
 
 test-kitchen                            Test Kitchen is an integration tool for developing
                                         |   and testing infrastructure code and software on
@@ -7500,6 +7600,10 @@ vessel                                  High-level web crawling framework
 vial                                    Vial: Fixtures, Reinvented
                                         |__ https://github.com/seuros/vial
 
+view_bind                               Render Rails partials by calling their compiled
+                                        |   method, skipping the per-call render machinery.
+                                        |__ https://github.com/igorkasyanchuk/view_bind
+
 view_component                          A framework for building reusable, testable &
                                         |   encapsulated view components in Ruby on Rails.
                                         |__ https://viewcomponent.org
@@ -7560,7 +7664,7 @@ web-push                                Web Push library for Ruby (RFC8030)
 webclient                               webclient gem - yet (another) universal network
                                         |   client interface for world wide web (www) requests
                                         |   via HTTP
-                                        |__ https://github.com/rubycoco/webclient
+                                        |__ https://github.com/rubycocos/webclient
 
 webdrivers                              Easy download and use of browser drivers.
                                         |__ https://github.com/titusfortner/webdrivers
@@ -7570,7 +7674,7 @@ webfinger                               Ruby WebFinger client library, following
                                         |__ https://github.com/nov/webfinger
 
 webget                                  webget gem - a web (go get) crawler incl. web cache
-                                        |__ https://github.com/rubycoco/webclient
+                                        |__ https://github.com/rubycocos/webclient
 
 webmock                                 Library for stubbing HTTP requests in Ruby.
                                         |__ https://github.com/bblimke/webmock
@@ -7710,7 +7814,7 @@ xpath                                   Generate XPath expressions from Ruby
 
 xrb                                     A fast native templating system that compiles
                                         |   directly to Ruby code.
-                                        |__ https://github.com/ioquatix/xrb
+                                        |__ https://github.com/socketry/xrb
 
 xxhash                                  Ruby wrapper for xxHash lib
                                         |__ http://github.com/nashby/xxhash
