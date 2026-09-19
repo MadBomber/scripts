@@ -987,7 +987,7 @@ capybara-thruster                       Example description
 
 caracal                                 Fast, professional Microsoft Word (docx) writer for
                                         |   Ruby.
-                                        |__ https://github.com/trade-informatics/caracal
+                                        |__ https://github.com/urvin-compliance/caracal
 
 carbon_fiber                            High-performance Ruby Fiber Scheduler backed by Zig
                                         |   with libxev. Pure Ruby and gem async.
@@ -6026,7 +6026,8 @@ ruby2ruby                               ruby2ruby provides a means of generating
                                         |   code easily from RubyParser compatible Sexps
                                         |__ https://github.com/seattlerb/ruby2ruby
 
-ruby_decision_model                     Ruby client for decision models such as Typesafe Jev
+ruby_decision_model                     The decision-model interface for Ruby: OpenRouter
+                                        |   and Typesafe behind one client
                                         |__ https://github.com/obie/ruby_decision_model
 
 ruby_engine                             Adds the RubyEngine pseudo-constant.
@@ -6816,7 +6817,7 @@ sprockets-helpers                       Asset path helpers for Sprockets 2.x & 3
 sprockets-rails                         Sprockets Rails integration
                                         |__ https://github.com/rails/sprockets-rails
 
-sqa                                     sqa - Stock Qualitative Analysis
+sqa                                     sqa - Simple Qualitative Analysis
                                         |__ https://github.com/MadBomber/sqa
 
 sqa-tai                                 SQA::TAI - Technical Analysis Indicators
