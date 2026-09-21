@@ -359,6 +359,9 @@ colortail                                   Like tail(1), but with various
                                             |   colors for specified output
                                             |__ https://github.com/joakim666/colortail
 
+confluence-markdown-exporter                Export Atlassian Confluence pages as Markdown files
+                                            |__ https://github.com/Spenhouet/confluence-markdown-exporter
+
 hashicorp/tap/consul                        Consul
                                             |__ https://www.consul.io
 

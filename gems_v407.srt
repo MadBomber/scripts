@@ -129,6 +129,7 @@ appraisal
 ar_lazy_preload
 archspec
 array_include_methods
+arrayfields
 artii
 Ascii85
 ascii85_native
@@ -284,6 +285,7 @@ chef-winrm
 chef-winrm-elevated
 chef-winrm-fs
 childprocess
+choice
 chromate
 chromedriver-binary
 chronic
@@ -420,6 +422,7 @@ deep-cover-core
 delegate
 dentaku
 derailed_benchmarks
+descriptive_statistics
 desiru
 device_detector
 devise
@@ -571,6 +574,7 @@ fastembed
 fasterer
 fastimage
 fasttext
+fattr
 faye-websocket
 fcntl
 feature_toggles
@@ -766,6 +770,7 @@ hyperclient-mcp
 i18n
 i18n_data
 ice_cube
+ice_nine
 idn-ruby
 iers
 ima
@@ -1103,6 +1108,7 @@ naught
 ncursesw
 necromancer
 neighbor
+nenv
 neo4j-ruby-driver
 neovim
 net-ftp
@@ -1811,6 +1817,7 @@ spring
 sprockets
 sprockets-rails
 sqa
+sqa-bi
 sqa-tai
 sqlite-vec
 sqlite3
@@ -1994,6 +2001,7 @@ unf
 unf_ext
 unicode
 unicode_plot
+unicode_utils
 unicode-display_width
 unicode-emoji
 unicode-types

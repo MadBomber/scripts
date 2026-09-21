@@ -4,7 +4,7 @@ Ascii85                                 Ascii85 encoder/decoder
 
 CFPropertyList                          Read, write and manipulate both binary and XML
                                         |   property lists as defined by apple
-                                        |__ http://github.com/ckruse/CFPropertyList
+                                        |__ https://github.com/ckruse/CFPropertyList
 
 ParseTree                               ParseTree is a C extension (using RubyInline) that
                                         |   extracts the parse tree for an entire class or a
@@ -204,7 +204,7 @@ activematrix                            Rails-native Matrix SDK for building mul
 
 activemodel                             A toolkit for building modeling frameworks (part of
                                         |   Rails).
-                                        |__ http://www.rubyonrails.org
+                                        |__ https://rubyonrails.org
 
 activemodel-serializers-xml             XML serialization for your Active Model objects and
                                         |   Active Record models - extracted from Rails
@@ -215,7 +215,7 @@ activeproject                           A standardized Ruby interface for multip
                                         |__ https://github.com/seuros/active_project
 
 activerecord                            Object-relational mapper framework (part of Rails).
-                                        |__ http://www.rubyonrails.org
+                                        |__ https://rubyonrails.org
 
 activerecord-has_some_of_many           An Active Record extension for creating associations
                                         |   through lateral joins
@@ -423,7 +423,7 @@ anima-core                              A personal AI agent with desires, person
 
 annotate                                Annotates Rails Models, routes, fixtures, and others
                                         |   based on the database schema.
-                                        |__ http://github.com/ctran/annotate_models
+                                        |__ https://github.com/ctran/annotate_models
 
 annotaterb                              A gem for generating annotations for Rails projects.
                                         |__ https://github.com/drwl/annotaterb
@@ -488,6 +488,9 @@ archspec                                Architecture linter for Ruby and Rails.
 array_include_methods                   Array#include_all?, Array#include_any?, and other
                                         |   methods missing from basic Ruby Array API
                                         |__ http://github.com/AndyObtiva/array_include_methods
+
+arrayfields                             arrayfields
+                                        |__ https://github.com/ahoward/arrayfields
 
 artii                                   A little Figlet-based ASCII art generator.
                                         |__ http://github.com/miketierney/artii
@@ -870,7 +873,7 @@ bubbletea                               Ruby wrapper for Charm's bubbletea. A po
                                         |__ https://github.com/marcoroth/bubbletea-ruby
 
 builder                                 Builders for MarkUp.
-                                        |__ http://onestepback.org
+                                        |__ https://github.com/rails/builder
 
 bullet                                  help to kill N+1 queries and unused eager loading.
                                         |__ https://github.com/flyerhzm/bullet
@@ -1017,12 +1020,18 @@ childprocess                            A simple and reliable solution for contr
                                         |   Ruby / OS combination.
                                         |__ https://github.com/enkessler/childprocess
 
+choice                                  Choice is a command line option parser.
+                                        |__ http://www.github.com/defunkt/choice
+
 chromate                                A dead-simple terminal coloring utility.
                                         |__ https://rubygems.org/gems/chromate
 
 chromedriver-binary                     Automatically downloads and installs ChromeDriver
                                         |   binaries.
                                         |__ https://github.com/dieter-medium/chromedriver-binary
+
+chronic                                 Natural language date/time parsing.
+                                        |__ http://github.com/mojombo/chronic
 
 chrono_machines                         A robust Ruby gem for implementing retry mechanisms
                                         |   with exponential backoff and jitter.
@@ -1492,6 +1501,9 @@ dentaku                                 A formula language parser and evaluator
 derailed_benchmarks                     Benchmarks designed to performance test your ENTIRE
                                         |   site
                                         |__ https://github.com/zombocom/derailed_benchmarks
+
+descriptive_statistics                  Descriptive Statistics
+                                        |__ https://github.com/thirtysixthspan/descriptive_statistics
 
 desiru                                  Declarative Self-Improving Ruby - A Ruby port of
                                         |   DSPy
@@ -2009,6 +2021,9 @@ fastimage                               FastImage - Image info fast
 fasttext                                Efficient text classification and representation
                                         |   learning for Ruby
                                         |__ https://github.com/ankane/fastText-ruby
+
+fattr                                   fattr
+                                        |__ https://github.com/ahoward/fattr
 
 faye-websocket                          Standards-compliant WebSocket server and client
                                         |__ https://github.com/faye/faye-websocket-ruby
@@ -2673,6 +2688,9 @@ i18n_data                               country/language names and 2-letter-code
 ice_cube                                Ruby Date Recurrence Library
                                         |__ https://ice-cube-ruby.github.io/ice_cube/
 
+ice_nine                                Deep Freeze Ruby Objects
+                                        |__ https://github.com/dkubb/ice_nine
+
 idn-ruby                                LibIDN Ruby Bindings.
                                         |__ http://github.com/deepfryed/idn-ruby
 
@@ -3304,10 +3322,8 @@ llm-docs-builder                        Build and optimize documentation for LLM
                                         |   llms.txt, transform markdown, and more
                                         |__ https://github.com/mensfeld/llm-docs-builder
 
-llm-shell                               llm-shell is an extensible, developer-oriented
-                                        |   command-line console that can interact with multiple
-                                        |   Large Language Models (LLMs).
-                                        |__ https://github.com/llmrb/llm-shell
+llm-shell                               The llm.rb console in a single RubyGem
+                                        |__ https://r.uby.dev
 
 llm.rb                                  Ruby's most capable AI runtime
                                         |__ https://github.com/llmrb/llm.rb
@@ -3389,9 +3405,10 @@ lucide-rails                            Ruby on Rails views helper method for re
                                         |   Lucide icons.
                                         |__ https://github.com/heyvito/lucide-rails
 
-lumberjack                              A simple, powerful, and fast logging utility with
-                                        |   excellent structured logging support that can be a
-                                        |   drop in replacement for the standard library Logger.
+lumberjack                              Extension of Ruby’s standard Logger for advanced,
+                                        |   structured logging. Includes log entry attributes,
+                                        |   context isolation, customizable formatters, flexible
+                                        |   output devices, and testing tools.
                                         |__ https://github.com/bdurand/lumberjack
 
 lumberjack_json_device                  A logging device for the lumberjack gem that writes
@@ -3731,8 +3748,8 @@ money-heuristics                        Heuristic module for the money gem
 money-rails                             Money gem integration with Rails
                                         |__ https://github.com/RubyMoney/money-rails
 
-mongo                                   Ruby driver for the MongoDB
-                                        |__ http://www.mongodb.org
+mongo                                   Ruby driver for MongoDB
+                                        |__ https://mongodb.com/docs/ruby-driver/
 
 monkeyspaw                              A prompt-driven web framework for Ruby - be careful
                                         |   what you wish for
@@ -3855,6 +3872,9 @@ necromancer                             Conversion from one object type to anoth
 
 neighbor                                Nearest neighbor search for Rails
                                         |__ https://github.com/ankane/neighbor
+
+nenv                                    Convenience wrapper for Ruby's ENV
+                                        |__ https://github.com/e2/nenv
 
 neo4j-ruby-driver                       Clean Neo4j Bolt driver implementation for Ruby
                                         |__ https://github.com/neo4jrb/neo4j-ruby-driver
@@ -4543,8 +4563,7 @@ podcast-buddy                           A simple Ruby command-line tool for drop
                                         |   AI buddy to your podcast.
                                         |__ https://github.com/codenamev/podcast-buddy
 
-poetry                                  Poetry: the AI-native UI component library for
-                                        |   Rails.
+poetry                                  Poetry: the AI-native frontend framework for Rails.
                                         |__ https://poetryui.com
 
 poetry-agent                            Poetry's agent surfaces: MCP server, WebMCP runtime,
@@ -4556,7 +4575,7 @@ poetry-charts                           Poetry's chart tier: server-rendered SVG
                                         |__ https://poetryui.com
 
 poetry-core                             Rails engine and component DSL for Poetry, the
-                                        |   AI-native UI component library.
+                                        |   AI-native frontend framework for Rails.
                                         |__ https://poetryui.com
 
 poetry-extract                          Domain in, theme out: extract a DESIGN.md + design
@@ -6308,6 +6327,10 @@ sprockets-rails                         Sprockets Rails integration
 sqa                                     sqa - Simple Qualitative Analysis
                                         |__ https://github.com/MadBomber/sqa
 
+sqa-bi                                  Bayesian inference over discrete outcomes from time
+                                        |   series data
+                                        |__ https://github.com/MadBomber/sqa-bi
+
 sqa-tai                                 SQA::TAI - Technical Analysis Indicators
                                         |__ https://github.com/MadBomber/sqa-tai
 
@@ -6627,9 +6650,9 @@ the_local                               Resident Claude Code expert subagents, c
                                         |   by the gems an app uses.
                                         |__ https://github.com/DYB-Development/the_local
 
-thor                                    A scripting framework that replaces rake, sake and
-                                        |   rubigen
-                                        |__ http://github.com/wycats/thor
+thor                                    Thor is a toolkit for building powerful command-line
+                                        |   interfaces.
+                                        |__ http://whatisthor.com/
 
 throttle_machines                       Advanced Rate limiting for Ruby applications
                                         |__ https://github.com/seuros/throttle_machines
@@ -6908,8 +6931,8 @@ typeprof                                TypeProf is a type analysis tool for Rub
 typhoeus                                Parallel HTTP library on top of libcurl multi.
                                         |__ https://github.com/typhoeus/typhoeus
 
-tzinfo                                  Daylight-savings aware timezone library
-                                        |__ http://tzinfo.github.io
+tzinfo                                  Time Zone Library
+                                        |__ https://tzinfo.github.io
 
 tzinfo-data                             Timezone Data for TZInfo
                                         |__ https://tzinfo.github.io
@@ -6940,7 +6963,7 @@ unicode                                 Unicode normalization library.
 
 unicode-display_width                   Determines the monospace display width of a string
                                         |   in Ruby.
-                                        |__ http://github.com/janlelis/unicode-display_width
+                                        |__ https://github.com/janlelis/unicode-display_width
 
 unicode-emoji                           Emoji data and regex
                                         |__ https://github.com/janlelis/unicode-emoji
@@ -6953,6 +6976,9 @@ unicode-version                         Ruby / Unicode / Emoji versions mapping
 
 unicode_plot                            Plot your data by Unicode characters
                                         |__ https://github.com/red-data-tools/unicode_plot.rb
+
+unicode_utils                           additional Unicode aware functions for Ruby 1.9
+                                        |__ http://github.com/lang/unicode_utils
 
 unicorn                                 Rack HTTP server for fast clients and Unix
                                         |__ https://yhbt.net/unicorn/
