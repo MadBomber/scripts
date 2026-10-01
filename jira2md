@@ -1,0 +1,107 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+#
+# jira2md — convert saved Jira issue JSON files into markdown documents.
+#
+# Usage:
+#   jira2md [options] PATH [PATH ...]
+#
+# Options:
+#   -d, --debug    print debugging output (via debug_me)
+#   -v, --verbose  report each file as it is converted and a final summary
+#   -h, --help     show this help (--ehlp is accepted as an alias)
+#
+# A PATH may be a JSON file or a directory. A directory contributes every
+# *.json file directly inside it. Each FOO.json is rendered to FOO.md in the
+# same directory as the JSON file, using the same renderer as jira_get.rb.
+#
+# Environment:
+#   JIRA_SITE  fallback site URL for ticket links when the JSON has no "self"
+#              URL (default: https://ds-connect.atlassian.net)
+
+require "json"
+require "optparse"
+require "uri"
+require_relative File.join(File.dirname(File.realpath(__FILE__)), "jira_get")
+
+class Jira2Md
+  attr_reader :debug, :verbose
+
+  def initialize(debug: false, verbose: false)
+    @debug   = debug
+    @verbose = verbose
+    return unless debug
+
+    require "debug_me"
+    extend DebugMe
+  end
+
+  # Parses argv into [options_hash, remaining_paths]. Prints help and exits
+  # for -h/--help (and the --ehlp alias).
+  def self.parse_options(argv)
+    options = { debug: false, verbose: false }
+    parser = OptionParser.new do |o|
+      o.banner = "usage: jira2md [options] PATH [PATH ...]"
+      o.separator "  PATH is a Jira JSON file or a directory of them"
+      o.separator ""
+      o.on("-d", "--debug", "print debugging output")         { options[:debug] = true }
+      o.on("-v", "--verbose", "report progress and a summary") { options[:verbose] = true }
+      o.on("-h", "--help", "--ehlp", "show this help")         { puts o; exit }
+    end
+    [options, parser.parse(argv)]
+  rescue OptionParser::ParseError => e
+    abort "jira2md: #{e.message}\n#{parser}"
+  end
+
+  # Expands directories to their *.json files; passes files through.
+  def expand(paths)
+    paths.flat_map do |path|
+      File.directory?(path) ? Dir.glob(File.join(path, "*.json")).sort : [path]
+    end
+  end
+
+  def md_path_for(json_path)
+    json_path.sub(/\.json\z/i, "") + ".md"
+  end
+
+  # Derives the site root from the issue's REST "self" URL, else falls back.
+  def site_for(issue, fallback: ENV.fetch("JIRA_SITE", JiraGet::DEFAULT_SITE))
+    uri = URI(issue["self"].to_s)
+    uri.host ? "#{uri.scheme}://#{uri.host}" : fallback.chomp("/")
+  rescue URI::InvalidURIError
+    fallback.chomp("/")
+  end
+
+  def convert(json_path)
+    issue = JSON.parse(File.read(json_path))
+    raise "not a Jira issue (no key)" unless issue.is_a?(Hash) && issue["key"]
+
+    md_path = md_path_for(json_path)
+    File.write(md_path, MarkdownRenderer.new(issue, site: site_for(issue)).render)
+    puts "#{json_path} -> #{md_path}" if verbose
+    debug_me { %i[json_path md_path] } if debug
+  end
+
+  def run(paths)
+    abort "usage: jira2md [options] PATH [PATH ...]  (see --help)" if paths.empty?
+
+    files = expand(paths)
+    debug_me { %i[paths files] } if debug
+    abort "jira2md: no JSON files found" if files.empty?
+
+    failures = files.reject do |file|
+      convert(file)
+      true
+    rescue StandardError => e
+      $stderr.puts "jira2md: #{file}: #{e.message}"
+      false
+    end
+    $stderr.puts "jira2md: #{files.size - failures.size} converted, #{failures.size} failed" if verbose
+    exit(failures.empty? ? 0 : 1)
+  end
+end
+
+if __FILE__ == $PROGRAM_NAME
+  options, paths = Jira2Md.parse_options(ARGV)
+  Jira2Md.new(**options).run(paths)
+end

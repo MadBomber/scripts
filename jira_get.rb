@@ -102,7 +102,14 @@ class MarkdownRenderer
 
   def key = @issue["key"]
 
-  def fields = @issue["fields"] || {}
+# Real "fields" win; values missing there (some saved JSON keeps only
+# "parent") fall back to versionedRepresentations, whose entries are keyed
+# by version number ("1").
+def fields = @fields ||= versioned_fields.merge(@issue["fields"] || {})
+
+def versioned_fields
+  (@issue["versionedRepresentations"] || {}).transform_values { |v| v.is_a?(Hash) ? v.values.last : v }
+end
 
   def metadata_table
     rows = {
