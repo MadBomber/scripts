@@ -295,11 +295,11 @@ class JiraGet
   def write_graph(issue)
     key = issue["key"]
     $stderr.puts "jira_get: building dependency graph for #{key}" if verbose?
-    return File.write(graph_path(key), DependencyGraph.new(issue).to_svg) && nil unless epic?(issue)
+    return File.write(graph_path(key), DependencyGraph.new(issue, site:).to_svg) && nil unless epic?(issue)
 
     children = epic_children(key)
     $stderr.puts "jira_get: #{key} is an epic with #{children.size} ticket(s)" if verbose?
-    File.write(graph_path(key), EpicGraph.new(issue, children).to_svg)
+    File.write(graph_path(key), EpicGraph.new(issue, children, site:).to_svg)
     " (epic graph: #{children.size} ticket#{"s" unless children.size == 1})"
   end
 
@@ -512,6 +512,26 @@ module GraphSupport
   TICKET_COLOR   = "#f0883e"
   EXTERNAL_COLOR = "#6e7681"
 
+  # Background and border color for each Jira status, in workflow order.
+  # Names are matched case-insensitively; edit here when the workflow changes.
+  # A status not listed gets DEFAULT_FILL with a grey border.
+  STATUS_STYLES = {
+    "Backlog"   => {fill: "#262c33", stroke: "#8b949e"}, # grey
+    "Shaping"   => {fill: "#3b2a63", stroke: "#a371f7"}, # purple
+    "Planning"  => {fill: "#124a4a", stroke: "#39c5cf"}, # teal
+    "Up Next"   => {fill: "#1d4577", stroke: "#58a6ff"}, # blue
+    "Building"  => {fill: "#5c2340", stroke: "#f778ba"}, # rose
+    "In Review" => {fill: "#6b5a0c", stroke: "#e3b341"}, # yellow
+    "Done"      => {fill: "#1e5a32", stroke: "#3fb950"}  # green
+  }.freeze
+  DEFAULT_FILL   = "#161b22"
+  DEFAULT_STROKE = "#8b949e"
+
+  # {fill:, stroke:} for a status name; nil when it is not in STATUS_STYLES.
+  def status_style(name)
+    STATUS_STYLES.find { |status, _| status.casecmp?(name.to_s) }&.last
+  end
+
   def links_of(issue) = Array(issue.dig("fields", "issuelinks"))
 
   # The linked issue and the link's wording relative to the owning issue
@@ -532,8 +552,18 @@ module GraphSupport
 
   def truncate(text, max = 36) = text.length > max ? "#{text[0, max - 1]}…" : text
 
+  # Jira page for a ticket, or nil when the graph was built without a site.
+  def browse_url(key) = @site && "#{@site}/browse/#{key}"
+
+  # Wraps SVG markup in a link to the ticket's Jira page (new tab), with a
+  # tooltip of the ticket's full title; returns the markup unchanged without a site.
+  def linked(key, title, markup)
+    url = browse_url(key) or return markup
+    %(<a href="#{escape(url)}" xlink:href="#{escape(url)}" target="_blank"><title>#{escape("#{key} — #{title}")}</title>\n#{markup}\n</a>)
+  end
+
   def svg_open(width, height)
-    %(<svg xmlns="http://www.w3.org/2000/svg" width="#{width}" height="#{height}" viewBox="0 0 #{width} #{height}" font-family="-apple-system, Helvetica, Arial, sans-serif">)
+    %(<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="#{width}" height="#{height}" viewBox="0 0 #{width} #{height}" font-family="-apple-system, Helvetica, Arial, sans-serif">)
   end
 
   def defs
@@ -556,21 +586,26 @@ module GraphSupport
     %(<path d="M#{x1},#{sy} C#{mid},#{sy} #{mid},#{ey} #{x2 - 2},#{ey}" fill="none" stroke="#8b949e" stroke-width="1.6" marker-end="url(#arrow)"/>)
   end
 
-  # style: :member (colored by status), :ticket (the focus ticket/epic, orange),
-  # or :external (outside the epic: grey, dashed).
+  # The background always follows the status (see STATUS_STYLES).
+  # style picks the border: :member (status color), :ticket (the focus
+  # ticket/epic, orange), or :external (outside the epic: grey, dashed).
   def box(node, x, y, style: :member)
-    color  = {ticket: TICKET_COLOR, external: EXTERNAL_COLOR}.fetch(style) { CATEGORY_COLORS.fetch(node[:category], "#8b949e") }
+    colors = status_style(node[:status])
+    fill   = colors ? colors[:fill] : DEFAULT_FILL
+    member = colors ? colors[:stroke] : DEFAULT_STROKE
+    color  = {ticket: TICKET_COLOR, external: EXTERNAL_COLOR}.fetch(style, member)
     stroke = style == :ticket ? 2.5 : 1.5
     dash   = style == :external ? ' stroke-dasharray="6 4"' : ""
-    status = style == :external ? "#{node[:status]} · outside epic" : node[:status]
-    <<~SVG.chomp
+    status = node[:status].to_s.empty? ? "" : %( <tspan fill="#b1bac4" font-size="12" font-weight="400">(#{escape(node[:status])})</tspan>)
+    note   = style == :external ? %(\n        <text x="#{x + 12}" y="#{y + 54}" fill="#b1bac4" font-size="11">outside this epic</text>) : ""
+    markup = <<~SVG.chomp
       <g>
-        <rect x="#{x}" y="#{y}" width="#{NODE_W}" height="#{NODE_H}" rx="8" fill="#161b22" stroke="#{color}" stroke-width="#{stroke}"#{dash}/>
-        <text x="#{x + 12}" y="#{y + 20}" fill="#{color}" font-size="14" font-weight="700">#{escape(node[:key])}</text>
-        <text x="#{x + 12}" y="#{y + 38}" fill="#e6edf3" font-size="12">#{escape(truncate(node[:summary]))}</text>
-        <text x="#{x + 12}" y="#{y + 54}" fill="#8b949e" font-size="11">#{escape(status)}</text>
+        <rect x="#{x}" y="#{y}" width="#{NODE_W}" height="#{NODE_H}" rx="8" fill="#{fill}" stroke="#{color}" stroke-width="#{stroke}"#{dash}/>
+        <text x="#{x + 12}" y="#{y + 20}" fill="#{color}" font-size="14" font-weight="700">#{escape(node[:key])}#{status}</text>
+        <text x="#{x + 12}" y="#{y + 38}" fill="#e6edf3" font-size="12">#{escape(truncate(node[:summary]))}</text>#{note}
       </g>
     SVG
+    linked(node[:key], node[:summary], markup)
   end
 end
 
@@ -580,8 +615,9 @@ end
 class DependencyGraph
   include GraphSupport
 
-  def initialize(issue)
+  def initialize(issue, site: nil)
     @issue = issue
+    @site  = site
   end
 
   def key = @issue["key"]
@@ -641,9 +677,10 @@ class EpicGraph
 
   BANNER_H = 64
 
-  def initialize(epic, children)
+  def initialize(epic, children, site: nil)
     @epic     = epic
     @children = children
+    @site     = site
   end
 
   def key = @epic["key"]
@@ -773,23 +810,43 @@ class EpicGraph
     parts.join("\n")
   end
 
-  # Title block for the epic plus the line-style legend.
+  # [fill, border, dash, label] for each legend entry: every status in
+  # STATUS_STYLES, any other status, and tickets outside the epic.
+  def legend_items
+    STATUS_STYLES.map { |status, c| [c[:fill], c[:stroke], nil, status] } +
+      [[DEFAULT_FILL, DEFAULT_STROKE, nil, "Other status"],
+       [DEFAULT_FILL, EXTERNAL_COLOR, "6 4", "Outside this epic"]]
+  end
+
+  # Legend swatches, three rows per column, at the right of the banner.
+  def legend(width)
+    items = legend_items
+    columns = items.each_slice(3).to_a
+    columns.each_with_index.flat_map do |col, c|
+      x = width - MARGIN - 150 * (columns.size - c) - 10
+      col.each_with_index.map do |(fill, stroke, dash, label), r|
+        y = MARGIN + 9 + r * 17
+        dash_attr = dash ? %( stroke-dasharray="#{dash}") : ""
+        %(<rect x="#{x}" y="#{y}" width="26" height="12" rx="3" fill="#{fill}" stroke="#{stroke}" stroke-width="1.5"#{dash_attr}/>) +
+          %(<text x="#{x + 34}" y="#{y + 10}" fill="#8b949e" font-size="11">#{escape(label)}</text>)
+      end
+    end.join("\n")
+  end
+
+  # Title block for the epic plus the legend.
   def banner(width)
     epic = nodes[key]
     w = width - MARGIN * 2
     summary = "#{@children.size} ticket#{"s" unless @children.size == 1}, #{edges.size} dependency link#{"s" unless edges.size == 1}"
-    <<~SVG.chomp
+    title_block = <<~SVG.chomp
       <g>
         <rect x="#{MARGIN}" y="#{MARGIN}" width="#{w}" height="#{BANNER_H}" rx="8" fill="#161b22" stroke="#{TICKET_COLOR}" stroke-width="2.5"/>
         <text x="#{MARGIN + 14}" y="#{MARGIN + 24}" fill="#{TICKET_COLOR}" font-size="16" font-weight="700">#{escape(epic[:key])} · EPIC</text>
         <text x="#{MARGIN + 14}" y="#{MARGIN + 43}" fill="#e6edf3" font-size="14">#{escape(truncate(epic[:summary], 70))}</text>
         <text x="#{MARGIN + 14}" y="#{MARGIN + 58}" fill="#8b949e" font-size="11">#{escape(epic[:status])} · #{summary}</text>
-        <rect x="#{width - MARGIN - 190}" y="#{MARGIN + 14}" width="26" height="12" rx="3" fill="none" stroke="#58a6ff" stroke-width="1.5"/>
-        <text x="#{width - MARGIN - 156}" y="#{MARGIN + 24}" fill="#8b949e" font-size="11">in this epic (color = status)</text>
-        <rect x="#{width - MARGIN - 190}" y="#{MARGIN + 36}" width="26" height="12" rx="3" fill="none" stroke="#{EXTERNAL_COLOR}" stroke-width="1.5" stroke-dasharray="6 4"/>
-        <text x="#{width - MARGIN - 156}" y="#{MARGIN + 46}" fill="#8b949e" font-size="11">outside this epic</text>
       </g>
     SVG
+    "#{linked(epic[:key], epic[:summary], title_block)}\n#{legend(width)}"
   end
 end
 
