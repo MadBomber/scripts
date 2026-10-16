@@ -1,0 +1,595 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+# epic_graph — render a Jira epic's member tickets and their "blocks" dependencies.
+#
+#   bin/epic_graph DSVBR-166            # writes DSVBR-166.md and DSVBR-166.svg in the cwd
+#   bin/epic_graph 166 --out notes/jira # bare number is prefixed with "$JIRA_PROJECT-"
+#   bin/epic_graph 166 180 DSVBR-190    # one .md and .svg per epic
+#
+# A ticket that is not an Epic is reported on stderr and the program exits 1.
+#
+# Environment (set by direnv in this workspace):
+#   JIRA_SITE          https://<tenant>.atlassian.net
+#   JIRA_USER_EMAIL    account email for basic auth
+#   JIRA_API_KEY       Atlassian API token
+#   JIRA_PROJECT       optional; default project key for bare ticket numbers
+#
+# Output:
+#   <EPIC>.md   Markdown report: status roll-up, member table, dependency list
+#   <EPIC>.svg  Dark-theme, transparent-background dependency graph. Each box is
+#               color coded by status and links to the ticket in Jira.
+
+require "json"
+require "net/http"
+require "optparse"
+require "uri"
+require "cgi"
+require "fileutils"
+
+module EpicGraph
+  # ------------------------------------------------------------------ data --
+
+  Ticket = Data.define(:key, :summary, :type, :status, :category, :assignee, :blocks, :blocked_by, :related, :member) do
+    def url(site) = "#{site}/browse/#{key}"
+  end
+
+  Epic = Data.define(:key, :summary, :status, :category, :tickets) do
+    def members = tickets.select(&:member)
+    def externals = tickets.reject(&:member)
+    def [](key) = tickets.find { it.key == key }
+  end
+
+  # Report date shown at the top of both outputs, e.g. "2026-10-07 12:30:05 CDT (UTC-05:00)".
+  def self.report_date(time = Time.now) = time.strftime("%Y-%m-%d %H:%M:%S %Z (UTC%:z)")
+
+  # ---------------------------------------------------------------- config --
+
+  class Config
+    REQUIRED = %w[JIRA_SITE JIRA_USER_EMAIL JIRA_API_KEY].freeze
+
+    attr_reader :site, :email, :api_key, :project
+
+    def initialize(env = ENV)
+      missing = REQUIRED.reject { env[it].to_s.strip.length.positive? }
+      raise ArgumentError, "missing environment variables: #{missing.join(", ")}" unless missing.empty?
+
+      @site         = env["JIRA_SITE"].sub(%r{/+\z}, "")
+      @email        = env["JIRA_USER_EMAIL"]
+      @api_key      = env["JIRA_API_KEY"]
+      @project      = env["JIRA_PROJECT"]
+    end
+
+    # "166" -> "DSVBR-166" when JIRA_PROJECT is set; full keys pass through upcased.
+    def normalize_key(raw)
+      return raw.upcase if raw.match?(/\A[A-Z][A-Z0-9_]*-\d+\z/i)
+      return "#{project}-#{raw}" if project && raw.match?(/\A\d+\z/)
+
+      raise ArgumentError, "cannot interpret #{raw.inspect} as a ticket key (set JIRA_PROJECT to use bare numbers)"
+    end
+  end
+
+  # ---------------------------------------------------------------- client --
+
+  class NotAnEpic < StandardError; end
+
+  class Client
+    FIELDS = %w[summary status issuetype issuelinks assignee].freeze
+
+    def initialize(config, http: nil)
+      @config = config
+      @http = http
+    end
+
+    # Raises NotAnEpic before fetching children when the ticket is any other type.
+    def fetch_epic(key)
+      epic_json = get("/rest/api/3/issue/#{key}", fields: FIELDS.join(","))
+      type = epic_json.dig("fields", "issuetype", "name")
+      raise NotAnEpic, "#{key} is a #{type}, not an Epic" unless type == "Epic"
+
+      children = search_all("parent = #{key} ORDER BY key")
+      Builder.new(epic_json, children).build
+    end
+
+    def get(path, params = {})
+      uri = URI.join(@config.site, path)
+      uri.query = URI.encode_www_form(params) unless params.empty?
+      request(uri)
+    end
+
+    def search_all(jql)
+      issues = []
+      token = nil
+      loop do
+        params = { jql:, fields: FIELDS.join(","), maxResults: 100 }
+        params[:nextPageToken] = token if token
+        page = get("/rest/api/3/search/jql", params)
+        issues.concat(page.fetch("issues"))
+        token = page["nextPageToken"]
+        break if page["isLast"] || token.nil?
+      end
+      issues
+    end
+
+    private
+
+    def request(uri)
+      req = Net::HTTP::Get.new(uri)
+      req.basic_auth(@config.email, @config.api_key)
+      req["Accept"] = "application/json"
+      res = (@http || Net::HTTP).start(uri.host, uri.port, use_ssl: uri.scheme == "https") { it.request(req) }
+      raise "Jira #{res.code} for #{uri.path}: #{res.body.to_s[0, 300]}" unless res.is_a?(Net::HTTPSuccess)
+
+      JSON.parse(res.body)
+    end
+  end
+
+  # Turns raw Jira JSON into an Epic. External tickets (linked to, but not
+  # children of, the epic) are included as non-members so blocking edges that
+  # cross the epic boundary still appear.
+  class Builder
+    BLOCKS = "Blocks"
+
+    def initialize(epic_json, children_json)
+      @epic_json = epic_json
+      @children_json = children_json
+    end
+
+    def build
+      member_keys = @children_json.map { it["key"] }.to_set
+      tickets = @children_json.map { ticket_from(it, member: true) }
+      externals = tickets.flat_map { |t| (t.blocks + t.blocked_by).reject { member_keys.include?(it) } }.uniq
+      tickets += externals.map { external_ticket(it, tickets) }
+
+      f = @epic_json.fetch("fields")
+      Epic.new(
+        key: @epic_json.fetch("key"), summary: f.fetch("summary"),
+        status: f.dig("status", "name"), category: f.dig("status", "statusCategory", "key"),
+        tickets:
+      )
+    end
+
+    def ticket_from(json, member:)
+      f = json.fetch("fields")
+      blocks, blocked_by, related = [], [], []
+      Array(f["issuelinks"]).each do |link|
+        name = link.dig("type", "name")
+        if (out = link["outwardIssue"])
+          (name == BLOCKS ? blocks : related) << out["key"]
+          remember_external(out)
+        elsif (inn = link["inwardIssue"])
+          (name == BLOCKS ? blocked_by : related) << inn["key"]
+          remember_external(inn)
+        end
+      end
+      Ticket.new(
+        key: json.fetch("key"), summary: f.fetch("summary"), type: f.dig("issuetype", "name"),
+        status: f.dig("status", "name"), category: f.dig("status", "statusCategory", "key"),
+        assignee: f.dig("assignee", "displayName"),
+        blocks: blocks.sort, blocked_by: blocked_by.sort, related: related.sort, member:
+      )
+    end
+
+    private
+
+    # Link payloads carry the linked issue's summary and status, which is all a
+    # non-member node needs.
+    def remember_external(linked)
+      (@external_info ||= {})[linked["key"]] ||= linked
+    end
+
+    def external_ticket(key, members)
+      info = (@external_info || {}).fetch(key, {})
+      f = info.fetch("fields", {})
+      Ticket.new(
+        key:, summary: f["summary"] || key, type: f.dig("issuetype", "name") || "Issue",
+        status: f.dig("status", "name") || "Unknown", category: f.dig("status", "statusCategory", "key") || "unknown",
+        assignee: nil,
+        blocks: members.select { it.blocked_by.include?(key) }.map(&:key),
+        blocked_by: members.select { it.blocks.include?(key) }.map(&:key),
+        related: [], member: false
+      )
+    end
+  end
+
+  # ---------------------------------------------------------------- layout --
+
+  # Layered left-to-right DAG layout over "blocks" edges. Column = longest path
+  # from a source; rows ordered by the barycenter of predecessors.
+  class Layout
+    Placed = Data.define(:ticket, :col, :row)
+
+    attr_reader :placed, :edges, :cols, :rows
+
+    def initialize(tickets)
+      @tickets = tickets
+      @by_key = tickets.to_h { [it.key, it] }
+      @edges = tickets.flat_map { |t| t.blocks.select { @by_key.key?(it) }.map { [t.key, it] } }.uniq
+      compute
+    end
+
+    def column_of(key) = @col[key]
+
+    private
+
+    def compute
+      @col = {}
+      @tickets.each { assign_column(it.key, []) }
+      pull_sources_right
+      columns = @tickets.group_by { @col[it.key] }.sort.to_h
+      ordered = {}
+      columns.each do |col, group|
+        group = group.sort_by do |t|
+          preds = t.blocked_by.filter_map { ordered[it] }
+          [preds.empty? ? Float::INFINITY : preds.sum.fdiv(preds.size), t.key]
+        end
+        group.each_with_index { |t, row| ordered[t.key] = row }
+        columns[col] = group
+      end
+      @placed = columns.flat_map { |col, group| group.each_with_index.map { |t, row| Placed.new(ticket: t, col:, row:) } }
+      @cols = columns.size
+      @rows = columns.values.map(&:size).max || 0
+    end
+
+    # A ticket with no in-graph blockers sits immediately left of its first
+    # successor instead of in column 0, so its edge never has to cross (and
+    # hide behind) unrelated boxes.
+    def pull_sources_right
+      @tickets.each do |t|
+        next if t.blocked_by.any? { @by_key.key?(it) }
+
+        succ = t.blocks.select { @by_key.key?(it) }.map { @col[it] }
+        @col[t.key] = succ.min - 1 unless succ.empty?
+      end
+    end
+
+    def assign_column(key, stack)
+      return @col[key] if @col.key?(key)
+      return 0 if stack.include?(key) # cycle guard
+
+      preds = @by_key.fetch(key).blocked_by.select { @by_key.key?(it) }
+      @col[key] = preds.empty? ? 0 : preds.map { assign_column(it, stack + [key]) }.max + 1
+    end
+  end
+
+  # ------------------------------------------------------------------- svg --
+
+  class SvgRenderer
+    BOX_W = 250
+    BOX_H = 96
+    GAP_X = 90
+    GAP_Y = 28
+    PAD   = 24
+    HEADER_H = 86
+    LEGEND_H = 40
+
+    # Dark theme, transparent background. Fill/stroke per status category,
+    # with named-status overrides for review and canceled states.
+    PALETTE = {
+      "new"           => { fill: "#1f2937", stroke: "#6b7280", pill: "#6b7280", label: "To do" },
+      "indeterminate" => { fill: "#3b2f0b", stroke: "#f59e0b", pill: "#f59e0b", label: "In progress" },
+      "done"          => { fill: "#0b3b2a", stroke: "#22c55e", pill: "#22c55e", label: "Done" },
+      "unknown"       => { fill: "#1f1f1f", stroke: "#52525b", pill: "#52525b", label: "Unknown" },
+      "review"        => { fill: "#2e1065", stroke: "#a78bfa", pill: "#a78bfa", label: "In review" },
+      "canceled"      => { fill: "#3f1d1d", stroke: "#ef4444", pill: "#ef4444", label: "Canceled" }
+    }.freeze
+
+    def initialize(epic, site:, report_date: EpicGraph.report_date)
+      @epic = epic
+      @site = site
+      @report_date = report_date
+      @layout = Layout.new(epic.tickets)
+    end
+
+    def self.palette_for(ticket)
+      case ticket.status.to_s.downcase
+      when /review/   then PALETTE["review"]
+      when /cancel/   then PALETTE["canceled"]
+      else PALETTE.fetch(ticket.category) { PALETTE["unknown"] }
+      end
+    end
+
+    def render
+      width  = PAD * 2 + @layout.cols * BOX_W + [@layout.cols - 1, 0].max * GAP_X
+      height = PAD * 2 + HEADER_H + @layout.rows * BOX_H + [@layout.rows - 1, 0].max * GAP_Y + LEGEND_H
+      width = [width, 720].max
+
+      <<~SVG
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="#{width}" height="#{height}" viewBox="0 0 #{width} #{height}" font-family="-apple-system, Helvetica, Arial, sans-serif">
+        <defs>
+          <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="#9ca3af"/>
+          </marker>
+        </defs>
+        #{header}
+        #{%(<text x="#{PAD}" y="#{PAD + HEADER_H + 20}" font-size="14" fill="#9ca3af">This epic has no member tickets yet.</text>) if @epic.members.empty?}
+        <g id="edges" fill="none" stroke="#9ca3af" stroke-width="1.6" marker-end="url(#arrow)">
+        #{@layout.edges.map { edge(*it) }.join("\n")}
+        </g>
+        <g id="nodes">
+        #{@layout.placed.map { node(it) }.join("\n")}
+        </g>
+        #{legend(height)}
+        </svg>
+      SVG
+    end
+
+    private
+
+    def esc(text) = CGI.escapeHTML(text.to_s)
+
+    def box_origin(col, row)
+      x = PAD + col * (BOX_W + GAP_X)
+      y = PAD + HEADER_H + row * (BOX_H + GAP_Y)
+      [x, y]
+    end
+
+    def header
+      p = self.class.palette_for(@epic)
+      <<~SVG.strip
+        <a href="#{esc(@epic_url = "#{@site}/browse/#{@epic.key}")}" xlink:href="#{esc(@epic_url)}" target="_blank">
+          <text x="#{PAD}" y="#{PAD + 22}" font-size="22" font-weight="700" fill="#f3f4f6">#{esc(@epic.key)} — #{esc(@epic.summary)}</text>
+        </a>
+        <text x="#{PAD}" y="#{PAD + 44}" font-size="13" fill="#d1d5db">Report Date: <tspan font-weight="600" fill="#f3f4f6">#{esc(@report_date)}</tspan></text>
+        <text x="#{PAD}" y="#{PAD + 64}" font-size="13" fill="#9ca3af">Epic status: <tspan fill="#{p[:pill]}" font-weight="600">#{esc(@epic.status)}</tspan> · #{@epic.members.size} member tickets · arrows read “blocks →”</text>
+      SVG
+    end
+
+    def node(placed)
+      t = placed.ticket
+      x, y = box_origin(placed.col, placed.row)
+      p = self.class.palette_for(t)
+      dash = t.member ? "" : ' stroke-dasharray="6 4"'
+      lines = clamp(wrap(t.summary, 32), 2)
+      url = t.url(@site)
+      pill_w = t.status.length * 7 + 16
+
+      <<~SVG.strip
+        <a href="#{esc(url)}" xlink:href="#{esc(url)}" target="_blank">
+          <title>#{esc(t.key)} · #{esc(t.status)}#{t.assignee ? " · #{esc(t.assignee)}" : ""}
+        #{esc(t.summary)}</title>
+          <g>
+            <rect x="#{x}" y="#{y}" width="#{BOX_W}" height="#{BOX_H}" rx="10" fill="#{p[:fill]}" stroke="#{p[:stroke]}" stroke-width="2"#{dash}/>
+            <text x="#{x + 14}" y="#{y + 24}" font-size="15" font-weight="700" fill="#f9fafb">#{esc(t.key)}</text>
+            <rect x="#{x + BOX_W - 14 - pill_w}" y="#{y + 11}" width="#{pill_w}" height="18" rx="9" fill="#{p[:pill]}"/>
+            <text x="#{x + BOX_W - 14 - pill_w / 2}" y="#{y + 24}" font-size="11" font-weight="600" text-anchor="middle" fill="#111827">#{esc(t.status)}</text>
+            #{lines.each_with_index.map { |l, i| %(<text x="#{x + 14}" y="#{y + 48 + i * 17}" font-size="12.5" fill="#d1d5db">#{esc(l)}</text>) }.join("\n    ")}
+            <text x="#{x + 14}" y="#{y + BOX_H - 10}" font-size="11" fill="#9ca3af">#{esc(t.type)}#{t.assignee ? " · #{esc(t.assignee)}" : ""}#{t.member ? "" : " · outside epic"}</text>
+          </g>
+        </a>
+      SVG
+    end
+
+    def edge(from_key, to_key)
+      from = @layout.placed.find { it.ticket.key == from_key }
+      to   = @layout.placed.find { it.ticket.key == to_key }
+      fx, fy = box_origin(from.col, from.row)
+      tx, ty = box_origin(to.col, to.row)
+      x1 = fx + BOX_W
+      y1 = fy + BOX_H / 2
+      x2 = tx - 2
+      y2 = ty + BOX_H / 2
+      if to.col <= from.col
+        # Back/same-column edge: route around with a wide curve so it stays visible.
+        cx = [x1, tx + BOX_W].max + GAP_X
+        return %(<path d="M#{x1},#{y1} C#{cx},#{y1} #{cx},#{y2} #{tx + BOX_W + 2},#{y2}" stroke-dasharray="4 4"><title>#{esc(from_key)} blocks #{esc(to_key)}</title></path>)
+      end
+      title = %(<title>#{esc(from_key)} blocks #{esc(to_key)}</title>)
+      if to.col - from.col > 1
+        # Skips at least one column: run along the row gap next to the target's
+        # row so the line passes between boxes instead of behind them.
+        lane = y2 > y1 ? ty - GAP_Y / 2 : ty + BOX_H + GAP_Y / 2
+        gx1 = x1 + GAP_X / 2
+        gx2 = x2 - GAP_X / 2
+        return %(<path d="M#{x1},#{y1} C#{gx1},#{y1} #{gx1},#{lane} #{x1 + GAP_X},#{lane} L#{x2 - GAP_X},#{lane} C#{gx2},#{lane} #{gx2},#{y2} #{x2},#{y2}">#{title}</path>)
+      end
+      mx = (x1 + x2) / 2
+      %(<path d="M#{x1},#{y1} C#{mx},#{y1} #{mx},#{y2} #{x2},#{y2}">#{title}</path>)
+    end
+
+    def legend(height)
+      y = height - PAD - 12
+      present = @epic.tickets.map { self.class.palette_for(it) }.uniq
+      items = PALETTE.values.select { present.include?(it) }
+      x = PAD
+      parts = items.map do |p|
+        s = %(<rect x="#{x}" y="#{y - 11}" width="14" height="14" rx="3" fill="#{p[:fill]}" stroke="#{p[:stroke]}" stroke-width="2"/>) \
+            + %(<text x="#{x + 20}" y="#{y}" font-size="12" fill="#d1d5db">#{esc(p[:label])}</text>)
+        x += 20 + p[:label].length * 7 + 24
+        s
+      end
+      unless @epic.externals.empty?
+        parts << %(<rect x="#{x}" y="#{y - 11}" width="14" height="14" rx="3" fill="none" stroke="#9ca3af" stroke-width="2" stroke-dasharray="4 3"/>) \
+               + %(<text x="#{x + 20}" y="#{y}" font-size="12" fill="#d1d5db">Linked ticket outside this epic</text>)
+      end
+      %(<g id="legend">#{parts.join}</g>)
+    end
+
+    def clamp(lines, max)
+      return lines if lines.size <= max
+
+      kept = lines.first(max)
+      kept[-1] = "#{kept[-1][0, 30].rstrip}…"
+      kept
+    end
+
+    def wrap(text, width)
+      text.to_s.split.each_with_object([+""]) do |word, lines|
+        if lines.last.empty? then lines.last << word
+        elsif (lines.last.length + 1 + word.length) <= width then lines.last << " " << word
+        else lines << word.dup
+        end
+      end
+    end
+  end
+
+  # -------------------------------------------------------------- markdown --
+
+  class MarkdownRenderer
+    def initialize(epic, site:, svg_name:, report_date: EpicGraph.report_date)
+      @epic = epic
+      @site = site
+      @svg_name = svg_name
+      @report_date = report_date
+      @layout = Layout.new(epic.tickets)
+    end
+
+    def render
+      return <<~MD if @epic.members.empty?
+        # #{@epic.key} — #{@epic.summary}
+
+        **Report Date:** #{@report_date}
+
+        Epic: [#{@epic.key}](#{link(@epic.key)}) · Status: **#{@epic.status}**
+
+        _This epic has no member tickets yet._
+      MD
+
+      <<~MD
+        # #{@epic.key} — #{@epic.summary}
+
+        **Report Date:** #{@report_date}
+
+        Epic: [#{@epic.key}](#{link(@epic.key)}) · Status: **#{@epic.status}**
+
+        ![Dependency graph for #{@epic.key}](#{@svg_name})
+
+        ## Status roll-up
+
+        | Status | Count | Tickets |
+        | --- | ---: | --- |
+        #{rollup_rows}
+
+        ## Member tickets
+
+        | Ticket | Type | Status | Assignee | Blocked by | Blocks | Summary |
+        | --- | --- | --- | --- | --- | --- | --- |
+        #{member_rows}
+
+        ## Dependency order
+
+        Columns from the graph: a ticket appears one column to the right of everything that blocks it.
+
+        #{column_lines}
+
+        ## Ready to start
+
+        Member tickets not yet done whose blockers are all done:
+
+        #{ready_lines}
+        #{externals_section}#{related_section}
+      MD
+    end
+
+    private
+
+    def link(key) = "#{@site}/browse/#{key}"
+    def md_link(key) = "[#{key}](#{link(key)})"
+    def links(keys) = keys.empty? ? "—" : keys.map { md_link(it) }.join(", ")
+    def cell(text) = text.to_s.gsub("|", "\\|")
+
+    def rollup_rows
+      @epic.members.group_by(&:status).sort_by { |status, ts| [SvgRenderer.palette_for(ts.first)[:label], status] }
+           .map { |status, ts| "| #{status} | #{ts.size} | #{links(ts.map(&:key))} |" }.join("\n")
+    end
+
+    def member_rows
+      @epic.members.map do |t|
+        "| #{md_link(t.key)} | #{t.type} | #{t.status} | #{t.assignee || "—"} | #{links(t.blocked_by)} | #{links(t.blocks)} | #{cell(t.summary)} |"
+      end.join("\n")
+    end
+
+    def column_lines
+      @layout.placed.group_by(&:col).sort.map do |col, group|
+        "#{col + 1}. #{group.map { "#{md_link(it.ticket.key)} (#{it.ticket.status})" }.join(", ")}"
+      end.join("\n")
+    end
+
+    def ready_lines
+      ready = @epic.members.reject { it.category == "done" }.select do |t|
+        t.blocked_by.all? { |k| (dep = @epic[k]).nil? || dep.category == "done" }
+      end
+      return "_None — every open ticket still has an unfinished blocker._" if ready.empty?
+
+      ready.map { "- #{md_link(it.key)} · #{it.status} · #{cell(it.summary)}" }.join("\n")
+    end
+
+    def externals_section
+      ex = @epic.externals
+      return "" if ex.empty?
+
+      rows = ex.map { "| #{md_link(it.key)} | #{it.status} | #{links(it.blocked_by)} | #{links(it.blocks)} | #{cell(it.summary)} |" }
+      <<~MD
+
+        ## Linked tickets outside this epic
+
+        | Ticket | Status | Blocked by (members) | Blocks (members) | Summary |
+        | --- | --- | --- | --- | --- |
+        #{rows.join("\n")}
+      MD
+    end
+
+    def related_section
+      rel = @epic.members.reject { it.related.empty? }
+      return "" if rel.empty?
+
+      <<~MD
+
+        ## Other links (non-blocking)
+
+        #{rel.map { "- #{md_link(it.key)} relates to #{links(it.related)}" }.join("\n")}
+      MD
+    end
+  end
+
+  # ------------------------------------------------------------------- cli --
+
+  class CLI
+    def self.run(argv, env: ENV, out: $stdout)
+      options = { out_dir: ".", json: false }
+      parser = OptionParser.new do |o|
+        o.banner = "usage: epic_graph EPIC-KEY [EPIC-KEY ...] [--out DIR] [--json]"
+        o.on("--out DIR", "directory for the .md and .svg files (default: .)") { options[:out_dir] = it }
+        o.on("--json", "also write the collected ticket data as <EPIC>.json") { options[:json] = true }
+      end
+      rest = parser.parse(argv)
+      raise OptionParser::MissingArgument, "EPIC-KEY" if rest.empty?
+
+      config = Config.new(env)
+      keys = rest.map { config.normalize_key(it) }.uniq
+      client = Client.new(config)
+      keys.each do |key|
+        epic = client.fetch_epic(key)
+        paths = write(epic, config, **options)
+        paths.each { out.puts it }
+      end
+      0
+    rescue NotAnEpic => e
+      # $stderr.puts rather than warn: RUBYOPT=-W0 turns warn into a no-op.
+      $stderr.puts "epic_graph: #{e.message}"
+      1
+    rescue OptionParser::ParseError, ArgumentError => e
+      $stderr.puts "epic_graph: #{e.message}", parser
+      2
+    end
+
+    def self.write(epic, config, out_dir:, json: false, **)
+      FileUtils.mkdir_p(out_dir)
+      svg_name = "#{epic.key}.svg"
+      md_path  = File.join(out_dir, "#{epic.key}.md")
+      svg_path = File.join(out_dir, svg_name)
+      report_date = EpicGraph.report_date
+      File.write(md_path, MarkdownRenderer.new(epic, site: config.site, svg_name:, report_date:).render)
+      File.write(svg_path, SvgRenderer.new(epic, site: config.site, report_date:).render)
+      paths = [md_path, svg_path]
+      if json
+        json_path = File.join(out_dir, "#{epic.key}.json")
+        File.write(json_path, JSON.pretty_generate(epic.to_h.merge(tickets: epic.tickets.map(&:to_h))))
+        paths << json_path
+      end
+      paths
+    end
+  end
+end
+
+exit EpicGraph::CLI.run(ARGV) if $PROGRAM_NAME == __FILE__
