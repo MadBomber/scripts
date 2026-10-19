@@ -9,9 +9,6 @@
 # External System Commands Used:
 #   pbpaste - clipboard (Mac-exclusive)
 #   mdfind  - Spotlight search (Mac-exclusive)
-#   xargs
-#   agrep   - TRE agrep (brew install tre); not the amatch gem's agrep
-#   pr
 #
 # TODO: add a second sink to write_entry so every note is also inserted
 #       into an sqlite3 database in $HOME.
@@ -24,9 +21,7 @@ require 'shellwords' # STDLIB
 class NoteManager
   NOTES_FILENAME   = "_notes.md"
 
-  # The amatch gem installs an incompatible agrep that can shadow TRE's on PATH
-  TRE_AGREP = "/opt/homebrew/bin/agrep"
-  AGREP     = File.executable?(TRE_AGREP) ? TRE_AGREP : "agrep"
+  HIT_DIVIDER = "─" * 60
 
   # An exact-name query keeps backups such as _notes.md.bak out of the results
   SPOTLIGHT_QUERY = "kMDItemFSName == '#{NOTES_FILENAME}'"
@@ -44,7 +39,8 @@ class NoteManager
   # stdin:     IO that is read when it is not a terminal
   # runner:    callable that executes a command array (system by default)
   # clock:     callable returning the current time
-  # finder:    callable returning the paths of every notes file
+  # finder:    callable returning the paths of every notes file (mdfind's
+  #            stderr is locale-loading noise)
   def initialize(home: Pathname.new(ENV['HOME']),
                  cwd: Pathname.pwd,
                  editor: ENV['EDITOR'],
@@ -131,7 +127,7 @@ class NoteManager
                       Ctrl-C cancels without adding anything.
 
       _ [-s|--search] <terms>
-                      Searches all '#{NOTES_FILENAME}' files using the 'agrep' command
+                      Searches all '#{NOTES_FILENAME}' files
                       and shows each matching line
 
       _ [-s|--search] [-p|--paragraph] <terms>
@@ -175,19 +171,8 @@ class NoteManager
     @home.join(NOTES_FILENAME)
   end
 
-  # mdfind's stderr is locale-loading noise.
-  def search_command(search_terms, agrep: AGREP)
-    query = Shellwords.escape(SPOTLIGHT_QUERY)
-    "mdfind -0 #{query} 2>/dev/null | xargs -0 #{agrep} -n #{Shellwords.escape(search_terms)} | pr -td"
-  end
-
   def search_notes(search_terms, mode = :line)
     @out.puts "\nSearching for #{search_terms} ..."
-    if mode == :line
-      @runner.call(search_command(search_terms))
-      return 0
-    end
-
     pattern = search_pattern(search_terms)
     @finder.call.each do |path|
       text = File.read(path).scrub
@@ -198,7 +183,7 @@ class NoteManager
     0
   end
 
-  # agrep treats terms as a regular expression; an invalid one is taken literally.
+  # Terms are a regular expression; an invalid one is taken literally.
   def search_pattern(search_terms)
     Regexp.new(search_terms)
   rescue RegexpError
@@ -206,8 +191,16 @@ class NoteManager
   end
 
   def matching_records(text, mode, pattern)
-    records = mode == :entry ? entry_records(text) : paragraph_records(text)
+    records = case mode
+              when :entry     then entry_records(text)
+              when :paragraph then paragraph_records(text)
+              else                 line_records(text)
+              end
     records.select { |record| pattern.match?(record.text) }
+  end
+
+  def line_records(text)
+    text.each_line.with_index(1).map { |line, number| Record.new(line: number, text: line) }
   end
 
   # Runs of non-blank lines; line is where the paragraph starts.
@@ -230,9 +223,10 @@ class NoteManager
     Record.new(line: numbered_lines.first.last, text: numbered_lines.map(&:first).join)
   end
 
-  # Mirrors agrep -n's "path:line:" prefix, with the record on its own lines.
+  # "path:line" (clickable in most terminals) under a divider, then the
+  # record.  rstrip keeps a matching line's indentation.
   def format_hit(path, record)
-    "#{path}:#{record.line}:\n#{record.text.strip}\n\n"
+    "\n#{HIT_DIVIDER}\n#{path}:#{record.line}\n#{record.text.rstrip}\n"
   end
 
   def add_note(words)
