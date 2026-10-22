@@ -21,6 +21,8 @@
 ##        children collapsed to their key columns; schema.svg shows every
 ##        table that way. Database foreign keys are solid edges; polymorphic
 ##        associations the models declare (has_one/has_many ... as:) are dashed.
+##        Each table page also lists the migrations that touched the table,
+##        read from the database's migrations_paths (db/migrate).
 ##        --erd-format picks svg (default), png, pdf or dot source; the
 ##        rendered formats need Graphviz `dot` on the PATH.
 ##
@@ -34,15 +36,16 @@
 
 require 'date'
 require 'fileutils'
+require 'pathname'
 require 'optparse'
 
 module DataDictionaryV2
   App = Data.define(:name, :root, :environment, :rails_version, :ruby_version, :databases, :models)
 
   Database = Data.define(:name, :adapter, :location, :server_version, :schema_version,
-                         :pending_migrations, :extensions, :enums, :tables, :error) do
+                         :pending_migrations, :extensions, :enums, :tables, :migrations, :error) do
     def initialize(name:, adapter: nil, location: nil, server_version: nil, schema_version: nil,
-                   pending_migrations: nil, extensions: [], enums: {}, tables: [], error: nil)
+                   pending_migrations: nil, extensions: [], enums: {}, tables: [], migrations: [], error: nil)
       super
     end
   end
@@ -61,6 +64,10 @@ module DataDictionaryV2
   ForeignKey = Data.define(:name, :column, :to_table, :primary_key, :on_delete, :on_update)
   Constraint = Data.define(:name, :expression)
   Trigger    = Data.define(:name, :timing, :events, :action)
+
+  # One migration file: tables maps each table it touches to the changes made
+  # to it, in file order; renames lists [old_name, new_name] pairs
+  Migration  = Data.define(:version, :name, :path, :tables, :renames)
 
   Model = Data.define(:name, :table_name, :database, :source, :sti_parent, :sti_column,
                       :associations, :enums, :validations, :stored_attributes, :attachments,
@@ -81,9 +88,10 @@ module DataDictionaryV2
   class DatabaseInspector
     INTERNAL_TABLES = %w[schema_migrations ar_internal_metadata].freeze
 
-    def initialize(connection, name:, count_rows: false, include_internal: false)
+    def initialize(connection, name:, root: Dir.pwd, count_rows: false, include_internal: false)
       @connection       = connection
       @name             = name
+      @root             = root
       @count_rows       = count_rows
       @include_internal = include_internal
     end
@@ -96,6 +104,7 @@ module DataDictionaryV2
         server_version:     server_version,
         schema_version:     schema_version,
         pending_migrations: pending_migrations,
+        migrations:         migrations,
         extensions:         extensions,
         enums:              enums,
         tables:             data_sources.map { |name, kind| table(name, kind) }
@@ -295,6 +304,17 @@ module DataDictionaryV2
       nil
     end
 
+    # Every migration file on this database's migrations paths, oldest first
+    def migrations
+      MigrationScanner.new(migrations_paths, root: @root).call
+    end
+
+    def migrations_paths
+      Array(migration_context&.migrations_paths)
+    rescue StandardError
+      []
+    end
+
     def migration_context
       pool = @connection.pool
       return pool.migration_context if pool.respond_to?(:migration_context)
@@ -302,6 +322,120 @@ module DataDictionaryV2
       @connection.migration_context if @connection.respond_to?(:migration_context)
     end
   end # class DatabaseInspector
+
+
+  # Reads migration files and works out which tables each one changes, from
+  # the schema DSL calls and from the SQL in execute strings and heredocs.
+  # Only the forward direction counts: `def down` and `dir.down` are skipped.
+  class MigrationScanner
+    TABLE_OPS = %w[create_table drop_table change_table add_column remove_column change_column
+                   change_column_null change_column_default change_column_comment rename_column
+                   add_index remove_index add_reference remove_reference add_belongs_to
+                   remove_belongs_to add_check_constraint remove_check_constraint
+                   add_unique_constraint remove_unique_constraint add_exclusion_constraint
+                   remove_exclusion_constraint add_timestamps remove_timestamps
+                   change_table_comment validate_foreign_key validate_check_constraint
+                   validate_constraint].freeze
+
+    # op :table[, :column | %i[a b] | [:a, :b] | "string"]
+    ARGUMENT    = /(?:\s*,\s*(?::(\w+)|%i\[([^\]]*)\]|\[([^\]]*)\]|"([^"]*)"|'([^']*)'))?/
+    # longest names first so change_column_null is not read as change_column
+    OPS         = TABLE_OPS.sort_by { |op| -op.size }.join('|')
+    DSL_CALL    = /\b(#{OPS})\b\s*\(?\s*:(\w+)#{ARGUMENT}/
+    # The same call with a variable for the table, as in `TABLES.each { |t| add_column t, ... }`;
+    # the change is attributed to every word in the file's %i[...] and %w[...] literals
+    DSL_VAR     = /\b(#{OPS})\b\s*\(?\s*([a-z_]\w*)#{ARGUMENT}/
+    WORD_LISTS  = /%[iw]\[([^\]]*)\]/m
+    RENAME      = /\brename_table\s*\(?\s*:(\w+)\s*,\s*:(\w+)/
+    JOIN_TABLE  = /\bcreate_join_table\s*\(?\s*:(\w+)\s*,\s*:(\w+)/
+    FOREIGN_KEY = /\b(add|remove)_foreign_key\s*\(?\s*:(\w+)\s*,\s*:(\w+)/
+    MODEL_TABLE = /self\.table_name\s*=\s*['"](\w+)['"]/
+    SQL         = /\b(?<verb>ALTER\s+TABLE|CREATE\s+TABLE|DROP\s+TABLE|TRUNCATE\s+TABLE|CREATE\s+(?:UNIQUE\s+)?INDEX\s+\S+\s+ON|UPDATE|INSERT\s+INTO|DELETE\s+FROM)\s+(?:IF\s+(?:NOT\s+)?EXISTS\s+)?(?:ONLY\s+)?"?(?<table>\w+)"?/i
+    HEREDOC     = /<<[~-]?(['"]?)([A-Z_]+)\1[^\n]*\n(.*?)^\s*\2\s*$/m
+    EXEC_STRING = /\bexecute\s*\(?\s*(['"])(.*?)\1/m
+    FILENAME    = /\A(\d+)_(.+)\.rb\z/
+
+    class << self
+      # The source with comment lines, `def down ... end`, `dir.down do ... end`
+      # and one-line `dir.down { ... }` removed. A block ends at the first line
+      # whose indentation matches the line that opened it.
+      def forward_source(source)
+        skip = nil
+        source.lines.filter_map do |line|
+          if skip
+            skip = nil if line.match?(/\A#{skip}end\b/)
+            next
+          end
+          next if line.match?(/\A\s*#/) || line.match?(/\bdir\.down\s*\{/)
+
+          if (m = line.match(/\A(\s*)(?:def down\b|dir\.down\s+do\b)/))
+            skip = m[1]
+            next
+          end
+          line
+        end.join
+      end
+
+      # SQL fragments in execute strings and heredocs
+      def sql_blocks(source)
+        source.scan(HEREDOC).map(&:last) + source.scan(EXEC_STRING).map(&:last)
+      end
+
+      # Column list argument rendered as "col" or "[a, b]"
+      def argument(match)
+        return match[3] if match[3]
+        return "[#{match[4].split.join(', ')}]" if match[4]
+        return "[#{match[5].delete(':').split(/\s*,\s*/).join(', ')}]" if match[5]
+
+        match[6] || match[7]
+      end
+
+      # { table => [change, ...] } in file order, from the forward source
+      def tables(source)
+        src    = forward_source(source)
+        tables = Hash.new { |h, k| h[k] = [] }
+
+        src.scan(DSL_CALL) { tables[$2] << [$1, argument(Regexp.last_match)].compact.join(' ') }
+        looped = src.scan(WORD_LISTS).flatten.flat_map(&:split).uniq
+        src.scan(DSL_VAR) do
+          change = [$1, argument(Regexp.last_match)].compact.join(' ')
+          looped.each { |table| tables[table] << change }
+        end
+        src.scan(RENAME)   { tables[$1] << "rename_table to #{$2}"; tables[$2] << "rename_table from #{$1}" }
+        src.scan(JOIN_TABLE) { tables[[$1, $2].sort.join('_')] << 'create_join_table' }
+        src.scan(FOREIGN_KEY) { tables[$2] << "#{$1}_foreign_key to #{$3}"; tables[$3] << "#{$1}_foreign_key from #{$2}" }
+        src.scan(MODEL_TABLE) { tables[$1] << 'data change through a model' }
+        sql_blocks(src).each do |sql|
+          sql.scan(SQL) do
+            m = Regexp.last_match
+            tables[m[:table]] << "#{m[:verb].upcase.gsub(/\s+/, ' ').sub(/ (UNIQUE )?INDEX .*/, ' INDEX')} (SQL)"
+          end
+        end
+        tables.transform_values(&:uniq)
+      end
+
+      def renames(source)
+        forward_source(source).scan(RENAME)
+      end
+
+      def migration(path)
+        version, name = File.basename(path).match(FILENAME)&.captures
+        source = File.read(path)
+        Migration.new(version: version || '0', name: name || File.basename(path, '.rb'), path: path,
+                      tables: tables(source), renames: renames(source))
+      end
+    end
+
+    # paths are migration directories, absolute or relative to root
+    def initialize(paths, root: Dir.pwd)
+      @dirs = Array(paths).map { |p| File.expand_path(p.to_s, root) }
+    end
+
+    # [Migration, ...] oldest first; missing directories are skipped
+    def call
+      @dirs.flat_map { |dir| Dir[File.join(dir, '*.rb')] }.sort.map { |path| self.class.migration(path) }
+    end
+  end # class MigrationScanner
 
 
   # Reads what the application code says about one ActiveRecord model
@@ -533,10 +667,12 @@ module DataDictionaryV2
     INDEX = 'data_dictionary.md'
 
     # erd_format names the diagram files the table pages embed; nil for none
-    def initialize(app, date: Date.today, erd_format: nil)
+    # output_dir is where the pages will be written; migration links are relative to it
+    def initialize(app, date: Date.today, erd_format: nil, output_dir: nil)
       @app        = app
       @date       = date
       @erd_format = erd_format
+      @output_dir = output_dir
       @multi      = app.databases.size > 1
       @models     = app.models.group_by { |m| [m.database, m.table_name] }
     end
@@ -671,6 +807,7 @@ module DataDictionaryV2
         parts << "## Triggers\n\n#{self.class.markdown_table(%w[Name When Action], rows)}"
       end
 
+      parts << migrations_section(db, t)
       models_for(db, t).each { |m| parts << model_detail(m) }
       parts << "[Back to the data dictionary](#{INDEX})"
       parts.compact.join("\n\n") + "\n"
@@ -763,6 +900,42 @@ module DataDictionaryV2
     # [[table_name, ForeignKey], ...] for keys in other tables pointing at this one
     def referencing_keys(db, t)
       db.tables.flat_map { |other| other.foreign_keys.select { |fk| fk.to_table == t.name }.map { |fk| [other.name, fk] } }
+    end
+
+    # The table's current name plus every name it was renamed from, found by
+    # walking the renames back from newest to oldest
+    def table_names(db, t)
+      names = [t.name]
+      db.migrations.reverse_each do |m|
+        m.renames.each { |old, new| names << old if names.include?(new) && !names.include?(old) }
+      end
+      names
+    end
+
+    # [[Migration, [change, ...]], ...] for the migrations that touched this table, oldest first
+    def migrations_for(db, t)
+      names = table_names(db, t)
+      db.migrations.filter_map do |m|
+        changes = names.flat_map { |n| m.tables.fetch(n, []) }
+        [m, changes] if changes.any?
+      end
+    end
+
+    def migration_link(m)
+      return m.path unless @output_dir
+
+      Pathname.new(m.path).relative_path_from(Pathname.new(@output_dir)).to_s
+    end
+
+    def migrations_section(db, t)
+      rows = migrations_for(db, t).map do |m, changes|
+        [self.class.format_version(m.version).sub(/ \(\d+\)\z/, ''),
+         "[#{m.name}](#{migration_link(m)})",
+         changes.map { |c| "`#{c}`" }.join(', ')]
+      end
+      return nil if rows.empty?
+
+      "## Migrations\n\n#{self.class.markdown_table(['Version', 'Migration', 'Changes to this table'], rows)}"
     end
 
     def model_detail(m)
@@ -1130,7 +1303,7 @@ module DataDictionaryV2
       end
 
       with_connection(klass) do |connection|
-        DatabaseInspector.new(connection, name: name, count_rows: count_rows, include_internal: include_internal).call
+        DatabaseInspector.new(connection, name: name, root: root, count_rows: count_rows, include_internal: include_internal).call
       end
     rescue StandardError => e
       Database.new(name: name, error: "#{e.class}: #{e.message.lines.first&.strip}")
@@ -1168,7 +1341,7 @@ module DataDictionaryV2
       collect(root: root, **options.slice(:count_rows, :include_internal, :databases, :all_databases))
     end
     erd_format = options[:erd] && options[:output] ? options[:erd_format] : nil
-    report     = Report.new(app, erd_format: erd_format)
+    report     = Report.new(app, erd_format: erd_format, output_dir: options[:output])
 
     if options[:output]
       FileUtils.mkdir_p(options[:output])
