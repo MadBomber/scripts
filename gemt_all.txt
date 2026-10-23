@@ -415,9 +415,9 @@ amazing_print                           Pretty print Ruby objects with proper in
                                         |   and colors
                                         |__ https://github.com/amazing-print/amazing_print
 
-amoeba                                  Easy copying of rails models and their child
+amoeba                                  Easy copying of ActiveRecord models and their child
                                         |   associations.
-                                        |__ http://github.com/amoeba-rb/amoeba
+                                        |__ https://github.com/amoeba-rb/amoeba
 
 amq-protocol                            AMQP 0.9.1 encoding & decoding library.
                                         |__ https://github.com/ruby-amqp/amq-protocol
@@ -436,7 +436,7 @@ annotate                                Annotates Rails Models, routes, fixtures
 annotaterb                              A gem for generating annotations for Rails projects.
                                         |__ https://github.com/drwl/annotaterb
 
-anonymous_loader                        💎 Load Ruby source files inside anonymous
+anonymous_loader                        🎭 Load Ruby source files inside anonymous
                                         |   namespaces.
                                         |__ https://github.com/ruby-oauth/anonymous_loader
 
@@ -946,6 +946,10 @@ callback_hell                           Analyze Rails models for callbacks and v
 
 cancancan                               Simple authorization solution for Rails.
                                         |__ https://github.com/CanCanCommunity/cancancan
+
+canon                                   Canonicalization, formatting and comparison library
+                                        |   for serialization formats (XML, HTML, JSON, YAML)
+                                        |__ https://github.com/lutaml/canon
 
 canvas_erd                              Edit Rails ERD diagrams on an interactive canvas
                                         |__ https://github.com/FASCINATION-works/CanvasERD
@@ -2277,6 +2281,10 @@ fugit                                   time tools for flor
 fuubar                                  the instafailing RSpec progress bar formatter
                                         |__ https://github.com/thekompanee/fuubar
 
+fuzzyurl                                A library for non-strict parsing, construction, and
+                                        |   wildcard-matching of URLs.
+                                        |__ https://github.com/gamache/fuzzyurl.rb
+
 fx                                      Support for database functions and triggers in Rails
                                         |   migrations
                                         |__ https://github.com/teoljungberg/fx
@@ -2833,6 +2841,9 @@ infusible                               An automatic dependency injector.
 inifile                                 INI file reader and writer
                                         |__ http://rubygems.org/gems/inifile
 
+iniparse                                A pure Ruby library for parsing INI documents.
+                                        |__ http://github.com/antw/iniparse
+
 iniparser                               iniparser - read / parse INI configuration, settings
                                         |   and data files into a hash (incl. named subsections)
                                         |__ https://github.com/datatxt/iniparser
@@ -3098,6 +3109,10 @@ kimurai                                 Modern web scraping framework written in
 kino                                    High-performance Ractor web server for Ruby.
                                         |__ https://github.com/yaroslav/kino
 
+kotoshu                                 Semantic spell checker for Ruby using ONNX word
+                                        |   embeddings
+                                        |__ https://github.com/kotoshu/kotoshu
+
 kramdown                                kramdown is a fast, pure-Ruby Markdown-superset
                                         |   converter.
                                         |__ http://kramdown.gettalong.org
@@ -3216,6 +3231,10 @@ legion-tty                              Interactive terminal UI for the LegionIO
 legionio                                Modular Ruby framework: distributed async job engine
                                         |   with optional LLM gateway, MCP server, and RBAC
                                         |__ https://github.com/LegionIO/LegionIO
+
+leptris                                 Nokogiri-compatible Ruby binding for libleptris (XML
+                                        |   1.0, XPath 1.0, SAX)
+                                        |__ https://github.com/leptris/leptris-ruby
 
 letter_opener                           Preview mail in browser instead of sending.
                                         |__ https://github.com/ryanb/letter_opener
@@ -3504,6 +3523,9 @@ lumberjack_rails                        Support for using the lumberjack logging
                                         |   Rails applications.
                                         |__ https://github.com/bdurand/lumberjack_rails
 
+lutaml-model                            LutaML creating data models in Ruby
+                                        |__ https://github.com/lutaml/lutaml-model
+
 mac_ocr                                 Ruby OCR on macOS via the Apple Vision framework.
                                         |__ https://github.com/TeamMilestone/mac_ocr
 
@@ -3783,7 +3805,7 @@ mixlib-versioning                       General purpose Ruby library that allows
                                         |   multiple formats.
                                         |__ https://github.com/chef/mixlib-versioning
 
-mize                                    Library that provides memoziation for methods and
+mize                                    Library that provides memoization for methods and
                                         |   functions
                                         |__ https://github.com/flori/mize
 
@@ -3850,6 +3872,9 @@ more_math                               Library that provides more mathematics.
 
 motor-admin                             Low-code Admin panel and Business intelligence
                                         |__ https://rubygems.org/gems/motor-admin
+
+moxml                                   Unified XML manipulation library
+                                        |__ https://github.com/lutaml/moxml
 
 msgpack                                 MessagePack, a binary-based efficient data
                                         |   interchange format.
@@ -4273,7 +4298,7 @@ omniauth-google-oauth2                  A Google OAuth2 strategy for OmniAuth
                                         |__ https://github.com/zquestz/omniauth-google-oauth2
 
 omniauth-oauth                          A generic OAuth (1.0/1.0a) strategy for OmniAuth.
-                                        |__ https://github.com/intridea/omniauth-oauth
+                                        |__ https://github.com/omniauth/omniauth-oauth
 
 omniauth-oauth2                         An abstract OAuth2 strategy for OmniAuth.
                                         |__ https://github.com/omniauth/omniauth-oauth2
@@ -4579,6 +4604,10 @@ pg_search                               PgSearch builds Active Record named scop
 
 pg_trunk                                Empower PostgreSQL migrations in Rails app
                                         |__ https://github.com/nepalez/pg_trunk
+
+pgdd                                    As-built database documentation and ERDs for a Rails
+                                        |   application
+                                        |__ https://github.com/madbomber/pgdd
 
 pghero                                  A performance dashboard for Postgres
                                         |__ https://github.com/ankane/pghero
@@ -5228,6 +5257,10 @@ reactionview                            An ActionView-compatible ERB engine with
 readline                                Loader for "readline".
                                         |__ https://github.com/ruby/readline
 
+readword                                Turn Word .doc and .docx files into Markdown, in
+                                        |   plain Ruby.
+                                        |__ https://github.com/urbullet/readword
+
 recursive-open-struct                   OpenStruct subclass that returns nested hash
                                         |   attributes as RecursiveOpenStructs
                                         |__ https://github.com/aetherknight/recursive-open-struct
@@ -5635,6 +5668,9 @@ rubocop-rspec                           Code style checking for RSpec files
 
 rubocop-rspec_rails                     Code style checking for RSpec Rails files
                                         |__ https://github.com/rubocop/rubocop-rspec_rails
+
+rubocop-spellcheck                      Spellcheck Ruby code and documentation with RuboCop.
+                                        |__ https://github.com/dblock/rubocop-spellcheck
 
 rubocop-yard                            Check yardoc format.
                                         |__ https://github.com/ksss/rubocop-yard
@@ -6558,6 +6594,9 @@ ssrf_filter                             A gem that makes it easy to prevent serv
 stackprof                               sampling callstack-profiler for ruby 2.2+
                                         |__ http://github.com/tmm1/stackprof
 
+stampeded                               A polyglot job processor built on Postgres 18+
+                                        |__ https://github.com/seuros/stampeded
+
 standard                                Ruby Style Guide, with linter & automatic code fixer
                                         |__ https://github.com/standardrb/standard
 
@@ -7171,6 +7210,9 @@ unicode-display_width                   Determines the monospace display width o
 unicode-emoji                           Emoji data and regex
                                         |__ https://github.com/janlelis/unicode-emoji
 
+unicode-name                            Returns name/aliases/label of a Unicode codepoint
+                                        |__ https://github.com/janlelis/unicode-name
+
 unicode-types                           Determines the very basic type of a code point
                                         |__ https://github.com/janlelis/unicode-types
 
@@ -7542,6 +7584,10 @@ yard-markdown                           yard plugin to generate markdown documen
 
 yard-solargraph                         A YARD extension for documenting Solargraph tags.
                                         |__ https://solargraph.org
+
+yeptris                                 The YAML counterpart of libleptris:
+                                        |   ultra-performance YAML 1.2 for Ruby
+                                        |__ https://github.com/leptris/yeptris
 
 youplot                                 A command line tool for Unicode Plotting
                                         |__ https://github.com/red-data-tools/YouPlot

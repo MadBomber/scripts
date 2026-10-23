@@ -191,10 +191,6 @@ berkeley-db                                 High performance key/value database
 berkeley-db@5                               High performance key/value database
                                             |__ https://www.oracle.com/database/technologies/related/berkeleydb.html
 
-blake3                                      C implementation of the BLAKE3
-                                            |   cryptographic hash function
-                                            |__ https://github.com/BLAKE3-team/BLAKE3
-
 blis                                        BLAS-like Library Instantiation Software Framework
                                             |__ https://github.com/flame/blis
 
@@ -408,6 +404,10 @@ csvlens                                     Command-line csv viewer
 ctx7                                        Manage AI coding skills and documentation context
                                             |__ https://context7.com
 
+cymbal                                      Language-agnostic code navigation
+                                            |   CLI powered by tree-sitter
+                                            |__ https://github.com/1broseidon/cymbal
+
 cypher-shell                                Command-line shell where you can
                                             |   execute Cypher against Neo4j
                                             |__ https://neo4j.com
@@ -599,7 +599,7 @@ eigen                                       C++ template library for linear alge
 
 ekphos                                      Terminal-based markdown research
                                             |   tool inspired by Obsidian
-                                            |__ https://ekphos.netlify.app/docs
+                                            |__ https://ekphos.nostacks.xyz/
 
 elixir                                      Functional metaprogramming aware
                                             |   language built on Erlang VM
@@ -619,10 +619,6 @@ eralchemy                                   Simple entity relation (ER) diagrams
                                             |__ https://github.com/eralchemy/eralchemy
 
 erlang                                      Programming language for highly
-                                            |   scalable real-time systems
-                                            |__ https://www.erlang.org/
-
-erlang@28                                   Programming language for highly
                                             |   scalable real-time systems
                                             |__ https://www.erlang.org/
 
@@ -672,6 +668,9 @@ fileql                                      Run SQL-like query on local files in
 
 fizz                                        C++14 implementation of the TLS-1.3 standard
                                             |__ https://github.com/facebookincubator/fizz
+
+fjira                                       Fuzzy-find cli jira interface
+                                            |__ https://github.com/mk-5/fjira
 
 flac                                        Free lossless audio codec
                                             |__ https://xiph.org/flac/
@@ -1152,6 +1151,10 @@ hyper-mcp                                   MCP server that extends its capabili
                                             |   through WebAssembly plugins
                                             |__ https://github.com/hyper-mcp-rs/hyper-mcp
 
+ical-buddy                                  Get events and tasks from
+                                            |   the macOS calendar database
+                                            |__ https://hasseg.org/icalBuddy/
+
 icdiff                                      Improved colored diff
                                             |__ https://www.jefftk.com/icdiff
 
@@ -1426,9 +1429,6 @@ libmatio                                    C library for reading and writing MA
 libmicrohttpd                               Light HTTP/1.1 server library
                                             |__ https://www.gnu.org/software/libmicrohttpd/
 
-libmng                                      MNG/JNG reference library
-                                            |__ https://sourceforge.net/projects/libmng/
-
 libmpc                                      C library for the arithmetic of
                                             |   high precision complex numbers
                                             |__ https://www.multiprecision.org/
@@ -1621,7 +1621,7 @@ lla                                         High-performance, extensible alterna
 llama.cpp                                   LLM inference in C/C++
                                             |__ https://llama.app
 
-lld@21                                      LLVM Project Linker
+lld@22                                      LLVM Project Linker
                                             |__ https://lld.llvm.org/
 
 llhttp                                      Port of http_parser to llparse
@@ -1639,16 +1639,14 @@ llvm@17                                     Next-gen compiler infrastructure
 llvm@20                                     Next-gen compiler infrastructure
                                             |__ https://llvm.org/
 
-llvm@21                                     Next-gen compiler infrastructure
-                                            |__ https://llvm.org/
-
 llvm@22                                     Next-gen compiler infrastructure
                                             |__ https://llvm.org/
 
 localai                                     OpenAI alternative
                                             |__ https://localai.io
 
-localstack/tap/localstack-cli               Localstack cli packaged using pyinstaller
+localstack/tap/localstack-cli               Deprecated localstack cli packaged
+                                            |   with pyinstaller, superseded by lstk
                                             |__ https://github.com/localstack/localstack-cli
 
 logtalk                                     Declarative object-oriented
@@ -1720,6 +1718,9 @@ maigret                                     Collect a dossier on a person by
                                             |   username from thousands of sites
                                             |__ https://github.com/soxoj/maigret
 
+mailpit                                     Web and API based SMTP testing
+                                            |__ https://mailpit.axllent.org/
+
 markdown                                    Text-to-HTML conversion tool
                                             |__ https://daringfireball.net/projects/markdown/
 
@@ -1756,6 +1757,10 @@ mcp-server-chart                            MCP with 25+ @antvis charts for
                                             |   visualization, generation, and analysis
                                             |__ https://github.com/antvis/mcp-server-chart
 
+mcpc                                        Universal command-line client for
+                                            |   the Model Context Protocol (MCP)
+                                            |__ https://github.com/apify/mcpc
+
 mcpm                                        Open source, community-driven
                                             |   MCP server and client manager
                                             |__ https://mcpm.sh/
@@ -1776,6 +1781,9 @@ mdfried                                     Terminal markdown viewer
 meilisearch                                 Ultra relevant, instant and
                                             |   typo-tolerant full-text search API
                                             |__ https://docs.meilisearch.com/
+
+memex                                       Index and search local agent conversation history
+                                            |__ https://github.com/nicosuave/memex
 
 antoniorodr/memo/memo                       CLI app to manage your Apple
                                             |   Notes and Apple reminders
@@ -1964,6 +1972,9 @@ nono                                        Capability-based sandbox shell for
                                             |   AI agents with OS-enforced isolation
                                             |__ https://nono.sh
 
+noodle                                      Terminal REST client with file-based collections
+                                            |__ https://noodlerest.dev
+
 notion-mcp-server                           MCP Server for Notion
                                             |__ https://github.com/makenotion/notion-mcp-server
 
@@ -2003,6 +2014,10 @@ oniguruma                                   Regular expressions library
 
 onnx                                        Open standard for machine learning interoperability
                                             |__ https://onnx.ai/
+
+onnxruntime                                 Cross-platform, high performance
+                                            |   scoring engine for ML models
+                                            |__ https://github.com/microsoft/onnxruntime
 
 openai-whisper                              General-purpose speech recognition model
                                             |__ https://github.com/openai/whisper
@@ -2057,6 +2072,9 @@ openslide                                   C library to read whole-slide
                                             |__ https://openslide.org/
 
 openssl@3                                   Cryptography and SSL/TLS Toolkit
+                                            |__ https://openssl-library.org
+
+openssl@4                                   Cryptography and SSL/TLS Toolkit
                                             |__ https://openssl-library.org
 
 openvino                                    Open Visual Inference And
@@ -2118,6 +2136,10 @@ pcre2                                       Perl compatible regular
 
 pdf2svg                                     PDF converter to SVG
                                             |__ https://cityinthesky.co.uk/opensource/pdf2svg
+
+openclaw/tap/peekaboo                       Lightning-fast macOS screenshots
+                                            |   & AI vision analysis
+                                            |__ https://github.com/openclaw/Peekaboo
 
 pgvector                                    Open-source vector similarity search for Postgres
                                             |__ https://github.com/pgvector/pgvector
@@ -2260,10 +2282,6 @@ python-build                                Simple, correct PEP 517 build fronte
 python-packaging                            Core utilities for Python packages
                                             |__ https://packaging.pypa.io/
 
-python-setuptools                           Easily download, build, install,
-                                            |   upgrade, and uninstall Python packages
-                                            |__ https://setuptools.pypa.io/
-
 python@3.12                                 Interpreted, interactive,
                                             |   object-oriented programming language
                                             |__ https://www.python.org/
@@ -2273,6 +2291,10 @@ python@3.13                                 Interpreted, interactive,
                                             |__ https://www.python.org/
 
 python@3.14                                 Interpreted, interactive,
+                                            |   object-oriented programming language
+                                            |__ https://www.python.org/
+
+python@3.15                                 Interpreted, interactive,
                                             |   object-oriented programming language
                                             |__ https://www.python.org/
 
@@ -2578,9 +2600,6 @@ sad                                         CLI search and replace | Space Age s
 sbcl                                        Steel Bank Common Lisp system
                                             |__ https://www.sbcl.org/
 
-scikit-image                                Image processing in Python
-                                            |__ https://scikit-image.org
-
 scip                                        Solver for mixed integer programming
                                             |   and mixed integer nonlinear programming
                                             |__ https://scipopt.org
@@ -2690,8 +2709,8 @@ speech                                      On-device speech toolkit for Apple
 speex                                       Audio codec designed for speech
                                             |__ https://speex.org/
 
-neilotoole/sq/sq                            sq data wrangler
-                                            |__ https://github.com/neilotoole/sq
+sq                                          Data wrangler with jq-like query language
+                                            |__ https://sq.io
 
 sql-formatter                               Whitespace formatter for different query languages
                                             |__ https://sql-formatter-org.github.io/sql-formatter/
@@ -2811,6 +2830,9 @@ termaid                                     Render Mermaid diagrams in the termi
 
 termframe                                   Terminal output SVG screenshot tool
                                             |__ https://github.com/pamburus/termframe
+
+terminal-notifier                           Send macOS User Notifications from the command-line
+                                            |__ https://github.com/julienXX/terminal-notifier
 
 termsvg                                     Record, share and export your
                                             |   terminal as a animated SVG image
