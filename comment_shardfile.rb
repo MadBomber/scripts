@@ -11,9 +11,9 @@ SHARD_FILENAME    = 'shard.yml'
 puts "processing #{SHARD_FILENAME} ..."
 
 require 'amazing_print'  # Pretty print Ruby objects with proper indentation and colors
-require 'github_api'
+require 'octokit'
 
-GITHUB = Github.new( oauth_token: GITHUB_API_TOKEN)
+GITHUB = Octokit::Client.new(access_token: GITHUB_API_TOKEN)
 
 
 require 'pathname'       # STDLIB
@@ -82,7 +82,7 @@ lines.each do |a_line|
       repo_account, repo_name = repo.split('/')
 
       begin
-        desc  = GITHUB.repos.get(repo_account, repo_name)['description']
+        desc  = GITHUB.repo("#{repo_account}/#{repo_name}").description
       rescue Exception => e
         STDERR.puts "ERROR: #{e}"
         STDERR.puts "while processing #{repo}"

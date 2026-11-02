@@ -6,7 +6,7 @@ require 'debug_me'
 include DebugMe
 
 require 'amazing_print'
-require 'github_api'
+require 'octokit'
 require 'pathname'
 
 require 'cli_helper'
@@ -60,10 +60,10 @@ git_remote_command    = 'git remote -v'
 git_upstream_command  = 'git remote add upstream '
 
 
-my_github_repos = Github.repos.list(
-  user:             github_account,
-  auto_pagination:  true
-)
+GITHUB = Octokit::Client.new(access_token: ENV['GITHUB_API_TOKEN'])
+GITHUB.auto_paginate = true
+
+my_github_repos = GITHUB.repositories(github_account)
 
 puts "\n#{github_account}'s github repos"
 ap my_github_repos.map{|r| r.name}
@@ -104,10 +104,7 @@ new_github_repos.each do |r|
 
       puts "Setting upstream remote for a forked repo ..."
 
-      my_repo = Github.repos.get(
-        user: github_account,
-        repo: r.name
-      )
+      my_repo = GITHUB.repo("#{github_account}/#{r.name}")
 
       upstream = my_repo.parent.html_url
 

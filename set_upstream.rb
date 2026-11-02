@@ -15,7 +15,7 @@
 
 require 'amazing_print'  # Pretty print Ruby objects with proper indentation and colors
 
-require 'github_api'
+require 'octokit'
 
 require 'debug_me'       # A tool to print the labeled value of variables.
 include DebugMe
@@ -66,6 +66,10 @@ def set_upstream(clone_path, upstream_url)
   end
 end # def set_upstream(clone_path, upstream_url)
 
+def github_client
+  @github_client ||= Octokit::Client.new(access_token: ENV['GITHUB_API_TOKEN'])
+end
+
 # obtain the github.com hosted repository details
 # of the cloned working directories
 def get_github_repos_already_cloned
@@ -74,11 +78,7 @@ def get_github_repos_already_cloned
   configatron.dir.children.each do |repo_name|
     if repo_name.directory?
       begin
-        repo = Github.repos.get(
-          user:         ENV['GITHUB_ACCOUNT'],
-          oauth_token:  ENV['GITHUB_API_TOKEN'],
-          repo:         repo_name.basename.to_s
-        )
+        repo = github_client.repo("#{ENV['GITHUB_ACCOUNT']}/#{repo_name.basename}")
       rescue Exception => e
         puts "\n#{e}"
         next

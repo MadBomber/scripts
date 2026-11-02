@@ -12,11 +12,10 @@ include DebugMe
 
 require 'pathname'  # STDLIB
 
-require 'github_api'  # Ruby client for the official GitHub API
+require 'octokit'     # Ruby client for the official GitHub API
 
-Github.configure do |c|
-  c.auto_pagination = true
-end
+GITHUB = Octokit::Client.new(access_token: ENV['GITHUB_API_TOKEN'])
+GITHUB.auto_paginate = true
 
 me        = Pathname.new(__FILE__).realpath
 my_dir    = me.parent
@@ -174,7 +173,7 @@ end
 
 pp $options  if verbose? || debug?
 
-repos = Github.repos.list user: $options[:user]
+repos = GITHUB.repositories($options[:user])
 
 repos.each do |r|
   out_path = Pathname.new "#{$options[:out_dirname]}/#{r.name}"

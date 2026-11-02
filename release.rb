@@ -3,7 +3,7 @@
 ##########################################################
 ###
 ##  File: release.rb
-##  Desc: Use gcli from gem github_api to create
+##  Desc: Use the gh CLI to create
 ##        an issue within a github-stored project
 ##        that invokes @rultor
 ##  By:   Dewayne VanHoozer (dvanhoozer@gmail.com)
@@ -208,8 +208,8 @@ STDERR.print "\nDo you want to release #{$options[:repo]} version #{$options[:ve
 answer = (gets).chomp.strip.downcase
 
 if answer.size>0 && 'y' == answer[0]
-  command = "gcli issue create" +
-      " #{$options[:user_account]} #{$options[:repo]}" +
+  command = "gh issue create" +
+      " --repo #{$options[:user_account]}/#{$options[:repo]}" +
       " --title='release #{$options[:version]}'" +
       " --body='@rultor release, tag=`#{$options[:version]}`'"
   puts command if verbose?
