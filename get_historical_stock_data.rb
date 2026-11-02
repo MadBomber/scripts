@@ -14,7 +14,7 @@ require 'csv'                 # STDLIB
 require 'date'                # STDLIB
 require 'debug_me'            # A tool to print the labeled value of variables.
 require 'faraday'             # HTTP/REST API client library.
-require 'faraday_middleware'  # Various middleware for Faraday
+require 'faraday/follow_redirects'  # Faraday middleware to follow HTTP redirects
 require 'json'                # STDLIB
 require 'rethinkdb'           # This package provides the Ruby driver library for the RethinkDB database server.
 
@@ -89,7 +89,7 @@ end
 
 def get_csv_from(a_url)
   text = Faraday.new(a_url) { |b|
-    b.use FaradayMiddleware::FollowRedirects
+    b.response :follow_redirects
     b.adapter :net_http
   }.get.body.gsub(' ','').downcase
 
