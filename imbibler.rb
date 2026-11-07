@@ -26,7 +26,7 @@ def ReadBookChapter(book, bookNum, url, output, dir_path=Pathname.pwd)
 	chapterVerses    = []
 
 	# Read and parse the chapter page.
-	page             = Nokogiri::HTML(open(URI.escape(url)))
+	page             = Nokogiri::HTML(URI.open(URI::RFC2396_PARSER.escape(url)))
 
 	# Find the first [or any] verse, just so we can figure out how the verses
 	# of this chapter are tagged. (Abbreviation formats vary, so don't guess.)
@@ -110,7 +110,7 @@ def ReadIndex(url, output, csv_dir=Pathname.pwd)
 	bookNum        = "1"
 
 	# Read and parse the index page.
-	testament      = Nokogiri::HTML(open(URI.escape(url)))
+	testament      = Nokogiri::HTML(URI.open(URI::RFC2396_PARSER.escape(url)))
 
 	# Just get the table of book/chapter links.
 	bookTable      = testament.at('table.infotable')
@@ -158,7 +158,7 @@ end
 
 indexUrl = ARGV[1] if ARGV.size == 2
 
-csv_path = Pathname.new(ARGV.shift).realpath
+csv_path = Pathname.new(ARGV.shift).expand_path
 
 # Create a comma-separated value file for the output, and start processing the index.
 csv = CSV.open(csv_path, 'w')
