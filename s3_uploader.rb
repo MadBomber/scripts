@@ -79,7 +79,7 @@ $warnings = []
 
 # Get the next ARGV parameter after param_index
 def get_next_parameter(param_index)
-  unless Fixnum == param_index.class
+  unless Integer == param_index.class
     param_index = ARGV.find_index(param_index)
   end
   next_parameter = nil
