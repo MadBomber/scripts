@@ -6,6 +6,16 @@ require 'csv'       # STDLIB
 require 'pathname'  # STDLIB
 
 #
+# fetch_page
+#
+# Fetches url and returns it parsed as an HTML document.
+#
+def fetch_page(url)
+	Nokogiri::HTML(URI.open(URI::RFC2396_PARSER.escape(url)))
+end
+
+
+#
 # ReadBookChapter
 #
 # Processes a BibleGateway.com bible chapter page, which contains verse text
@@ -26,7 +36,7 @@ def ReadBookChapter(book, bookNum, url, output, dir_path=Pathname.pwd)
 	chapterVerses    = []
 
 	# Read and parse the chapter page.
-	page             = Nokogiri::HTML(URI.open(URI::RFC2396_PARSER.escape(url)))
+	page             = fetch_page(url)
 
 	# Find the first [or any] verse, just so we can figure out how the verses
 	# of this chapter are tagged. (Abbreviation formats vary, so don't guess.)
@@ -110,7 +120,7 @@ def ReadIndex(url, output, csv_dir=Pathname.pwd)
 	bookNum        = "1"
 
 	# Read and parse the index page.
-	testament      = Nokogiri::HTML(URI.open(URI::RFC2396_PARSER.escape(url)))
+	testament      = fetch_page(url)
 
 	# Just get the table of book/chapter links.
 	bookTable      = testament.at('table.infotable')
@@ -140,6 +150,8 @@ end # def ReadIndex(url, output)
 
 ###########################################################
 ## Main
+
+return unless $PROGRAM_NAME == __FILE__
 
 # Assign default index URL, but override it if an index URL is explicitly specified.
 indexUrl = "http://www.biblegateway.com/versions/New-International-Version-NIV-Bible/"
