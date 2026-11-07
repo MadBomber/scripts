@@ -2,8 +2,6 @@
 
 source "https://rubygems.org"
 
-ruby "2.3.1"
-
 # Special Libraries
 #gem 'mapbox-sdk'  # Ruby bindings for the Mapbox API
 
@@ -16,7 +14,6 @@ gem 'sinatra-contrib'                   # Collection of useful Sinatra extension
 gem "sinatra-activerecord"              # Extends Sinatra with ActiveRecord helpers.
 gem 'haml'                              # An elegant, structured (X)HTML/XML templating engine.
 gem 'sass'                              # A powerful but elegant CSS compiler that makes CSS fun again.
-gem 'refile'                            # Simple and powerful file upload library
 gem 'sinatra-partial',  require: 'sinatra/partial'  # A sinatra extension for render partials.
 gem 'sinatra-param',    require: 'sinatra/param'    # Parameter Validation & Type Coercion for Sinatra.
 gem 'thin'                                          # A thin and fast web server
