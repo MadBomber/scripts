@@ -151,7 +151,7 @@ What the file is/does should be understood from its name; but, not always.  I wi
 | image_renamer.rb                        | Batch rename image files |
 | image_resizer.rb                        | Resize images in batch |
 | image_rotater.rb                        | Rotate images by specified degrees |
-| imbibler.rb                             | Drinking game or beverage tracker |
+| imbibler.rb                             | Scrape a BibleGateway.com translation into a CSV plus one text file per chapter |
 | insert_ticket_into_changelog.rb         | Add ticket numbers to changelog |
 | install_gems_from_file.rb               | Batch install gems from list |
 | iTerm2                                  | iTerm2 AppleScript utilities |
