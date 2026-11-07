@@ -16,6 +16,7 @@ include DebugMe
 
 require 'pathname'  # STDLIB
 require 'erb'       # STDLIB
+require 'fileutils' # STDLIB
 
 me        = Pathname.new(__FILE__).realpath
 my_dir    = me.parent
@@ -149,6 +150,6 @@ template_files.each do |template_file|
       puts text
     end
   else
-    system "cp -R #{template_file} #{Pathname.pwd}"
+    FileUtils.cp_r(template_file, Pathname.pwd)
   end
 end
