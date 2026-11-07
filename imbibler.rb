@@ -11,7 +11,7 @@ require 'pathname'  # STDLIB
 # Fetches url and returns it parsed as an HTML document.
 #
 def fetch_page(url)
-	Nokogiri::HTML(URI.open(URI::RFC2396_PARSER.escape(url)))
+	URI.open(URI::RFC2396_PARSER.escape(url)) { |io| Nokogiri::HTML(io) }
 end
 
 
