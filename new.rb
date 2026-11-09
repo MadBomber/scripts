@@ -112,15 +112,15 @@ template_files = ARGV.map { |f| templates_path + f }
 
 template_files.each_index do |x|
   template_file = template_files[x]
-  unless template_file.exist?
-    errors << "no such template file: #{template_file.basename}"
-    next
-  end
 
   erb_version = template_file.parent +
                 (template_file.basename.to_s + '.erb')
 
-  template_files[x] = erb_version if erb_version.exist?
+  template_file = template_files[x] = erb_version if erb_version.exist?
+
+  unless template_file.exist?
+    errors << "no such template file: #{template_file.basename}"
+  end
 end
 
 
