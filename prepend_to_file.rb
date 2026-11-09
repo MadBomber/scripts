@@ -6,7 +6,7 @@ require 'fileutils'
 # Method to display help information
 def display_help
   puts <<~HELP
-    Usage: prepend_content.rb [options] CONTENT_FILE TARGET_FILES_OR_DIRS
+    Usage: #{File.basename($0)} [options] CONTENT_FILE TARGET_FILES_OR_DIRS
 
     Options:
       --dryrun, -d      Show what would happen without making changes
@@ -55,7 +55,7 @@ end
 def main
   options = {}
   OptionParser.new do |opts|
-    opts.banner = "Usage: prepend_content.rb [options] CONTENT_FILE TARGET_FILES_OR_DIRS"
+    opts.banner = "Usage: #{File.basename($0)} [options] CONTENT_FILE TARGET_FILES_OR_DIRS"
 
     opts.on('--dryrun', '-d', 'Show what would happen without making changes') do
       options[:dryrun] = true
