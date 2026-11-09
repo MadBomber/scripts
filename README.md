@@ -26,12 +26,11 @@ What the file is/does should be understood from its name; but, not always.  I wi
 | bible_semantic_search.rb                | Semantic search through Bible text |
 | blessing.rb                             | Display random blessings or quotes |
 | blessings.txt                           | Collection of blessings and inspirational quotes |
-| bp.rb                                   | Boilerplate code generator |
+| bp.rb                                   | Extract blood pressure data from email and format into a report |
 | breakout_git_revisions.sh               | Extract git revisions to separate files |
 | brew_not_installed                      | List Homebrew packages not installed |
 | Brewfile                                | Homebrew bundle file for package management |
 | brewt                                   | Homebrew utility script |
-| brewt_all.md                            | Markdown list of all Homebrew packages |
 | brewt_all.txt                           | Complete list of Homebrew packages |
 | bundler_inline_example.rb               | Example of using bundler inline in Ruby scripts |
 | buzz_words.rb                           | Generate or manage buzzwords |
@@ -65,7 +64,6 @@ What the file is/does should be understood from its name; but, not always.  I wi
 | cost_of_trip.rb                         | Calculate travel expenses and trip costs |
 | cr2lf                                   | Convert carriage returns to line feeds |
 | create_changelog.rb                     | Generate changelog from git commits |
-| create_data_dictionary                  | Generate data dictionary from database schema |
 | create_db_system_users.s                | Create database system users |
 | create_erd_scripts_from_rails_models.rb| Generate ERD scripts from Rails models |
 | create_gems_used_report.rb              | Report on gems used in projects |
@@ -74,9 +72,8 @@ What the file is/does should be understood from its name; but, not always.  I wi
 | create_working_directory.rb             | Set up new project working directory |
 | csv_reader.rb                           | Read and process CSV files |
 | csv2json.rb                             | Convert CSV files to JSON format |
-| ct.rb                                   | Code testing utility |
+| ct.rb                                   | Tail a file and color lines by regex matches (colortail) |
 | daemon_control                          | Control background daemon processes |
-| data_dictionary.rb                      | Generate data dictionary documentation |
 | database_dumps                          | Database backup and dump utilities |
 | db_schema_visualizer.pl                 | Visualize database schema in Perl |
 | de_dog_da_log.rb                        | Clean up and process log files |
@@ -84,13 +81,13 @@ What the file is/does should be understood from its name; but, not always.  I wi
 | delete_docker_junk.rb                   | Clean up Docker containers and images |
 | delete_mods_history.sh                  | Delete mods command history |
 | describe_gems.rb                        | Display descriptions for installed gems |
-| disable.rb                              | Disable features or services |
-| dit.rb                                  | Directory iteration tool |
+| disable.rb                              | Disable/enable Rails migrations by their timestamp |
+| dit.rb                                  | Line-by-line diff of old.xml vs new.xml |
 | doc_github_actions.sh                   | Document GitHub Actions workflows |
 | docker_info.rb                          | Display Docker system information |
 | docx_appender.rb                        | Append content to DOCX files |
 | docx_breakup.rb                         | Split DOCX files into sections |
-| docx_brf.rb                             | Convert DOCX to BRF (Braille) format |
+| docx_brf.rb                             | Find valid bible references in text |
 | docx_draft_layout.rb                    | Format DOCX for draft layout |
 | docx_extract_bodytext.rb                | Extract body text from DOCX files |
 | docx_rm_blank_paragraphs.rb             | Remove blank paragraphs from DOCX |
@@ -123,7 +120,6 @@ What the file is/does should be understood from its name; but, not always.  I wi
 | gem_ctags.rb                            | Generate ctags for installed gems |
 | gemd                                    | Display gem descriptions |
 | gems_categorized.md                     | Categorized list of Ruby gems |
-| gems_v344.txt                           | Gem list for Ruby v3.4.4 |
 | gemt                                    | List gem tasks like rake -T |
 | gemt_all.txt                            | All gem tasks list |
 | gemu                                    | Gem update utility |
@@ -193,7 +189,7 @@ What the file is/does should be understood from its name; but, not always.  I wi
 | normalize_pathnames.rb                  | Standardize file path formats |
 | note.rb                                 | Quick note-taking tool using $EDITOR |
 | number                                  | Add line numbers to text |
-| organizer.rb                            | Organize files into directories |
+| organizer.rb                            | Process a text file of addresses |
 | path                                    | Display or modify PATH variable |
 | pdf2png.sh                              | Convert PDF files to PNG images |
 | phpinfo                                 | Display PHP configuration info |
