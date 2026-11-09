@@ -47,7 +47,7 @@ end
 gems = ARGV
 
 gems.each do |gem|
-  spec = YAML.load(`gem spec #{gem}`)
+  spec = YAML.unsafe_load(`gem spec #{gem}`)
 
   unless spec
     puts "\n#{gem} -- ERROR no such gem installed"

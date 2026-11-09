@@ -491,7 +491,7 @@ else
         begin
           system command
           begin
-            depends = YAML.load(`gem spec #{gem_name}`)
+            depends = YAML.unsafe_load(`gem spec #{gem_name}`)
                         .dependencies.map{|d| d.name}
             unless depends.empty?
               depends.each {|d| missing_gems.delete d}
