@@ -63,7 +63,7 @@ What the file is/does should be understood from its name; but, not always.  I wi
 | convert_position_to_named_parameters.rb | Convert positional to named parameters |
 | convert_vcr_response_to_fixture.rb      | Convert VCR cassettes to test fixtures |
 | copy_csv_to_rdb.rb                      | Import CSV data into RDB format |
-| copy_latest_voice_memo.rb               | Copy the latest Voice Memos recording and its transcript |
+| copy_latest_voice_memo.rb               | Copy the latest Voice Memos recording and its transcript (meant to live in a project's `notes/` dir) |
 | copy_missing_files.rb                   | Copy files that don't exist in destination |
 | copy_modified_files.rb                  | Copy only modified files between directories |
 | cost_of_trip.rb                         | Calculate travel expenses and trip costs |
@@ -180,7 +180,7 @@ What the file is/does should be understood from its name; but, not always.  I wi
 | loripsum.rb                             | Lorem Ipsum text generator |
 | madbomber_celebration.rb                | Terminal MADBOMBER fireworks celebration animation |
 | magic_8_ball.rb                         | Magic 8-ball fortune teller |
-| make_gems_local_to_rails.rb             | Symlink bundled gems local to a Rails app |
+| make_gems_local_to_rails.rb             | Snippet for config/boot.rb: symlink bundled gems local to a Rails app |
 | markdown_to_docx.rb                     | Convert Markdown files to DOCX |
 | mbox_finder.rb                          | Search through mbox email files |
 | md2html                                 | Convert Markdown to HTML |
@@ -201,7 +201,7 @@ What the file is/does should be understood from its name; but, not always.  I wi
 | newsletter_reader.rb                    | Fetch Ruby newsletter RSS issues and save as Markdown |
 | normalize_pathnames.rb                  | Standardize file path formats |
 | note.rb                                 | Quick note-taking tool using $EDITOR |
-| note_v2.rb                              | Quick note-taking tool using $EDITOR (v2) |
+| note_v2.rb                              | Quick note-taking tool using $EDITOR; writes `_notes.md`, uses pbpaste, no project DB |
 | number                                  | Add line numbers to text |
 | o2g2o.rb                                | Convert links between Obsidian and GitHub Markdown |
 | organizer.rb                            | Process a text file of addresses |
@@ -218,7 +218,7 @@ What the file is/does should be understood from its name; but, not always.  I wi
 | prepend_to_path_exclusive.rb            | Add directory to PATH without duplicates |
 | print_tree.rb                           | Print directory tree structure |
 | printenv                                | Display environment variables |
-| process_latest_meeting.rb               | Process the latest Voice Memos recording into meeting notes |
+| process_latest_meeting.rb               | Process the latest Voice Memos recording into meeting notes (meant to live in a project's `notes/` dir) |
 | projxslt.rb                             | Apply XSLT transformations to project |
 | pushd_to_gem_directory                  | Navigate to gem installation directory |
 | rab_list_all.sh                         | List all RabbitMQ queues |
