@@ -28,6 +28,8 @@ require 'amazing_print'
 require 'debug_me'
 include DebugMe
 
+require 'fileutils'
+
 require 'cli_helper'
 include CliHelper
 
@@ -118,7 +120,7 @@ TARGET_DIR     = WORKING_ROOT + target_branch
 # recurisvely copy the source WD to the target WD
 # may need to mkdir [feature|bugfix|chore] if it does not already exist
 
-do_command "cp -R #{SOURCE_DIR} #{TARGET_DIR}"
+FileUtils.cp_r(SOURCE_DIR, TARGET_DIR, preserve: true, verbose: debug? || verbose?)
 
 
 
