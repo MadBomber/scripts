@@ -38,7 +38,7 @@ end
 
 
 def process_yaml(file_contents='')
-  a_hash = YAML.load file_contents
+  a_hash = YAML.load(file_contents, aliases: true)
   # SMELL: multi-line strings in YAML
   #        add a newline character after
   #        the last line of the string.  That
