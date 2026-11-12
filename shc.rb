@@ -13,7 +13,7 @@ me = Pathname.new(__FILE__).basename
 
 
 unless ARGV.empty?
-  if %w[-h --help].include? ARGV.shift
+  if (ARGV & %w[-h --help]).any?
     puts <<~USAGE
 
       Section Header Comment generator
