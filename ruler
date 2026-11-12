@@ -1,22 +1,114 @@
 #!/usr/bin/env ruby
+# Prints the terminal size and a horizontal ruler.
+#
+# Usage: ruler [COLUMNS]
+#   COLUMNS  optional; resize the iTerm2 window to this many
+#            columns before printing.
 
 require 'terminal-size'
 
-width   = Terminal.size[:width]
-height  = Terminal.size[:height]
-dots    = "."*(width+10)
-tens    = (1..width).step(10).map {|x| x-1}
-fives   = tens.map{|x|x+5}
+RESIZE_TIMEOUT = 1.0   # seconds to wait for the window to resize
+RESIZE_POLL    = 0.02
 
-tens.shift
+# Returns the requested column count, or nil when no argument given.
+# Raises ArgumentError when the argument is not a positive integer.
+def requested_width(argv)
+  arg = argv.first
+  return nil if arg.nil?
+  raise ArgumentError, "width must be a positive integer: #{arg}" unless arg.match?(/\A[1-9]\d*\z/)
 
-tens.each do |x|
-  y = x/100 + 1
-  dots[x-y,y]=(x/10).to_s
+  arg.to_i
 end
 
-fives.each{|x| dots[x-1]='^'}
+# xterm window-manipulation sequence (supported by iTerm2):
+# CSI 8 ; rows ; columns t
+def resize_sequence(rows, columns)
+  "\e[8;#{rows};#{columns}t"
+end
 
-puts "Terminal Size: #{height} rows by #{width} columns"
-puts dots[0,width]
+# Returns the iTerm2 session GUID from ITERM_SESSION_ID
+# ("w0t0p0:GUID"), or nil when not running inside iTerm2.
+def iterm_session_guid(env = ENV)
+  env['ITERM_SESSION_ID']&.split(':')&.last
+end
 
+# AppleScript that sets the column count of one iTerm2 session.
+# iTerm2 honors this even when the profile has "Disable
+# session-initiated window resizing" turned on, which makes it
+# ignore the escape sequence.
+def resize_applescript(guid, columns)
+  <<~APPLESCRIPT
+    tell application "iTerm2"
+      repeat with w in windows
+        repeat with t in tabs of w
+          repeat with s in sessions of t
+            if id of s is "#{guid}" then
+              set columns of s to #{columns}
+              return
+            end if
+          end repeat
+        end repeat
+      end repeat
+    end tell
+  APPLESCRIPT
+end
+
+# Sends the resize request: AppleScript inside iTerm2, otherwise
+# the escape sequence.
+def request_resize(columns, guid: iterm_session_guid, out: $stdout)
+  if guid
+    system('osascript', '-e', resize_applescript(guid, columns), out: File::NULL, err: File::NULL)
+  else
+    out.print resize_sequence(Terminal.size[:height], columns)
+    out.flush
+  end
+end
+
+# Asks the terminal to resize, then waits for it to take effect.
+# Returns true when the terminal reports the requested width.
+def resize_width(columns, out: $stdout)
+  request_resize(columns, out: out)
+
+  deadline = Time.now + RESIZE_TIMEOUT
+  until Terminal.size[:width] == columns
+    return false if Time.now > deadline
+
+    sleep RESIZE_POLL
+  end
+  true
+end
+
+def ruler(width)
+  dots    = "."*(width+10)
+  tens    = (1..width).step(10).map {|x| x-1}
+  fives   = tens.map{|x|x+5}
+
+  tens.shift
+
+  tens.each do |x|
+    y = x/100 + 1
+    dots[x-y,y]=(x/10).to_s
+  end
+
+  fives.each{|x| dots[x-1]='^'}
+
+  dots[0,width]
+end
+
+if __FILE__ == $PROGRAM_NAME
+  begin
+    columns = requested_width(ARGV)
+  rescue ArgumentError => e
+    abort "ruler: #{e.message}"
+  end
+
+  if columns && !resize_width(columns)
+    warn "ruler: window did not resize to #{columns} columns"
+  end
+
+  width   = Terminal.size[:width]
+  height  = Terminal.size[:height]
+
+  puts "Terminal Size: #{height} rows by #{width} columns"
+  puts ruler(width)
+end
