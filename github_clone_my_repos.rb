@@ -92,15 +92,21 @@ ap new_github_repos.map{|r| r.name}
 new_github_repos.each do |r|
   command = "#{clone_command}#{r.full_name} #{sandbox_path}/#{r.name}"
   puts "\n#{command} ..."
-  `#{command}` unless dryrun?
+  next if dryrun?
+
+  `#{command}`
 
   if r.fork
     target_dir = Pathname.new("#{sandbox_path}/#{r.name}")
-    target_dir.mkdir unless target_dir.exist?
+
+    unless (target_dir + '.git').exist?
+      puts "Clone failed; not setting upstream for #{r.name}"
+      next
+    end
 
     remotes = `cd #{target_dir} && #{git_remote_command}`
 
-    unless dryrun?  ||  remotes.include?('upstream')
+    unless remotes.include?('upstream')
 
       puts "Setting upstream remote for a forked repo ..."
 
