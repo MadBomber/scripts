@@ -217,7 +217,6 @@ What the file is/does should be understood from its name; but, not always.  I wi
 | prepend_to_file.rb                      | Prepend text to beginning of file |
 | prepend_to_path_exclusive.rb            | Add directory to PATH without duplicates |
 | print_tree.rb                           | Print directory tree structure |
-| printenv                                | Display environment variables |
 | process_latest_meeting.rb               | Process the latest Voice Memos recording into meeting notes (meant to live in a project's `notes/` dir) |
 | projxslt.rb                             | Apply XSLT transformations to project |
 | pushd_to_gem_directory                  | Navigate to gem installation directory |
