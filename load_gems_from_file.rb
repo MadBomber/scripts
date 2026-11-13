@@ -30,7 +30,7 @@ if !file_path.exist? || file_path.directory?
   exit
 end
 
-installed = Set.new(Gem::Specification.all.map(&:name))
+installed = Set.new(Gem::Specification.map(&:name))
 gems_list = file_path.read.split("\n").map { |g| g.split.first }.compact.reject(&:empty?)
 missing   = gems_list.reject { |name| installed.include?(name) }
 

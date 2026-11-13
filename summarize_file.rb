@@ -7,7 +7,7 @@
 
 require 'pathname'  # STDLIB
 require 'summary'   # This is a simple gem that generates introduction text from a long text, it will always break the text at the end of the last word near to the limit you informed as argument.
-require 'systemu'   # systemu
+require 'open3'     # STDLIB
 require 'pp'
 
 if 0 == ARGV.length or ARGV[0].downcase.include? '-h'
@@ -28,11 +28,11 @@ case fext
 
   when '.html', '.htm' then
     #puts "Convert #{fext} file to '.txt' ..."
-    a,b,c = systemu "html2text #{fp.to_s}"
+    b, _err, _status = Open3.capture3("html2text", fp.to_s)
 
   when '.pdf' then
     #puts "Convert #{fext} file to '.txt' ..."
-    a,b,c = systemu "pdf2txt #{fp.to_s}"
+    b, _err, _status = Open3.capture3("pdf2txt", fp.to_s)
 
   when '.txt' then
     b = fp.read

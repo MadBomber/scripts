@@ -1,5 +1,3 @@
 #!/bin/sh
-wl=$1
-ruby -n -e 'puts $_ if $_.chomp.length == ENV["wl"].to_i'
-
+WL="$1" ruby -n -e 'puts $_ if $_.chomp.length == ENV["WL"].to_i'
 

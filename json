@@ -22,7 +22,7 @@ def show_usage
 
   pretty prints JSON files
 
-  Usage: #{Pathname.new(__FILE__).basebane} json_files+
+  Usage: #{Pathname.new(__FILE__).basename} json_files+
 
   Where:
 

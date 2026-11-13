@@ -54,6 +54,10 @@ class ForkOfflineMover
 
   # Raises MoveError if this fork cannot be safely moved.
   def validate!(name, force:)
+    if name.empty? || name != File.basename(name) || %w[. ..].include?(name)
+      raise MoveError, "invalid fork name (expected a plain directory name): #{name.inspect}"
+    end
+
     src = source_path(name)
     tgt = target_path(name)
 
@@ -134,7 +138,7 @@ def parse_args(argv)
     when '--dry-run'  then options[:dry_run] = true
     when '--force'    then options[:force] = true
     when '--list'     then options[:list] = true
-    else                   options[:names] << arg
+    else                   options[:names] << arg.chomp('/')
     end
   end
 

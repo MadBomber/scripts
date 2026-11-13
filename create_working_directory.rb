@@ -29,6 +29,7 @@ require 'debug_me'
 include DebugMe
 
 require 'fileutils'
+require 'open3'
 
 require 'cli_helper'
 include CliHelper
@@ -77,20 +78,29 @@ abort_if_errors
 ######################################################
 # Local methods
 
-def do_command(command)
+# Runs argv in dir without a shell so paths with spaces survive.
+# Returns true when the command succeeds.
+def do_command(*argv, chdir:)
   if debug? || verbose?
-    puts "Command: #{command} ..."
+    puts "Command: (in #{chdir}) #{argv.join(' ')} ..."
   end
-  result = `#{command}`
+  output, status = Open3.capture2e(*argv, chdir: chdir.to_s)
+  puts output if debug? || verbose?
+  status.success?
+rescue SystemCallError => e
+  warn "#{argv.first}: #{e.message}"
+  false
 end
 
 ######################################################
 # Main
 
 at_exit do
-  puts
-  puts "Done."
-  puts
+  if $!.nil?
+    puts
+    puts "Done."
+    puts
+  end
 end
 
 ap configatron.to_h  if verbose? || debug?
@@ -105,7 +115,7 @@ WORKING_ROOT  = PROJECT_DIR + working_dir_name
 
 
 update_branches.each do |branch|
-  do_command "cd #{PROJECT_DIR + branch} && git up"
+  do_command "git", "up", chdir: PROJECT_DIR + branch
 end
 
 
@@ -130,12 +140,14 @@ FileUtils.cp_r(SOURCE_DIR, TARGET_DIR, preserve: true, verbose: debug? || verbos
 # TODO: configatron.branch_name is already a branch?  If not,
 #       then need to create the branch before checking it out.
 
-do_command "cd #{TARGET_DIR} && git checkout #{target_branch}"
+unless do_command("git", "checkout", target_branch, chdir: TARGET_DIR)
+  abort "ERROR: git checkout #{target_branch} failed in #{TARGET_DIR}"
+end
 
 
 # Do a git status to update all of the junk in the .git directory
 
-do_command "cd #{TARGET_DIR} && git status"
+do_command "git", "status", chdir: TARGET_DIR
 
 
 
@@ -144,14 +156,14 @@ do_command "cd #{TARGET_DIR} && git status"
 ENVRC = TARGET_DIR + '.envrc'
 
 if ENVRC.exist?
-  do_command "cd #{TARGET_DIR} && direnv allow"
+  do_command "direnv", "allow", chdir: TARGET_DIR
 end
 
 PREP_SCRIPT = 'prepare_default_config_for_development'
 PREP_FILE   = TARGET_DIR + PREP_SCRIPT
 
 if PREP_FILE.exist?  &&  PREP_FILE.file?  &&  PREP_FILE.executable?
-  do_command "cd #{TARGET_DIR} && ./#{PREP_SCRIPT}"
+  do_command "./#{PREP_SCRIPT}", chdir: TARGET_DIR
 end
 
 

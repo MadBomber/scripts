@@ -18,6 +18,7 @@ class MyCommandLine
 
   # parse the ARGV array
   def self.parse
+    return parse_these_args(['--help']) if ARGV.empty?
 
     # Preprocess ARGV because OptionParser cannot handle splats
     # change ['-f', 'x', 'y', 'z', '--any-switch']

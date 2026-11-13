@@ -5,7 +5,7 @@
 # brew install jq
 
 
-asof="YYYY-MM-DD$1"
+asof="$1"
 
 if [ "x" = "x$JIRA_DB_PROJECTS" ] ; then
   echo
@@ -21,9 +21,9 @@ if [ "x" = "x$JIRA_DB_DIR" ] ; then
   exit 1
 fi
 
-if [ "YYYY-MM-DD" != "$asof" ] ; then
+if [ -n "$asof" ] ; then
   for project in $JIRA_DB_PROJECTS ; do
-    sed s/YYYY-MM-DD/$asof/ $JIRA_DB_DIR/resync_state.json > $JIRA_DB_DIR/$project/sync_state.json
+    sed "s/YYYY-MM-DD/$asof/" "$JIRA_DB_DIR/resync_state.json" > "$JIRA_DB_DIR/$project/sync_state.json"
   done
 fi
 

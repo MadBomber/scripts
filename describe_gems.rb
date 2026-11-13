@@ -24,7 +24,6 @@ end
 require 'pp'
 
 require 'yaml'  # STDLIB
-require 'systemu'  # systemu
 
 # FIXME: make word_wrap a gem
 require 'word_wrap'  # Simple tool for word-wrapping text

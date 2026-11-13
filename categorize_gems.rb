@@ -38,7 +38,7 @@ puts "="*64
 
 # Main processing
 puts "Starting gem categorization..."
-all_specs = Gem::Specification.all
+all_specs = Gem::Specification.to_a
 puts "Found #{all_specs.length} gems to process."
 
 

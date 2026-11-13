@@ -473,7 +473,7 @@ gem_list = $gems.join(' ')
 if ARGV.empty?
   system "gemt #{gem_list}"
 else
-  installed_gems = Gem::Specification.all.map { |gs| gs.name }
+  installed_gems = Gem::Specification.map { |gs| gs.name }
 
   if %w{ -i --install }.include?ARGV.first
     missing_gems = $gems.reject{ |gem_name| installed_gems.include?(gem_name)}

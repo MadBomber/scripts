@@ -171,6 +171,8 @@ configatron.input_files = get_pathnames_from( configatron.arguments, %w[.rb .txt
 
 
 def first_argument_is_a_prompt?
+  return false if configatron.arguments.empty?
+
   prompt = configatron.arguments.shift
 
   if is_a_prompt?(prompt)
