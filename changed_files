@@ -5,22 +5,30 @@ debug() {
   echo "[DEBUG] $@" >&2  # Redirect to stderr
 }
 
-append_unique_existing_filepath() {
+# Appends $2 to the colon-separated variable named $1 unless already present.
+append_unique() {
     var_name="$1"
     filepath="$2"
 
-    if [ ! -e "$filepath" ]; then
-        debug "Filepath does not exist: $filepath"
+    current_value="$(eval "echo \"\$$var_name\"")"
+
+    if [ -z "$current_value" ]; then
+        eval "$var_name=\"\$filepath\""
+    else
+        case ":$current_value:" in
+            *":$filepath:"*) ;;
+            *) eval "$var_name=\"\$current_value:\$filepath\"" ;;
+        esac
+    fi
+}
+
+append_unique_existing_filepath() {
+    if [ ! -e "$2" ]; then
+        debug "Filepath does not exist: $2"
         return
     fi
 
-    current_value="$(eval "echo \$$var_name")"
-    
-    if [ -z "$current_value" ]; then
-        eval "$var_name=\"$filepath\""
-    elif [ "$(echo "$current_value" | grep -c -w "$filepath")" -eq 0 ]; then
-        eval "$var_name=\"$current_value:$filepath\""
-    fi
+    append_unique "$1" "$2"
 }
 
 
@@ -86,10 +94,10 @@ for commit in $COMMITS; do
     case "$status" in
       R)
         # Renamed file:  RNXXX old_path    new_path
-        old_file=$(echo "$file" | awk '{print $1}')
-        new_file=$(echo "$file" | awk '{print $2}')
-        append_unique_existing_filepath "renamed_files" "$old_file > $new_file"  # Store as new:old
-        append_unique_existing_filepath "deleted_files" "$old_file"
+        old_file=$(printf '%s\n' "$line" | cut -f2)
+        new_file=$(printf '%s\n' "$line" | cut -f3)
+        append_unique "renamed_files" "$old_file > $new_file"
+        append_unique "deleted_files" "$old_file"
         append_unique_existing_filepath "added_files" "$new_file" # Also add the new name
         debug "== R == $file"
         debug "old_file: $old_file"
@@ -109,7 +117,7 @@ for commit in $COMMITS; do
         debug "modified_files: $modified_files"
         ;;
       D)
-        append_unique_existing_filepath "deleted_files" "$file"
+        append_unique "deleted_files" "$file"
         debug "== D == $file"
         debug "deleted_files: $deleted_files"
         ;;
