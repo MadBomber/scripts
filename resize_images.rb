@@ -79,12 +79,10 @@ def resize_image(
     new_format=configatron.format
   )
 
-  old_filename  = filepath.basename.to_s
-  extension     = filepath.extname
-  new_filename  = old_filename.gsub(extension, "-#{new_size}#{new_format}")
-  new_filepath  = configatron.outdir + new_filename
+  basename      = filepath.basename(filepath.extname).to_s
+  new_filepath  = configatron.outdir + "#{basename}-#{new_size}#{new_format}"
 
-  image = MiniMagick::Image.open(old_filename)
+  image = MiniMagick::Image.open(filepath.to_s)
 
   image.resize  new_size
   image.format  new_format
