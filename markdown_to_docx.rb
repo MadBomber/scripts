@@ -14,7 +14,7 @@
 
 require 'amazing_print'  # Pretty print Ruby objects with proper indentation and colors
 require 'ruby-progressbar'  # Ruby/ProgressBar is a flexible text progress bar library for Ruby.
-require 'systemu'           # systemu
+require 'open3'             # STDLIB
 
 require 'debug_me'          # A tool to print the labeled value of variables.
 include DebugMe
@@ -123,7 +123,10 @@ files_to_process.sort.each do |a_file_path|
   progressbar.increment
   # puts "#{base_filename} ..." if verbose?
   file_directory  = (configatron.output == SAME_AS_INPUT) ? a_file_path.parent : configatron.output
-  a,b,conversion_errors = systemu "pandoc -f markdown -t docx #{a_file_path} -o #{file_directory+(base_filename+'.docx')}"
+  _out, conversion_errors, _status = Open3.capture3(
+    "pandoc", "-f", "markdown", "-t", "docx", a_file_path.to_s,
+    "-o", (file_directory+(base_filename+'.docx')).to_s
+  )
   unless conversion_errors.empty?
     STDERR.puts <<~EOS
 

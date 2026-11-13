@@ -1,6 +1,6 @@
 #!/bin/env ruby
 
-require 'systemu'  # systemu
+require 'open3'    # STDLIB
 require 'pp'
 require 'json'     # STDLIB
 
@@ -10,7 +10,7 @@ s_updated = 'curl "https://rubygems.org/api/v1/activity/just_updated.json"'
 puts
 puts "fetching NEW gems using #{s_added}"
 
-a,b,c=systemu s_added
+b, _err, _status = Open3.capture3(s_added)
 
 j = JSON.parse( b )
 
@@ -23,7 +23,7 @@ puts
 
 puts "fetching UPDATED gems using #{s_updated}"
 
-a,b,c=systemu s_updated
+b, _err, _status = Open3.capture3(s_updated)
 
 j2 = JSON.parse( b )
 
