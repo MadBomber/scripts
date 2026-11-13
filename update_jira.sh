@@ -35,11 +35,11 @@ for project in $JIRA_DB_PROJECTS ; do
     # TODO: capture list of changed jira tickets
 
     jira-sync \
-        --baseurl $JIRA_HOST \
-        --project $project \
-        --user $JIRA_USER \
-        --password $JIRA_PASS \
-        --target $JIRA_DB_DIR/$project \
+        --baseurl "$JIRA_HOST" \
+        --project "$project" \
+        --user "$JIRA_USER" \
+        --password "$JIRA_PASS" \
+        --target "$JIRA_DB_DIR/$project" \
         fetch
 
     # TODO: only apply gron to the list of changed tickets

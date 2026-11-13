@@ -14,10 +14,10 @@ for project in $JIRA_DB_PROJECTS ; do
 
     jira-sync \
         --baseurl "$JIRASYNC_BASEURL" \
-        --project $project \
-        --user $JIRASYNC_USER \
-        --password $JIRASYNC_PASS \
-        --target $JIRA_DB_DIR/$project \
+        --project "$project" \
+        --user "$JIRASYNC_USER" \
+        --password "$JIRASYNC_PASS" \
+        --target "$JIRA_DB_DIR/$project" \
         update
 
 done
