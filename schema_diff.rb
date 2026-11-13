@@ -31,8 +31,9 @@ def show_usage
   EOS
 end
 
-unless DB_DIR.exist?
-  error "Expecting to be run from a Rails.root directory; but, no 'db' sub-directory was found."
+def error(msg)
+  STDERR.print "\nERROR: #{msg}\n\n"
+  exit(1)
 end
 
 # Display the usage info
@@ -42,6 +43,10 @@ if  ARGV.size != 2 ||
   exit
 end
 
+unless DB_DIR.exist?
+  error "Expecting to be run from a Rails.root directory; but, no 'db' sub-directory was found."
+end
+
 env1 = ARGV[0]
 env2 = ARGV[1]
 
@@ -49,12 +54,6 @@ env2 = ARGV[1]
 
 ######################################################
 # Local methods
-
-def error(msg)
-  STDERR.print "\nERROR: #{msg}\n\n"
-  exit(1)
-end
-
 
 def move_schemas_to (a_directory)
   puts "Saving schema(s) to #{a_directory.basename} ..."
