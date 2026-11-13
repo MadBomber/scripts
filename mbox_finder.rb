@@ -68,7 +68,7 @@ puts
 
 # TODO: Keep track of which $key_words caused a hit on the eMail
 def is_interesting?(a_line)
-  a_downcased_line  = a_line
+  a_downcased_line  = a_line.downcase
   is_interesting    = false
   $key_words.each do |a_word|
     is_interesting  ||= a_downcased_line.include?(a_word)
