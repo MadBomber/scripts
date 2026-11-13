@@ -68,7 +68,7 @@ Where:
                           Default: #{$options[:user_account]}
 
     -r or --repo        Github repo name.
-                          Default: #{$options[:repo_dir].basename}
+                          Default: #{$options[:repo_dir]&.basename || 'none (not inside a git repo)'}
 
     -g or --gem         Setup for a rubygems project
 
@@ -183,7 +183,9 @@ unless ARGV.empty?
  end
 
 
-if $options[:repo_dir].exist?
+if $options[:repo_dir].nil?
+  $errors << "No git repository found from #{Pathname.pwd}; use -r to specify the repo directory"
+elsif $options[:repo_dir].exist?
   $options[:rultor_yml] = $options[:repo_dir] + '.rultor.yml'
   if $options[:rultor_yml].exist?
     $warnings << ".rultor.yml already exists."
