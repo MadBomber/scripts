@@ -19,7 +19,7 @@ require 'date'
 $gem_hash = Hash.new
 $gem_names= Array.new
 
-Gem::Specification.all.each do |gs|
+Gem::Specification.each do |gs|
   # ignore duplicates - they are just different versions of the same thing
   $gem_names << gs.name unless $gem_names.include?(gs.name)
   $gem_hash[gs.name] = gs

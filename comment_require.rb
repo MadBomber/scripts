@@ -62,7 +62,7 @@ STDLIBS = %w[
 
 GEMS = Hash.new
 
-Gem::Specification.all.each do |gs|
+Gem::Specification.each do |gs|
   GEMS[gs.name] = gs.summary
 end
 
