@@ -16,7 +16,7 @@ require 'docx'           # a ruby library/gem for interacting with .docx files
 
 if ARGV.empty? or ARGV.first == "-h" or ARGV.first == "--help"
   puts
-  puts "Usage: docx_draft_style.rb [options] MS_WORD_DOCX++"
+  puts "Usage: #{File.basename($0)} [options] MS_WORD_DOCX++"
   puts
   puts "  Where:"
   puts "    MS_WORD_DOCX++    is one or more Microsoft Word DOCX filenames"

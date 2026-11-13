@@ -6,7 +6,7 @@ include DebugMe
 
 def usage
   puts
-  puts "Usage: batch_delete_repos.rb path/to/file"
+  puts "Usage: #{File.basename($0)} path/to/file"
   puts
   exit 1
 end
