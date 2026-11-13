@@ -24,6 +24,8 @@ def fix_dir(dir_path)
 
   kids = dir_path.children 
   kids.each do |a_path|
+    next if '.git' == a_path.basename.to_s
+
     if a_path.directory?
       a_path.chmod(DIR_PERM)
       fix_dir(a_path)
@@ -41,7 +43,7 @@ end
 
 def restore_git_perm(a_path)
   puts a_path   # .relative_path_from(HERE.realpath)
-  diff = `git diff #{a_path}`.split("\n")
+  diff = IO.popen(['git', 'diff', '--', a_path.to_s], &:read).split("\n")
   if 3 == diff.size
     diff_perm = Integer(diff[1][11..])
     a_path.chmod(diff_perm)
@@ -58,7 +60,8 @@ fix_dir(HERE)
 # they should be according to git, then restore the mode that
 # git wants.
 
-files = `git diff --name-only`.split("\n").map{|f| Pathname.new(f)}
+# --relative gives paths from the current directory, not the repo top
+files = IO.popen(%w[git diff --name-only --relative -z], &:read).split("\0").map{|f| Pathname.new(f)}
 
 files.each do |f|
   restore_git_perm(f)
