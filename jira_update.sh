@@ -13,7 +13,7 @@ for project in $JIRA_DB_PROJECTS ; do
     echo "Updating JIRA project: $project ..."
 
     jira-sync \
-        --baseurl JIRASYNC_BASEURL \
+        --baseurl "$JIRASYNC_BASEURL" \
         --project $project \
         --user $JIRASYNC_USER \
         --password $JIRASYNC_PASS \
