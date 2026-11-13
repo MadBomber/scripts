@@ -12,7 +12,7 @@ ROOT = Pathname.new(__FILE__).realpath.parent
 class MissingSystemEnvironmentVariable < RuntimeError; end
 
 unless defined?(APP_BIND)
-  raise APP_BIND, "APP_BIND is undefined" if ENV['APP_BIND'].nil?
+  raise MissingSystemEnvironmentVariable, "APP_BIND is undefined" if ENV['APP_BIND'].nil?
   APP_BIND = ENV['APP_BIND']
 end
 

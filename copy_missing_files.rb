@@ -12,6 +12,8 @@ require 'amazing_print'  # Pretty print Ruby objects with proper indentation and
 require 'debug_me'       # A tool to print the labeled value of variables.
 include DebugMe
 
+require 'fileutils'      # STDLIB
+
 require 'cli_helper'     # An encapsulation of an integration of slop, nenv, inifile and configatron.
 include CliHelper
 
@@ -118,11 +120,10 @@ def review_directory(a_directory)
         # Copy the entire directory
         $count[:missing] += s.children.size
         puts "Copying the entire directory #{s}" if     verbose?  ||  debug?  || dry_run?
-        command = "cp -R #{s} #{target_absolute.parent}"
         if dry_run?
-          puts command
+          puts "cp -R #{s} #{target_absolute.parent}"
         else
-          system command
+          FileUtils.cp_r(s, target_absolute.parent, preserve: true, dereference_root: false)
           print "*"                                unless verbose?  ||  debug?
         end
       end
@@ -135,11 +136,10 @@ def review_directory(a_directory)
         # Copy an individual file
         $count[:missing] += 1
         puts "Copying #{s}" if     verbose?  ||  debug?  || dry_run?
-        command = "cp #{s} #{target_absolute.parent}"
         if dry_run?
-          puts command
+          puts "cp #{s} #{target_absolute.parent}"
         else
-          system command
+          FileUtils.cp(s, target_absolute.parent)
           print "."           unless verbose?  ||  debug?  || dry_run?
         end
       else
@@ -149,6 +149,8 @@ def review_directory(a_directory)
         puts "Skipping #{s}" if verbose?  ||  debug?  || dry_run?
       end
     end
+  rescue SystemCallError => e
+    warn e.message
   end
 end # def review_directory(a_directory)
 

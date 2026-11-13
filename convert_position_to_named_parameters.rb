@@ -9,7 +9,7 @@ require 'pathname'
 
 source_file = ARGV[0]
 unless source_file
-  puts "Usage: ruby transform_methods.rb <source_file>"
+  puts "Usage: ruby #{File.basename($0)} <source_file>"
   exit 1
 end
 

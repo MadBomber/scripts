@@ -9,6 +9,7 @@ What the file is/does should be understood from its name; but, not always.  I wi
 | File Name                               | Description |
 |-----------------------------------------|-------------|
 | _old_stuff_and_1offs                    | Archive directory for old and one-off scripts |
+| 147.rb                                  | Toggle a color scheme on iTerm2 tabs 1, 4 and 7 |
 | acronym_extractor.rb                    | Extract acronyms from text |
 | acronym_finder.rb                       | Find and expand acronyms |
 | acronym_simple.rb                       | Simple acronym generator |
@@ -21,17 +22,18 @@ What the file is/does should be understood from its name; but, not always.  I wi
 | applications.txt                        | List of installed applications |
 | aw                                      | Scrabble word finder - finds all words |
 | backup_dotfiles                         | Backup dotfiles from home directory |
+| backup_envrc.rb                         | Back up all .envrc files to ~/.envrc_backup |
 | backup_just.rb                          | Backup justfiles from projects |
 | bg2md.rb                                | Convert background notes to Markdown |
 | bible_semantic_search.rb                | Semantic search through Bible text |
 | blessing.rb                             | Display random blessings or quotes |
 | blessings.txt                           | Collection of blessings and inspirational quotes |
-| bp.rb                                   | Boilerplate code generator |
+| bp.rb                                   | Extract blood pressure data from email and format into a report |
+| branch_report.rb                        | Generate a Markdown report of every git branch |
 | breakout_git_revisions.sh               | Extract git revisions to separate files |
 | brew_not_installed                      | List Homebrew packages not installed |
 | Brewfile                                | Homebrew bundle file for package management |
 | brewt                                   | Homebrew utility script |
-| brewt_all.md                            | Markdown list of all Homebrew packages |
 | brewt_all.txt                           | Complete list of Homebrew packages |
 | bundler_inline_example.rb               | Example of using bundler inline in Ruby scripts |
 | buzz_words.rb                           | Generate or manage buzzwords |
@@ -41,6 +43,7 @@ What the file is/does should be understood from its name; but, not always.  I wi
 | cf                                      | Configuration file manager |
 | change_git_repos_to_ssh_access.rb       | Convert git remotes from HTTPS to SSH |
 | changed_files                           | List recently changed files |
+| churn.rb                                | Report git file churn as Markdown |
 | class_method_file_xref.rb               | Cross-reference classes, methods and files |
 | classpath                               | Java classpath management utility |
 | clean_up_gems.rb                        | Remove old versions of installed Ruby gems |
@@ -60,23 +63,22 @@ What the file is/does should be understood from its name; but, not always.  I wi
 | convert_position_to_named_parameters.rb | Convert positional to named parameters |
 | convert_vcr_response_to_fixture.rb      | Convert VCR cassettes to test fixtures |
 | copy_csv_to_rdb.rb                      | Import CSV data into RDB format |
+| copy_latest_voice_memo.rb               | Copy the latest Voice Memos recording and its transcript (meant to live in a project's `notes/` dir) |
 | copy_missing_files.rb                   | Copy files that don't exist in destination |
 | copy_modified_files.rb                  | Copy only modified files between directories |
 | cost_of_trip.rb                         | Calculate travel expenses and trip costs |
 | cr2lf                                   | Convert carriage returns to line feeds |
 | create_changelog.rb                     | Generate changelog from git commits |
-| create_data_dictionary                  | Generate data dictionary from database schema |
 | create_db_system_users.s                | Create database system users |
-| create_erd_scripts_from_rails_models.rb| Generate ERD scripts from Rails models |
+| create_erd_scripts_from_rails_models.rb | Generate ERD scripts from Rails models |
 | create_gems_used_report.rb              | Report on gems used in projects |
 | create_install_gemset                   | Create and install Ruby gemset |
 | create_jira_summary_index.rb            | Create index of JIRA issues |
 | create_working_directory.rb             | Set up new project working directory |
 | csv_reader.rb                           | Read and process CSV files |
 | csv2json.rb                             | Convert CSV files to JSON format |
-| ct.rb                                   | Code testing utility |
+| ct.rb                                   | Tail a file and color lines by regex matches (colortail) |
 | daemon_control                          | Control background daemon processes |
-| data_dictionary.rb                      | Generate data dictionary documentation |
 | database_dumps                          | Database backup and dump utilities |
 | db_schema_visualizer.pl                 | Visualize database schema in Perl |
 | de_dog_da_log.rb                        | Clean up and process log files |
@@ -84,13 +86,13 @@ What the file is/does should be understood from its name; but, not always.  I wi
 | delete_docker_junk.rb                   | Clean up Docker containers and images |
 | delete_mods_history.sh                  | Delete mods command history |
 | describe_gems.rb                        | Display descriptions for installed gems |
-| disable.rb                              | Disable features or services |
-| dit.rb                                  | Directory iteration tool |
+| disable.rb                              | Disable/enable Rails migrations by their timestamp |
+| dit.rb                                  | Line-by-line diff of old.xml vs new.xml |
 | doc_github_actions.sh                   | Document GitHub Actions workflows |
 | docker_info.rb                          | Display Docker system information |
 | docx_appender.rb                        | Append content to DOCX files |
 | docx_breakup.rb                         | Split DOCX files into sections |
-| docx_brf.rb                             | Convert DOCX to BRF (Braille) format |
+| docx_brf.rb                             | Find valid bible references in text |
 | docx_draft_layout.rb                    | Format DOCX for draft layout |
 | docx_extract_bodytext.rb                | Extract body text from DOCX files |
 | docx_rm_blank_paragraphs.rb             | Remove blank paragraphs from DOCX |
@@ -123,7 +125,6 @@ What the file is/does should be understood from its name; but, not always.  I wi
 | gem_ctags.rb                            | Generate ctags for installed gems |
 | gemd                                    | Display gem descriptions |
 | gems_categorized.md                     | Categorized list of Ruby gems |
-| gems_v344.txt                           | Gem list for Ruby v3.4.4 |
 | gemt                                    | List gem tasks like rake -T |
 | gemt_all.txt                            | All gem tasks list |
 | gemu                                    | Gem update utility |
@@ -151,12 +152,13 @@ What the file is/does should be understood from its name; but, not always.  I wi
 | image_renamer.rb                        | Batch rename image files |
 | image_resizer.rb                        | Resize images in batch |
 | image_rotater.rb                        | Rotate images by specified degrees |
-| imbibler.rb                             | Drinking game or beverage tracker |
+| imbibler.rb                             | Scrape a BibleGateway.com translation into a CSV plus one text file per chapter |
 | insert_ticket_into_changelog.rb         | Add ticket numbers to changelog |
 | install_gems_from_file.rb               | Batch install gems from list |
 | iTerm2                                  | iTerm2 AppleScript utilities |
 | jar_search.pl                           | Search for classes in Java JAR files |
 | jarify                                  | Create JAR files |
+| jira_get.rb                             | Fetch Jira tickets as JSON and render them to Markdown |
 | jira_open.rb                            | Open JIRA issues in browser |
 | jira_update.sh                          | Update JIRA issues from command line |
 | json                                    | JSON processing utility |
@@ -173,9 +175,12 @@ What the file is/does should be understood from its name; but, not always.  I wi
 | lipsum.rb                               | Generate Lorem Ipsum placeholder text |
 | list_gems_as_markdown.rb                | List gems in Markdown format |
 | list_top_leve_gems.rb                   | List top-level gems only |
+| llmstxt_generator.rb                    | Generate an llms.txt file for MkDocs documentation |
 | load_gems_from_file.rb                  | Load gem list from file |
 | loripsum.rb                             | Lorem Ipsum text generator |
+| madbomber_celebration.rb                | Terminal MADBOMBER fireworks celebration animation |
 | magic_8_ball.rb                         | Magic 8-ball fortune teller |
+| make_gems_local_to_rails.rb             | Snippet for config/boot.rb: symlink bundled gems local to a Rails app |
 | markdown_to_docx.rb                     | Convert Markdown files to DOCX |
 | mbox_finder.rb                          | Search through mbox email files |
 | md2html                                 | Convert Markdown to HTML |
@@ -183,6 +188,9 @@ What the file is/does should be understood from its name; but, not always.  I wi
 | mime_guesser.rb                         | Detect MIME types of files |
 | mock_web_app.rb                         | Simple mock web application server |
 | monitor_websites.rb                     | Monitor website uptime and changes |
+| move_fork_offline.rb                    | Move fork directories to an offline volume and symlink them |
+| movie_card.rb                           | Generate a Markdown info card from movie mp4 metadata |
+| mp4_to_m4a.rb                           | Extract an MP4's audio track to an M4A file |
 | my_docx_style_fixer.rb                  | Custom DOCX style corrections |
 | my_qa                                   | Personal QA testing tools |
 | new                                     | Create new file from template |
@@ -190,29 +198,37 @@ What the file is/does should be understood from its name; but, not always.  I wi
 | new_branch.sh                           | Create new git branch |
 | new_rails_app.s                         | Generate new Rails application |
 | newgit_project                          | Initialize new git project |
+| newsletter_reader.rb                    | Fetch Ruby newsletter RSS issues and save as Markdown |
 | normalize_pathnames.rb                  | Standardize file path formats |
 | note.rb                                 | Quick note-taking tool using $EDITOR |
+| note_v2.rb                              | Quick note-taking tool using $EDITOR; writes `_notes.md`, uses pbpaste, no project DB |
 | number                                  | Add line numbers to text |
-| organizer.rb                            | Organize files into directories |
+| o2g2o.rb                                | Convert links between Obsidian and GitHub Markdown |
+| organizer.rb                            | Process a text file of addresses |
 | path                                    | Display or modify PATH variable |
 | pdf2png.sh                              | Convert PDF files to PNG images |
 | phpinfo                                 | Display PHP configuration info |
-| picnic_gems.rb                          | Collection of fun Ruby gems |
+| picnic_gems.rb                          | Install gems listed in a text file (migrate gems between Ruby versions) |
 | platform                                | Display system platform info |
 | ppsql.rb                                | Pretty print SQL queries |
+| pr_get.rb                               | Fetch GitHub pull requests as JSON and render them to Markdown |
 | pr_summary.rb                           | Generate pull request summary |
 | prepend_relative_path_as_comment.rb     | Add relative path as comment to files |
 | prepend_to_file.rb                      | Prepend text to beginning of file |
 | prepend_to_path_exclusive.rb            | Add directory to PATH without duplicates |
 | print_tree.rb                           | Print directory tree structure |
 | printenv                                | Display environment variables |
+| process_latest_meeting.rb               | Process the latest Voice Memos recording into meeting notes (meant to live in a project's `notes/` dir) |
 | projxslt.rb                             | Apply XSLT transformations to project |
 | pushd_to_gem_directory                  | Navigate to gem installation directory |
 | rab_list_all.sh                         | List all RabbitMQ queues |
-| rawk.rb                                 | Ruby AWK-like text processor |
+| rawk.rb                                 | Analyze Rails logs (request timing stats) |
+| razer_kb_enable_m_keys.rb               | Set Razer BlackWidow M-keys to emit F13-F17 |
+| razer_macro_daemon.rb                   | Diagnostic macro daemon for Razer BlackWidow M-keys |
 | rb2html                                 | Convert Ruby code to HTML |
 | release.rb                              | Manage software releases |
 | relink_home_dirs.rb                     | Fix symbolic links in home directory |
+| remadd.rb                               | Add remind(1) entries using natural-language dates |
 | rename_db_columns.rb                    | Batch rename database columns |
 | replace_home_dots.rb                    | Replace dotfiles in home directory |
 | resize_images.rb                        | Batch resize image files |
@@ -236,7 +252,7 @@ What the file is/does should be understood from its name; but, not always.  I wi
 | set_upstream.rb                         | Set git upstream branch |
 | sgem                                    | Show gem directory and files |
 | sgi                                     | Search git index |
-| shc.rb                                  | Shell script compiler |
+| shc.rb                                  | Wrap text in a section-header comment banner |
 | slugify                                 | Convert text to URL-friendly slugs |
 | spot                                    | Spotlight search wrapper |
 | sql                                     | Directory containing SQL scripts |
@@ -247,6 +263,7 @@ What the file is/does should be understood from its name; but, not always.  I wi
 | sw                                      | Scrabble word finder - specific patterns |
 | sync_repo.sh                            | Sync repository with remote |
 | sync_upstream.rb                        | Sync fork with upstream repository |
+| tdv.rb                                  | Terrific Doc Viewer: web server for SVG and Markdown docs |
 | tell                                    | Text-to-speech utility |
 | templates                               | File templates used with `new` command |
 | termall.rb                              | Terminate all matching processes |

@@ -51,7 +51,7 @@ if ARGV.empty? or '-h' == ARGV.first or '--help' == ARGV.first
 
   puts <<~EOS
 
-    Usage: np.rb file_path
+    Usage: #{File.basename($0)} file_path
 
     Where: file_path is a path to a file of eMail messages
 

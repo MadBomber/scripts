@@ -103,7 +103,7 @@ ARGV.compact!
 
 
 ARGV.each do |param|
-  errors << "does not exist: #{param}" unless File.exists?(param)
+  errors << "does not exist: #{param}" unless File.exist?(param)
 end
 
 

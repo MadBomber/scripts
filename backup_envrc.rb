@@ -11,6 +11,7 @@
 #
 
 require 'date'
+require 'fileutils'
 require 'pathname'
 require 'tempfile'
 
@@ -22,13 +23,15 @@ home_string       = HOME.to_s
 BACKUP_DIR_STRING = BACKUP_DIR.to_s
 
 unless BACKUP_DIR.exist?
-  BACKUP_DIR.mkdir
+  BACKUP_DIR.mkdir(0o700)
 end
 
 unless BACKUP_DIR.directory?
   puts "\nERROR: Not a Directory ~/#{BACKUP_DIR.basename}"
   exit(1)
 end
+
+BACKUP_DIR.chmod(0o700) # keep backups owner-only
 
 # Handle the case where LAST_TIME_PATH doesn't exist
 if LAST_TIME_PATH.exist?
@@ -98,12 +101,23 @@ end
 puts "done"
 
 puts "Copy files to backup ... "
-source_paths.zip(target_paths).each do |source, target|
+failed = source_paths.zip(target_paths).reject do |source, target|
+  temp = "#{target}.tmp"
   target.parent.mkpath
-  command = "cp -f '#{source}' '#{target}'"
-  puts command
-  `#{command}`
+  puts "#{source} -> #{target}"
+  FileUtils.cp(source, temp)
+  File.rename(temp, target) # keeps the old copy if cp fails; replaces a read-only one
+  true
+rescue SystemCallError => e
+  FileUtils.rm_f(temp)
+  warn "  FAILED: #{e.message}"
+  false
 end
 puts "done"
 
-LAST_TIME_PATH.write(DateTime.now.to_s)
+if failed.empty?
+  LAST_TIME_PATH.write(DateTime.now.to_s)
+else
+  warn "#{failed.size} file(s) not backed up; timestamp left unchanged"
+  exit(1)
+end
