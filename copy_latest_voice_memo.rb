@@ -1,12 +1,12 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-# Copies the most recent Voice Memos recording into notes/meetings/, plus its
+# Copies the most recent Voice Memos recording into meetings/ beside this script, plus its
 # embedded transcript (.txt, and timestamped .md/.html linked to the audio)
 # beside it, named after the recording's title (ZCUSTOMLABELFORSORTING in CloudRecordings.db;
 # ZCUSTOMLABEL holds the creation timestamp, not the title).
 #
-# Usage: ruby notes/copy_latest_voice_memo.rb [destination_dir]
+# Usage: ruby copy_latest_voice_memo.rb [destination_dir]
 #
 # The terminal running this needs Full Disk Access to read the Voice Memos
 # group container.
@@ -22,6 +22,18 @@ RECORDINGS_DIR = File.expand_path(
 )
 DB_PATH = File.join(RECORDINGS_DIR, "CloudRecordings.db")
 DEFAULT_DESTINATION = File.join(__dir__, "meetings")
+
+USAGE = <<~EOS
+  Copies the most recent Voice Memos recording, plus its embedded transcript
+  (.txt, and timestamped .md/.html linked to the audio), into destination_dir.
+
+  Usage: #{File.basename($PROGRAM_NAME)} [destination_dir]
+
+  destination_dir defaults to #{DEFAULT_DESTINATION}
+
+  The terminal running this needs Full Disk Access to read the Voice Memos
+  group container.
+EOS
 
 # Returns the path of the newest .m4a in +dir+ (by modification time), or nil.
 def latest_recording(dir = RECORDINGS_DIR)
@@ -196,6 +208,11 @@ def export_latest_recording(destination_dir = DEFAULT_DESTINATION, recordings_di
 end
 
 def main(argv)
+  if (argv & %w[-h --help]).any?
+    puts USAGE
+    return
+  end
+
   exported = export_latest_recording(argv.first || DEFAULT_DESTINATION)
   abort "No .m4a recordings found in #{RECORDINGS_DIR}" unless exported
 
