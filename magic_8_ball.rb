@@ -39,7 +39,7 @@ def get_answer(answers)
 end
 
 def say_answer(answers)
-  system "say '#{get_answer(answers)}'"
+  system('say', get_answer(answers))
 end
 
 ######################################################
