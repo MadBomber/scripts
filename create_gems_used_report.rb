@@ -32,7 +32,7 @@ end
 GEMS = Hash.new
 USED = Array.new
 
-Gem::Specification.all.each do |gem_spec|
+Gem::Specification.each do |gem_spec|
   GEMS[gem_spec.name] = gem_spec
 end
 

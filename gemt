@@ -140,7 +140,7 @@ gem_hash = Hash.new
 
 longest_desc = 0
 
-Gem::Specification.all.each do |gs|
+Gem::Specification.each do |gs|
   unless search_strings.empty?
     thing = "#{gs.name} #{gs.summary} #{gs.description}".downcase
 

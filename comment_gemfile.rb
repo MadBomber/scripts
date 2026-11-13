@@ -17,7 +17,7 @@ end
 
 $gem_hash = Hash.new
 
-Gem::Specification.all.each do |gs|
+Gem::Specification.each do |gs|
   $gem_hash[gs.name] = gs.summary
 end
 
