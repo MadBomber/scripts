@@ -76,8 +76,7 @@ end
   if ARGV.include? param
     param_index = ARGV.index(param)
     if param_index+1 >= ARGV.size
-      # FIXME: errors is not global
-      $errors << "#{ARGV[param_index]} specified without parameter"
+      errors << "#{ARGV[param_index]} specified without parameter"
     else
       $options[:from_language] = ARGV[param_index+1].to_sym
       ARGV[param_index+1] = nil
@@ -92,8 +91,7 @@ end
   if ARGV.include? param
     param_index = ARGV.index(param)
     if param_index+1 >= ARGV.size
-      # FIXME: errors is not global
-      $errors << "#{ARGV[param_index]} specified without parameter"
+      errors << "#{ARGV[param_index]} specified without parameter"
     else
       $options[:to_language] = ARGV[param_index+1].to_sym
       ARGV[param_index+1] = nil
