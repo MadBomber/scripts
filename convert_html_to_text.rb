@@ -1,4 +1,4 @@
-#!/bin/env ruby
+#!/usr/bin/env ruby
 ####################################################################
 ###
 ##  File: convert_html_to_text.rb
