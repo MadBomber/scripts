@@ -12,7 +12,7 @@
 # group container.
 
 require "fileutils"
-require "cgi"
+require "cgi/escape"
 require "json"
 require "uri"
 require "open3"
