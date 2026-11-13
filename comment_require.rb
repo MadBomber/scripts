@@ -10,7 +10,7 @@
 
 USAGE = <<~EOS
 
-  Usage: __FILE__ path_to_rb_file+
+  Usage: #{File.basename(__FILE__)} path_to_rb_file+
 
   Where:
 
