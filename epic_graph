@@ -24,7 +24,7 @@ require "json"
 require "net/http"
 require "optparse"
 require "uri"
-require "cgi"
+require "cgi/escape"
 require "fileutils"
 
 module EpicGraph
