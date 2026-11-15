@@ -13,6 +13,7 @@
 #
 
 require 'date'
+require 'fileutils'
 require 'pathname'
 require 'tempfile'
 
@@ -117,15 +118,29 @@ end
 
 puts "done"
 
+failed_count = 0
+
 puts "Copy files to backup ... "
   (0..source_paths.size-1).each do |inx|
     directory = target_paths[inx].parent
     directory.mkpath
-    command = "cp -f '#{source_paths[inx]}' '#{target_paths[inx]}'"
-    puts command
-    `#{command}`
+    puts "cp -f '#{source_paths[inx]}' '#{target_paths[inx]}'"
+    begin
+      # like cp -f: replace a read-only backup, but keep it if the source is unreadable
+      FileUtils.rm_f(target_paths[inx]) if source_paths[inx].readable?
+      FileUtils.cp(source_paths[inx], target_paths[inx])
+    rescue SystemCallError => e
+      $stderr.puts "ERROR: #{e.message}"
+      failed_count += 1
+    end
   end
 puts "done"
+
+# Keep the old timestamp so failed files are retried on the next run
+unless failed_count.zero?
+  $stderr.puts "ERROR: #{failed_count} file(s) not backed up; timestamp not updated"
+  exit(1)
+end
 
 LAST_TIME_PATH.write(DateTime.now.to_s)
 
