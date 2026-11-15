@@ -16,6 +16,7 @@
 #   remadd "Pay bills" monthly on the 15th
 #   remadd "Sync" every other friday at 2pm
 #   remadd "Conference" third thursday in november at 9am
+#   remadd "Book club" last friday at 7pm
 #   remadd "Project" next monday at 9am until december 31
 #   remadd -r "Thu 8 ++7 AT 09:30 MSG Quilt Guild %"
 #   remadd -f work "Deploy" next wednesday at 1500
@@ -41,7 +42,7 @@ FILE_MAP = {
 
 ORDINALS = {
   'first' => 1, 'second' => 8, 'third' => 15,
-  'fourth' => 22, 'last' => 25,
+  'fourth' => 22, 'last' => 1,  # 'last' counts back from the 1st; see ordinal_trigger
   '1st' => 1, '2nd' => 8, '3rd' => 15, '4th' => 22,
 }
 
@@ -75,6 +76,18 @@ end
 
 def remind_day_abbrev(day_name)
   day_name.capitalize[0..2]
+end
+
+# Remind trigger for "<ordinal> <day> [in <month>]", e.g. "Thu 8 ++7".
+# "last" counts back from the 1st of the following month: "Tue Dec 1 --7"
+# is the last Tuesday in November.
+def ordinal_trigger(ordinal, day, month = nil)
+  ordinal = ordinal.downcase
+  if ordinal == 'last'
+    month &&= Date::ABBR_MONTHNAMES[Date::ABBR_MONTHNAMES.index(month) % 12 + 1]
+    back = ' --7'
+  end
+  "#{[day, month, ORDINALS.fetch(ordinal)].compact.join(' ')}#{back} ++7"
 end
 
 def has_time?(parsed, time_expr)
@@ -264,11 +277,10 @@ def build_reminder(message, time_expr, advance:, until_date: nil)
   # --- third thursday in november [at 9am] ---
   ordinal_month_match = time_expr.match(ORDINAL_MONTH_RE)
   if ordinal_month_match
-    start_day = ORDINALS[ordinal_month_match[1].downcase]
     day = remind_day_abbrev(ordinal_month_match[2])
     month = ordinal_month_match[3].capitalize[0..2]
     rest = ordinal_month_match[4].strip
-    line = "REM #{day} #{month} #{start_day} ++7"
+    line = "REM #{ordinal_trigger(ordinal_month_match[1], day, month)}"
     line += " +#{advance}" if advance > 0
     line += _parse_time_and_duration(rest)
     line += until_clause
@@ -279,10 +291,9 @@ def build_reminder(message, time_expr, advance:, until_date: nil)
   # --- second thursday [at 0930 for 2 hours] ---
   ordinal_match = time_expr.match(ORDINAL_RE)
   if ordinal_match
-    start_day = ORDINALS[ordinal_match[1].downcase]
     day = remind_day_abbrev(ordinal_match[2])
     rest = ordinal_match[3].strip
-    line = "REM #{day} #{start_day} ++7"
+    line = "REM #{ordinal_trigger(ordinal_match[1], day)}"
     line += " +#{advance}" if advance > 0
     line += _parse_time_and_duration(rest)
     line += until_clause
@@ -403,6 +414,7 @@ parser = OptionParser.new do |opts|
   opts.separator '  remadd "Pay rent" first monday'
   opts.separator '  remadd "Pay bills" monthly on the 15th'
   opts.separator '  remadd "Conference" third thursday in november at 9am'
+  opts.separator '  remadd "Book club" last friday at 7pm'
   opts.separator '  remadd "Project" next monday at 9am until december 31'
   opts.separator '  remadd "Yoga" every tuesday at 6am for 90 minutes'
   opts.separator '  remadd -f work "Deploy" next wednesday at 3pm'
