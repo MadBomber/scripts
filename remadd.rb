@@ -80,14 +80,15 @@ end
 
 # Remind trigger for "<ordinal> <day> [in <month>]", e.g. "Thu 8 ++7".
 # "last" counts back from the 1st of the following month: "Tue Dec 1 --7"
-# is the last Tuesday in November.
-def ordinal_trigger(ordinal, day, month = nil)
+# is the last Tuesday in November. remind allows only one delta, so a
+# positive advance replaces the default week of warning.
+def ordinal_trigger(ordinal, day, month = nil, advance: 0)
   ordinal = ordinal.downcase
   if ordinal == 'last'
     month &&= Date::ABBR_MONTHNAMES[Date::ABBR_MONTHNAMES.index(month) % 12 + 1]
     back = ' --7'
   end
-  "#{[day, month, ORDINALS.fetch(ordinal)].compact.join(' ')}#{back} ++7"
+  "#{[day, month, ORDINALS.fetch(ordinal)].compact.join(' ')}#{back} ++#{advance > 0 ? advance : 7}"
 end
 
 def has_time?(parsed, time_expr)
@@ -280,8 +281,7 @@ def build_reminder(message, time_expr, advance:, until_date: nil)
     day = remind_day_abbrev(ordinal_month_match[2])
     month = ordinal_month_match[3].capitalize[0..2]
     rest = ordinal_month_match[4].strip
-    line = "REM #{ordinal_trigger(ordinal_month_match[1], day, month)}"
-    line += " +#{advance}" if advance > 0
+    line = "REM #{ordinal_trigger(ordinal_month_match[1], day, month, advance: advance)}"
     line += _parse_time_and_duration(rest)
     line += until_clause
     line += " MSG #{message} %"
@@ -293,8 +293,7 @@ def build_reminder(message, time_expr, advance:, until_date: nil)
   if ordinal_match
     day = remind_day_abbrev(ordinal_match[2])
     rest = ordinal_match[3].strip
-    line = "REM #{ordinal_trigger(ordinal_match[1], day)}"
-    line += " +#{advance}" if advance > 0
+    line = "REM #{ordinal_trigger(ordinal_match[1], day, advance: advance)}"
     line += _parse_time_and_duration(rest)
     line += until_clause
     line += " MSG #{message} %"
