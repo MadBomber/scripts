@@ -78,9 +78,20 @@ brewfile_lines.each do |a_line|
     next
   end
 
-  # At this point a_line should only contain a package name
+  # Only brew and cask entries have a description; leave tap, mas, etc. alone
+  entry = a_line.match(/^\s*(brew|cask)\s+"([^"]+)"/)
 
-  summary     = `brew info #{a_line}`.split("\n")[1] # summary is always the 2nd line
+  unless entry
+    brewfile.puts a_line
+    next
+  end
+
+  command = ['brew', 'desc']
+  command << '--cask' if 'cask' == entry[1]
+  command << entry[2]
+
+  # brew desc prints "name: description"
+  summary = IO.popen(command, err: File::NULL, &:read).lines.first.to_s.chomp.sub(/\A\S+:\s*/, '')
 
   unless summary.empty?
 
