@@ -9,6 +9,7 @@
 ##        the good body and bad heart recreate a docx file.  It lives!
 #
 
+require 'fileutils' # STDLIB
 require 'pathname'  # STDLIB
 require 'zip'
 
@@ -85,9 +86,7 @@ temp_dir.mkdir
 temp_dir = temp_dir.realpath
 
 
-at_exit do
-  puts("rm -fr '#{temp_dir}'")
-end
+at_exit { FileUtils.rm_rf(temp_dir) }
 
 zip_log           = temp_dir + 'zip.log'
 
