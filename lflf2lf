@@ -1,10 +1,23 @@
 #!/bin/sh
+# lflf2lf FILE -- replace every pair of newlines in FILE with one newline, in place
+
+if [ $# -ne 1 ]; then
+  echo "usage: $(basename "$0") FILE" >&2
+  exit 1
+fi
 
 source_file=$1
+case $source_file in -*) source_file=./$source_file ;; esac
 tmp_file=$source_file.tmp
 
-sed 's/\n\n/\n/g' $source_file > $tmp_file
-mv $tmp_file $source_file
+if [ ! -f "$source_file" ] || [ ! -r "$source_file" ]; then
+  printf '%s: not a readable regular file: %s\n' "$(basename "$0")" "$source_file" >&2
+  exit 1
+fi
 
+trap 'rm -f "$tmp_file"' EXIT
+trap 'exit 1' HUP INT TERM
 
-
+# sed works line by line and never sees "\n\n"; perl -0777 reads the whole file
+perl -0777 -pe 's/\n\n/\n/g' "$source_file" > "$tmp_file" || exit 1
+mv "$tmp_file" "$source_file"
