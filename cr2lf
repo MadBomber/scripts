@@ -1,10 +1,22 @@
 #!/bin/sh
+# cr2lf FILE -- replace every carriage return in FILE with a newline, in place
+
+if [ $# -ne 1 ]; then
+  echo "usage: $(basename "$0") FILE" >&2
+  exit 1
+fi
 
 cr_file=$1
+case $cr_file in -*) cr_file=./$cr_file ;; esac
 tmp_file=$cr_file.tmp
 
-sed 's/\r/\n/g' $cr_file > $tmp_file
-mv $tmp_file $cr_file
+if [ ! -f "$cr_file" ] || [ ! -r "$cr_file" ]; then
+  printf '%s: not a readable regular file: %s\n' "$(basename "$0")" "$cr_file" >&2
+  exit 1
+fi
 
+trap 'rm -f "$tmp_file"' EXIT
+trap 'exit 1' HUP INT TERM
 
-
+sed 's/\r/\n/g' "$cr_file" > "$tmp_file" || exit 1
+mv "$tmp_file" "$cr_file"

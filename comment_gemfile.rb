@@ -51,17 +51,37 @@ unless gemfile.exist?
 end
 
 gemfile_bak = Pathname.new (gemfile.to_s + '.bak')
+gemfile_tmp = Pathname.new (gemfile.to_s + '.tmp')
 
-gemfile.rename( gemfile_bak )
+# A rerun must never overwrite the backup; it may be the only full copy.
+if gemfile_bak.exist?
+  puts
+  puts "ERROR: Backup already exists; remove it and run again"
+  puts "       #{gemfile_bak}"
+  puts
+  exit(1)
+end
 
-GEMFILE = gemfile.open('w')
+# Returns the summary for a single-line gem declaration, or nil when the
+# line is not one ('gemspec', a multi-line 'gem ...,' start, etc.).
+def gem_summary(a_line)
+  return nil unless a_line.strip.match?(/\Agem[\s(]/)
+
+  eval(a_line)
+rescue SyntaxError, StandardError
+  nil
+end
+
+# The new content goes to a temp file that only replaces the
+# Gemfile after every line has been processed.
+GEMFILE = gemfile_tmp.open('w')
 
 start_flags = ['# START_ADDING_COMMENTS']   # SMELL: unused
 end_flags   = ['__END__', '# STOP_ADDING_COMMENTS']
 
 process_the_line = true # once you hit the end flag, stop processing
 
-gemfile_bak.readlines.each do |a_line|
+gemfile.readlines.each do |a_line|
   process_the_line = false if end_flags.any? {|flag| a_line.start_with? flag}
 
   if process_the_line
@@ -74,11 +94,11 @@ gemfile_bak.readlines.each do |a_line|
 
     a_line.chomp!
 
-    if a_line.strip.start_with? 'gem'
+    summary = gem_summary(a_line)
 
-      summary     = eval(a_line)
+    unless summary.nil?
 
-      unless summary&.empty?
+      unless summary.empty?
 
         sz          = a_line.length
         spacer_cnt  = last_desc_start_col - sz
@@ -101,6 +121,9 @@ end # of gemfile.readlines.each do |a_line|
 
 
 GEMFILE.close
+
+gemfile.rename( gemfile_bak )
+gemfile_tmp.rename( gemfile )
 
 
 

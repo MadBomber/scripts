@@ -28,7 +28,8 @@ Sawyer::Agent.serializer = Sawyer::Serializer.new(JSON)
 ACCESS_TOKEN = ENV['GITHUB_PERSONAL_ACCESS_TOKEN']
 
 # List of repositories to delete (format: 'username/repo_name')
-repos = filepath.readlines.map { |line| line.split('#')[0].strip }
+# Blank and comment-only lines are skipped.
+repos = filepath.readlines.map { |line| line.split('#')[0].to_s.strip }.reject(&:empty?)
 
 debug_me{[
   :repos
@@ -42,6 +43,8 @@ repos.each do |repo|
   puts "Attempting to delete repository: #{repo}"
   client.delete_repository(repo)
   puts "Successfully deleted repository: #{repo}"
+rescue Octokit::InvalidRepository => e
+  puts "Error: skipping invalid repository name #{repo.inspect}: #{e.message}"
 rescue Octokit::NotFound
   puts "Error: Repository #{repo} not found or you lack permission to delete it."
 rescue Octokit::Error => e

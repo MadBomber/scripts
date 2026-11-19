@@ -1,4 +1,4 @@
-#!/bin/env ruby
+#!/usr/bin/env ruby
 ###################################################
 ###
 ##  File: replace_home_dots.rb

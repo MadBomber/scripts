@@ -61,13 +61,6 @@ if [[ ! -n "$1" ]]; then
   exit 0
 fi
 
-## Identify case insensitive filesystems
-case_sensitive_filesystem=1
-case $OSTYPE in
-  darwin*) case_sensitive_filesystem=0 ;; # OS X
-  *) ;; # Do nothing
-esac
-
 ## Notify if in dry_run mode
 if [ $dry_run -eq 1 ]; then
   echo "--- Begin dry run mode."
@@ -124,8 +117,9 @@ for source in "$@"; do
     if [ $verbose -eq 1 ]; then
       echo "ignore: $source"
     fi
-  elif [ -e "$target" -a $case_sensitive_filesystem -eq 1 ]; then
-    ## If conflicts with existing filename, skip move and complain
+  elif [ -e "$target" ] && ! [ "$source" -ef "$target" ]; then
+    ## If conflicts with a different existing file, skip move and complain
+    ## (-ef lets a case-only rename through on case-insensitive filesystems)
     echo "conflict: $source"
   else
     ## If move is legal

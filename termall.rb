@@ -75,6 +75,7 @@ commands = []
 
 psf_lines.each do |psf|
   elements = psf.split
+  next if elements[1].to_i == Process.pid # never signal termall itself
   if elements[10].start_with? process_name
     commands << "#{command} #{elements[1]} # #{elements[10]}"
   end

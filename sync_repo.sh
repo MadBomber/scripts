@@ -27,7 +27,7 @@ cd "$TARGET_DIR" || exit
 # Check if upstream remote exists
 if git remote get-url upstream > /dev/null 2>&1; then
   echo "Fetching from upstream..."
-  git fetch upstream
+  git fetch upstream || { echo "Error: git fetch upstream failed; nothing pushed." >&2; exit 1; }
 
   # Determine the primary branch
   if git show-ref --verify --quiet refs/heads/main; then
@@ -40,8 +40,8 @@ if git remote get-url upstream > /dev/null 2>&1; then
   fi
 
   echo "Merging changes from upstream/$PRIMARY_BRANCH..."
-  git checkout "$PRIMARY_BRANCH"
-  git merge "upstream/$PRIMARY_BRANCH"
+  git checkout "$PRIMARY_BRANCH" || { echo "Error: git checkout $PRIMARY_BRANCH failed; nothing pushed." >&2; exit 1; }
+  git merge "upstream/$PRIMARY_BRANCH" || { echo "Error: git merge upstream/$PRIMARY_BRANCH failed; nothing pushed." >&2; exit 1; }
 
   echo "Pushing changes to origin..."
   git push origin "$PRIMARY_BRANCH"

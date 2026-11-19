@@ -129,7 +129,7 @@ def review_directory(a_directory)
     end
 
     source_relative     = s.relative_path_from configatron.source_dir
-    reference_absolute  = configatron.referebce_dir + source_relative
+    reference_absolute  = configatron.reference_dir + source_relative
     target_absolute     = configatron.target_dir    + source_relative
 
     if s.directory?
@@ -147,7 +147,7 @@ def review_directory(a_directory)
         next
       end
       if target_absolute.exist?
-        if unmodified_file?(s,target_absolute)
+        if reference_absolute.exist? && unmodified_file?(reference_absolute, s)
           $count[:unmodified] += 1
         else
           # Copy an individual file

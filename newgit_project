@@ -1,8 +1,16 @@
 #!/bin/bash
 # newgit_project
 
-mkdir $1
-cd $1
+set -euo pipefail
+
+if [ "$#" -ne 1 ] || [ -z "$1" ]; then
+  echo "Usage: $(basename "$0") new_project_directory" >&2
+  exit 1
+fi
+
+# Plain mkdir (not -p) so an existing directory stops the script.
+mkdir "$1"
+cd "$1"
 git init
 git commit -am "[initial] Empty Commit" --allow-empty
 git tag initial -m "Tag initial commit"
