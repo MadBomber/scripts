@@ -131,6 +131,7 @@ apple_id
 appraisal
 ar_lazy_preload
 archspec
+arel
 array_include_methods
 arrayfields
 artii
@@ -207,6 +208,7 @@ base64
 bcp47_spec
 bcrypt
 bcrypt_pbkdf
+behavior_machines
 benchmark
 benchmark-ips
 benry-cmdopt
@@ -428,6 +430,8 @@ date
 ddmetrics
 ddplugin
 dead_end
+deadline_machines
+debride
 debug
 debug_inspector
 debug_me
@@ -691,6 +695,7 @@ github_api
 github-markup
 github-pages-health-check
 gitingest
+gitlab-crystalball
 gitt
 glamour
 gli
@@ -756,6 +761,7 @@ hamster
 hana
 hanami-view
 handlebars_assets
+harel_machines
 harmonica
 hash_with_dot_access
 hashdiff
@@ -777,6 +783,7 @@ hoe
 holidays
 honker
 honyaku
+horologium
 hotwire_club-mcp
 hotwire-livereload
 hotwire-spark
@@ -1060,6 +1067,7 @@ memory
 memory_profiler
 memory-leak
 mercenary
+merge_machines
 mermaid
 message_bus
 messageformat-wrapper
@@ -1397,6 +1405,7 @@ prime
 prism
 prism_ext
 prism-merge
+probabilistic_machines
 proc_to_ast
 process_executer
 process-metrics
@@ -1539,6 +1548,8 @@ red-candle
 redcarpet
 redis
 redis-client
+redis-cluster-client
+redis-clustering
 redis-namespace
 redis-objects
 redlock
@@ -1596,6 +1607,7 @@ robot_lab-am
 robot_lab-cyborg
 robot_lab-discovery
 robot_lab-document_store
+robot_lab-durable
 robot_lab-ractor
 robot_lab-rails
 robot_lab-sandbox
@@ -1604,6 +1616,7 @@ robot_lab-web
 robot_wars
 roda
 rodf
+rogue_machines
 role_fu
 rolify
 rom
@@ -1674,6 +1687,9 @@ ruby_llm-modes
 ruby_llm-monitoring
 ruby_llm-pollinations
 ruby_llm-providers-apfel
+ruby_llm-providers-claude_code
+ruby_llm-providers-codex
+ruby_llm-providers-copilot
 ruby_llm-providers-lms
 ruby_llm-red_candle
 ruby_llm-registry
@@ -1818,6 +1834,7 @@ sghtmltopdf
 shai-cli
 shale
 shared_tools
+shed_machines
 shell_tools
 shellany
 shellwords
@@ -1877,6 +1894,7 @@ sloprb
 slow_enumerator_tools
 smart_colored
 smart_init
+smart_message
 smart_properties
 smarter_csv
 smith-agents
@@ -1927,8 +1945,12 @@ standard-performance
 standardrb
 standardwebhooks
 state_machines
+state_machines_activerecord_rspec
+state_machines_rspec
+state_machines_transactions
 state_machines-activemodel
 state_machines-activerecord
+state_machines-rspec
 statesman
 steep
 stemmer
@@ -1958,6 +1980,7 @@ super_diff
 superform
 superglue
 supermail
+supervisor_machines
 swagger-ui
 swarm_cli
 swarm_sdk
@@ -2014,6 +2037,7 @@ thruster
 tiktoken_ruby
 tilt
 time
+timecop
 timeliness
 timeout
 timers
